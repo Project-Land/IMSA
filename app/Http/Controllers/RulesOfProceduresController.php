@@ -28,8 +28,7 @@ class RulesOfProceduresController extends Controller
      */
     public function create()
     {
-
-
+        return view('documents.create');
     }
 
     /**
@@ -41,6 +40,34 @@ class RulesOfProceduresController extends Controller
     public function store(Request $request)
     {
         $document = new Document();
+
+        $validatedData = $request->validate([
+            'doc_name' => 'required|unique:documents|max:255',
+            'version' => 'required'
+        ]);
+
+        $document->doc_category = 'rules_procedure';
+        $document->doc_name = $request->document_name;
+        $document->version = $request->version;
+
+        if($request->file('file')){
+            $file = $request->file;
+
+            $name = $file->getClientOriginalName();
+            $document->file_name = '_rules_of_procedure'.time().'.'.request()->file->getClientOriginalExtension();
+
+            $document->allowed_type = 'pdf';
+            $document->can_download = 1;
+            $document->visitor_can_download = 1;
+            $standard = $this::getStandard();
+            $document->standard_id = $standard;
+            $document->save();
+            $file->storeAs('rules_of_procedure', $document->file_name);
+
+            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+            return redirect('/rules-of-procedures');
+
+        }
     }
 
     /**
