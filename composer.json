@@ -17,7 +17,10 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.0"
+<<<<<<< HEAD
        
+=======
+>>>>>>> cee4a3bc8ce59317829d60ca9733ba364cf8d9e1
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
