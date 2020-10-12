@@ -1,6 +1,6 @@
 @extends('dashboard.php')
 @section('content')
-<form>
+<form action="" method="POST">
 
 <div class="form-group">
     <label for="document_name">Example label</label>
