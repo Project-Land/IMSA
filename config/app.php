@@ -161,6 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+<<<<<<< HEAD
+       
+=======
+>>>>>>> cee4a3bc8ce59317829d60ca9733ba364cf8d9e1
 
         /*
          * Package Service Providers...
