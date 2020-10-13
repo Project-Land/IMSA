@@ -11,15 +11,9 @@
             <div class="dropdown-menu">
                 <!-- Dropdown menu links -->
                 <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
-<<<<<<< HEAD
                 <a class="dropdown-item" href="/policies">Politike</a>
                 <a class="dropdown-item" href="/procedures">Procedure</a>
                 <a class="dropdown-item" href="/manuals">Uputstva</a>
-=======
-                <a class="dropdown-item" href="#">Politike</a>
-                <a class="dropdown-item" href="/procedures">Procedure</a>
-                <a class="dropdown-item" href="#">Uputstva</a>
->>>>>>> 74e3753fb0de2d4bac9efa3d4f2f017324c7a45f
             </div>
         </div>
 
