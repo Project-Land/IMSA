@@ -33,6 +33,8 @@
         
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
 
+        <script src="https://kit.fontawesome.com/f94836499c.js" crossorigin="anonymous"></script>
+
         <style> .dropdown-menu {
     position: static;
     float: none;
