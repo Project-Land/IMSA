@@ -87,8 +87,8 @@ class RulesOfProceduresController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   $document = Document::findOrFail($id);
+        return view('documents.edit',['document'=>$document,'url'=>route('rules-of-procedures.update',$document->id)]);
     }
 
     /**

@@ -9,31 +9,29 @@
 
 		<form action="{{$url}}" method="POST" enctype="multipart/form-data">
 			@csrf
-			@isset($method)
-			@method('{{$method}}')
-			@endisset
+			@method('PUT')
 			<div class="form-group">
 				<label for="dokument_name">Naziv dokumenta:</label>
-        <input type="text" class="form-control" id="document_name" name="document_name" placeholder="Naziv dokumenta" value="{{old('document_name')}}" autofocus>
+        <input type="text" class="form-control" id="document_name" name="document_name" placeholder="Naziv dokumenta" value="{{$document->document_name}}" autofocus>
         @error('document_name')
         <span class="text-danger">{{ $message }}</span>
         @enderror
 			</div>
 			<div class="form-group">
 				<label for="document_version">Verzija:</label>
-        <input type="text" class="form-control" id="document_version" name="document_version" placeholder="Verzija" value="{{old('document_version')}}">
+        <input type="text" class="form-control" id="document_version" name="document_version" placeholder="Verzija" value="{{$document->version}}">
         @error('document_version')
         <span class="text-danger">{{ $message }}</span>
         @enderror
 			</div>
 			<div class="form-group">
 				<label for="name_file">Izaberi PDF Fajl:</label>
-        <input type="file" class="form-control-file" id="name_file" name="file">
+        <input type="file" class="form-control-file" id="name_file" name="file">{{$document->file_name}}
         @error('file')
           <span class="text-danger">{{ $message }}</span>
         @enderror
 			</div>
-			<button type="submit" class="btn btn-primary">Kreiraj</button>
+			<button type="submit" class="btn btn-primary">Izmeni</button>
 		</form>
     </div>
 
