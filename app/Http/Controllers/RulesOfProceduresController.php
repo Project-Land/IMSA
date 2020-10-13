@@ -21,7 +21,9 @@ class RulesOfProceduresController extends Controller
             return redirect('/');
         }
         $documents = Document::where('doc_category', 'rules_procedure')->where('standard_id', $standardId)->get();
-        return view('documents.index', compact('documents'));
+        $folder = "rules_of_procedure";
+        $route_name = "rules-of-procedures";
+        return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 
     /**
@@ -62,7 +64,7 @@ class RulesOfProceduresController extends Controller
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
-            $file->storeAs('rules_of_procedure', $document->file_name);
+            $file->storeAs('/public/rules_of_procedure', $document->file_name);
 
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
             return redirect('/rules-of-procedures');
