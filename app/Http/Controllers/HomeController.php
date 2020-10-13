@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HomeController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         session()->forget('standard');
         session()->forget('standard_name');
         $standards = Standard::all();
         return view('dashboard', compact('standards'));
     }
 
-    public function standard($id) {
+    public function standard($id)
+    {
         try{
             $standard = Standard::findorFail($id);
             session(['standard' => $id]);

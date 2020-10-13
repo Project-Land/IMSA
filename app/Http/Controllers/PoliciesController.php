@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Standard;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +24,8 @@ class PoliciesController extends Controller
         $documents = Document::where('doc_category', 'policy')->where('standard_id', $standardId)->get();
         $folder = "policy";
         $route_name = "policies";
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $currentStandard = Standard::find($standardId)->name;
+        return view('documents.index', compact('documents', 'folder', 'route_name', 'currentStandard'));
     }
 
     /**
@@ -33,7 +35,7 @@ class PoliciesController extends Controller
      */
     public function create()
     {
-        return view('documents.create',['url'=> route('policies.store')]);
+        return view('documents.create',['url'=> route('policies.store'), 'back' => route('policies.index')]);
     }
 
     /**
@@ -100,7 +102,7 @@ class PoliciesController extends Controller
     public function edit($id)
     {
         $document = Document::findOrFail($id);
-        return view('documents.edit', ['document' => $document, 'url' => route('policies.update', $document->id), 'folder' => 'policy']);
+        return view('documents.edit', ['document' => $document, 'url' => route('policies.update', $document->id), 'folder' => 'policy', 'back' => route('policy.index')]);
     }
 
     /**

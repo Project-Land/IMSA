@@ -7,7 +7,7 @@
 
 	<div class="row">
       <div class="col">
-        <a class="btn btn-light" href="{{ redirect()->back()->getTargetUrl() }}"><i class="fas fa-arrow-left"></i> Nazad</a>
+        <a class="btn btn-light" href="{{ $back }}"><i class="fas fa-arrow-left"></i> Nazad</a>
       </div>
     </div>
 
