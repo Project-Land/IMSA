@@ -18,9 +18,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', 'App\Http\Controllers\HomeController@index')->name('dashboard');
     Route::get('/standards/{id}', 'App\Http\Controllers\HomeController@standard')->name('standard');
     Route::resource('rules-of-procedures', 'App\Http\Controllers\RulesOfProceduresController');
-<<<<<<< HEAD
-    Route::resource('policies', 'App\Http\Controllers\PoliciesController');
-=======
+    Route::resource('policies', PoliciesController::class);
     Route::resource('procedures', ProceduresController::class);
->>>>>>> 74e3753fb0de2d4bac9efa3d4f2f017324c7a45f
 });
