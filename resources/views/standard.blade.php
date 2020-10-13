@@ -14,7 +14,7 @@
                     <li><a href="/policies">Politike</a></li>
                     <li><a href="/procedures">Procedure</a></li>
                     <li><a href="/manuals">Uputstva</a></li>
-                    <li><a href="/forms">Forme</a></li>
+                    <li><a href="/forms">Obrasci</a></li>
                 </div>
             </div>
         </div>
