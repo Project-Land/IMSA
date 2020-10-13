@@ -2,10 +2,10 @@
 
     <div class="col">
 
-        <a type="button" href="/" class="btn col-2 bg-secondary text-white">Standardi</a>
+        <a type="button" href="/" class="btn btn-secondary col-sm-12 col-md-2 text-white">Standardi</a>
 
-        <div class="btn-group col-2">
-            <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="btn-group col-sm-12 col-md-2">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dokumentacija
             </button>
             <div class="dropdown-menu">
@@ -18,8 +18,8 @@
             </div>
         </div>
 
-        <div class="btn-group col=2">
-            <button type="button" class="btn btn-secondary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="btn-group col-sm-12 col-md-2">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sistemski procesi
             </button>
             <div class="dropdown-menu">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Standard;
 use Illuminate\Http\Request;
 
 class ProceduresController extends Controller
@@ -21,7 +22,8 @@ class ProceduresController extends Controller
         $documents = Document::where('doc_category', 'procedure')->where('standard_id', $standardId)->get();
         $folder = "procedure";
         $route_name = "procedures";
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $currentStandard = Standard::find($standardId)->name;
+        return view('documents.index', compact('documents', 'folder', 'route_name', 'currentStandard'));
     }
 
     /**
@@ -31,7 +33,7 @@ class ProceduresController extends Controller
      */
     public function create()
     {
-        return view('documents.create',['url'=> route('procedures.store')]);
+        return view('documents.create',['url'=> route('procedures.store'), 'back' => route('procedures.index')]);
     }
 
     /**
@@ -44,11 +46,20 @@ class ProceduresController extends Controller
     {
         $document = new Document();
 
+        $messages = array(
+            'file.required' => 'Izaberite fajl',
+            'file.mimes' => 'Fajl mora biti u PDF formatu',
+            'document_name.required' => 'Unesite naziv dokumenta',
+            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
+            'document_name.unique' => 'Već postoji dokument sa takvim nazivom',
+            'document_version.required' => 'Unesite verziju dokumenta'
+        );
+
         $validatedData = $request->validate([
             'document_name' => 'required|unique:documents|max:255',
             'document_version' => 'required',
             'file' => 'required|max:10000|mimes:pdf'
-        ]);
+        ], $messages);
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
@@ -89,7 +100,7 @@ class ProceduresController extends Controller
     public function edit($id)
     {
         $document = Document::findOrFail($id);
-        return view('documents.edit',['document'=>$document,'url'=>route('procedures.update',$document->id), 'folder' => 'procedure']);
+        return view('documents.edit',['document'=>$document,'url'=>route('procedures.update',$document->id), 'folder' => 'procedure', 'back' => route('procedures.index')]);
     }
 
     /**
@@ -103,11 +114,18 @@ class ProceduresController extends Controller
     {
         $document = Document::findOrFail($id);
 
+        $messages = array(
+            'file.mimes' => 'Fajl mora biti u PDF formatu',
+            'document_name.required' => 'Unesite naziv dokumenta',
+            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
+            'document_version.required' => 'Unesite verziju dokumenta'
+        );
+
         $validatedData = $request->validate([
             'document_name' => 'required|max:255',
             'document_version' => 'required',
             'file' => 'max:10000|mimes:pdf'
-        ]);
+        ], $messages);
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
