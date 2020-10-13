@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="mx-auto w-50 mt-20 bg-secondary p-10 rounded">
+    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
 
 		<form action="{{ $url }}" method="POST" enctype="multipart/form-data">
 			@csrf
