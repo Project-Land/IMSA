@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2>Standardi</h2>
+        
     </x-slot>
 
     <div class="row mt-5">

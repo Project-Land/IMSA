@@ -56,7 +56,13 @@
                 </div>
                 
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    @include('nav')
+                @if (!Request::is('/'))
+                   @include('nav')
+                   @else
+                   <h1 class="h1 text-center" >{{'IZABERITE STANDARD'}}</h1>
+                   
+                @endif
+                    
                 </div>
             </header>
 

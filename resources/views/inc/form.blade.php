@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kreiraj novi dokument') }}
+            {{ __('Kreiraj novi dokument za Standard') }} {{session('standard_name')}}
         </h2>
     </x-slot>
 
