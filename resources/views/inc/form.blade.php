@@ -44,8 +44,6 @@
 		</form>
     </div>
 
-<<<<<<< HEAD
-=======
     <script>
     document.getElementById("name_file").addEventListener("change", function(e){
         let file = document.getElementById('name_file').files[0];
@@ -54,5 +52,4 @@
     
 </script>
 
->>>>>>> 1dd1e305dcbd41a0bdecef8f8e57f6804391b150
 </x-app-layout>
