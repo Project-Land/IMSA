@@ -45,23 +45,20 @@ class RulesOfProceduresController extends Controller
         $document = new Document();
 
         $validatedData = $request->validate([
-            'doc_name' => 'required|unique:documents|max:255',
-            'version' => 'required'
+            'document_name' => 'required|unique:documents|max:255',
+            'document_version' => 'required',
+            'file' => 'required|max:10000|mimes:pdf'
         ]);
 
         $document->doc_category = 'rules_procedure';
-        $document->doc_name = $request->document_name;
-        $document->version = $request->version;
+        $document->document_name = $request->document_name;
+        $document->version = $request->document_version;
 
         if($request->file('file')){
             $file = $request->file;
 
             $name = $file->getClientOriginalName();
-            $document->file_name = '_rules_of_procedure'.time().'.'.request()->file->getClientOriginalExtension();
-
-            $document->allowed_type = 'pdf';
-            $document->can_download = 1;
-            $document->visitor_can_download = 1;
+            $document->file_name = 'rules_of_procedure_'.time().'.'.$file->getClientOriginalExtension();
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
@@ -69,7 +66,6 @@ class RulesOfProceduresController extends Controller
 
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
             return redirect('/rules-of-procedures');
-
         }
     }
 
