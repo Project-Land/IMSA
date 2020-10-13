@@ -140,6 +140,6 @@ class RulesOfProceduresController extends Controller
     {
         Document::destroy($id);
         //logic for deleting the file from the server
-        return back()->flash('status', 'Dokument je uspešno uklonjen');
+        return back()->with('status', 'Dokument je uspešno uklonjen');
     }
 }

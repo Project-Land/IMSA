@@ -47,7 +47,7 @@
                                     <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <a class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></a>
+                                        <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </td>
                             </tr>   
