@@ -27,16 +27,23 @@
         @enderror
 			</div>
 			<div class="form-group">
-				<label for="name_file">Izaberi PDF Fajl:</label>
-        <input type="file" class="form-control-file" id="name_file" name="file">
+				<label for="name_file" class="btn btn-primary">Izaberi PDF Fajl</label>
+        <input type="file" class="form-control-file" id="name_file" name="file" style="display:none;">
+        <span id="old_document">fajl nije izabran</span>
         @error('file')
           <span class="text-danger">{{ $message }}</span>
         @enderror
 			</div>
-			<button type="submit" class="btn btn-primary">Kreiraj</button>
+			<button type="submit" class="btn btn-success">Kreiraj</button>
 		</form>
     </div>
 
-
+    <script>
+    document.getElementById("name_file").addEventListener("change", function(e){
+        let file = document.getElementById('name_file').files[0];
+        if(file)document.getElementById('old_document').textContent=file.name;
+    });
+    
+</script>
 
 </x-app-layout>
