@@ -2,9 +2,9 @@
 
     <div class="col">
 
-        <a type="button" href="/" class="btn btn-secondary col-sm-12 col-md-2 text-white">Standardi</a>
+        <a type="button" href="/" class="btn btn-secondary text-white col-sm-12 col-md-2 mb-1">Standardi</a>
 
-        <div class="btn-group col-sm-12 col-md-2">
+        <div class="btn-group col-sm-12 col-md-2 mb-1">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dokumentacija
             </button>
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="btn-group col-sm-12 col-md-2">
+        <div class="btn-group col-sm-12 col-md-2 mb-1">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sistemski procesi
             </button>
