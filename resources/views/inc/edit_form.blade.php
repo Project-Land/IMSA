@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Izmeni poslovnik') }}
+            {{ __('Izmeni dokument') }}
         </h2>
     </x-slot>
 
 	<div class="row">
       <div class="col">
-        <a class="btn btn-light" href="{{ redirect()->back()->getTargetUrl() }}">Nazad</a>
+        <a class="btn btn-light" href="{{ redirect()->back()->getTargetUrl() }}"><i class="fas fa-arrow-left"></i> Nazad</a>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
         <input type="file" class="form-control-file" id="name_file" name="file" style="display:none;">
         <span id="old_document">{{$document->file_name}}</span>
         @error('file')
-          <span class="text-danger">{{ $message }}</span>
+          <br><span class="text-danger">{{ $message }}</span>
         @enderror
 			</div>
 			<button type="submit" class="btn btn-success">Izmeni</button>
