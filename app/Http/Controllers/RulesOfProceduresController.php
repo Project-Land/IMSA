@@ -17,6 +17,9 @@ class RulesOfProceduresController extends Controller
     public function index()
     {
         $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
         $documents = Document::where('doc_category', 'rules_procedure')->where('standard_id', $standardId)->get();
         return view('documents.index', compact('documents'));
     }

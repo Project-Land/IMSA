@@ -16,10 +16,10 @@ class Controller extends BaseController
     {
         $standardId = session('standard');
         if(isset($standardId)) {
-            $standard = Standard::findOrFail($standardId);
+            $standard = Standard::find($standardId);
+            return $standard->id;
         } else {
-            $standard = Standard::get()->first();
+            return null;
         }
-        return $standard->id;
     }
 }
