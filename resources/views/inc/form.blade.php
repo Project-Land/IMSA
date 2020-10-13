@@ -33,9 +33,9 @@
         @enderror
 			</div>
 			<div class="form-group">
-				<label for="name_file" class="btn btn-primary">Izaberi PDF Fajl</label>
+				<label for="name_file" class="btn btn-primary">Izaberi Fajl</label>
         <input type="file" class="form-control-file" id="name_file" name="file" style="display:none;">
-        <span id="old_document">fajl nije izabran</span>
+        <span id="old_document">Fajl nije izabran</span>
         @error('file')
           <br><span class="text-danger">{{ $message }}</span>
         @enderror

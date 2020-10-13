@@ -14,6 +14,7 @@
                 <a class="dropdown-item" href="/policies">Politike</a>
                 <a class="dropdown-item" href="/procedures">Procedure</a>
                 <a class="dropdown-item" href="/manuals">Uputstva</a>
+                <a class="dropdown-item" href="/forms">Obrasci</a>
             </div>
         </div>
 
