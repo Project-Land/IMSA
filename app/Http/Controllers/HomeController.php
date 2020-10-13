@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class HomeController extends Controller
 {
     public function index() {
+        session()->forget('standard');
         $standards = Standard::all();
         return view('dashboard', compact('standards'));
     }

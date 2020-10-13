@@ -52,14 +52,17 @@
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
-           
-                @include('nav')
-            
+                
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    @include('nav')
+                </div>
             </header>
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $slot }}
+                </div>
             </main>
         </div>
 
