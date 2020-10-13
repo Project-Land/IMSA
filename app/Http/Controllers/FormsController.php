@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
-use App\Models\Standard;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +23,7 @@ class FormsController extends Controller
         $documents = Document::where('doc_category', 'form')->where('standard_id', $standardId)->get();
         $folder = "form";
         $route_name = "forms";
-        $currentStandard = Standard::find($standardId)->name;
-        return view('documents.index', compact('documents', 'folder', 'route_name', 'currentStandard'));
+        return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 
     /**

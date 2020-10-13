@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
-use App\Models\Standard;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,8 +23,7 @@ class RulesOfProceduresController extends Controller
         $documents = Document::where('doc_category', 'rules_procedure')->where('standard_id', $standardId)->get();
         $folder = "rules_of_procedure";
         $route_name = "rules-of-procedures";
-        $currentStandard = Standard::find($standardId)->name;
-        return view('documents.index', compact('documents', 'folder', 'route_name', 'currentStandard'));
+        return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
-use App\Models\Standard;
 use Illuminate\Http\Request;
 
 class ManualsController extends Controller
@@ -22,8 +21,7 @@ class ManualsController extends Controller
         $documents = Document::where('doc_category', 'manual')->where('standard_id', $standardId)->get();
         $folder = "manuals";
         $route_name = "manuals";
-        $currentStandard = Standard::find($standardId)->name;
-        return view('documents.index', compact('documents', 'folder', 'route_name', 'currentStandard'));
+        return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 
     /**
