@@ -31,26 +31,16 @@
 				@enderror
 			</div>
 			<div class="form-group">
-<<<<<<< HEAD
-				<label for="name_file">Izaberi PDF Fajl:</label>
-				<input type="file" class="form-control-file" id="name_file" name="file">{{ $document->document_name }}
-				@error('file')
-				<span class="text-danger">{{ $message }}</span>
-				@enderror
-=======
 				<label for="name_file" class="btn btn-primary">Izaberi PDF Fajl</label>
         <input type="file" class="form-control-file" id="name_file" name="file" style="display:none;">
         <span id="old_document">{{$document->file_name}}</span>
         @error('file')
           <span class="text-danger">{{ $message }}</span>
         @enderror
->>>>>>> 1dd1e305dcbd41a0bdecef8f8e57f6804391b150
 			</div>
 			<button type="submit" class="btn btn-success">Izmeni</button>
 		</form>
     </div>
-<<<<<<< HEAD
-=======
 <script>
     document.getElementById("name_file").addEventListener("change", function(e){
         let file = document.getElementById('name_file').files[0];
@@ -59,6 +49,5 @@
     
 </script>
 
->>>>>>> 1dd1e305dcbd41a0bdecef8f8e57f6804391b150
 
 </x-app-layout>
