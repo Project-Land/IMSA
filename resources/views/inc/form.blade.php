@@ -1,13 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standard') }}
+            {{ __('Kreiraj novi poslovnik') }}
         </h2>
     </x-slot>
 
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-light" href="{{ redirect()->back()->getTargetUrl() }}">Nazad</a>
+      </div>
+    </div>
+
     <div class="mx-auto w-50 mt-20 bg-secondary p-10 rounded">
 
-		<form action="{{$url}}" method="POST" enctype="multipart/form-data">
+		<form action="{{ $url }}" method="POST" enctype="multipart/form-data">
 			@csrf
 			@isset($method)
 			@method('{{$method}}')
@@ -36,7 +42,5 @@
 			<button type="submit" class="btn btn-primary">Kreiraj</button>
 		</form>
     </div>
-
-
 
 </x-app-layout>

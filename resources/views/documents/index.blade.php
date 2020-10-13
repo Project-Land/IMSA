@@ -25,7 +25,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route($route_name.'.create') }}">Kreiraj novi dokument</a>
+                    <a class="btn btn-info" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <table class="table table-bordered yajra-datatable">
@@ -33,18 +33,22 @@
                             <tr class="text-center">
                                 <th>Naziv dokumenta</th>
                                 <th>Verzija</th>
-                                <th>Akcije</th>
+                                <th class="no-sort">Akcije</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($documents as $document)
                             <tr>
                                 <td>{{ $document->document_name }}</td>
-                                <td>{{ $document->version }}</td>
+                                <td class="text-center">{{ $document->version }}</td>
                                 <td class="text-center">
                                     <a href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
                                     <a href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route($route_name.'.destroy', $document->id) }}"><i class="fas fa-trash"></i></a>
+                                    <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <a class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></a>
+                                    </form>
                                 </td>
                             </tr>   
                         @endforeach
@@ -60,5 +64,24 @@
 </x-app-layout>
 
 <script>
-    $('.yajra-datatable').DataTable(); 
+    $('.yajra-datatable').DataTable({
+        "language": {
+            "info": "Prikaz strane _PAGE_ od _PAGES_",
+            "infoEmpty": "Nema podataka",
+            "zeroRecords": "Nema podataka",
+            "infoFiltered": "(od _MAX_ ukupno rezultata)",
+            "lengthMenu": "Prikaži _MENU_ redova po stranici",
+            "search": "Pretraga",
+            "paginate": {
+                "next": "Sledeća",
+                "previous": "Prethodna",
+                "first": "Prva",
+                "last": "Poslednja"
+            }
+        },
+        "columnDefs": [{
+          "targets": 'no-sort',
+          "orderable": false,
+        }]
+    }); 
 </script>

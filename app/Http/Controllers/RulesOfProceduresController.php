@@ -89,8 +89,9 @@ class RulesOfProceduresController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   $document = Document::findOrFail($id);
-        return view('documents.edit',['document'=>$document,'url'=>route('rules-of-procedures.update',$document->id)]);
+    {
+        $document = Document::findOrFail($id);
+        return view('documents.edit',['document'=>$document,'url'=>route('rules-of-procedures.update',$document->id), 'folder' => 'rules_of_procedure']);
     }
 
     /**
@@ -102,7 +103,31 @@ class RulesOfProceduresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $document = Document::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'document_name' => 'required|max:255',
+            'document_version' => 'required',
+            'file' => 'max:10000|mimes:pdf'
+        ]);
+
+        $document->doc_category = 'rules_procedure';
+        $document->document_name = $request->document_name;
+        $document->version = $request->document_version;
+
+        if($request->file('file')){
+            $file = $request->file;
+            $name = $file->getClientOriginalName();
+            $document->file_name = 'rules_of_procedure_'.time().'.'.$file->getClientOriginalExtension();
+            $standard = $this::getStandard();
+            $document->standard_id = $standard;
+            $file->storeAs('/public/rules_of_procedure', $document->file_name);
+        }
+
+        $document->save();
+        $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        return redirect('/rules-of-procedures');
+
     }
 
     /**
@@ -113,6 +138,8 @@ class RulesOfProceduresController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Document::destroy($id);
+        //logic for deleting the file from the server
+        return back()->flash('status', 'Dokument je uspešno uklonjen');
     }
 }
