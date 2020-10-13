@@ -31,7 +31,7 @@ class RulesOfProceduresController extends Controller
      */
     public function create()
     {
-        return view('documents.create',['url'=> action([RulesOfProceduresController::class, 'store'])]);
+        return view('documents.create',['url'=> route('rules-of-procedures.store')]);
     }
 
     /**
