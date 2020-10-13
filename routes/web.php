@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ManualsController;
 use App\Http\Controllers\ProceduresController;
 
 /*
@@ -20,4 +21,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('rules-of-procedures', 'App\Http\Controllers\RulesOfProceduresController');
     Route::resource('policies', PoliciesController::class);
     Route::resource('procedures', ProceduresController::class);
+    Route::resource('manuals', ManualsController::class);
 });
