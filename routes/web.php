@@ -8,6 +8,7 @@ use App\Http\Controllers\PoliciesController;
 use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
+use App\Http\Controllers\ComplianceCorrectionsController;
 
 
 /*
@@ -34,4 +35,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('goals', GoalsController::class);
 
     Route::resource('risk-management', RiskManagementController::class);
+    Route::resource('compliance-correction', ComplianceCorrectionsController::class);
+
 });
