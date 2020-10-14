@@ -24,7 +24,7 @@
             </button>
             <div class="dropdown-menu">
                 <!-- Dropdown menu links -->
-                <a class="dropdown-item" href="#">Upravljanje rizikom</a>
+                <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
                 <a class="dropdown-item" href="/internal-check">Interne provere</a>
                 <a class="dropdown-item" href="#">Neusaglašenosti i korektivne mere</a>
                 <a class="dropdown-item" href="#">Obuke</a>
