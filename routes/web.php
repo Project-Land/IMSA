@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ManualsController;
-use App\Http\Controllers\ProceduresController;
-use App\Http\Controllers\PoliciesController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\GoalsController;
+use App\Http\Controllers\ManualsController;
+use App\Http\Controllers\PoliciesController;
+use App\Http\Controllers\ProceduresController;
+use App\Http\Controllers\InternalCheckController;
 
 
 /*
@@ -26,4 +28,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
+
+    Route::resource('internal-check', InternalCheckController::class);
+    Route::resource('goals', GoalsController::class);
+
 });

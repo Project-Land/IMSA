@@ -25,10 +25,10 @@
             <div class="dropdown-menu">
                 <!-- Dropdown menu links -->
                 <a class="dropdown-item" href="#">Upravljanje rizikom</a>
-                <a class="dropdown-item" href="#">Interne provere</a>
+                <a class="dropdown-item" href="/internal-check">Interne provere</a>
                 <a class="dropdown-item" href="#">Neusaglašenosti i korektivne mere</a>
                 <a class="dropdown-item" href="#">Obuke</a>
-                <a class="dropdown-item" href="#">Ciljevi</a>
+                <a class="dropdown-item" href="/goals">Ciljevi</a>
                 <a class="dropdown-item" href="#">Odobreni isporučioci</a>
                 <a class="dropdown-item" href="#">Zainteresovane strane</a>
                 <a class="dropdown-item" href="#">Upravljanje reklamacijama</a>
