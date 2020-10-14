@@ -17,7 +17,7 @@ class RiskManagementController extends Controller
         if($this::getStandard() == null){
             return redirect('/');
         }
-        $riskManagements = RiskManagement::all();
+        $riskManagements = RiskManagement::where('standard_id', $this::getStandard())->get();
         return view('system_processes.risk_management.index', compact('riskManagements'));
     }
 

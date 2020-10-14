@@ -18,7 +18,7 @@ class SuppliersController extends Controller
         if($this::getStandard() == null){
             return redirect('/');
         }
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::where('standard_id', $this::getStandard())->get();
         return view('system_processes.suppliers.index', compact('suppliers'));
     }
 

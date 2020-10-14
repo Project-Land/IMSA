@@ -17,7 +17,7 @@ class StakeholdersController extends Controller
         if($this::getStandard() == null){
             return redirect('/');
         }
-        $stakeholders = Stakeholder::all();
+        $stakeholders = Stakeholder::where('standard_id', $this::getStandard())->get();
         return view('system_processes.stakeholders.index', compact('stakeholders'));
     }
 
