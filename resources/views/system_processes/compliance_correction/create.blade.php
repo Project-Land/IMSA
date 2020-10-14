@@ -17,14 +17,14 @@
 			@csrf
 			<div class="form-group">
 				<label for="dokument_name">Naziv dokumenta:</label>
-				<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Naziv dokumenta" autofocus>
+				<input type="text" class="form-control" id="document_name" name="document_name" value="{{ old('document_name') }}" placeholder="Naziv dokumenta" autofocus>
 				@error('document_name')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="document_version">Verzija:</label>
-				<input type="text" class="form-control" id="document_version" name="document_version" placeholder="Verzija">
+				<input type="text" class="form-control" id="document_version" name="document_version" value="{{ old('document_name') }}" placeholder="Verzija">
 				@error('document_version')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror

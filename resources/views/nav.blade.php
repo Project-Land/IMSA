@@ -30,7 +30,7 @@
                 <a class="dropdown-item" href="#">Obuke</a>
                 <a class="dropdown-item" href="/goals">Ciljevi</a>
                 <a class="dropdown-item" href="#">Odobreni isporučioci</a>
-                <a class="dropdown-item" href="#">Zainteresovane strane</a>
+                <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
                 <a class="dropdown-item" href="#">Upravljanje reklamacijama</a>
             </div>
         </div>
