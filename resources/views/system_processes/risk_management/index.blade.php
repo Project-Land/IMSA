@@ -49,8 +49,11 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center"></td>
+                                    <td class="text-center">{{ ($risk->measure)? $risk->measure : '/' }}</td>
                                     <td class="text-center">
+                                        @if($risk->measure)
+                                            <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
+                                        @endif
                                         <a href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">
                                             @method('DELETE')

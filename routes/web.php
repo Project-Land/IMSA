@@ -36,6 +36,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('goals', GoalsController::class);
 
     Route::resource('risk-management', RiskManagementController::class);
+    Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
+    Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
     Route::resource('compliance-correction', ComplianceCorrectionsController::class);
     Route::resource('stakeholders', StakeholdersController::class);
 

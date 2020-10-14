@@ -46,7 +46,7 @@
             <div class="form-group">
 				<label for="acceptable">Prihvatljivo:</label>
                 <select class="form-control" name="acceptable" id="acceptable">
-                    @for($i = 1; $i <= $risk->total; $i++)
+                    @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->acceptable) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
                 </select>
@@ -68,23 +68,10 @@
 
     $('#probability').change( () => {
         calculate();
-        populateAcceptable();
     })
 
-    $('#frequency').change(() => {
+    $('#frequency').change( () => {
         calculate();
-        populateAcceptable();
     })
-
-    function populateAcceptable(){
-        let total = $('#total').val();
-        $('#acceptable').html('');
-        for(let i = 1; i <= total; i++){
-            $('#acceptable').append($('<option>', { 
-                value: i,
-                text : i
-            }));
-        }
-    }
 
 </script>
