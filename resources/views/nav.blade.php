@@ -26,11 +26,11 @@
                 <!-- Dropdown menu links -->
                 <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
                 <a class="dropdown-item" href="/internal-check">Interne provere</a>
-                <a class="dropdown-item" href="#">Neusaglašenosti i korektivne mere</a>
+                <a class="dropdown-item" href="/compliance-correction">Neusaglašenosti i korektivne mere</a>
                 <a class="dropdown-item" href="#">Obuke</a>
                 <a class="dropdown-item" href="/goals">Ciljevi</a>
-                <a class="dropdown-item" href="#">Odobreni isporučioci</a>
-                <a class="dropdown-item" href="#">Zainteresovane strane</a>
+                <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
+                <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
                 <a class="dropdown-item" href="#">Upravljanje reklamacijama</a>
             </div>
         </div>

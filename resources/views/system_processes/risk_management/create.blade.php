@@ -25,24 +25,18 @@
 			<div class="form-group">
 				<label for="probability">Verovatnoća:</label>
                 <select class="form-control" name="probability" id="probability">
-                    @for($i=1; $i<=5; $i++)
+                    @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
-				@error('probability')
-					<span class="text-danger">{{ $message }}</span>
-				@enderror
 			</div>
             <div class="form-group">
 				<label for="frequency">Učestalost:</label>
                 <select class="form-control" name="frequency" id="frequency">
-                    @for($i=1; $i<=5; $i++)
+                    @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
-				@error('frequency')
-					<span class="text-danger">{{ $message }}</span>
-				@enderror
 			</div>
             <div class="form-group">
 				<label for="total">Ukupno:</label>
@@ -51,13 +45,10 @@
             <div class="form-group">
 				<label for="acceptable">Prihvatljivo:</label>
                 <select class="form-control" name="acceptable" id="acceptable">
-                    @for($i=1; $i<=25; $i++)
+                    @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
-				@error('acceptable')
-					<span class="text-danger">{{ $message }}</span>
-				@enderror
 			</div>
 			<button type="submit" class="btn btn-success">Kreiraj</button>
 		</form>
@@ -67,8 +58,7 @@
 
 <script>
 
-    function calculate()
-    {
+    function calculate(){
         let probability = $('#probability').val();
         let frequency = $('#frequency').val();
         let total = probability * frequency;
