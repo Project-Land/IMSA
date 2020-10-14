@@ -5,6 +5,7 @@ use App\Http\Controllers\ManualsController;
 use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\PoliciesController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\RiskManagementController;
 
 
 /*
@@ -26,4 +27,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
+    Route::resource('risk-management', RiskManagementController::class);
 });

@@ -100,7 +100,7 @@ class PoliciesController extends Controller
     public function edit($id)
     {
         $document = Document::findOrFail($id);
-        return view('documents.edit', ['document' => $document, 'url' => route('policies.update', $document->id), 'folder' => 'policy', 'back' => route('policy.index')]);
+        return view('documents.edit', ['document' => $document, 'url' => route('policies.update', $document->id), 'folder' => 'policy', 'back' => route('policies.index')]);
     }
 
     /**
