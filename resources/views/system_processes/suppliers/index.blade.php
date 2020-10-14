@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Upravljanje rizicima') }}
+            {{ session('standard_name') }} - {{ __('Odobreni isporučioci') }}
         </h2>
     </x-slot>
 
@@ -25,37 +25,32 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> Kreiraj rizik / priliku</a>
+                    <a class="btn btn-info" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> Kreiraj isporučioca</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Opis rizika / prilike</th>
-                                    <th>Verovatnoća</th>
-                                    <th>Učestalost</th>
-                                    <th>Ukupno</th>
-                                    <th>Prihvatljivo</th>
-                                    <th>Mera</th>
+                                    <th>Naziv isporučioca</th>
+                                    <th>Predmet nabavke</th>
+                                    <th>Status</th>
+                                    <th>Datum ažuriranja</th>
+                                    <th>Datum sledećeg preispitivanja</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($riskManagements as $risk)
+                                @foreach($suppliers as $s)
                                 <tr>
-                                    <td>{{ $risk->description }}</td>
-                                    <td class="text-center">{{ $risk->probability }}</td>
-                                    <td class="text-center">{{ $risk->frequency }}</td>
-                                    <td class="text-center">{{ $risk->total }}</td>
-                                    <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center">{{ ($risk->measure)? $risk->measure : '/' }}</td>
+                                    <td>{{ $s->supplier_name }}</td>
+                                    <td class="text-center">{{ $s->subject }}</td>
+                                    <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
                                     <td class="text-center">
-                                        @if($risk->measure)
-                                            <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
-                                        @endif
-                                        <a href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">
+                                        <a href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>

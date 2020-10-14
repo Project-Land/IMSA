@@ -10,7 +10,7 @@ use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\ComplianceCorrectionsController;
 use App\Http\Controllers\StakeholdersController;
-
+use App\Http\Controllers\SuppliersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +38,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
     Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
+    
     Route::resource('compliance-correction', ComplianceCorrectionsController::class);
     Route::resource('stakeholders', StakeholdersController::class);
+    Route::resource('suppliers', SuppliersController::class);
 
 });
