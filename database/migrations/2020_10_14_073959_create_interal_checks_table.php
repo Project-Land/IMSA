@@ -15,7 +15,14 @@ class CreateInteralChecksTable extends Migration
     {
         Schema::create('interal_checks', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
+            $table->string('sector');
+            $table->string('leaders');
+            $table->unsignedBigInteger('standard_id');
+            $table->integer('num_plan_ip');
+            $table->string('reports');
             $table->timestamps();
+            $table->foreign('standard_id')->references('id')->on('standards');
         });
     }
 

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class InteralCheck extends Model
 {
     use HasFactory;
+
+    public function standard(){
+        return $this->belongsTo('App\Models\Standard');
+    }
 }

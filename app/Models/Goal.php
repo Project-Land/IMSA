@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     use HasFactory;
+
+    public function standard(){
+        return $this->hasOne('App\Models\Standard');
+    }
 }

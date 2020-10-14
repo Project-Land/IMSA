@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Standard extends Model
 {
     use HasFactory;
+
+    public function goal(){
+        return $this->hasOne('App\Models\Goal');
+    }
+
+    public function internalCheck(){
+        return $this->hasOne('App\Models\InternalCheck');
+    }
 }
