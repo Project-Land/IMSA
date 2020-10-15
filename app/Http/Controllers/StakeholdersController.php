@@ -39,8 +39,6 @@ class StakeholdersController extends Controller
      */
     public function store(Request $request)
     {
-        $stakeholder = new Stakeholder();
-
         $messages = array(
             'name.required' => 'Unesite naziv / ime zainteresovane strane',
             'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
@@ -54,12 +52,12 @@ class StakeholdersController extends Controller
             'response' => 'required'
         ], $messages);
 
-        $stakeholder->standard_id = $this::getStandard();
-        $stakeholder->name = $request->name;
-        $stakeholder->expectation = $request->expectation;
-        $stakeholder->response = $request->response;
-
-        $stakeholder->save();
+        $stakeholder = Stakeholder::create([
+            'name' => $request->name,
+            'standard_id' => $this::getStandard(),
+            'expectation' => $request->expectation,
+            'response' => $request->response
+        ]);
 
         $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');
         return redirect('/stakeholders');

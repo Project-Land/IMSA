@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Sector;
 use Illuminate\Http\Request;
 
 class ProceduresController extends Controller
@@ -31,7 +32,8 @@ class ProceduresController extends Controller
      */
     public function create()
     {
-        return view('documents.create',['url'=> route('procedures.store'), 'back' => route('procedures.index')]);
+        $sectors = Sector::all();
+        return view('documents.create',['url'=> route('procedures.store'), 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
     }
 
     /**
@@ -50,18 +52,21 @@ class ProceduresController extends Controller
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
             'document_name.unique' => 'Već postoji dokument sa takvim nazivom',
-            'document_version.required' => 'Unesite verziju dokumenta'
+            'document_version.required' => 'Unesite verziju dokumenta',
+            'sector.required' => 'Izaberite pripadajući sektor'
         );
 
         $validatedData = $request->validate([
             'document_name' => 'required|unique:documents|max:255',
             'document_version' => 'required',
-            'file' => 'required|max:10000|mimes:pdf'
+            'file' => 'required|max:10000|mimes:pdf',
+            'sector' => 'required'
         ], $messages);
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+        $document->sector_id = $request->sector;
 
         if($request->file('file')){
             $file = $request->file;
@@ -98,7 +103,8 @@ class ProceduresController extends Controller
     public function edit($id)
     {
         $document = Document::findOrFail($id);
-        return view('documents.edit',['document'=>$document,'url'=>route('procedures.update',$document->id), 'folder' => 'procedure', 'back' => route('procedures.index')]);
+        $sectors = Sector::all();
+        return view('documents.edit',['document'=>$document,'url'=>route('procedures.update',$document->id), 'folder' => 'procedure', 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
     }
 
     /**
@@ -116,18 +122,21 @@ class ProceduresController extends Controller
             'file.mimes' => 'Fajl mora biti u PDF formatu',
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_version.required' => 'Unesite verziju dokumenta'
+            'document_version.required' => 'Unesite verziju dokumenta',
+            'sector.required' => 'Izaberite pripadajući sektor'
         );
 
         $validatedData = $request->validate([
             'document_name' => 'required|max:255',
             'document_version' => 'required',
-            'file' => 'max:10000|mimes:pdf'
+            'file' => 'max:10000|mimes:pdf',
+            'sector' => 'required'
         ], $messages);
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+        $document->sector_id = $request->sector;
 
         if($request->file('file')){
             $file = $request->file;
