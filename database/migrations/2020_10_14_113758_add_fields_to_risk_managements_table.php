@@ -15,7 +15,7 @@ class AddFieldsToRiskManagementsTable extends Migration
     {
         Schema::table('risk_managements', function (Blueprint $table) {
             $table->string('measure')->nullable();
-            $table->timestamps('measure_created_at')->nullable();
+            $table->timestamp('measure_created_at')->nullable();
             $table->string('cause')->nullable();
             $table->string('risk_lowering_measure')->nullable();
             $table->string('responsibility')->nullable();

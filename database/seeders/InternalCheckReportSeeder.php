@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class InternalCheckSeeder extends Seeder
+class InternalCheckReportSeeder extends Seeder
 {
     /**
      * Run the database seeds.

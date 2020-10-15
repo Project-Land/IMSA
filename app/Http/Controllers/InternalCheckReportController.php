@@ -2,21 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InternalCheck;
-use App\Models\PlanIp;
-use Faker\Provider\ar_JO\Internet;
 use Illuminate\Http\Request;
+use App\Models\InternalCheck;
+use App\Models\InternalCheckReport;
 
-class InternalCheckController extends Controller
+class InternalCheckReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {   
-        $internal_checks=InternalCheck::all();
+        $internal_checks=InternalCheckReport::all();
         return view('system_processes.internal_check.index',['internal_checks'=>$internal_checks]);
     }
 
@@ -25,9 +19,10 @@ class InternalCheckController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
-    {   
-        return view('system_processes.internal_check.create');
+    public function createReport($id)
+    {
+        $internalCheck=InternalCheck::findOrFail($id);
+        return view('system_processes.internal_check_report.create',['internalCheck'=>$internalCheck]);
     }
 
     /**
@@ -38,21 +33,16 @@ class InternalCheckController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+       /* $validatedData = $request->validate([
             'date' => 'required',
             'sector' => 'required',
             'leaders' => 'required',
             'standard_id' => 'required',
-        ]);
-        $internalCheck=InternalCheck::create($validatedData);
-       $planIp=new PlanIp();
-       $planIp->save();
-       $planIp->name=$planIp->id.'/'.date('Y');
-       $planIp->save();
-        $planIp->internalCheck()->save($internalCheck);
-        $request->session()->flash('status', 'Godišnji plan je uspešno kreiran!');
+        ]);*/
         
-        return redirect('/internal-check');
+        $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
+        
+        return redirect('/internal-check-report');
     }
 
     /**
@@ -74,8 +64,8 @@ class InternalCheckController extends Controller
      */
     public function edit($id)
     {
-        $internal_check=InternalCheck::findOrFail($id);
-        return view('system_processes.internal_check.edit',['internalCheck'=>$internal_check]);
+        $internal_check_report=InternalCheckReport::findOrFail($id);
+        return view('system_processes.internal_check_report.create',['internalCheckReport'=>$internal_check_report]);
     }
 
     /**
@@ -93,12 +83,12 @@ class InternalCheckController extends Controller
             'standard_id' => 'required',
         ]);
         
-        $internal_check=InternalCheck::findOrfail($id);
-        $internal_check->update($validatedData);
+        $internal_check_report=InternalCheckReport::findOrfail($id);
+        $internal_check_report->update($validatedData);
         
-        $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
+        $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
         
-        return redirect('/internal-check');
+        return redirect('/internal-check-report');
     }
     
 
@@ -110,7 +100,7 @@ class InternalCheckController extends Controller
      */
     public function destroy($id)
     {
-        InternalCheck::destroy($id);
-        return back()->with('status', 'Godišnji plan je uspešno uklonjen');
+        InternalCheckReport::destroy($id);
+        return back()->with('status', 'Izveštaj za godišnji plan je uspešno uklonjen');
     }
 }

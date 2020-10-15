@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InteralCheck extends Model
+class PlanIp extends Model
 {
     use HasFactory;
 
-    public function standard(){
-        return $this->belongsTo('App\Models\Standard');
+    protected $guarded=[];
+
+    public function internalCheck(){
+        return $this->hasOne('App\Models\InternalCheck');
     }
 }

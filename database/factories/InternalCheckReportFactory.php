@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\InteralCheck;
+use App\Models\InternalCheckReport;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class InternalCheckFactory extends Factory
+class InternalCheckReportFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = InteralCheck::class;
+    protected $model = InternalCheckReport::class;
 
     /**
      * Define the model's default state.

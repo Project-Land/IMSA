@@ -21,7 +21,7 @@ class CreateSuppliersTable extends Migration
             $table->integer('price');
             $table->integer('shippment_deadline');
             $table->boolean('status');
-            $table->timestamps('deadline_date');
+            $table->timestamp('deadline_date')->nullable();
             $table->unsignedBigInteger('standard_id');
             $table->timestamps();
 
