@@ -19,37 +19,39 @@
             <div class="card">
 
                 <div class="card-header">
-                    <p>{{ $corrective_measure->name }}</p>
+                    <h5 class="text-center mt-2 font-weight-bold">{{ $corrective_measure->name }}</h5>
                 </div>
 
                 <div class="card-body bg-white mt-3">
                     <div class="row">
-                        <div class="col-md-4">
-                            <p>Br. kartona</p>
-                            <p>Datum kreiranja</p>
-                            <p>Sistem menadžment</p>
-                            <p>Opis neusaglašenosti</p>
-                            <p>Uzrok neusaglašenosti</p>
-                            <p>Mera za otklanjanje neusaglašenosti</p>
-                            <p>Mera odobrena</p>
-                            @unless($corrective_measure->measure_approval_reason == null)<p>Razlog neodobravanja mere</p>@endunless
-                            @unless($corrective_measure->measure_approval_date == null)<p>Datum odobravanja mere</p>@endunless
-                            <p>Status mere</p>
-                            @unless($corrective_measure->measure_effective == null)<p>Mera efektivna</p>@endunless
-                        </div>
-                        <div class="col-md-8">
-                            <p>{{ $corrective_measure->name }}</p>
-                            <p>{{ date('d.m.Y', strtotime($corrective_measure->created_at)) }}</p>
-                            <p>{{ $corrective_measure->standard->name }}</p>
-                            <p>{{ $corrective_measure->noncompliance_description }}</p>
-                            <p>{{ $corrective_measure->noncompliance_cause }}</p>
-                            <p>{{ $corrective_measure->measure }}</p>
-                            <p>{{ $corrective_measure->measure_approval == 1 ? "Odobrena" : "Neodobrena" }}</p>
-                            @unless($corrective_measure->measure_approval_reason == null)<p>{{ $corrective_measure->measure_approval_reason }}</p>@endunless
-                            @unless($corrective_measure->measure_approval_date == null)<p>{{ date('d.m.Y', strtotime($corrective_measure->measure_approval_date)) }}</p>@endunless
-                            <p>{{ $corrective_measure->measure_status == 1 ? "Da" : "Ne" }}</p>    
-                            @unless($corrective_measure->measure_effective == null)<p>{{ $corrective_measure->measure_effective == 1 ? "Efektivna" : "Neefektivna" }}</p>@endunless
-                        </div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold"><p>Br. kartona</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->name }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Datum kreiranja</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ date('d.m.Y', strtotime($corrective_measure->created_at)) }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Sistem menadžment</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->standard->name }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Opis neusaglašenosti</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->noncompliance_description }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Uzrok neusaglašenosti</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->noncompliance_cause }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Mera za otklanjanje neusaglašenosti</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->measure }}</p></div>
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Mera odobrena</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->measure_approval == 1 ? "Odobrena" : "Neodobrena" }}</p></div>
+                        @unless($corrective_measure->measure_approval_reason == null)
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Razlog neodobravanja mere</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->measure_approval_reason }}</p></div>
+                        @endunless
+                        @unless($corrective_measure->measure_approval_date == null)
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Datum odobravanja mere</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ date('d.m.Y', strtotime($corrective_measure->measure_approval_date)) }}</p></div>
+                        @endunless
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Status mere</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->measure_status == 1 ? "Da" : "Ne" }}</p> </div>
+                        @unless($corrective_measure->measure_effective == null)
+                        <div class="col-sm-3 mt-3 border-bottom font-weight-bold""><p>Mera efektivna</p></div>
+                        <div class="col-sm-9 mt-3 border-bottom"><p>{{ $corrective_measure->measure_effective == 1 ? "Efektivna" : "Neefektivna" }}</p></div>
+                        @endunless
                     </div>
                 </div>
             </div>  
