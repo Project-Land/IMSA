@@ -31,6 +31,27 @@
 				@enderror
 			</div>
 			<div class="form-group">
+				<label for="personal_info">Ime:</label>
+				<input type="text" class="form-control" id="personal_info" name="personal_info" value="{{ $supplier->personal_info }}">
+				@error('personal_info')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+			<div class="form-group">
+				<label for="phone_number">Broj telefona:</label>
+				<input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $supplier->phone_number }}">
+				@error('phone_number')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" id="email" name="email" value="{{ $supplier->email }}">
+				@error('email')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+			<div class="form-group">
 				<label for="quality">Kvalitet:</label>
 				<select class="form-control" name="quality" id="quality">
 					@for($i = 1; $i <= 5; $i++)

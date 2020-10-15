@@ -13,8 +13,9 @@ use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
-use App\Http\Controllers\ComplianceCorrectionsController;
 use App\Http\Controllers\InternalCheckReportController;
+use App\Http\Controllers\SectorsController;
+use App\Http\Controllers\CorrectiveMeasuresController;
 
 
 /*
@@ -43,10 +44,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
     Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
-    
-    Route::resource('compliance-correction', ComplianceCorrectionsController::class);
+   
+    Route::resource('corrective-measures', CorrectiveMeasuresController::class);
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
+    Route::resource('sectors', SectorsController::class);
+
 
     Route::resource('plan-ip', PlanIpController::class);
 

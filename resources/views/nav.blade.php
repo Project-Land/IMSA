@@ -26,12 +26,23 @@
                 <!-- Dropdown menu links -->
                 <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
                 <a class="dropdown-item" href="/internal-check">Interne provere</a>
-                <a class="dropdown-item" href="/compliance-correction">Neusaglašenosti i korektivne mere</a>
+                <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
                 <a class="dropdown-item" href="#">Obuke</a>
                 <a class="dropdown-item" href="/goals">Ciljevi</a>
                 <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
                 <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
                 <a class="dropdown-item" href="#">Upravljanje reklamacijama</a>
+            </div>
+        </div>
+
+        <div class="btn-group col-sm-12 col-md-2 mb-1">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sektori
+            </button>
+            <div class="dropdown-menu">
+                <!-- Dropdown menu links -->
+                <a class="dropdown-item" href="/sectors">Lista sektora</a>
+                <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>
             </div>
         </div>
 

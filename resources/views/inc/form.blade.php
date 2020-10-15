@@ -32,6 +32,20 @@
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
+			@if(isset($category) && $category == 'procedures')
+			<div class="form-group">
+				<label for="sector">Izaberi sektor</label>
+				<select class="form-control" name="sector" id="sector">
+					<option value="">Izaberi...</option>
+					@foreach($sectors as $sector)
+						<option value="{{ $sector->id }}" {{ old('sector') == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
+					@endforeach
+				</select>
+				@error('sector')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+			@endif
 			<div class="form-group">
 				<label for="name_file" class="btn btn-primary">Izaberi Fajl</label>
 				<input type="file" class="form-control-file" id="name_file" name="file" style="display: none;">

@@ -44,7 +44,7 @@ class SuppliersController extends Controller
 
         $messages = array(
             'supplier_name.required' => 'Unesite naziv isporučioca',
-            'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
+            'supplier_name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
             'subject.required' => 'Unesite predmet nabavke'
         );
 
@@ -59,6 +59,9 @@ class SuppliersController extends Controller
         $supplier->quality = $request->quality;
         $supplier->price = $request->price;
         $supplier->shippment_deadline = $request->shippment_deadline;
+        $supplier->personal_info = $request->personal_info;
+        $supplier->phone_number = $request->phone_number;
+        $supplier->email = $request->email;
 
         $total = $supplier->quality + $supplier->price + $supplier->shippment_deadline;
         $supplier->status = $total >= 8.5 ? 1:0;
@@ -79,7 +82,7 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Supplier::find($id);
     }
 
     /**
@@ -120,6 +123,9 @@ class SuppliersController extends Controller
         $supplier->subject = $request->subject;
         $supplier->quality = $request->quality;
         $supplier->price = $request->price;
+        $supplier->personal_info = $request->personal_info;
+        $supplier->phone_number = $request->phone_number;
+        $supplier->email = $request->email;
 
         $total = $supplier->quality + $supplier->price + $supplier->shippment_deadline;
         $supplier->status = $total >= 8.5 ? 1:0;
