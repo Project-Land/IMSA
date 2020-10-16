@@ -44,7 +44,7 @@
             </select>
         </div>
             
-        <button type="submit" class="btn btn-primary">Kreairaj</button>
+        <button type="submit" class="btn btn-primary">Kreiraj</button>
         </form>
     </div>
 

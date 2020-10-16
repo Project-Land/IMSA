@@ -18,11 +18,12 @@ class CreateInternalChecksTable extends Migration
             $table->date('date');
             $table->string('sector');
             $table->string('leaders');
-            $table->unsignedBigInteger('standard_id');
-            $table->unsignedBigInteger('plan_ip_id');
+            $table->unsignedBigInteger('standard_id')->nullable();
+            $table->unsignedBigInteger('plan_ip_id')->nullable();
+            $table->unsignedBigInteger('internal_check_report_id')->nullable();
             $table->timestamps();
             $table->foreign('standard_id')->references('id')->on('standards');
-            
+            $table->foreign('internal_check_report_id')->references('id')->on('internal_checks');
         });
     }
 

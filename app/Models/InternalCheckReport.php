@@ -14,4 +14,14 @@ class InternalCheckReport extends Model
     public function internalCheck(){
         return $this->hasOne('App\Models\InternalCheck');
     }
+
+    public function recommendations()
+    {
+        return $this->hasMany('App\Models\Recommendation');
+    }
+
+    public function inconsistencies()
+    {
+        return $this->hasMany('App\Models\Inconsistency');
+    }
 }
