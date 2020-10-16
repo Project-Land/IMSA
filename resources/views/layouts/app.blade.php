@@ -12,43 +12,33 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
         <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" />
 
         @livewireStyles
 
         <!-- Scripts -->
-
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
         <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-        
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.js" defer></script>
-
         <script src="https://kit.fontawesome.com/f94836499c.js" crossorigin="anonymous"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
-
-        <style> .dropdown-menu {
-    position: static;
-    float: none;
-}
-.dropdown-menu .dropdown-item:hover {
-   
-    background-color: #d1cdcd;
-}
-</style>
+        <style>
+            .dropdown-menu {
+                position: static;
+                float: none;
+            }
+            .dropdown-menu .dropdown-item:hover {   
+                background-color: #d1cdcd;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -61,13 +51,11 @@
                 </div>
                 
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                @if (!Request::is('/'))
-                   @include('nav')
-                   @else
-                   <h1 class="h1 text-center" >{{'IZABERITE STANDARD'}}</h1>
-                   
-                @endif
-                    
+                    @if (!Request::is('/'))
+                    @include('nav')
+                    @else
+                    <h1 class="h1 text-center" >{{ 'IZABERITE STANDARD' }}</h1>
+                    @endif
                 </div>
             </header>
 
@@ -82,5 +70,9 @@
         @stack('modals')
 
         @livewireScripts
+
+        @include('footer')
+
+        
     </body>
 </html>
