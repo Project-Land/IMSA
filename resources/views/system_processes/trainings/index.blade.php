@@ -25,13 +25,28 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a>
+                    <div class="row">
+                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a></div>
+                        <div class="col-sm-8">
+                            <form class="form-inline" action="{{ route('trainings.filter-year') }}" method="POST">
+                                @csrf
+                                <label for="year" class="mr-3">Godina</label>
+                                <select name="year" id="year" class="form-control w-25 mr-2">
+                                    @foreach($years as $year)
+                                        <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary">Primeni</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
+                                    <th>Godina</th>
                                     <th>Naziv</th>
                                     <th>Vrsta</th>
                                     <th>Opis</th>
@@ -46,6 +61,7 @@
                             <tbody>
                                 @foreach($trainingPlans as $tp)
                                 <tr>
+                                    <td class="text-center">{{ $tp->year }}</td>
                                     <td class="text-center">{{ $tp->name }}</td>
                                     <td class="text-center">{{ $tp->type }}</td>
                                     <td class="text-center">{{ $tp->description }}</td>
@@ -77,7 +93,7 @@
 </x-app-layout>
 
 <script>
-    $('.yajra-datatable').DataTable({
+    let table = $('.yajra-datatable').DataTable({
         "language": {
             "info": "Prikaz strane _PAGE_ od _PAGES_",
             "infoEmpty": "Nema podataka",

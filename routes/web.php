@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
     Route::resource('trainings', TrainingsController::class);
+    Route::post('trainings', [TrainingsController::class, 'filterYear'])->name('trainings.filter-year');
 
     Route::resource('plan-ip', PlanIpController::class);
 

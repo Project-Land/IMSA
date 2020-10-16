@@ -18,8 +18,23 @@ class TrainingsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
+
+        $years = range(2010, date('Y') + 10);
         $trainingPlans = Training::all();
-        return view('system_processes.trainings.index', compact('trainingPlans'));
+        return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
+    }
+
+    public function filterYear(Request $request)
+    {
+        $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
+
+        $year = $request->year;
+        $years = range(2010, date('Y') + 10);
+        $trainingPlans = Training::where('year', $year)->get();
+        return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
     }
 
     /**
