@@ -1,15 +1,19 @@
 <?php
 
+
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\GoalsController;
+use App\Http\Controllers\PlanIpController;
 use App\Http\Controllers\ManualsController;
 use App\Http\Controllers\PoliciesController;
+use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\ProceduresController;
+use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
-use App\Http\Controllers\StakeholdersController;
-use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\TrainingsController;
@@ -48,4 +52,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('suppliers', SuppliersController::class);
     Route::resource('trainings', TrainingsController::class);
 
+    Route::resource('plan-ip', PlanIpController::class);
+
+    Route::resource('internal-check-report', InternalCheckReportController::class);
+Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
 });

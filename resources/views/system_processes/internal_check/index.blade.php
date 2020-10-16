@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="card-header">
                     <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
-                    <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi program IP</a>
+                    
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -50,23 +50,45 @@
                                     <td>{{ $check->sector }}</td>
                                     <td>{{ $check->leaders }}</td>
                                     <td>{{ $check->standard->name }}</td>
-                                    <td class="text-center">{{ $check->num_plan_ip }}
-                                    <a href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </td>
                                     <td class="text-center">
-                                    <a href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i></a>
-                                        <a href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
+                                    @if(!isset($check->planIp->checked_date))
+                                       {{''}}
+                                      
+                                    <a href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
+                                    @else
+                                    {{'PIP'}}  {{$check->planIp->name}}
+                                    <a href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
+                                    <form class="inline" action="{{ route('plan-ip.destroy', $check->id) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                    @endif
+                                    
+                            
+                                    </td>
+
+                                    <td class="text-center">
+
+                                    @if(!isset($check->internalCheckReport->id))
+                                    @if(isset($check->planIp->checked_date))
+                                    <a href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
+                                    @else
+                                    {{'Još nije moguće napraviti izveštaj'}}
+                                    @endif
+                                      
+                                   
+                                    @else
+                                    <a href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
+                                    @endif
+                                    
+                                       
                                     <td class="text-center">
                                        
                                         <a href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>

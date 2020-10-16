@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Standard extends Model
+class InternalCheckReport extends Model
 {
     use HasFactory;
 
-    public function goal(){
-        return $this->hasOne('App\Models\Goal');
-    }
+    protected $guarded=[];
 
     public function internalCheck(){
         return $this->hasOne('App\Models\InternalCheck');
     }
-
-   
 }
