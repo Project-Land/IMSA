@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\GoalsController;
@@ -55,5 +53,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('plan-ip', PlanIpController::class);
 
     Route::resource('internal-check-report', InternalCheckReportController::class);
-Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
+    Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
 });

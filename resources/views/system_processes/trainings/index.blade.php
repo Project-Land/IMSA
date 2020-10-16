@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Odobreni isporučioci') }}
+            {{ session('standard_name') }} - {{ __('Godišnji plan obuke') }}
         </h2>
     </x-slot>
 
@@ -25,32 +25,38 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> Kreiraj isporučioca</a>
+                    <a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Naziv isporučioca</th>
-                                    <th>Predmet nabavke</th>
-                                    <th>Status</th>
-                                    <th>Datum ažuriranja</th>
-                                    <th>Datum sledećeg preispitivanja</th>
+                                    <th>Naziv</th>
+                                    <th>Vrsta</th>
+                                    <th>Opis</th>
+                                    <th>Br. zaposlenih</th>
+                                    <th>Termin / Mesto</th>
+                                    <th>Resursi</th>
+                                    <th>Br. zaposlenih - realizovano</th>
+                                    <th>Ocena efekata obuke</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($suppliers as $s)
+                                @foreach($trainingPlans as $tp)
                                 <tr>
-                                    <td>{{ $s->supplier_name }}</td>
-                                    <td class="text-center">{{ $s->subject }}</td>
-                                    <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
-                                    <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>
-                                    <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
+                                    <td class="text-center">{{ $tp->name }}</td>
+                                    <td class="text-center">{{ $tp->type }}</td>
+                                    <td class="text-center">{{ $tp->description }}</td>
+                                    <td class="text-center">{{ $tp->num_of_employees }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($tp->training_date)) }} u {{ date('H:i', strtotime($tp->training_date)) }}, {{ $tp->place }}</td>
+                                    <td class="text-center">{{ $tp->resources }}</td>
+                                    <td class="text-center">{{ $tp->final_num_of_employees == null ? "/" : $tp->final_num_of_employees }}</td>
+                                    <td class="text-center">{{ $tp->rating == null ? "/" : $tp->rating }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">
+                                        <a href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
