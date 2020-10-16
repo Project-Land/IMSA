@@ -25,7 +25,7 @@ class InternalCheckController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {   
         return view('system_processes.internal_check.create');
     }

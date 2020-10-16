@@ -20,17 +20,17 @@
         <h2 class="mx-auto text-center">{{'Plan IP - '.$planIp->name}}</h2>
         <div class="form-group">
             <label for="checked_date">Termin provere</label>
-            <input type="text" class="form-control" id="checked_date" placeholder="" name="checked_date" value="{{$planIp->internalCheck->date}}">
+            <input type="text" class="form-control" id="checked_date" placeholder="" name="checked_date" value="{{$planIp->internalCheck->date}}" readonly>
         </div>
 
         <div class="form-group">
             <label for="checked_sector">Sektor</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector}}">
+            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector}}" readonly>
         </div>
 
         <div class="form-group">
             <label for="team_for_internal_check">Tim za proveru</label>
-            <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}">
+            <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}" readonly>
         </div>
 
     

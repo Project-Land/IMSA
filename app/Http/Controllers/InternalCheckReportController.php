@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inconsistency;
 use Illuminate\Http\Request;
 use App\Models\InternalCheck;
 use App\Models\InternalCheckReport;
+use App\Models\Recommendation;
 
 class InternalCheckReportController extends Controller
 {
@@ -33,16 +35,54 @@ class InternalCheckReportController extends Controller
      */
     public function store(Request $request)
     {
-       /* $validatedData = $request->validate([
-            'date' => 'required',
-            'sector' => 'required',
-            'leaders' => 'required',
-            'standard_id' => 'required',
-        ]);*/
+        $validatedData = $request->validate([
+            
+            'internal_check_id' => 'required',
+            'specification' => 'required'
+            
+        ]);
+
+        $recommendationData = $request->validate([
+
+            'newInputRecommendation1' => 'string',
+            'newInputRecommendation2' => 'string',
+            'newInputRecommendation3' => 'string',
+            'newInputRecommendation4' => 'string'       
+            
+        ]);
+
+        $InconsistencyData = $request->validate([
+            'newInput1' => 'string',
+            'newInput2' => 'string',
+            'newInput3' => 'string',
+            'newInput4' => 'string',
+            'newInput4' => 'string'
+            
+        ]);
+
+    
+
+        $report=InternalCheckReport::create($validatedData);
+
+        foreach( $InconsistencyData as $inc){
+            if($inc === "")continue;
+            $inconsistency=new Inconsistency();
+            $inconsistency->description=$inc;
+            $report->inconsistencies()->save($inconsistency);
+        }
+        foreach( $recommendationData as $rec){
+            if($rec === "")continue;
+            $recommendation=new Recommendation();
+            $recommendation->description=$rec;
+            $report->recommendations()->save($recommendation);
+        }
+
+        $internalCheck=InternalCheck::findOrFail($validatedData['internal_check_id']);
+        $report->internalCheck()->save( $internalCheck);
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
         
-        return redirect('/internal-check-report');
+        return redirect('/internal-check');
     }
 
     /**
@@ -53,7 +93,8 @@ class InternalCheckReportController extends Controller
      */
     public function show($id)
     {
-        //
+       $report=InternalCheckReport::findOrfail($id);
+       echo $report;
     }
 
     /**
@@ -78,8 +119,7 @@ class InternalCheckReportController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'sector' => 'required',
-            'leaders' => 'required',
+            'specification' => 'required',
             'standard_id' => 'required',
         ]);
         
@@ -88,7 +128,7 @@ class InternalCheckReportController extends Controller
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
         
-        return redirect('/internal-check-report');
+        return redirect('/internal-check');
     }
     
 

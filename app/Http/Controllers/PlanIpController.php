@@ -46,7 +46,8 @@ class PlanIpController extends Controller
      */
     public function show($id)
     {
-        //
+        $plan_ip=PlanIp::findOrFail($id);
+        echo $plan_ip;
     }
 
     /**
