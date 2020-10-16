@@ -26,7 +26,21 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
+                    <div class="row">
+                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a></div>
+                        <div class="col-sm-8">
+                            <form class="form-inline" action="{{ route('goals.filter-year') }}" method="POST">
+                                @csrf
+                                <label for="year" class="mr-3">Godina</label>
+                                <select name="year" id="year" class="form-control w-25 mr-2">
+                                    @foreach($years as $year)
+                                        <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary">Primeni</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">

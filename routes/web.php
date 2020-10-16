@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('internal-check', InternalCheckController::class);
     Route::resource('goals', GoalsController::class);
+    Route::post('goals', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
 
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
