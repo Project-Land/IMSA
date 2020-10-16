@@ -129,7 +129,10 @@ class StakeholdersController extends Controller
      */
     public function destroy($id)
     {
-        Stakeholder::destroy($id);
-        return back()->with('status', 'Zainteresovana strana je uspešno uklonjena');
+        if(Stakeholder::destroy($id)){
+            return back()->with('status', 'Zainteresovana strana je uspešno uklonjena');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

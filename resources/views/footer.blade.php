@@ -8,6 +8,6 @@
             </ul>
             <br>
         </div>
-        <div class="pt-1 md:flex md:items-center md:justify-center"><p class="text-white">@ IMSA {{ date('Y') }}</p></div>
+        <div class="pt-1 md:flex md:items-center md:justify-center"><p class="text-white">IMSA © Copyright {{ date('Y') }}</p></div>
     </div>
 </nav>

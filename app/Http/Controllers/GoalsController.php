@@ -20,7 +20,7 @@ class GoalsController extends Controller
         }
 
         $years = range(2010, date('Y') + 10);
-        $goals = Goal::all();
+        $goals = Goal::where('standard_id', $standardId)->get();
         return view('system_processes.goals.index', ['goals' => $goals, 'years' => $years]);
     }
 
@@ -33,7 +33,7 @@ class GoalsController extends Controller
 
         $year = $request->year;
         $years = range(2010, date('Y') + 10);
-        $goals = Goal::where('year', $year)->get();
+        $goals = Goal::where('year', $year)->where('standard_id', $standardId)->get();
         return view('system_processes.goals.index', compact('goals', 'years'));
     }
 
@@ -77,8 +77,8 @@ class GoalsController extends Controller
      */
     public function edit($id)
     {
-        $goal=Goal::findOrFail($id);
-        return view('system_processes.goals.edit',['goal'=>$goal]);
+        $goal = Goal::findOrFail($id);
+        return view('system_processes.goals.edit', ['goal' => $goal]);
     }
 
     /**

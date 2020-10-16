@@ -31,7 +31,7 @@
                 <a class="dropdown-item" href="/goals">Ciljevi</a>
                 <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
                 <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
-                <a class="dropdown-item" href="#">Upravljanje reklamacijama</a>
+                <a class="dropdown-item" href="/complaints">Upravljanje reklamacijama</a>
             </div>
         </div>
 

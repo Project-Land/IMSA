@@ -110,7 +110,10 @@ class SectorsController extends Controller
      */
     public function destroy($id)
     {
-        Sector::destroy($id);
-        return back()->with('status', 'Sektor je uspešno uklonjen');
+        if(Sector::destroy($id)){
+            return back()->with('status', 'Sektor je uspešno uklonjen');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

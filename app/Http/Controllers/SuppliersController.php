@@ -146,7 +146,10 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
-        Supplier::destroy($id);
-        return back()->with('status', 'Odobreni isporučilac je uspešno uklonjen');
+        if(Supplier::destroy($id)){
+            return back()->with('status', 'Odabrani isporučilac je uspešno uklonjen');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

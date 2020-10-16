@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignPlanIpsIdOnInternalChecks extends Migration
+class AddStandardIdToTrainingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddForeignPlanIpsIdOnInternalChecks extends Migration
      */
     public function up()
     {
-        Schema::table('internal_checks', function (Blueprint $table) {
-            $table->foreign('plan_ip_id')->references('id')->on('plan_ips');
+        Schema::table('trainings', function (Blueprint $table) {
+            $table->unsignedBigInteger('standard_id');
+            $table->foreign('standard_id')->references('id')->on('standards');
         });
     }
-    
 
     /**
      * Reverse the migrations.
@@ -26,6 +26,8 @@ class AddForeignPlanIpsIdOnInternalChecks extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('internal_checks_plan_ip_id_foreign');
+        Schema::table('trainings', function (Blueprint $table) {
+            //
+        });
     }
 }

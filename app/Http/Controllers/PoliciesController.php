@@ -153,8 +153,11 @@ class PoliciesController extends Controller
      */
     public function destroy($id)
     {
-        Document::destroy($id);
-        //logic for deleting the file from the server
-        return back()->with('status', 'Dokument je uspešno uklonjen');
+        if(Document::destroy($id)){
+            //logic for deleting the file from the server
+            return back()->with('status', 'Dokument je uspešno uklonjen');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

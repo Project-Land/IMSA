@@ -137,8 +137,11 @@ class RiskManagementController extends Controller
      */
     public function destroy($id)
     {
-        RiskManagement::destroy($id);
-        return back()->with('status', 'Rizik / plan je uspešno uklonjen');
+        if(RiskManagement::destroy($id)){
+            return back()->with('status', 'Rizik / plan je uspešno uklonjen');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 
     public function editPlan($id)

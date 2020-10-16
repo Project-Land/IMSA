@@ -13,7 +13,7 @@
 
     <div class="mx-auto w-75 mt-10 bg-secondary p-10 rounded">
 
-		<form action="{{route('goals.store')}}" method="POST" enctype="multipart/form-data">
+		<form action="{{ route('goals.store') }}" method="POST" enctype="multipart/form-data">
 			
 			
 			

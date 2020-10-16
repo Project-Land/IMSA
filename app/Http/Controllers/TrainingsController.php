@@ -20,7 +20,7 @@ class TrainingsController extends Controller
         }
 
         $years = range(2010, date('Y') + 10);
-        $trainingPlans = Training::all();
+        $trainingPlans = Training::where('standard_id', $standardId)->get();
         return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
     }
 
@@ -33,7 +33,7 @@ class TrainingsController extends Controller
 
         $year = $request->year;
         $years = range(2010, date('Y') + 10);
-        $trainingPlans = Training::where('year', $year)->get();
+        $trainingPlans = Training::where('year', $year)->where('standard_id', $standardId)->get();
         return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
     }
 
@@ -78,6 +78,7 @@ class TrainingsController extends Controller
             'training_date' => 'required'
         ], $messages);
 
+        $trainingPlan->standard_id = $this::getStandard();
         $trainingPlan->name = $request->name;
         $trainingPlan->description = $request->description;
         $trainingPlan->year = $request->year;

@@ -174,7 +174,10 @@ class CorrectiveMeasuresController extends Controller
      */
     public function destroy($id)
     {
-        CorrectiveMeasure::destroy($id);
-        return back()->with('status', 'Neusaglašenost / korektivna mera je uspešno uklonjena');
+        if(CorrectiveMeasure::destroy($id)){
+            return back()->with('status', 'Neusaglašenost / korektivna mera je uspešno obrisana');
+        }else{
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

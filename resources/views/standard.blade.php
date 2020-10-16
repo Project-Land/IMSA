@@ -48,7 +48,7 @@
                     <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/goals">Ciljevi</a></div>
                     <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/suppliers">Odabrani isporučioci</a></div>
                     <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/stakeholders">Zainteresovane strane</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/">Upravljanje reklamacijama</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/complaints">Upravljanje reklamacijama</a></div>
                 </div>
             </div>
         </div>
