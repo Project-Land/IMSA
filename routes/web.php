@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\GoalsController;
@@ -16,7 +14,7 @@ use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
-
+use App\Http\Controllers\TrainingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +36,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
 
+    Route::resource('sectors', SectorsController::class);
+
     Route::resource('internal-check', InternalCheckController::class);
     Route::resource('goals', GoalsController::class);
+    Route::post('goals', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
 
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
@@ -48,11 +49,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('corrective-measures', CorrectiveMeasuresController::class);
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
-    Route::resource('sectors', SectorsController::class);
-
+    Route::resource('trainings', TrainingsController::class);
+    Route::post('trainings', [TrainingsController::class, 'filterYear'])->name('trainings.filter-year');
 
     Route::resource('plan-ip', PlanIpController::class);
 
     Route::resource('internal-check-report', InternalCheckReportController::class);
-Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
+    Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
 });

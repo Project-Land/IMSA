@@ -2,8 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standard') }} {{session('standard_name')}}
-           
+            {{ session('standard_name') }} - {{ __('Godišnji plan obuke') }}
         </h2>
     </x-slot>
 
@@ -27,9 +26,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a></div>
+                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a></div>
                         <div class="col-sm-8">
-                            <form class="form-inline" action="{{ route('goals.filter-year') }}" method="POST">
+                            <form class="form-inline" action="{{ route('trainings.filter-year') }}" method="POST">
                                 @csrf
                                 <label for="year" class="mr-3">Godina</label>
                                 <select name="year" id="year" class="form-control w-25 mr-2">
@@ -48,38 +47,39 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Godina</th>
-                                    <th>Cilj</th>
-                                    <th>KPI</th>
-                                    <th>Potrebne aktivnosti za realizaciju cilja</th>
-                                    <th>Odgovornost za praćenje i realizaciju cilja</th>
-                                    <th>Rok za realizaciju</th>
-                                    <th>Potrebni resursi</th>
-                                    <th>Analiza ispunjenosti cilja</th>
+                                    <th>Naziv</th>
+                                    <th>Vrsta</th>
+                                    <th>Opis</th>
+                                    <th>Br. zaposlenih</th>
+                                    <th>Termin / Mesto</th>
+                                    <th>Resursi</th>
+                                    <th>Br. zaposlenih - realizovano</th>
+                                    <th>Ocena efekata obuke</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($goals as $goal)
+                                @foreach($trainingPlans as $tp)
                                 <tr>
-                                    <td>{{ $goal->year }}</td>
-                                    <td>{{ $goal->goal }}</td>
-                                    <td>{{ $goal->kpi }}</td>
-                                    <td>{{ $goal->activities }}</td>
-                                    <td>{{ $goal->responsibility }}</td>
-                                    <td>{{ $goal->deadline }}</td>
-                                    <td>{{ $goal->resources }}</td>
-                                    <td class="text-center">{{ $goal->analysis }}</td>
+                                    <td class="text-center">{{ $tp->year }}</td>
+                                    <td class="text-center">{{ $tp->name }}</td>
+                                    <td class="text-center">{{ $tp->type }}</td>
+                                    <td class="text-center">{{ $tp->description }}</td>
+                                    <td class="text-center">{{ $tp->num_of_employees }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($tp->training_date)) }} u {{ date('H:i', strtotime($tp->training_date)) }}, {{ $tp->place }}</td>
+                                    <td class="text-center">{{ $tp->resources }}</td>
+                                    <td class="text-center">{{ $tp->final_num_of_employees == null ? "/" : $tp->final_num_of_employees }}</td>
+                                    <td class="text-center">{{ $tp->rating == null ? "/" : $tp->rating }}</td>
                                     <td class="text-center">
-                                    <button class="button" id="open_modal_button"><i class="fas fa-eye"></i></button>
-                                        <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
+                                        <a href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>   
-                            @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -93,7 +93,7 @@
 </x-app-layout>
 
 <script>
-    $('.yajra-datatable').DataTable({
+    let table = $('.yajra-datatable').DataTable({
         "language": {
             "info": "Prikaz strane _PAGE_ od _PAGES_",
             "infoEmpty": "Nema podataka",

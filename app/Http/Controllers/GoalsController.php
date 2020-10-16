@@ -14,8 +14,27 @@ class GoalsController extends Controller
      */
     public function index()
     {
-        $goals=Goal::all();
-        return view('system_processes.goals.index',['goals'=>$goals]);
+        $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
+
+        $years = range(2010, date('Y') + 10);
+        $goals = Goal::all();
+        return view('system_processes.goals.index', ['goals' => $goals, 'years' => $years]);
+    }
+
+    public function filterYear(Request $request)
+    {
+        $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
+
+        $year = $request->year;
+        $years = range(2010, date('Y') + 10);
+        $goals = Goal::where('year', $year)->get();
+        return view('system_processes.goals.index', compact('goals', 'years'));
     }
 
     /**
