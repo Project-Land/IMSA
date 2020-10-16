@@ -12,7 +12,7 @@ use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
-
+use App\Http\Controllers\TrainingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
 
+    Route::resource('sectors', SectorsController::class);
+
     Route::resource('internal-check', InternalCheckController::class);
     Route::resource('goals', GoalsController::class);
 
@@ -44,7 +46,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('corrective-measures', CorrectiveMeasuresController::class);
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
-    Route::resource('sectors', SectorsController::class);
-
+    Route::resource('trainings', TrainingsController::class);
 
 });
