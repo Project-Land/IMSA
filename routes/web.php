@@ -51,7 +51,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
     Route::resource('trainings', TrainingsController::class);
-    Route::post('trainings/filter-year', [TrainingsController::class, 'filterYear'])->name('trainings.filter-year');
+    Route::post('trainings/get-data', [TrainingsController::class, 'getData']);
+    Route::delete('trainings/delete/{id}', [TrainingsController::class, 'deleteApi']);
     Route::resource('complaints', ComplaintsController::class);
 
     Route::resource('plan-ip', PlanIpController::class);

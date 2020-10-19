@@ -20,21 +20,17 @@ class TrainingsController extends Controller
         }
 
         $years = range(2010, date('Y') + 10);
-        $trainingPlans = Training::where('standard_id', $standardId)->get();
+        $trainingPlans = Training::where('standard_id', $standardId)->where('year', date('Y'))->get();
         return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
     }
 
-    public function filterYear(Request $request)
-    {
+    public function getData(Request $request) {
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
-
-        $year = $request->year;
-        $years = range(2010, date('Y') + 10);
-        $trainingPlans = Training::where('year', $year)->where('standard_id', $standardId)->get();
-        return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
+        $trainingPlans = Training::where('standard_id', $standardId)->where('year', $request->data['year'])->get();
+        return response()->json($trainingPlans);
     }
 
     /**
@@ -176,5 +172,11 @@ class TrainingsController extends Controller
     {
         Training::destroy($id);
         return back()->with('status', 'Godišnji plan obuke je uspešno uklonjen');
+    }
+
+    public function deleteApi($id)
+    {
+        Training::destroy($id);
+        return true;
     }
 }
