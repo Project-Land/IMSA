@@ -31,6 +31,8 @@
         <script src="https://kit.fontawesome.com/f94836499c.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
+        <script src="{{ asset('js/app.js') }}"></script>
+
         <style>
             .dropdown-menu {
                 position: static;
@@ -74,7 +76,6 @@
         @livewireScripts
 
         @include('footer')
-
         
     </body>
 </html>

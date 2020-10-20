@@ -29,5 +29,6 @@ class AddForeignPlanIpsIdOnInternalChecks extends Migration
     {
         
        
+        //Schema::dropForeign('internal_checks_plan_ip_id_foreign');
     }
 }
