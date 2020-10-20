@@ -46,7 +46,7 @@ class ComplaintsController extends Controller
         $messages = array(
             'name.required' => 'Unesite oznaku reklamacije',
             'name.max' => 'Oznaka može sadržati najviše 190 karaktera',
-            'desription.required' => 'Unesite opis reklamacije',
+            'description.required' => 'Unesite opis reklamacije',
             'submission_date.required' => 'Unesite datum podnošenja reklamacije',
             'process.required' => 'Unesite proces na koji se reklamacija odnosi',
             'process.max' => 'Polje može sadržati najviše 190 karaktera',

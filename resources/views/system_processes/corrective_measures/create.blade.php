@@ -29,7 +29,14 @@
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
-				<input type="text" class="form-control" id="noncompliance_source" name="noncompliance_source" value="{{ old('noncompliance_source') }}">
+				<select class="form-control" name="noncompliance_source" id="noncompliance_source">
+					<option value="">Izaberi...</option>
+					<option value="Eksterna provera" {{ old('noncompliance_source') == "Eksterna provera" ? "selected" : "" }}>Eksterna provera</option>
+					<option value="Interna provera" {{ old('noncompliance_source') == "Interna provera" ? "selected" : "" }}>Interna provera</option>
+					<option value="Preispitivanje ISM-a" {{ old('noncompliance_source') == "Preispitivanje ISM-a" ? "selected" : "" }}>Preispitivanje ISM-a</option>
+					<option value="Žalba" {{ old('noncompliance_source') == "Žalba" ? "selected" : "" }}>Žalba</option>
+					<option value="Ostalo" {{ old('noncompliance_source') == "Ostalo" ? "selected" : "" }}>Ostalo</option>
+				</select>
 				@error('noncompliance_source')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror

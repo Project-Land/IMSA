@@ -15,9 +15,10 @@ use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\TrainingsController;
-use App\Http\Controllers\ComplaintsCOntroller;
+use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\InconsistenciesController;
 use App\Http\Controllers\RecommendationsController;
+use App\Http\Controllers\ManagementSystemReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
     Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
-   
+
     Route::resource('corrective-measures', CorrectiveMeasuresController::class);
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
@@ -62,5 +63,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
     Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
-
+    Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
 });

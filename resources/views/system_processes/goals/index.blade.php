@@ -70,7 +70,7 @@
                                     <td>{{ $goal->resources }}</td>
                                     <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
-                                    <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
                                         <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
@@ -119,7 +119,7 @@
             .then((response) => {
                 let modal = `<div class="modal" id="showData" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content rounded-0">
                                         <div class="modal-header text-center">
                                             <h5 class="modal-title font-weight-bold">${ response.data.goal }</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -145,7 +145,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>

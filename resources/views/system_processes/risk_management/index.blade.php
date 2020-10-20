@@ -49,16 +49,17 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center">{{ ($risk->measure)? $risk->measure : '/' }}</td>
-                                    <td class="text-center">
+                                    <td class="text-center">{{ ($risk->measure) ? : '/' }}
                                         @if($risk->measure)
                                             <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
                                         @endif
+                                    </td>
+                                    <td class="text-center">
                                         <a href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>   
