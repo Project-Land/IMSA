@@ -37,7 +37,7 @@ class InternalCheckReportController extends Controller
     {
         $validatedData = $request->validate([
             
-            'internal_check_id' => 'required',
+            
             'specification' => 'required'
             
         ]);
@@ -76,9 +76,9 @@ class InternalCheckReportController extends Controller
             $recommendation->description=$rec;
             $report->recommendations()->save($recommendation);
         }
-
-        $internalCheck=InternalCheck::findOrFail($validatedData['internal_check_id']);
-        $report->internalCheck()->save( $internalCheck);
+        $report->refresh();
+        $internalCheck=InternalCheck::findOrFail($request->internal_check_id);
+        $report->internalCheck()->save($internalCheck);
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
         
@@ -93,7 +93,7 @@ class InternalCheckReportController extends Controller
      */
     public function show($id)
     {
-       $report=InternalCheckReport::findOrfail($id);
+       $report=InternalCheckReport::where('id',$id)->with('recommendations','inconsistencies')->get();
        echo $report;
     }
 
@@ -105,8 +105,9 @@ class InternalCheckReportController extends Controller
      */
     public function edit($id)
     {
-        $internal_check_report=InternalCheckReport::findOrFail($id);
-        return view('system_processes.internal_check_report.create',['internalCheckReport'=>$internal_check_report]);
+        $internal_check_report=InternalCheckReport::where('id',$id)->with('internalCheck','recommendations','inconsistencies')->get();
+        $internal_check_report=$internal_check_report[0];
+        return view('system_processes.internal_check_report.edit',['internalCheckReport'=>$internal_check_report]);
     }
 
     /**
@@ -120,11 +121,89 @@ class InternalCheckReportController extends Controller
     {
         $validatedData = $request->validate([
             'specification' => 'required',
-            'standard_id' => 'required',
+            //'standard_id' => 'required',
         ]);
-        
+
+        $inconsistenciesData = $request->validate([
+
+            'inconsistencies.*' => 'string',
+           
+        ]);
+
+        $recommendationsData = $request->validate([  
+
+            'recommendations.*' => 'string',
+          
+        ]);
+
         $internal_check_report=InternalCheckReport::findOrfail($id);
         $internal_check_report->update($validatedData);
+
+        $newInconsistenciesData = $request->validate([
+
+            'newInput1' => 'string',
+            'newInput2' => 'string',
+            'newInput3' => 'string',
+            'newInput4' => 'string',
+          
+        ]);
+
+        $newRecommendationsData = $request->validate([
+
+            'newInputRecommendation1' => 'string',
+            'newInputRecommendation2' => 'string',
+            'newInputRecommendation3' => 'string',
+            'newInputRecommendation4' => 'string',
+           
+           
+        ]);
+        
+        if(isset($inconsistenciesData['inconsistencies'])){
+            $incs=$internal_check_report->inconsistencies;
+            foreach($incs as $i){
+                if(!in_array($i->id, array_keys($inconsistenciesData['inconsistencies']))){
+                    $i->delete();
+                }
+            }
+        foreach($inconsistenciesData['inconsistencies'] as $k=>$v){
+    
+            $inc=Inconsistency::findOrFail($k);
+            $inc->description=$v;
+            $internal_check_report->inconsistencies()->save($inc);
+        }
+    }
+
+    if(isset($recommendationsData['recommendations'])){
+
+        $recs=$internal_check_report->recommendations;
+        foreach($recs as $r){
+            if(!in_array($r->id, array_keys($recommendationsData['recommendations']))){
+                $r->delete();
+            }
+        }
+        foreach($recommendationsData['recommendations'] as $k=>$v){
+    
+            $rec=Recommendation::findOrFail($k);
+            $rec->description=$v;
+            $internal_check_report->recommendations()->save($rec);
+        }
+    }
+        foreach($newInconsistenciesData as $v){
+    
+            $inc=new Inconsistency();
+            $inc->description=$v;
+            $internal_check_report->inconsistencies()->save($inc);
+        }
+
+        foreach($newRecommendationsData as $v){
+    
+            $rec=new Recommendation();
+            $rec->description=$v;
+            $internal_check_report->recommendations()->save($rec);
+        }
+
+        
+
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
         

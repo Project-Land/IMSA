@@ -16,6 +16,8 @@ use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsCOntroller;
+use App\Http\Controllers\InconsistenciesController;
+use App\Http\Controllers\RecommendationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,5 +59,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('plan-ip', PlanIpController::class);
     Route::resource('internal-check-report', InternalCheckReportController::class);
     Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
+    Route::resource('inconsistencies', InconsistenciesController::class);
+    Route::resource('recommendations', RecommendationsController::class);
 
 });

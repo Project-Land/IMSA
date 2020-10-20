@@ -23,7 +23,7 @@ class CreateInternalChecksTable extends Migration
             $table->unsignedBigInteger('internal_check_report_id')->nullable();
             $table->timestamps();
             $table->foreign('standard_id')->references('id')->on('standards');
-            $table->foreign('internal_check_report_id')->references('id')->on('internal_checks');
+           
         });
     }
 

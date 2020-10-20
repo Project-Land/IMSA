@@ -17,7 +17,7 @@
 			@csrf
         <div class="form-group">
             <label for="date">Termin provere</label>
-            <input type="datetime-local" class="form-control" id="date" placeholder="" name="date">
+            <input type="text" class="form-control" id="date" placeholder="" name="date">
         </div>
 
         <div class="form-group">
@@ -48,6 +48,21 @@
         </form>
     </div>
 
-    
+    <script>
+   	$('#date').datetimepicker();
+
+	$('#status').change( () => {
+		if($('#status').val() == 1){
+			$('#final_num_field').css('display', '');
+			$('#rating_field').css('display', '');
+		}
+		else{
+			$('#final_num_field').css('display', 'none');
+			$('#rating_field').css('display', 'none');
+			$('#final_num_of_employees').val('');
+			$('#rating').val('');
+		}
+	})
+</script>
 
 </x-app-layout>

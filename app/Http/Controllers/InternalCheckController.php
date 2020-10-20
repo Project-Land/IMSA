@@ -91,6 +91,7 @@ class InternalCheckController extends Controller
             'sector' => 'required',
             'leaders' => 'required',
             'standard_id' => 'required',
+            'date'=> 'required|date'
         ]);
         
         $internal_check=InternalCheck::findOrfail($id);

@@ -37,17 +37,17 @@
        
         <div class="form-group">
             <label for="check_start">Početak provere</label>
-            <input type="datetime-local" class="form-control" id="check_start" placeholder="" name="check_start">
+            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start">
         </div>
 
         <div class="form-group">
             <label for="check_end">Završetak provere</label>
-            <input type="datetime-local" class="form-control" id="check_end" placeholder="" name="check_end">
+            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end">
         </div>
 
         <div class="form-group">
             <label for="report_deadline">Rok za dostavljanje izveštaja</label>
-            <input type="datetime-local" class="form-control" id="report_deadline" placeholder="" name="report_deadline">
+            <input type="text" class="form-control" id="report_deadline" placeholder="" name="report_deadline">
         </div>
 
         
@@ -56,6 +56,24 @@
         </form>
     </div>
 
-    
+    <script>
+        $('#check_start').datetimepicker();
+        $('#check_end').datetimepicker();
+        $('#report_deadline').datetimepicker();
+
+        $('#status').change( () => {
+            if($('#status').val() == 1){
+                $('#final_num_field').css('display', '');
+                $('#rating_field').css('display', '');
+            }
+            else{
+                $('#final_num_field').css('display', 'none');
+                $('#rating_field').css('display', 'none');
+                $('#final_num_of_employees').val('');
+                $('#rating').val('');
+            }
+        })
+
+    </script>
 
 </x-app-layout>

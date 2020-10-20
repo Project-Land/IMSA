@@ -46,7 +46,7 @@
                             <tbody>
                             @foreach($internal_checks as $check)
                                 <tr>
-                                    <td>{{ $check->date }}</td>
+                                    <td>{{ implode("/",array_reverse(explode("-",$check->date))) }}</td>
                                     <td>{{ $check->sector }}</td>
                                     <td>{{ $check->leaders }}</td>
                                     <td>{{ $check->standard->name }}</td>
@@ -56,7 +56,7 @@
                                       
                                     <a href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
                                     @else
-                                    <span id="planIp.show" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
+                                    <span class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
                                     <a href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                     <form class="inline" action="{{ route('plan-ip.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
@@ -79,7 +79,7 @@
                                       
                                    
                                     @else
-                                    <span id="report.show" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
+                                    <span class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
                             
                                     <a href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
@@ -146,12 +146,14 @@
     const planIpShow=document.getElementById('planIp.show');
     const reportShow=document.getElementById('report.show');
     
-    const urlIp=planIpShow.dataset.url;
-    const urlReport=reportShow.dataset.url;
+    
+    
     
    
 
     const planIpShowAjax=function(){
+        const urlIp=this.dataset.url;
+        if (typeof modal !== 'undefined') modal.remove();
         $.ajax({url: urlIp, success: function(result){
         const data=JSON.parse(result);
         const modal=`
@@ -164,12 +166,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Termin provere: ${data.checked_date}</p>
+        <p>Termin provere: ${new Date(data.checked_date).toLocaleString('sr-SR',{ timeZone: 'CET' })}</p>
         <p>Sektor: ${data.checked_sector}</p>
         <p>Tim za proveru: ${data.team_for_internal_check}</p>
-        <p>Početak provere: ${data.check_start}</p>
-        <p>Završetak provere: ${data.check_end}</p>
-        <p>Rok za dostavljanje izveštaja: ${data.report_deadline}</p>
+        <p>Početak provere: ${new Date(data.check_start).toLocaleString('sr-SR',{ timeZone: 'CET' })}</p>
+        <p>Završetak provere: ${new Date(data.check_end).toLocaleString('sr-SR',{ timeZone: 'CET' })}</p>
+        <p>Rok za dostavljanje izveštaja: ${new Date(data.report_deadline).toLocaleString('sr-SR',{ timeZone: 'CET' })} </p>
         <small> kreirano: ${new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' })} </small>
       </div>
       <div class="modal-footer">
@@ -193,9 +195,12 @@ $("#modal").modal('show');
 
 
     const reportShowAjax=function(){
+        const urlReport=this.dataset.url;
+        if (typeof modal !== 'undefined') modal.remove();
         $.ajax({url: urlReport, success: function(result){
-        const data=JSON.parse(result);
-        const modal=`
+        let data=JSON.parse(result);
+        data=data[0];
+        let modal=`
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -205,7 +210,19 @@ $("#modal").modal('show');
         </button>
       </div>
       <div class="modal-body">
-        <p><h2>Specifikacija: </h2>${data.specification}</p>
+      <p><h2>Specifikacija: </h2>${data.specification}</p>`;
+      let num=1;
+      for( let inc of data.inconsistencies){
+        modal+=`<p><h3>Neusaglašenost ${num}: </h3>${inc.description}</p>`;
+        num++;
+      }
+
+        num=1;
+      for( let rec of data.recommendations){
+        modal+=`<p><h3>Preporuka ${num}: </h3>${rec.description}</p>`;
+        num++;
+      }
+       modal+=`
         <small> kreirano: ${new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' })} </small>
       </div>
       <div class="modal-footer">
@@ -228,6 +245,12 @@ $("#modal").modal('show');
     }
 
 
-    planIpShow.addEventListener('click',planIpShowAjax);
-    reportShow.addEventListener('click',reportShowAjax);
+    for(plan of document.querySelectorAll('.planIpshow')){
+    plan.addEventListener('click',planIpShowAjax);
+    }
+
+    for(report of document.querySelectorAll('.reportShow')){
+    report.addEventListener('click',reportShowAjax);
+    }
+   
 </script>

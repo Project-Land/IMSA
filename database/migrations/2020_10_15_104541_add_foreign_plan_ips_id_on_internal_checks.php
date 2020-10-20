@@ -15,6 +15,7 @@ class AddForeignPlanIpsIdOnInternalChecks extends Migration
     {
         Schema::table('internal_checks', function (Blueprint $table) {
             $table->foreign('plan_ip_id')->references('id')->on('plan_ips');
+            $table->foreign('internal_check_report_id')->references('id')->on('internal_check_reports');
         });
     }
     
@@ -26,6 +27,7 @@ class AddForeignPlanIpsIdOnInternalChecks extends Migration
      */
     public function down()
     {
-        Schema::dropForeign('internal_checks_plan_ip_id_foreign');
+        
+       
     }
 }

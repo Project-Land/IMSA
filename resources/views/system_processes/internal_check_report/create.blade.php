@@ -223,23 +223,6 @@ let coun=1;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     inconsistencies.addEventListener('change', addInput);
     recommendations.addEventListener('change', addInputRecommedation);
         
