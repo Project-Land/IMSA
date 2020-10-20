@@ -49,7 +49,7 @@
                                         <form class="inline" action="{{ route('stakeholders.destroy', $s->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>   

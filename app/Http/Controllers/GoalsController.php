@@ -55,7 +55,43 @@ class GoalsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $goal = new Goal();
+
+        $messages = array(
+            'responsibility.required' => 'Unesite odgovornost',
+            'responsibility.max' => 'Polje može sadržati najviše 190 karaktera',
+            'goal.required' => 'Unesite cilj',
+            'goal.max' => 'Polje može sadržati najviše 190 karaktera',
+            'deadline.required' => 'Unesite rok za realizaciju',
+            'kpi.required' => 'Unesite KPI',
+            'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
+            'resources.required' => 'Unesite resurse',
+            'resources.max' => 'Polje može sadržati najviše 190 karaktera',
+            'activities.required' => 'Unesite aktivnosti'
+        );
+
+        $validatedData = $request->validate([
+            'responsibility' => 'required|max:190',
+            'goal' => 'required|max:190',
+            'deadline' => 'required',
+            'kpi' => 'required|max:190',
+            'resources' => 'required|max:190',
+            'activities' => 'required'
+        ], $messages);
+
+        $goal->standard_id = $this::getStandard();
+        $goal->year = $request->year;
+        $goal->responsibility = $request->resources;
+        $goal->goal = $request->goal;
+        $goal->deadline = $request->deadline;
+        $goal->kpi = $request->kpi;
+        $goal->resources = $request->resources;
+        $goal->activities = $request->activities;
+        $goal->analysis = $request->analysis != null ? $request->analysis : null;
+
+        $goal->save();
+        $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
+        return redirect('/goals');
     }
 
     /**
@@ -90,7 +126,43 @@ class GoalsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $goal = Goal::findOrFail($id);
+
+        $messages = array(
+            'responsibility.required' => 'Unesite odgovornost',
+            'responsibility.max' => 'Polje može sadržati najviše 190 karaktera',
+            'goal.required' => 'Unesite cilj',
+            'goal.max' => 'Polje može sadržati najviše 190 karaktera',
+            'deadline.required' => 'Unesite rok za realizaciju',
+            'kpi.required' => 'Unesite KPI',
+            'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
+            'resources.required' => 'Unesite resurse',
+            'resources.max' => 'Polje može sadržati najviše 190 karaktera',
+            'activities.required' => 'Unesite aktivnosti'
+        );
+
+        $validatedData = $request->validate([
+            'responsibility' => 'required|max:190',
+            'goal' => 'required|max:190',
+            'deadline' => 'required',
+            'kpi' => 'required|max:190',
+            'resources' => 'required|max:190',
+            'activities' => 'required'
+        ], $messages);
+
+        $goal->standard_id = $this::getStandard();
+        $goal->year = $request->year;
+        $goal->responsibility = $request->resources;
+        $goal->goal = $request->goal;
+        $goal->deadline = $request->deadline;
+        $goal->kpi = $request->kpi;
+        $goal->resources = $request->resources;
+        $goal->activities = $request->activities;
+        $goal->analysis = $request->analysis != null ? $request->analysis : null;
+
+        $goal->save();
+        $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
+        return redirect('/goals');
     }
 
     /**

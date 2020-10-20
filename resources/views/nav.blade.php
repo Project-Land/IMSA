@@ -2,10 +2,10 @@
 
     <div class="col">
 
-        <a type="button" href="/" class="btn btn-secondary text-white col-sm-12 col-md-2 mb-1">Standardi</a>
+        <a type="button" href="/" class="btn btn-secondary rounded-0 text-white col-sm-10 col-md-2 mb-1">Standardi</a>
 
         <div class="btn-group col-sm-12 col-md-2 mb-1">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-secondary dropdown-toggle rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dokumentacija
             </button>
             <div class="dropdown-menu">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="btn-group col-sm-12 col-md-2 mb-1">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-secondary dropdown-toggle rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sistemski procesi
             </button>
             <div class="dropdown-menu">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="btn-group col-sm-12 col-md-2 mb-1">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-secondary dropdown-toggle rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sektori
             </button>
             <div class="dropdown-menu">

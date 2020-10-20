@@ -19,7 +19,6 @@ class CreateCorrectiveMeasuresTable extends Migration
             $table->unsignedBigInteger('standard_id');
             $table->string('noncompliance_source');
             $table->unsignedBigInteger('sector_id');
-            $table->string('noncompliance_org_unit');
             $table->text('noncompliance_description');
             $table->text('noncompliance_cause');
             $table->date('noncompliance_cause_date');
