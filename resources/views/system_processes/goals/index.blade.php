@@ -70,7 +70,7 @@
                                     <td>{{ $goal->resources }}</td>
                                     <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
-                                    <button class="button" id="open_modal_button"><i class="fas fa-eye"></i></button>
+                                    <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
                                         <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
@@ -112,5 +112,49 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+    });
+
+    function showGoal(id){
+        axios.get('/goals/'+id)
+            .then((response) => {
+                let modal = `<div class="modal" id="showData" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h5 class="modal-title font-weight-bold">${ response.data.goal }</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Godina</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.year }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>KPI</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.kpi }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Aktivnosti</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.activities }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Analzia</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $("body").append(modal);
+                $('#showData').modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 </script>

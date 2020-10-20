@@ -92,7 +92,6 @@
     }); 
 
     function showMeasure(id){
-        console.log(id);
         axios.get('/corrective-measures/'+id)
             .then((response) => {
                 let modal = `<div class="modal" id="showData" tabindex="-1" role="dialog">

@@ -81,7 +81,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="analysis">Analiza</label>
-                    <textarea rows="10" style="height:200px;" class="form-control" name="analysis" id="analysis" {{ $goal->deadline <= date('m-d-Y') ? "":"disabled" }} >{{ $goal->analysis }}</textarea>
+                    <textarea rows="10" style="height:200px;" class="form-control" name="analysis" id="analysis" {{ $goal->deadline <= date('Y-m-d') ? "required":"disabled" }} >{{ $goal->analysis }}</textarea>
                 </div>
             </div>
             
