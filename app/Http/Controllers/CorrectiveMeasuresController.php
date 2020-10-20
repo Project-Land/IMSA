@@ -99,8 +99,8 @@ class CorrectiveMeasuresController extends Controller
      */
     public function show($id)
     {
-        $corrective_measure = CorrectiveMeasure::findOrFail($id);
-        return view('system_processes.corrective_measures.show', compact('corrective_measure'));
+        $corrective_measure = CorrectiveMeasure::with('standard')->with('sector')->findOrFail($id);
+        return response()->json($corrective_measure);
     }
 
     /**

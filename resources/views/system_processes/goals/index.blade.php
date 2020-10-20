@@ -66,16 +66,16 @@
                                     <td>{{ $goal->kpi }}</td>
                                     <td>{{ $goal->activities }}</td>
                                     <td>{{ $goal->responsibility }}</td>
-                                    <td>{{ $goal->deadline }}</td>
+                                    <td>{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
                                     <td>{{ $goal->resources }}</td>
-                                    <td class="text-center">{{ $goal->analysis }}</td>
+                                    <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
                                     <button class="button" id="open_modal_button"><i class="fas fa-eye"></i></button>
                                         <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>   
