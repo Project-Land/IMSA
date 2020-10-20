@@ -102,7 +102,8 @@ class GoalsController extends Controller
      */
     public function show($id)
     {
-        //
+        $goal = Goal::findOrFail($id);
+        return response()->json($goal);
     }
 
     /**

@@ -47,21 +47,21 @@
                             <tbody>
                                 @foreach($complaints as $c)
                                 <tr>
-                                    <td>{{ $c->name }}</td>
+                                    <td class="text-center">{{ $c->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($c->submission_date)) }}</td>
-                                    <td>{{ $c->description }}</td>
-                                    <td>{{ $c->process }}</td>
-                                    <td>{{ $c->accepted == 1 ? "DA" : "NE" }}</td>
+                                    <td class="text-center">{{ $c->description }}</td>
+                                    <td class="text-center">{{ $c->process }}</td>
+                                    <td class="text-center">{{ $c->accepted == 1 ? "DA" : "NE" }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
-                                    <td>{{ $c->responsible_person != null ? $c->responsible_person : "/" }}</td>
-                                    <td>{{ $c->way_of_solving != null ? $c->way_of_solving : "/" }}</td>
+                                    <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
+                                    <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td>
                                     <td class="text-center">{{ ($c->status == '1') ? 'Otvorena' : 'Zatvorena' }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('complaints.edit', $c->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('complaints.destroy', $c->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>   
