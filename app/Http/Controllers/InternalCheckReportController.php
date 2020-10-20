@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CorrectiveMeasure;
 use App\Models\Inconsistency;
 use Illuminate\Http\Request;
 use App\Models\InternalCheck;
@@ -118,7 +119,23 @@ class InternalCheckReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {  $count=1;
+
+        $correctiveMeasureData=$request->validate([
+            'noncompliance_source.*' => 'string',
+            'noncompliance_description.*' => 'string',
+            'noncompliance_cause.*' => 'string',
+            'measure.*' => 'string', 
+            'measure_approval.*' => 'string',
+            'measure_approval_reason.*' => 'string|nullable',
+            'measure_status.*' => 'string',
+            'measure_effective.*' => 'string|nullable'
+            
+        ]);
+      
+       // dd($correctiveMeasureData);exit();
+
+
         $validatedData = $request->validate([
             'specification' => 'required',
             //'standard_id' => 'required',
@@ -193,6 +210,23 @@ class InternalCheckReportController extends Controller
             $inc=new Inconsistency();
             $inc->description=$v;
             $internal_check_report->inconsistencies()->save($inc);
+            $inc->refresh();
+
+            $correctiveMeasure=CorrectiveMeasure::create([
+                'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
+                'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
+                'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
+                'measure'=> $correctiveMeasureData['measure'][$count],
+                'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
+                'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
+                'measure_status'=>$correctiveMeasureData['measure_status'][$count],
+                'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                
+
+            ]);
+            $count++;
+
+            $inc->correctiveMeasure()->save($correctiveMeasure);
         }
 
         foreach($newRecommendationsData as $v){
@@ -200,9 +234,11 @@ class InternalCheckReportController extends Controller
             $rec=new Recommendation();
             $rec->description=$v;
             $internal_check_report->recommendations()->save($rec);
+            
+           
         }
 
-        
+       
 
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');

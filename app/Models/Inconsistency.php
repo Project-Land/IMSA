@@ -13,4 +13,9 @@ class Inconsistency extends Model
     {
         return $this->belongsTo('App\Models\InternalCheckReport');
     }
+
+    public function correctiveMeasure()
+    {
+        return $this->hasOne('App\Models\CorrectiveMeasure');
+    }
 }

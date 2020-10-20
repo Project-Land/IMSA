@@ -9,6 +9,8 @@ class CorrectiveMeasure extends Model
 {
     use HasFactory;
 
+    protected $guarded=[];
+
     public function standard()
     {
         return $this->belongsTo('App\Models\Standard');
@@ -17,5 +19,10 @@ class CorrectiveMeasure extends Model
     public function sector()
     {
         return $this->belongsTo('App\Models\Sector');
+    }
+
+    public function inconsistency()
+    {
+        return $this->belongsTo('App\Models\Inconsistency');
     }
 }
