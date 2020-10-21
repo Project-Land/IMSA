@@ -18,10 +18,8 @@ class GoalsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-
-        $years = range(2010, date('Y') + 10);
         $goals = Goal::where('standard_id', $standardId)->get();
-        return view('system_processes.goals.index', ['goals' => $goals, 'years' => $years]);
+        return view('system_processes.goals.index', ['goals' => $goals]);
     }
 
     public function filterYear(Request $request)

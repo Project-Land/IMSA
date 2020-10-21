@@ -65,4 +65,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     
+    Route::get('/users/create', function () {
+        return view('livewire.user.user');
+    })->name('user.create');
+    
 });

@@ -58,7 +58,7 @@
                         <div class="border-t border-gray-100"></div>
 
                         <!-- Team Management -->
-                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user()->current_team_id == 1)
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Team') }}
                             </div>
@@ -84,6 +84,19 @@
                             @foreach (Auth::user()->allTeams() as $team)
                                 <x-jet-switchable-team :team="$team" />
                             @endforeach
+
+                            <div class="border-t border-gray-100"></div>
+                        @endif
+
+                        <!-- User Management -->
+                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user()->current_team_id == 1)
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Manage users') }}
+                            </div>
+
+                            <x-jet-dropdown-link href="{{ route('user.create') }}">
+                                {{ __('Create New User') }}
+                            </x-jet-dropdown-link>
 
                             <div class="border-t border-gray-100"></div>
                         @endif
