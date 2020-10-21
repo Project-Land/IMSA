@@ -43,7 +43,7 @@
                             <tbody>
                                 @foreach($suppliers as $s)
                                 <tr>
-                                    <td>{{ $s->supplier_name }}</td>
+                                    <td class="text-center">{{ $s->supplier_name }}</td>
                                     <td class="text-center">{{ $s->subject }}</td>
                                     <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>

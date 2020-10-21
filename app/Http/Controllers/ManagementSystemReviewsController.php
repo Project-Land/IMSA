@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ManagementSystemReview;
+use App\Models\Goal;
+use App\Models\CorrectiveMeasure;
+use App\Models\PlanIp;
+use App\Models\Supplier;
+use App\Models\RiskManagement;
+use App\Http\Requests\StoreManagementSystemReview;
 
 class ManagementSystemReviewsController extends Controller
 {
@@ -38,37 +44,37 @@ class ManagementSystemReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreManagementSystemReview $request)
     {
         $msr = new ManagementSystemReview();
 
-        $messages = array(
-            'participants.required' => 'Unesite učesnike',
-            'measures_status.required' => 'Unesite status mera',
-            'internal_external_changes.required' => 'Unesite promene',
-            'customer_satisfaction.required' => 'Unesite zadovoljstvo klijenata',
-            'monitoring_measurement_results.required' => 'Unesite rezultate praćenja merenja',
-            'resource_adequacy.required' => 'Unesite adekvatnost resursa',
-            'improvement_opportunities.required' => 'Unesite prilike za poboljšanje',
-            'needs_for_change.required' => 'Unesite potrebe za izmenama u sistemu menadžmenta',
-            'needs_for_resources.required' => 'Unesite potrebe za resursima',
+        $year = (int)$request->year;
+        $standardId = $this::getStandard();
 
-        );
+        $msr->standard_id = $this::getStandard();
+        $msr->year = $request->year;
+        $msr->participants = $request->participants;
+        $msr->measures_status = $request->measures_status;
+        $msr->internal_external_changes = $request->internal_external_changes;
+        $msr->customer_satisfaction = $request->customer_satisfaction;
+        $msr->monitoring_measurement_results = $request->monitoring_measurement_results;
+        $msr->resource_adequacy = $request->resource_adequacy;
+        $msr->resource_adequacy = $request->resource_adequacy;
+        $msr->checks_results_desc = $request->checks_results_desc;
+        $msr->improvement_opportunities = $request->improvement_opportunities;
+        $msr->needs_for_change = $request->needs_for_change;
+        $msr->needs_for_resources = $request->needs_for_resources;
 
-        $validatedData = $request->validate([
-            'participants' => 'required',
-            'measures_status' => 'required',
-            'internal_external_changes' => 'required',
-            'monitoring_measurement_results' => 'required',
-            'customer_satisfaction' => 'required',
-            'resource_adequacy' => 'required',
-            'improvement_opportunities' => 'required',
-            'needs_for_change' => 'required',
-            'needs_for_resources' => 'required',
+        $msr->objectives_scope = Goal::getStats($standardId, $year);
+        $msr->inconsistancies_corrective_measures = CorrectiveMeasure::getStats($standardId, $year);
+        $msr->checks_results = PlanIp::getStats($standardId, $year);
+        $msr->external_suppliers_performance = Supplier::getStats($standardId, $year);
+        $msr->measures_effectiveness = RiskManagement::getStats($standardId, $year);    
+        
+        $msr->save();
 
-        ], $messages);
-
-        //save
+        $request->session()->flash('status', 'Zapisnik je uspešno sačuvan!');
+        return redirect('/management-system-reviews');
     }
 
     /**
@@ -105,6 +111,50 @@ class ManagementSystemReviewsController extends Controller
     public function update(Request $request, int $id)
     {
         $msr = ManagementSystemReview::findOrFail($id);
+
+        $messages = array(
+            'participants.required' => 'Unesite učesnike',
+            'measures_status.required' => 'Unesite status mera',
+            'internal_external_changes.required' => 'Unesite promene',
+            'customer_satisfaction.required' => 'Unesite zadovoljstvo klijenata',
+            'monitoring_measurement_results.required' => 'Unesite rezultate praćenja merenja',
+            'resource_adequacy.required' => 'Unesite adekvatnost resursa'
+        );
+
+        $validatedData = $request->validate([
+            'participants' => 'required',
+            'measures_status' => 'required',
+            'internal_external_changes' => 'required',
+            'monitoring_measurement_results' => 'required',
+            'customer_satisfaction' => 'required',
+            'resource_adequacy' => 'required'
+        ], $messages);
+
+        $msr->year = $request->year;
+        $msr->participants = $request->participants;
+        $msr->measures_status = $request->measures_status;
+        $msr->internal_external_changes = $request->internal_external_changes;
+        $msr->customer_satisfaction = $request->customer_satisfaction;
+        $msr->monitoring_measurement_results = $request->monitoring_measurement_results;
+        $msr->resource_adequacy = $request->resource_adequacy;
+        $msr->resource_adequacy = $request->resource_adequacy;
+        $msr->checks_results_desc = $request->checks_results_desc;
+        $msr->improvement_opportunities = $request->improvement_opportunities;
+        $msr->needs_for_change = $request->needs_for_change;
+        $msr->needs_for_resources = $request->needs_for_resources;
+
+        $year = (int)$request->year;
+        $standardId = $this::getStandard();
+
+        $msr->objectives_scope = Goal::getStats($standardId, $year);
+        $msr->inconsistancies_corrective_measures = CorrectiveMeasure::getStats($standardId, $year);
+        $msr->checks_results = PlanIp::getStats($standardId, $year);
+        $msr->external_suppliers_performance = Supplier::getStats($standardId, $year);
+        $msr->measures_effectiveness = RiskManagement::getStats($standardId, $year);    
+        
+        $msr->save();
+        $request->session()->flash('status', 'Zapisnik je uspešno izmenjen!');
+        return redirect('/management-system-reviews');
     }
 
     /**

@@ -76,7 +76,8 @@ class RiskManagementController extends Controller
      */
     public function show($id)
     {
-        //
+        $risk = RiskManagement::findOrFail($id);
+        return response()->json($risk);
     }
 
     /**

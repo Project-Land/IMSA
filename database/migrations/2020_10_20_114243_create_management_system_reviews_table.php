@@ -25,12 +25,13 @@ class CreateManagementSystemReviewsTable extends Migration
             $table->string('inconsistancies_corrective_measures');
             $table->text('monitoring_measurement_results');
             $table->string('checks_results');
+            $table->text('checks_results_desc')->nullable();
             $table->string('external_suppliers_performance');
             $table->text('resource_adequacy');
             $table->string('measures_effectiveness');
-            $table->text('improvement_opportunities');
-            $table->text('needs_for_change');
-            $table->text('needs_for_resources');
+            $table->text('improvement_opportunities')->nullable();
+            $table->text('needs_for_change')->nullable();
+            $table->text('needs_for_resources')->nullable();
             $table->timestamps();
 
             $table->foreign('standard_id')->references('id')->on('standards');

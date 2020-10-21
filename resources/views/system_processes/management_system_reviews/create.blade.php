@@ -19,10 +19,13 @@
 			<div class="form-group">
 				<label for="year">Godina:</label>
 				<select class="form-control" name="year" id="year">
-					@foreach(range(date('Y')-10, date('Y')+10) as $year)
+					@foreach(range(date('Y')-1, date('Y')+10) as $year)
 						<option value="{{ $year }}" {{ $year == old('year') ? "selected" : "" }}>{{ $year }}</option>
 					@endforeach
 				</select>
+				@error('year')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
 			</div>
 
 			<div class="form-group">
@@ -68,6 +71,14 @@
 			</div>
 
 			<div class="form-group">
+				<label for="checks_results_desc">Dodatni opis rezultata internih provera:</label>
+				<textarea class="form-control" id="checks_results_desc" name="checks_results_desc">{{ old('checks_results_desc') }}</textarea>
+				@error('checks_results_desc')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+
+			<div class="form-group">
 				<label for="resource_adequacy">Adekvatnost resursa:</label>
 				<textarea class="form-control" id="resource_adequacy" name="resource_adequacy">{{ old('resource_adequacy') }}</textarea>
 				@error('resource_adequacy')
@@ -79,7 +90,7 @@
 
 			<div class="form-group">
 				<label for="improvement_opportunities ">Prilike za poboljšanje:</label>
-				<textarea class="form-control" id="improvement_opportunities " name="improvement_opportunities ">{{ old('improvement_opportunities ') }}</textarea>
+				<textarea class="form-control" id="improvement_opportunities" name="improvement_opportunities">{{ old('improvement_opportunities ') }}</textarea>
 				@error('improvement_opportunities')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -87,7 +98,7 @@
 
 			<div class="form-group">
 				<label for="needs_for_change ">Potrebe za izmenama u sistemu menadžmenta:</label>
-				<textarea class="form-control" id="needs_for_change " name="needs_for_change ">{{ old('needs_for_change ') }}</textarea>
+				<textarea class="form-control" id="needs_for_change" name="needs_for_change">{{ old('needs_for_change ') }}</textarea>
 				@error('needs_for_change')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -95,7 +106,7 @@
 
 			<div class="form-group">
 				<label for="needs_for_resources ">Potrebe za resursima:</label>
-				<textarea class="form-control" id="needs_for_resources " name="needs_for_resources ">{{ old('needs_for_resources ') }}</textarea>
+				<textarea class="form-control" id="needs_for_resources" name="needs_for_resources">{{ old('needs_for_resources ') }}</textarea>
 				@error('needs_for_resources')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} {{ __('- Zapisnik sa preispitivanja ') }} {{ $msr->year }} {{ __('- Izmena') }}
+            {{ session('standard_name') }} - {{ __('Zapisnik sa preispitivanja - Izmena') }}
         </h2>
     </x-slot>
 
@@ -19,7 +19,7 @@
 			<div class="form-group">
 				<label for="year">Godina:</label>
 				<select class="form-control" name="year" id="year">
-					@foreach(range(date('Y')-10, date('Y')+10) as $year)
+					@foreach(range(date('Y')-1, date('Y')+10) as $year)
 						<option value="{{ $year }}" {{ $year == $msr->year ? "selected" : "" }}>{{ $year }}</option>
 					@endforeach
 				</select>
@@ -57,10 +57,20 @@
 				@enderror
 			</div>
 
+			<p class="h5">Performanse procesa i usaglašenost proizvoda i usluga</p><hr>
+
 			<div class="form-group">
 				<label for="monitoring_measurement_results">Rezultati praćenja i merenja:</label>
 				<textarea class="form-control" id="monitoring_measurement_results" name="monitoring_measurement_results">{{ $msr->monitoring_measurement_results }}</textarea>
 				@error('monitoring_measurement_results')
+					<span class="text-danger">{{ $message }}</span>
+				@enderror
+			</div>
+
+			<div class="form-group">
+				<label for="checks_results_desc">Dodatni opis rezultata internih provera:</label>
+				<textarea class="form-control" id="checks_results_desc" name="checks_results_desc">{{ $msr->checks_results_desc }}</textarea>
+				@error('checks_results_desc')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
@@ -73,26 +83,28 @@
 				@enderror
 			</div>
 
+			<p class="h5">Izlazne tačke preispitivanja</p><hr>
+
 			<div class="form-group">
 				<label for="improvement_opportunities ">Prilike za poboljšanje:</label>
-				<textarea class="form-control" id="improvement_opportunities " name="improvement_opportunities ">{{ $msr->improvement_opportunities }}</textarea>
-				@error('improvement_opportunities ')
+				<textarea class="form-control" id="improvement_opportunities" name="improvement_opportunities">{{ $msr->improvement_opportunities }}</textarea>
+				@error('improvement_opportunities')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="form-group">
 				<label for="needs_for_change ">Potrebe za izmenama u sistemu menadžmenta:</label>
-				<textarea class="form-control" id="needs_for_change " name="needs_for_change ">{{ $msr->needs_for_change }}</textarea>
-				@error('needs_for_change ')
+				<textarea class="form-control" id="needs_for_change" name="needs_for_change">{{ $msr->needs_for_change }}</textarea>
+				@error('needs_for_change')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="form-group">
 				<label for="needs_for_resources ">Potrebe za resursima:</label>
-				<textarea class="form-control" id="needs_for_resources " name="needs_for_resources ">{{ $msr->needs_for_resources }}</textarea>
-				@error('needs_for_resources ')
+				<textarea class="form-control" id="needs_for_resources" name="needs_for_resources">{{ $msr->needs_for_resources }}</textarea>
+				@error('needs_for_resources')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>

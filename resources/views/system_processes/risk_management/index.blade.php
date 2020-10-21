@@ -49,7 +49,7 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center">{{ ($risk->measure) ? : '/' }}
+                                    <td class="text-center"><span @if($risk->measure) style="cursor: pointer"  onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
                                             <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
                                         @endif
@@ -97,4 +97,46 @@
           "orderable": false,
         }],
     }); 
+
+    function showMeasure(id){
+        axios.get('/risk-management/'+id)
+            .then((response) => {
+                let modal = `<div class="modal" id="showMeasure-${ id }" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content rounded-0">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-bold">${ response.data.measure }</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Opis rizika / prilike</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Uzrok</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera za smanjenje rizika</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Status</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 0 ? "Zatvorena" : "Otvorena" }</p></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $("body").append(modal);
+                $('#showMeasure-'+id).modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 </script>

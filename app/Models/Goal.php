@@ -12,4 +12,17 @@ class Goal extends Model
     public function standard(){
         return $this->hasOne('App\Models\Standard');
     }
+
+    public static function getStats($standardId, $year)
+    {
+        $os_total = Goal::where('standard_id', $standardId)->where('year', $year)->count();
+        $os_fulfilled = Goal::where('standard_id', $standardId)->where('year', $year)->whereNotNull('analysis')->count();
+        if($os_total == 0){
+            $os_percentage = 0;
+        }
+        else{
+            $os_percentage = ($os_fulfilled / $os_total) * 100;
+        }
+        return "Ostvareno ".$os_fulfilled." ciljeva od ukupno ".$os_total." što čini ".round($os_percentage)."%";
+    }
 }

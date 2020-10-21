@@ -45,7 +45,7 @@
                                     <td class="text-center">{{ $measure->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($measure->created_at)) }}</td>
                                     <td class="text-center">{{ $measure->standard->name }}</td>
-                                    <td class="text-center">{{ $measure->measure_status == '0'? "Otvorena" : "Zatvorena" }}</td>
+                                    <td class="text-center">{{ $measure->measure_approval == '0'? "Otvorena" : "Zatvorena" }}</td>
                                     <td class="text-center">
                                         <button class="text-primary" onclick="showMeasure({{ $measure->id }})"><i class="fas fa-eye"></i></button>
                                         <a href="{{ route('corrective-measures.edit', $measure->id) }}"><i class="fas fa-edit"></i></a>
@@ -94,7 +94,7 @@
     function showMeasure(id){
         axios.get('/corrective-measures/'+id)
             .then((response) => {
-                let modal = `<div class="modal" id="showData" tabindex="-1" role="dialog">
+                let modal = `<div class="modal" id="showData-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>`;
                 $("body").append(modal);
-                $('#showData').modal();
+                $('#showData-'+id).modal();
             })
             .catch((error) => {
                 console.log(error)

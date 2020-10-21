@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="/images/logo.png" alt="logo" class="h-15 w-15"/>
+                        <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
@@ -42,16 +42,16 @@
                     <x-slot name="content">
                         <!-- Account Management -->
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Moj nalog') }}
+                            {{ __('Manage Account') }}
                         </div>
 
                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                            {{ __('Profil') }}
+                            {{ __('Profile') }}
                         </x-jet-dropdown-link>
 
                         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                             <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                {{ __('API Tokeni') }}
+                                {{ __('API Tokens') }}
                             </x-jet-dropdown-link>
                         @endif
 
@@ -60,17 +60,17 @@
                         <!-- Team Management -->
                         @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Upravljaj timovima') }}
+                                {{ __('Manage Team') }}
                             </div>
 
                             <!-- Team Settings -->
                             <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                {{ __('Podešavanje tima') }}
+                                {{ __('Team Settings') }}
                             </x-jet-dropdown-link>
 
                             @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                 <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                    {{ __('Kreiraj novi tim') }}
+                                    {{ __('Create New Team') }}
                                 </x-jet-dropdown-link>
                             @endcan
 
@@ -78,7 +78,7 @@
 
                             <!-- Team Switcher -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Promeni timove') }}
+                                {{ __('Switch Teams') }}
                             </div>
 
                             @foreach (Auth::user()->allTeams() as $team)
@@ -95,7 +95,7 @@
                             <x-jet-dropdown-link href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                                {{ __('Odjava') }}
+                                {{ __('Logout') }}
                             </x-jet-dropdown-link>
                         </form>
                     </x-slot>
@@ -138,12 +138,12 @@
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profil') }}
+                    {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                        {{ __('API Tokeni') }}
+                        {{ __('API Tokens') }}
                     </x-jet-responsive-nav-link>
                 @endif
 
@@ -154,7 +154,7 @@
                     <x-jet-responsive-nav-link href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                        {{ __('Odjava') }}
+                        {{ __('Logout') }}
                     </x-jet-responsive-nav-link>
                 </form>
 
@@ -163,23 +163,23 @@
                     <div class="border-t border-gray-200"></div>
 
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Upravljaj timovima') }}
+                        {{ __('Manage Team') }}
                     </div>
 
                     <!-- Team Settings -->
                     <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('Podešavanja tima') }}
+                        {{ __('Team Settings') }}
                     </x-jet-responsive-nav-link>
 
                     <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                        {{ __('Kreiraj novi tim') }}
+                        {{ __('Create New Team') }}
                     </x-jet-responsive-nav-link>
 
                     <div class="border-t border-gray-200"></div>
 
                     <!-- Team Switcher -->
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Promeni timove') }}
+                        {{ __('Switch Teams') }}
                     </div>
 
                     @foreach (Auth::user()->allTeams() as $team)

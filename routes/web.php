@@ -64,4 +64,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
+    
 });

@@ -18,4 +18,17 @@ class CorrectiveMeasure extends Model
     {
         return $this->belongsTo('App\Models\Sector');
     }
+
+    public static function getStats($standardId, $year)
+    {
+        $icm_total = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->count();
+        $icm_approved = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->where('measure_approval', '1')->count();
+        if($icm_total == 0){
+            $icm_percentage = 0;
+        }
+        else{
+            $icm_percentage = ($icm_approved / $icm_total) * 100;
+        }
+        return "Odobreno ".$icm_approved." mera od ukupno ".$icm_total." što čini ".round($icm_percentage)."%";
+    }
 }
