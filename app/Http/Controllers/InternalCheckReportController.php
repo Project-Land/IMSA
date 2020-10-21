@@ -120,60 +120,64 @@ class InternalCheckReportController extends Controller
      */
     public function update(Request $request, $id)
     {  $count=1;
-
+        
         $correctiveMeasureData=$request->validate([
-            'noncompliance_source.*' => 'string',
-            'noncompliance_description.*' => 'string',
-            'noncompliance_cause.*' => 'string',
-            'measure.*' => 'string', 
-            'measure_approval.*' => 'string',
+            'noncompliance_source.*' => 'string|required',
+            'noncompliance_description.*' => 'string|required',
+            'noncompliance_cause.*' => 'string|required',
+            'measure.*' => 'string|required', 
+            'measure_approval.*' => 'string|required',
             'measure_approval_reason.*' => 'string|nullable',
-            'measure_status.*' => 'string',
+            'measure_status.*' => 'string|required',
             'measure_effective.*' => 'string|nullable'
             
         ]);
       
-       // dd($correctiveMeasureData);exit();
+       
 
 
         $validatedData = $request->validate([
-            'specification' => 'required',
+            'specification' => 'required|min:3',
             //'standard_id' => 'required',
         ]);
 
         $inconsistenciesData = $request->validate([
 
-            'inconsistencies.*' => 'string',
+            'inconsistencies.*' => 'string|required',
            
         ]);
 
         $recommendationsData = $request->validate([  
 
-            'recommendations.*' => 'string',
+            'recommendations.*' => 'string|required',
           
         ]);
+        
 
         $internal_check_report=InternalCheckReport::findOrfail($id);
         $internal_check_report->update($validatedData);
 
         $newInconsistenciesData = $request->validate([
 
-            'newInput1' => 'string',
-            'newInput2' => 'string',
-            'newInput3' => 'string',
-            'newInput4' => 'string',
+            'newInput1' => 'string|min:3',
+            'newInput2' => 'string|min:3',
+            'newInput3' => 'string|min:3',
+            'newInput4' => 'string|min:3',
           
         ]);
+       
 
+        
         $newRecommendationsData = $request->validate([
 
-            'newInputRecommendation1' => 'string',
-            'newInputRecommendation2' => 'string',
-            'newInputRecommendation3' => 'string',
-            'newInputRecommendation4' => 'string',
+            'newInputRecommendation1' => 'string|min:3',
+            'newInputRecommendation2' => 'string|min:3',
+            'newInputRecommendation3' => 'string|min:3',
+            'newInputRecommendation4' => 'string|min:3',
            
            
         ]);
+        dd($newInconsistenciesData);exit();
         
         if(isset($inconsistenciesData['inconsistencies'])){
             $incs=$internal_check_report->inconsistencies;

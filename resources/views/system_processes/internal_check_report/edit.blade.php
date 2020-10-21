@@ -10,9 +10,17 @@
         	<a class="btn btn-light" href="/internal-check"><i class="fas fa-arrow-left"></i> Nazad</a>
      	</div>
     </div>
-
+  
     <div class="mx-auto w-75 mt-10 bg-secondary p-10 rounded container">
-
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 		<form id="internal_check_report_edit_form" action="{{route('internal-check-report.update',$internalCheckReport->id)}}" method="POST">
             @csrf
             @method('PUT')
@@ -48,51 +56,85 @@
 
         <div class="form-group col">
             <label for="specification">Specifikacija dokumenata</label>
-            <input type="text" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}">
+            <input type="text" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required>
+            @error('specification')
+					<span class="text-danger">{{ $message }}</span>
+			@enderror
         </div>
         </div>
+
+
         <div class="form-group">
             <span id="addInconsistencies"  class="btn btn-primary">Dodaj neusaglašenost</span>
             <span id="addRecommendations"  class="btn btn-primary">Dodaj preporuku</span>
            
+           
         </div>
-<div id="inconsistenciesDiv">
-        @foreach($internalCheckReport->inconsistencies as $inc)
-        <div class="form-group">
-       
-            <label for="inconsistencies">Neusaglašenost</label>
-           <textarea class="form-control" name="inconsistencies[{{$inc->id}}]">{{$inc->description}}</textarea>
-           <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
-           <a href="{{route('corrective-measures.edit',$inc->correctiveMeasure->id)}}" >Korektivna mera</a>
-            </div>
         
-        @endforeach
-</div>
+        <div id="inconsistenciesDiv" class="row border-top mt-2">
+            @foreach($internalCheckReport->inconsistencies as $inc)
+            <div class="form-group col-6 mt-3">
+        
+                <label for="inconsistencies">Neusaglašenost</label>
+            <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->description}}</textarea>
+            @error('inconsistencies.'.$inc->id)
+					<span class="text-danger">{{ $message }}</span>
+			@enderror
+            <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
+            <a href="{{route('corrective-measures.edit',$inc->correctiveMeasure->id)}}" >Korektivna mera</a>
+                </div>
+    
+            @endforeach
+        </div>
+        
 
        
-<div id="recommendationsDiv" >
-        @foreach($internalCheckReport->recommendations as $rec)
-        <div class="form-group" id="recommendations[{{$rec->id}}]">
-            <label for="recommendations">Preporuka</label>
-           <textarea class="form-control" name="recommendations[{{$rec->id}}]">{{$rec->description}}</textarea>
-          <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
-          
+        <div id="recommendationsDiv"  class="row border-top mt-2">
+        
+                @foreach($internalCheckReport->recommendations as $rec)
+                <div class="form-group col-6 mt-3" id="recommendations[{{$rec->id}}]">
+                    <label for="recommendations">Preporuka</label>
+                <textarea class="form-control" name="recommendations[{{$rec->id}}]" required>{{$rec->description}}</textarea>
+                @error('recommendations.'.$rec->id)
+					<span class="text-danger">{{ $message }}</span>
+			    @enderror
+                <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
+                
+                </div>
+                @endforeach
         </div>
-        @endforeach
-</div>
             
         <button type="submit" id="submitForm" class="btn btn-primary" >Izmeni</button>
         </form>
     </div>
 
+
+   
     <script>
+
+let el=document.querySelector('#inconsistenciesDiv').lastElementChild;
+el.style="margin-right:20px;";
+
+let counter=1;
+let coun=1;
+
+function removeInput(){
+   
+   if(this.dataset.counter=='counter')
+    counter--;
+   if(this.dataset.counter=='coun')
+    coun--;
+   this.closest("div").remove();
+   return false;
+  
+}
+
     const form=document.getElementById('internal_check_report_edit_form');
     const inconsistencies=document.getElementById('addInconsistencies');
     const recommendations=document.getElementById('addRecommendations');
     const recommendationsDiv=document.getElementById('recommendationsDiv');
     const inconsistenciesDiv=document.getElementById('inconsistenciesDiv');
-    let counter=1;
-    let coun=1;
+    
 
     const addInput=function(){
         
@@ -101,45 +143,49 @@
             const newInput=document.createElement('textarea');
             const div=document.createElement('div');
             const label=document.createElement('label');
-            const addNewInconsistencies=document.createElement('span');
+            let addNewInconsistencies=document.createElement('button');
             addNewInconsistencies.classList="btn btn-danger";
-           
+            addNewInconsistencies.setAttribute("data-counter", "counter");
             addNewInconsistencies.id="button"+counter;
-           
             addNewInconsistencies.innerHTML='<i class="fas fa-trash"></i>';
             label.for="newInput"+counter;
             div.append(label);
             label.textContent="Upiši neusaglašenost";
+            label.classList="mt-3";
             newInput.id='newInput'+counter;
             newInput.name='newInput'+counter;
             newInput.type='text';
+            newInput.style="background:#dbffe5;"
+            newInput.required = true;
             newInput.classList="form-control";
             addNewInconsistencies.addEventListener('click',removeInput);
-            div.append(newInput);
-            div.classList="form-group mt-3";
+            div.append(newInput);	 
+            div.classList="form-group col-6";
             div.id="newInputDiv"+counter;
             inconsistencies.after(div);
             div.append(addNewInconsistencies);
-            div.innerHTML+= `<div style="background:#5c9c6a;padding:10px;">
+            const div2=document.createElement('div');
+            div2.innerHTML+=
+            `<div style="background:#5c9c6a;padding:10px;">
             <h2>Popuni karton korektivne mere</h2>
 			<div class="form-group">
 				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
-				<input type="text" class="form-control" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="">
+				<input type="text" class="form-control" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
 			
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]"></textarea>
+				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]"></textarea>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
 			
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]"></textarea>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
 				
 			</div>
 			<div class="form-group">
@@ -151,7 +197,7 @@
 			</div>
 			<div class="form-group" id="measure_reason_field" style="display: none">
 				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason">
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
 			</div>
 			<div class="form-group">
 				<label for="measure_status">Status mere:</label>
@@ -168,13 +214,14 @@
 					<option value="0">NE</option>
 				</select>
 			</div>
-            </div>`;
+            </div>`; 
+            div.append(div2);
             inconsistenciesDiv.append(div);
-            
+            newInput.focus();
             counter++;
 
             $('#measure_approval').change( () => {
-        console.log('aa');
+        
 		if($('#measure_approval').val() == 0){
 			$('#measure_reason_field').css('display', '');
 		}
@@ -193,6 +240,14 @@
 		}
 	})
 
+
+
+
+
+
+
+    
+    
     }
 
 
@@ -202,34 +257,34 @@
             const newInput=document.createElement('textarea');
             const div=document.createElement('div');
             const label=document.createElement('label');
-            const addNewRecommendations=document.createElement('span');
+            const addNewRecommendations=document.createElement('button');
             addNewRecommendations.classList="btn btn-danger";
-           
+            addNewRecommendations.setAttribute("data-counter", "coun");
             addNewRecommendations.id="buttonRecommedations"+coun;
            
             addNewRecommendations.innerHTML='<i class="fas fa-trash"></i>';
             label.for="newInputRecommendation"+coun;
             div.append(label);
             label.textContent="Upiši preporuku";
+            label.classList="mt-3";
             newInput.id='newInputRecommendation'+coun;
             newInput.name='newInputRecommendation'+coun;
             newInput.type='text';
+            newInput.style="background:#dbffe5;"
+            newInput.required = true;
             newInput.classList="form-control";
             addNewRecommendations.addEventListener('click',removeInput);
             div.append(newInput);
-            div.classList="form-group mt-3";
+            div.classList="form-group col-6";
             div.id="newInputRecommendationDiv"+coun;
             recommendations.after(div);
             div.append(addNewRecommendations);
             recommendationsDiv.append(div);
-            
+            newInput.focus();
             coun++;
         
     }
-function removeInput(){
-  
-   this.closest("div").remove();
-}
+
 
     inconsistencies.addEventListener('click', addInput);
     recommendations.addEventListener('click', addInputRecommedation);
