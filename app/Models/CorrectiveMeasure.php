@@ -33,7 +33,10 @@ class CorrectiveMeasure extends Model
         }
         return "Odobreno ".$icm_approved." mera od ukupno ".$icm_total." što čini ".round($icm_percentage)."%";
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 69e93a62de4d0597820d99a65fbefc8736a0a81f
     public function inconsistency()
     {
         return $this->belongsTo('App\Models\Inconsistency');
