@@ -33,7 +33,7 @@
                                 @csrf
                                 <label for="year" class="mr-3">Godina</label>
                                 <select name="year" id="year" class="form-control w-25 mr-2">
-                                    @foreach($years as $year)
+                                    @foreach(range(date("Y")-1, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
@@ -61,13 +61,13 @@
                             <tbody>
                             @foreach($goals as $goal)
                                 <tr>
-                                    <td>{{ $goal->year }}</td>
-                                    <td>{{ $goal->goal }}</td>
-                                    <td>{{ $goal->kpi }}</td>
-                                    <td>{{ $goal->activities }}</td>
-                                    <td>{{ $goal->responsibility }}</td>
-                                    <td>{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
-                                    <td>{{ $goal->resources }}</td>
+                                    <td class="text-center">{{ $goal->year }}</td>
+                                    <td class="text-center">{{ $goal->goal }}</td>
+                                    <td class="text-center">{{ $goal->kpi }}</td>
+                                    <td class="text-center">{{ $goal->activities }}</td>
+                                    <td class="text-center">{{ $goal->responsibility }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
+                                    <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
                                         <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>

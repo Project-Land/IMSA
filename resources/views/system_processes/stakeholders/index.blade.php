@@ -41,7 +41,7 @@
                             <tbody>
                                 @foreach($stakeholders as $s)
                                 <tr>
-                                    <td>{{ $s->name }}</td>
+                                    <td class="text-center">{{ $s->name }}</td>
                                     <td class="text-center">{{ $s->expectation }}</td>
                                     <td class="text-center">{{ $s->response }}</td>
                                     <td class="text-center">

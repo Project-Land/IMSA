@@ -20,7 +20,7 @@
                 <div class="form-group col-md-6">
                     <label for="year">Godina</label>
                     <select class="form-control" id="year" name="year">
-                        @foreach(range(date("Y")-10, 2035) as $year)
+                        @foreach(range(date("Y")-1, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == $goal->year ? "selected" : "" }}>{{ $year }}</option>
                         @endforeach
                     </select>
