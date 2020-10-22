@@ -19,6 +19,7 @@ use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\InconsistenciesController;
 use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,9 +65,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
-    
-    Route::get('/users/create', function () {
-        return view('livewire.user.user');
-    })->name('user.create');
+    Route::resource('users', UserController::class);
     
 });

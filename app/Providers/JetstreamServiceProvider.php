@@ -52,23 +52,23 @@ class JetstreamServiceProvider extends ServiceProvider
             'read',
             'update',
             'delete',
-        ])->description(__('Administrators can perform any action.'));
+        ])->description(__('Super Admin.'));
 
         Jetstream::role('admin', __('Administrator'), [
             'create',
             'read',
             'update',
             'delete',
-        ])->description(__('Administrators can perform any action.'));
+        ])->description(__('Administrator ima pristup svim segmentima aplikacije.'));
 
         Jetstream::role('editor', __('Editor Internih Provera'), [
             'read',
             'create',
             'update',
-        ])->description(__('Editors have the ability to read, create, and update.'));
+        ])->description(__('Editor internih provera može da dodaje, menja i briše interne provere.'));
 
         Jetstream::role('user', __('Korisnik'), [
             'read',
-        ])->description(__('Users have only the ability to read.'));
+        ])->description(__('Korisnik ima ograničeni pristup.'));
     }
 }
