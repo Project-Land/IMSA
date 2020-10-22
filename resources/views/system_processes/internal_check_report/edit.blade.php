@@ -112,8 +112,6 @@
    
     <script>
 
-let el=document.querySelector('#inconsistenciesDiv').lastElementChild;
-el.style="margin-right:20px;";
 
 let counter=1;
 let coun=1;
@@ -125,8 +123,14 @@ function removeInput(){
    if(this.dataset.counter=='coun')
     coun--;
    this.closest("div").remove();
-   return false;
-  
+   let els=document.querySelector('#inconsistenciesDiv');
+   let childs=els.childElementCount;
+   if(childs %2 !== 0){
+    let e=els.lastElementChild;
+    e.style="margin-right:10px;";
+   }
+
+   
 }
 
     const form=document.getElementById('internal_check_report_edit_form');

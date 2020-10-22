@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CorrectiveMeasure;
-use App\Models\Inconsistency;
+use App\Models\Standard;
 use Illuminate\Http\Request;
+use App\Models\Inconsistency;
 use App\Models\InternalCheck;
-use App\Models\InternalCheckReport;
 use App\Models\Recommendation;
+use App\Models\CorrectiveMeasure;
+use Illuminate\Support\Facades\DB;
+use App\Models\InternalCheckReport;
+use Exception;
 
 class InternalCheckReportController extends Controller
 {
@@ -119,8 +122,8 @@ class InternalCheckReportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  $count=1;
-        
+    {  
+
         $correctiveMeasureData=$request->validate([
             'noncompliance_source.*' => 'string|required',
             'noncompliance_description.*' => 'string|required',
@@ -143,19 +146,16 @@ class InternalCheckReportController extends Controller
 
         $inconsistenciesData = $request->validate([
 
-            'inconsistencies.*' => 'string|required',
+            'inconsistencies.*' => 'string|required|min:3',
            
         ]);
 
         $recommendationsData = $request->validate([  
 
-            'recommendations.*' => 'string|required',
+            'recommendations.*' => 'string|required|min:3',
           
         ]);
         
-
-        $internal_check_report=InternalCheckReport::findOrfail($id);
-        $internal_check_report->update($validatedData);
 
         $newInconsistenciesData = $request->validate([
 
@@ -165,9 +165,8 @@ class InternalCheckReportController extends Controller
             'newInput4' => 'string|min:3',
           
         ]);
-       
 
-        
+
         $newRecommendationsData = $request->validate([
 
             'newInputRecommendation1' => 'string|min:3',
@@ -177,7 +176,19 @@ class InternalCheckReportController extends Controller
            
            
         ]);
-        dd($newInconsistenciesData);exit();
+
+    try{
+        DB::transaction(function () use ($request,$id,$correctiveMeasureData,$validatedData,$inconsistenciesData,$recommendationsData,$newInconsistenciesData,$newRecommendationsData){
+        
+        
+        $count=1;
+        
+        $standard=Standard::where('name',$request->standard)->get()[0];
+        
+     
+
+        $internal_check_report=InternalCheckReport::findOrfail($id);
+        $internal_check_report->update($validatedData);
         
         if(isset($inconsistenciesData['inconsistencies'])){
             $incs=$internal_check_report->inconsistencies;
@@ -228,6 +239,9 @@ class InternalCheckReportController extends Controller
                 
 
             ]);
+
+           
+            $correctiveMeasure->standard()->associate($standard);
             $count++;
 
             $inc->correctiveMeasure()->save($correctiveMeasure);
@@ -239,10 +253,18 @@ class InternalCheckReportController extends Controller
             $rec->description=$v;
             $internal_check_report->recommendations()->save($rec);
             
+            
            
         }
 
-       
+        });
+
+    }catch(Exception $e){
+        $request->session()->flash('status', 'Došlo je do greske,pokušajte ponovo');
+        
+        return redirect('/internal-check');
+        exit();
+    }
 
         
         $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
