@@ -8,6 +8,8 @@ use App\Models\Team;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Jetstream\Events\TeamMemberAdded;
+use Laravel\Jetstream\Jetstream;
 
 class UserController extends Controller
 {
@@ -42,31 +44,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        $messages = array(
+            'name.required' => 'Unesite ime',
+            'name.max' => 'Polje ne sme biti duže od 255 karaktera',
+            'email.required' => 'Unesite email adresu',
+            'email.unique' => 'Već postoji korisnik sa takvom email adresom',
+            'password.required' => 'Unesite lozinku',
+            'password.string' => 'Lozinka mora sadržati minimum 8 karaktera',
+            'password.confirmed' => 'Lozinke se ne podudaraju',
+        );
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules()
-        ]);
+        ], $messages);
 
-        User::create([
+        $teamID = \Auth::user()->current_team_id;
+
+        $userID = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'current_team_id' => '2'
+            'current_team_id' => $teamID
         ]);
+
+        $role = $request['role'];
+
+        $team = Team::find($teamID);
+
+        $team->users()->attach(
+            $newTeamMember = Jetstream::findUserByEmailOrFail($request['email']),
+            ['role' => $role]
+        );
+
+        TeamMemberAdded::dispatch($team, $newTeamMember);
 
         $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         return redirect('/users');
-        
-    }
-
-    protected function createTeam(User $user)
-    {
-        $user->ownedTeams()->save(Team::forceCreate([
-            'user_id' => $user->id,
-            'name' => explode(' ', $user->name, 2)[0]."'s Team",
-            'personal_team' => true,
-        ]));
     }
 
     /**
