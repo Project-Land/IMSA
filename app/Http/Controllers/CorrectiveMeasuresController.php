@@ -22,7 +22,7 @@ class CorrectiveMeasuresController extends Controller
             return redirect('/');
         }
 
-        $measures = CorrectiveMeasure::all();
+        $measures = CorrectiveMeasure::with('inconsistency')->get();
         return view('system_processes.corrective_measures.index', compact('measures'));
     }
 
