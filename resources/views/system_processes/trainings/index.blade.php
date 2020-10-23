@@ -31,7 +31,7 @@
                             <form class="form-inline">
                                 <label for="year" class="mr-3">Godina</label>
                                 <select name="year" id="trainings-year" class="form-control w-25 mr-2">
-                                    @foreach($years as $year)
+                                    @foreach(range(date('Y')-1, date('Y')+10) as $year)
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>

@@ -91,7 +91,8 @@ class ComplaintsController extends Controller
      */
     public function show($id)
     {
-        //
+        $complaint = Complaint::findOrFail($id);
+        abort(404);
     }
 
     /**

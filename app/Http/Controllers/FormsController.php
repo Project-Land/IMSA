@@ -88,7 +88,8 @@ class FormsController extends Controller
      */
     public function show($id)
     {
-        //
+        $form = Form::findOrFail($id);
+        abort(404);
     }
 
     /**

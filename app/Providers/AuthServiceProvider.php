@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Team;
 use App\Policies\TeamPolicy;
+use App\Policies\SectorPolicy;
+use App\Models\Sector;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
         Stakeholder::class => StakeholderPolicy::class,
         Supplier::class => SupplierPolicy::class,
         Complaint::class => ComplaintPolicy::class,
-        
+        Sector::class => SectorPolicy::class,
+
     ];
 
     /**

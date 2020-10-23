@@ -86,7 +86,8 @@ class ManualsController extends Controller
      */
     public function show($id)
     {
-        //
+        $manuak = Manual::findOrFail($id);
+        abort(404);
     }
 
     /**

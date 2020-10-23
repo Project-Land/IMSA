@@ -19,9 +19,8 @@ class TrainingsController extends Controller
             return redirect('/');
         }
 
-        $years = range(2010, date('Y') + 10);
         $trainingPlans = Training::where('standard_id', $standardId)->where('year', date('Y'))->get();
-        return view('system_processes.trainings.index', compact('trainingPlans', 'years'));
+        return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 
     public function getData(Request $request) {
@@ -99,7 +98,8 @@ class TrainingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $training = Training::findOrFail($id);
+        abort(404);
     }
 
     /**

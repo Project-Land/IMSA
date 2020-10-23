@@ -47,14 +47,14 @@
 			<div class="form-group">
 				<label for="year">Godina:</label>
 				<select class="form-control" name="year" id="year">
-					@for($i = 2010; $i <= date('Y')+10; $i++)
-						<option value="{{ $i }}" {{ $trainingPlan->year == $i ? "selected": "" }} >{{ $i }}</option>
-					@endfor
+					@foreach(range(date('Y')-1, date('Y')+10) as $year)
+						<option value="{{ $year }}" {{ $trainingPlan->year == $year ? "selected": "" }} >{{ $year }}</option>
+					@endforeach
 				</select>
 			</div>
 			<div class="form-group">
 				<label for="training_date">Planirani termin:</label>
-				<input type="text" class="form-control" id="training_date" name="training_date" value="{{ $trainingPlan->training_date  }}">
+				<input type="text" class="form-control" id="training_date" name="training_date" value="{{ date('d.m.Y H:i', strtotime($trainingPlan->training_date))  }}">
 				@error('training_date')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -112,7 +112,10 @@
 </style>
 
 <script>
-   	$('#training_date').datetimepicker();
+	jQuery.datetimepicker.setLocale('sr');
+   	$('#training_date').datetimepicker({
+		format: 'd.m.Y H:i',
+	});
 
 	$('#status').change( () => {
 		if($('#status').val() == 1){

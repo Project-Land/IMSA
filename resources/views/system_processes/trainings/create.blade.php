@@ -46,9 +46,9 @@
 			<div class="form-group">
 				<label for="year">Godina:</label>
 				<select class="form-control" name="year" id="year">
-					@for($i = 2010; $i <= date('Y')+10; $i++)
-						<option value="{{ $i }}" {{ date('Y') == $i ? "selected": "" }} >{{ $i }}</option>
-					@endfor
+					@foreach(range(date('Y')-1, date('Y')+10) as $year)
+						<option value="{{ $year }}" {{ $year == old('year') ? "selected": "" }} >{{ $year }}</option>
+					@endforeach
 				</select>
 			</div>
 			<div class="form-group">
@@ -113,7 +113,10 @@
 </style>
 
 <script>
-   	$('#training_date').datetimepicker();
+	jQuery.datetimepicker.setLocale('sr');
+   	$('#training_date').datetimepicker({
+		format: 'd.m.Y H:i',
+	});
 
 	$('#status').change( () => {
 		if($('#status').val() == 1){

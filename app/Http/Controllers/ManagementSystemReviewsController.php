@@ -28,6 +28,15 @@ class ManagementSystemReviewsController extends Controller
         return view('system_processes.management_system_reviews.index', compact('msr'));
     }
 
+    public function getData(Request $request) {
+        $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
+        $reviews = ManagementSystemReview::where('standard_id', $standardId)->where('year', $request->data['year'])->get();
+        return response()->json($reviews);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +60,7 @@ class ManagementSystemReviewsController extends Controller
         $year = (int)$request->year;
         $standardId = $this::getStandard();
 
-        $msr->standard_id = $this::getStandard();
+        $msr->standard_id = $standardId;
         $msr->year = $request->year;
         $msr->participants = $request->participants;
         $msr->measures_status = $request->measures_status;
@@ -170,5 +179,11 @@ class ManagementSystemReviewsController extends Controller
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
+    }
+
+    public function deleteApi($id)
+    {
+        ManagementSystemReview::destroy($id);
+        return true;
     }
 }

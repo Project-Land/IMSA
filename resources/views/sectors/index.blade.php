@@ -24,22 +24,25 @@
         <div class="col">
 
             <div class="card">
+                @can('create', App\Models\Sector::class)
                 <div class="card-header">
                     <a class="btn btn-info" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a>
                 </div>
+                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
                                     <th>Naziv sektora</th>
-                                    <th class="no-sort">Akcije</th>
+                                   <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($sectors as $sector)
                                 <tr>
                                     <td class="text-center">{{ $sector->name }}</td>
+                                    @canany(['update', 'delete'], $sector)
                                     <td class="text-center">
                                         <a href="{{ route('sectors.edit', $sector->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
@@ -48,6 +51,7 @@
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
+                                    @endcanany
                                 </tr>   
                             @endforeach
                             </tbody>

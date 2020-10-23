@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sector;
+use App\Models\Team;
 
 class SectorsController extends Controller
 {
@@ -14,7 +15,7 @@ class SectorsController extends Controller
      */
     public function index()
     {
-        $sectors = Sector::all();
+        $sectors = Sector::where('team_id', \Auth::user()->current_team_id)->get();
         return view('sectors.index', compact('sectors'));
     }
 
@@ -25,6 +26,7 @@ class SectorsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Sector::class);
         return view('sectors.create');
     }
 
@@ -36,6 +38,7 @@ class SectorsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Sector::class);
         $messages = array(
             'name.required' => 'Unesite naziv sektora',
             'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera',
@@ -46,7 +49,7 @@ class SectorsController extends Controller
             'name' => 'required|unique:sectors|max:190'
         ], $messages);
 
-        $sector = Sector::create(['name' => $request->name]);
+        $sector = Sector::create(['name' => $request->name, 'team_id' => \Auth::user()->current_team_id, 'user_id' => \Auth::user()->id]);
         
         $request->session()->flash('status', 'Sektor je uspešno kreiran!');
         return redirect('/sectors');
@@ -60,7 +63,8 @@ class SectorsController extends Controller
      */
     public function show($id)
     {
-        //
+        $sector = Sector::findOrFail($id);
+        abort(404);
     }
 
     /**
@@ -71,6 +75,7 @@ class SectorsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Sector::find($id));
         $sector = Sector::findOrFail($id);
         return view('sectors.edit', compact('sector'));
     }
@@ -84,6 +89,7 @@ class SectorsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Sector::find($id));
         $sector = Sector::findOrFail($id);
 
         $messages = array(
@@ -110,10 +116,20 @@ class SectorsController extends Controller
      */
     public function destroy($id)
     {
-        if(Sector::destroy($id)){
+        $this->authorize('delete', Sector::find($id));
+        
+        try{
+            Sector::destroy($id);
+            return back()->with('status', 'Sektor je uspešno uklonjen');
+        } catch(\Illuminate\Database\QueryException $e){
+            \App\Facades\CustomLog::warning('Neuspeli pokušaj brisanja sektora od strane korisnika: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            return back()->with('status', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.');
+        }
+
+        /*if(Sector::destroy($id)){
             return back()->with('status', 'Sektor je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
-        }
+        }*/
     }
 }

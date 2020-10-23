@@ -20,17 +20,14 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <x-jet-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                            <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                                <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                            </button>
-                        @else
+            <div class="flex justify-end">
+
+                <!-- Notifications menu -->
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-jet-dropdown width="48">
+                        <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>{{ Auth::user()->name }}</div>
+                                <div>Notifikacije</div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -38,80 +35,116 @@
                                     </svg>
                                 </div>
                             </button>
-                        @endif
-                    </x-slot>
+                        </x-slot>
 
-                    @foreach (Auth::user()->allTeams() as $team)
-                        <x-jet-switchable-team :team="$team" />
-                    @endforeach
-
-                    <x-slot name="content">
-                        <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Upravljanje nalogom') }}
-                        </div>
-
-                        <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                            {{ __('Profil') }}
-                        </x-jet-dropdown-link>
-
-                        @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                            <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                {{ __('API Tokeni') }}
-                            </x-jet-dropdown-link>
-                        @endif
-
-                        <div class="border-t border-gray-100"></div>
-                        
-                        <!-- Team Management -->
-                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                        <x-slot name="content">
+                            <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Upravljanje timovima') }}
+                                {{ __('Obaveštenja') }}
                             </div>
 
-                            <!-- Team Settings -->
-                            <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                {{ __('Podešavanja tima') }}
+                            <x-jet-dropdown-link href="#">
+                                {{ __('Alert 1') }}
+                            </x-jet-dropdown-link>
+                        </x-slot>
+
+                    </x-jet-dropdown>
+                </div>
+
+                <!-- Settings Dropdown -->
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-jet-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                </button>
+                            @else
+                                <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    <div>{{ Auth::user()->name }}</div>
+
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            @endif
+                        </x-slot>
+
+                        @foreach (Auth::user()->allTeams() as $team)
+                            <x-jet-switchable-team :team="$team" />
+                        @endforeach
+
+                        <x-slot name="content">
+                            <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Upravljanje nalogom') }}
+                            </div>
+
+                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                                {{ __('Profil') }}
                             </x-jet-dropdown-link>
 
-                            @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                    {{ __('Kreiraj novi tim') }}
+                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                                    {{ __('API Tokeni') }}
                                 </x-jet-dropdown-link>
-                            @endcan
+                            @endif
 
                             <div class="border-t border-gray-100"></div>
-                        @endif
+                            
+                            <!-- Team Management -->
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Upravljanje timovima') }}
+                                </div>
 
-                        <!-- User Management -->
-                        @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Upravljanje korisnicima') }}
-                            </div>
+                                <!-- Team Settings -->
+                                <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                    {{ __('Podešavanja tima') }}
+                                </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('users.index') }}">
-                                {{ __('Lista korisnika') }}
-                            </x-jet-dropdown-link>
+                                @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                                    <x-jet-dropdown-link href="{{ route('teams.create') }}">
+                                        {{ __('Kreiraj novi tim') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
 
-                            <x-jet-dropdown-link href="{{ route('users.create') }}">
-                                {{ __('Kreiraj novog korisnika') }}
-                            </x-jet-dropdown-link>
+                                <div class="border-t border-gray-100"></div>
+                            @endif
 
-                            <div class="border-t border-gray-100"></div>
-                        @endif
+                            <!-- User Management -->
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Upravljanje korisnicima') }}
+                                </div>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                                <x-jet-dropdown-link href="{{ route('users.index') }}">
+                                    {{ __('Lista korisnika') }}
+                                </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                            this.closest('form').submit();">
-                                {{ __('Odjava') }}
-                            </x-jet-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-jet-dropdown>
+                                <x-jet-dropdown-link href="{{ route('users.create') }}">
+                                    {{ __('Kreiraj novog korisnika') }}
+                                </x-jet-dropdown-link>
+
+                                <div class="border-t border-gray-100"></div>
+                            @endif
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-jet-dropdown-link href="{{ route('logout') }}"
+                                                    onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                    {{ __('Odjava') }}
+                                </x-jet-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-jet-dropdown>
+                </div>
+
             </div>
 
             <!-- Hamburger -->

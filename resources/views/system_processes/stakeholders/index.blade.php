@@ -37,7 +37,7 @@
                                     <th>Zainteresovana strana</th>
                                     <th>Potrebe i očekivanja zainteresovane strane</th>
                                     <th>Odgovor preduzeća na potrebe i očekivanja</th>
-                                    @canany(['update', 'delete'], $stakeholders->first())<th class="no-sort">Akcije</th>@endcanany
+                                    <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>

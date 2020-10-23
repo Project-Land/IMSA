@@ -42,7 +42,7 @@
                             <tbody>
                             @foreach($documents as $document)
                                 <tr>
-                                    <td>{{ $document->document_name }}</td>
+                                    <td class="text-center">{{ $document->document_name }}</td>
                                     <td class="text-center">{{ $document->version }}</td>
                                     @if($route_name == 'procedures')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">

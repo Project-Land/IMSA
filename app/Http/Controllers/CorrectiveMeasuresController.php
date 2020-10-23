@@ -161,6 +161,10 @@ class CorrectiveMeasuresController extends Controller
         $correctiveMeasure->measure_effective = $request->measure_effective != null ? $request->measure_effective : null;
         $correctiveMeasure->measure_approval_date = $request->measure_approval == '1' ? Carbon::now() : null;
 
+        if($request->measure_status == 0){
+            $correctiveMeasure->measure_effective = null;
+        }
+
         $correctiveMeasure->save();
         $request->session()->flash('status', 'Korektivna mera je uspešno izmenjena!');
         return redirect('/corrective-measures');

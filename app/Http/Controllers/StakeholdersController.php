@@ -76,7 +76,8 @@ class StakeholdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $stakeholder = Stakeholder::findOrFail($id);
+        abort(404);
     }
 
     /**

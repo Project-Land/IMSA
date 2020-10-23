@@ -43,7 +43,7 @@
             <div class="dropdown-menu">
                 <!-- Dropdown menu links -->
                 <a class="dropdown-item" href="/sectors">Lista sektora</a>
-                <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>
+                @can('create', App\Models\Sector::class)<a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>@endcan
             </div>
         </div>
 

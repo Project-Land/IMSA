@@ -65,6 +65,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
+    Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
+    Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
+
     Route::resource('users', UserController::class);
     
 });

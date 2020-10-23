@@ -39,7 +39,7 @@
                                     <th>Status</th>
                                     <th>Datum ažuriranja</th>
                                     <th>Datum sledećeg preispitivanja</th>
-                                    @canany(['update', 'delete'], $suppliers->first())<th class="no-sort">Akcije</th>@endcanany
+                                    <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>

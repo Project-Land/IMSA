@@ -32,7 +32,7 @@
                         <div class="col-sm-8">
                             <form class="form-inline">
                                 <label for="year" class="mr-3">Godina</label>
-                                <select name="year" id="year" class="form-control w-25 mr-2">
+                                <select name="year" id="reviews-year" class="form-control w-25 mr-2">
                                     @foreach(range(date('Y')-1, date('Y')+10) as $year)
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
@@ -50,7 +50,7 @@
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-body">
                                 @foreach($msr as $m)
                                 <tr>
                                     <td class="text-center">Zapisnik sa preispitivanja {{ $m->year }}</td>
@@ -158,5 +158,58 @@
                 console.log(error)
             })
     }
+
+    function deleteSingleReview(id){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let url = "/management-system-reviews/delete/"+id;
+        
+        if(confirm('Da li ste sigurni?')){
+            $.ajax({
+                type: "delete",
+                url: url,
+                data: { 
+                    id: id
+                },
+                success: function(result) {
+                    alert('Zapisnik je uspešno uklonjen');
+                    location.reload();
+                },
+                error: function(result) {
+                    alert('error', result);
+                }
+            });
+        }
+    }
+
+    $('#reviews-year').change( () => {
+        let year = $('#reviews-year').val();
+        const data = {'year': year}
+        axios.post('/management-system-reviews/get-data', { data })
+        .then((response) => {
+            if(response.data.length == 0){
+                $('#table-body').html('<td colspan="2" class="dataTables_empty" valign="top">Nema podataka</td>');
+            }
+            else{
+                let allData = "";
+                $.each(response.data, function (i, item){
+                    let row = `<tr>
+                            <td class="text-center">Zapisnik sa preispitivanja ${ item.year }</td>
+                            <td class="text-center">
+                                <a href="/management-system-reviews/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                <a style="cursor: pointer; color: red;" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                            </td>
+                            </tr>`;
+                    allData += row;
+                });
+                $('#table-body').html(allData)
+            }
+        }, (error) => {
+            console.log(error);
+        })
+    });
 
 </script>

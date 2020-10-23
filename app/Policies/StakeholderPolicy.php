@@ -15,32 +15,36 @@ class StakeholderPolicy
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
 
-    public function before(User $user)
+
+    public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if ($role == "admin" || $role == "super-admin") {
+        if(($role == "admin" || $role == "super-admin")) {
             return true;
         }
     }
 
-    public function create(User $user)
-    {
-        
-    }
-
     public function update(User $user, Stakeholder $stakeholder)
     {
-        
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $stakeholder->team_id){
+            if(($role == "admin" || $role == "super-admin")) {
+                return true;
+            }
+            return true;
+        }
     }
 
     public function delete(User $user, Stakeholder $stakeholder)
     {
-
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $stakeholder->team_id){
+            if(($role == "admin" || $role == "super-admin")) {
+                return true;
+            }
+            return true;
+        }
     }
 }
 
