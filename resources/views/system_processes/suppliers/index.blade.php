@@ -24,9 +24,11 @@
         <div class="col">
 
             <div class="card">
+                @can('create', App\Models\Supplier::class)
                 <div class="card-header">
                     <a class="btn btn-info" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> Kreiraj isporučioca</a>
                 </div>
+                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -37,7 +39,7 @@
                                     <th>Status</th>
                                     <th>Datum ažuriranja</th>
                                     <th>Datum sledećeg preispitivanja</th>
-                                    <th class="no-sort">Akcije</th>
+                                    @canany(['update', 'delete'], $suppliers->first())<th class="no-sort">Akcije</th>@endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,6 +50,7 @@
                                     <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
+                                    @canany(['update', 'delete'], $s)
                                     <td class="text-center">
                                         <a href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">
@@ -56,6 +59,7 @@
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
+                                    @endcanany
                                 </tr>   
                                 @endforeach
                             </tbody>

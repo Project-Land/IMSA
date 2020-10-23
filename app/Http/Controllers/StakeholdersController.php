@@ -12,6 +12,7 @@ class StakeholdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         if($this::getStandard() == null){
@@ -28,6 +29,8 @@ class StakeholdersController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Stakeholder::class);
+
         return view('system_processes.stakeholders.create');
     }
 
@@ -39,6 +42,8 @@ class StakeholdersController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Stakeholder::class);
+        
         $messages = array(
             'name.required' => 'Unesite naziv / ime zainteresovane strane',
             'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
@@ -82,6 +87,8 @@ class StakeholdersController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Stakeholder::find($id));
+
         $stakeholder = Stakeholder::findOrFail($id);
         return view('system_processes.stakeholders.edit', compact('stakeholder'));
     }
@@ -95,6 +102,8 @@ class StakeholdersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Stakeholder::find($id));
+
         $stakeholder = Stakeholder::findOrFail($id);
 
         $messages = array(
@@ -129,6 +138,8 @@ class StakeholdersController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Stakeholder::find($id));
+
         if(Stakeholder::destroy($id)){
             return back()->with('status', 'Zainteresovana strana je uspešno uklonjena');
         }else{
