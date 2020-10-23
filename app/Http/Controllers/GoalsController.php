@@ -31,9 +31,8 @@ class GoalsController extends Controller
         }
 
         $year = $request->year;
-        $years = range(2010, date('Y') + 10);
         $goals = Goal::where('year', $year)->where('standard_id', $standardId)->get();
-        return view('system_processes.goals.index', compact('goals', 'years'));
+        return view('system_processes.goals.index', compact('goals'));
     }
 
     /**
@@ -87,6 +86,9 @@ class GoalsController extends Controller
         $goal->resources = $request->resources;
         $goal->activities = $request->activities;
         $goal->analysis = $request->analysis != null ? $request->analysis : null;
+
+        $goal->team_id = Auth::user()->current_team_id;
+        $goal->user_id = Auth::user()->id;
 
         $goal->save();
         $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
