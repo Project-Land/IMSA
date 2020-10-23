@@ -10,4 +10,13 @@ class Stakeholder extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'standard_id', 'expectation', 'response'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

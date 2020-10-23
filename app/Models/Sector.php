@@ -14,4 +14,12 @@ class Sector extends Model
     public function correctiveMeasure(){
         return $this->belongsTo('App\Models\CorrectiveMeasure');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

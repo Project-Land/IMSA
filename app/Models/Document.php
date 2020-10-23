@@ -13,4 +13,13 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\Sector');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

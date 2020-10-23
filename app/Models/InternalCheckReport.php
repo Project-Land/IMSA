@@ -24,4 +24,13 @@ class InternalCheckReport extends Model
     {
         return $this->hasMany('App\Models\Inconsistency');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

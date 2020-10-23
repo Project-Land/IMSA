@@ -20,5 +20,15 @@ class Standard extends Model
     public function correctiveMeasure(){
         return $this->belongsTo('App\Models\CorrectiveMeasure');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function teams()
+    {
+        return $this->belongsToMany('App\Models\Team');
+    }
+
    
 }

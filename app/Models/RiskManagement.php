@@ -23,4 +23,13 @@ class RiskManagement extends Model
         }
         return "Zatvoreno ".$rm_closed. " mera od ukupno ".$rm_total.", što čini ".round($rm_percentage)."%";;
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

@@ -22,4 +22,13 @@ class InternalCheck extends Model
     public function internalCheckReport(){
         return $this->belongsTo('App\Models\InternalCheckReport');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

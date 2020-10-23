@@ -23,4 +23,13 @@ class Supplier extends Model
 
         return "Odobreno ".$sup_approved. " isporučilaca od ukupno ".$sup_total.", što čini ".round($sup_percentage)."%";
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
 }

@@ -26,8 +26,9 @@
 
             <div class="card">
                 <div class="card-header">
+                @can('update', $internal_checks[0])
                     <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
-                    
+                    @endcan
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -53,10 +54,12 @@
                                     <td class="text-center">
                                     @if(!isset($check->planIp->checked_date))
                                        {{''}}
-                                      
+                                       @can('update', $internal_checks[0])   
                                     <a href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
+                                    @endcan
                                     @else
                                     <span class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
+                                    @can('update', $internal_checks[0])
                                     <a href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                     <form class="inline" action="{{ route('plan-ip.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
@@ -64,12 +67,12 @@
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                     </form>
                                     @endif
-                                    
+                                    @endcan
                             
                                     </td>
-
+                                  
                                     <td class="text-center">
-
+                                    @can('update', $internal_checks[0])
                                     @if(!isset($check->internalCheckReport->id))
                                     @if(isset($check->planIp->checked_date))
                                     <a href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
@@ -87,19 +90,25 @@
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcan
                                     </td>
                                     @endif
+
                                     
-                                       
+                                  
+    
+
                                     <td class="text-center">
-                                       
+                                    @can('update', $internal_checks[0])
                                         <a href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcan
                                     </td>
+                                    
                                 </tr>   
                             @endforeach
                             </tbody>

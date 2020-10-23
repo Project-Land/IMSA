@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\InternalCheck;
+
 use App\Models\PlanIp;
-use Faker\Provider\ar_JO\Internet;
 use Illuminate\Http\Request;
+use App\Models\InternalCheck;
+use App\Models\Team;
+use Faker\Provider\ar_JO\Internet;
 
 class InternalCheckController extends Controller
 {
@@ -26,7 +28,7 @@ class InternalCheckController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    { 
         return view('system_processes.internal_check.create');
     }
 
