@@ -29,6 +29,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Supplier::class);
         return view('system_processes.suppliers.create');
     }
 
@@ -40,6 +41,7 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Supplier::class);
         $supplier = new Supplier();
 
         $messages = array(
@@ -93,6 +95,7 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Supplier::find($id));
         $supplier = Supplier::findOrFail($id);
         return view('system_processes.suppliers.edit', compact('supplier'));
     }
@@ -106,6 +109,8 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Supplier::find($id));
+
         $supplier = Supplier::findOrFail($id);
         
         $messages = array(
@@ -146,6 +151,8 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Supplier::find($id));
+
         if(Supplier::destroy($id)){
             return back()->with('status', 'Odabrani isporučilac je uspešno uklonjen');
         }else{

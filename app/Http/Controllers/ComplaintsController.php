@@ -30,6 +30,7 @@ class ComplaintsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Complaint::class);
         return view('system_processes.complaints.create');
     }
 
@@ -41,6 +42,9 @@ class ComplaintsController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->authorize('create', Complaint::class);
+
         $complaint = new Complaint();
 
         $messages = array(
@@ -98,6 +102,8 @@ class ComplaintsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Complaint::find($id));
+
         $complaint = Complaint::findOrFail($id);
         return view('system_processes.complaints.edit', compact('complaint'));
     }
@@ -111,6 +117,8 @@ class ComplaintsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Complaint::find($id));
+
         $complaint = Complaint::findOrFail($id);
 
         $messages = array(
@@ -156,6 +164,8 @@ class ComplaintsController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Complaint::find($id));
+
         if(Complaint::destroy($id)){
             return back()->with('status', 'Reklamacija je uspešno obrisana');
         }else{
