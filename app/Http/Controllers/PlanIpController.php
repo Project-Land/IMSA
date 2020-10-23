@@ -59,6 +59,7 @@ class PlanIpController extends Controller
     public function edit($id)
     {
         $plan_ip=PlanIp::findOrFail($id);
+        $this->authorize('update',$plan_ip);
         return view('system_processes.plan_ip.edit',['planIp'=> $plan_ip]);
     }
 
@@ -72,6 +73,7 @@ class PlanIpController extends Controller
     public function update(Request $request, $id)
     {
         $planIp=PlanIp::findOrFail($id);
+        $this->authorize('update',$planIp);
         $validated=$request->validate([
             'checked_date'=>'required|date',
             'checked_sector'=>'required',
@@ -91,7 +93,8 @@ class PlanIpController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   $plan_ip=PlanIp::findOrFail($id);
+        $this->authorize('update',$plan_ip);
         PlanIp::destroy($id);
         return back()->with('status', 'Plan IP je uspešno uklonjen');
     }

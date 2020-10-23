@@ -59,7 +59,8 @@ class InternalCheckReportPolicy
      */
     public function update(User $user, InternalCheckReport $internalCheckReport)
     {
-        //
+        if($user->id===$internalCheckReport->internalCheck->user->id)
+          return true;
     }
 
     /**
@@ -71,7 +72,8 @@ class InternalCheckReportPolicy
      */
     public function delete(User $user, InternalCheckReport $internalCheckReport)
     {
-        //
+        if($user->id===$internalCheckReport->internalCheck->user->id)
+          return true;
     }
 
     /**

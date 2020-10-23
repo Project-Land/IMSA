@@ -59,7 +59,8 @@ class CorrectiveMeasurePolicy
      */
     public function update(User $user, CorrectiveMeasure $correctiveMeasure)
     {
-        //
+        if($user->id === $correctiveMeasure->inconsistency->InternalCheckReport->internalCheck->user->id)
+        return true;
     }
 
     /**

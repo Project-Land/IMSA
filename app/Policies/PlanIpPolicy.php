@@ -2,13 +2,19 @@
 
 namespace App\Policies;
 
-use App\Models\InternalCheck;
+use App\Models\PlanIp;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class InternalCheckPolicy
+class PlanIpPolicy
 {
     use HandlesAuthorization;
+
+    public function before(User $user)
+    {
+        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
+        return true; 
+    }
 
     /**
      * Determine whether the user can view any models.
@@ -16,12 +22,6 @@ class InternalCheckPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
-        return true; 
-    }
-    
     public function viewAny(User $user)
     {
         //
@@ -31,12 +31,12 @@ class InternalCheckPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\InternalCheck  $internalCheck
+     * @param  \App\Models\PlanIp  $planIp
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, PlanIp $planIp)
     {
-        return true;
+        //
     }
 
     /**
@@ -54,23 +54,22 @@ class InternalCheckPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\InternalCheck  $internalCheck
+     * @param  \App\Models\PlanIp  $planIp
      * @return mixed
      */
-    public function update(User $user, InternalCheck $internalCheck)
+    public function update(User $user, PlanIp $planIp)
     {
-        if($user->id === $internalCheck->user->id)
-         return true;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\InternalCheck  $internalCheck
+     * @param  \App\Models\PlanIp  $planIp
      * @return mixed
      */
-    public function delete(User $user, InternalCheck $internalCheck)
+    public function delete(User $user, PlanIp $planIp)
     {
         //
     }
@@ -79,10 +78,10 @@ class InternalCheckPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\InternalCheck  $internalCheck
+     * @param  \App\Models\PlanIp  $planIp
      * @return mixed
      */
-    public function restore(User $user, InternalCheck $internalCheck)
+    public function restore(User $user, PlanIp $planIp)
     {
         //
     }
@@ -91,10 +90,10 @@ class InternalCheckPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\InternalCheck  $internalCheck
+     * @param  \App\Models\PlanIp  $planIp
      * @return mixed
      */
-    public function forceDelete(User $user, InternalCheck $internalCheck)
+    public function forceDelete(User $user, PlanIp $planIp)
     {
         //
     }

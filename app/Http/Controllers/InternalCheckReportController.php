@@ -28,6 +28,7 @@ class InternalCheckReportController extends Controller
     public function createReport($id)
     {
         $internalCheck=InternalCheck::findOrFail($id);
+        $this->authorize('update',$internalCheck);
         return view('system_processes.internal_check_report.create',['internalCheck'=>$internalCheck]);
     }
 
@@ -39,11 +40,10 @@ class InternalCheckReportController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            
-            
-            'specification' => 'required'
-            
+        $this->authorize('create',InternalCheck::class);
+        $validatedData = $request->validate([ 
+
+            'specification' => 'required'    
         ]);
 
         $recommendationData = $request->validate([
@@ -59,8 +59,8 @@ class InternalCheckReportController extends Controller
             'newInput1' => 'string',
             'newInput2' => 'string',
             'newInput3' => 'string',
-            'newInput4' => 'string',
             'newInput4' => 'string'
+            
             
         ]);
 
@@ -111,6 +111,7 @@ class InternalCheckReportController extends Controller
     {
         $internal_check_report=InternalCheckReport::where('id',$id)->with('internalCheck','recommendations','inconsistencies')->get();
         $internal_check_report=$internal_check_report[0];
+        $this->authorize('update',$internal_check_report);
         return view('system_processes.internal_check_report.edit',['internalCheckReport'=>$internal_check_report]);
     }
 
@@ -251,9 +252,7 @@ class InternalCheckReportController extends Controller
     
             $rec=new Recommendation();
             $rec->description=$v;
-            $internal_check_report->recommendations()->save($rec);
-            
-            
+            $internal_check_report->recommendations()->save($rec);          
            
         }
 

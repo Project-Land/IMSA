@@ -29,6 +29,7 @@ class InternalCheckController extends Controller
      */
     public function create()
     { 
+        $this->authorize('create',InternalCheck::class);
         return view('system_processes.internal_check.create');
     }
 
@@ -40,6 +41,7 @@ class InternalCheckController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validate([
             'date' => 'required',
             'sector' => 'required',
@@ -77,6 +79,7 @@ class InternalCheckController extends Controller
     public function edit($id)
     {
         $internal_check=InternalCheck::findOrFail($id);
+        $this->authorize('update',$internal_check);
         return view('system_processes.internal_check.edit',['internalCheck'=>$internal_check]);
     }
 
@@ -89,6 +92,10 @@ class InternalCheckController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $internal_check=InternalCheck::findOrfail($id);
+        $this->authorize('update',$internal_check);
+
         $validatedData = $request->validate([
             'sector' => 'required',
             'leaders' => 'required',
@@ -96,7 +103,7 @@ class InternalCheckController extends Controller
             'date'=> 'required|date'
         ]);
         
-        $internal_check=InternalCheck::findOrfail($id);
+      
         $internal_check->update($validatedData);
         
         $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
@@ -113,6 +120,8 @@ class InternalCheckController extends Controller
      */
     public function destroy($id)
     {
+        $internal_check=InternalCheck::findOrfail($id);
+        $this->authorize('delete',$internal_check);
         InternalCheck::destroy($id);
         return back()->with('status', 'Godišnji plan je uspešno uklonjen');
     }

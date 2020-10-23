@@ -46,6 +46,8 @@ class CorrectiveMeasuresController extends Controller
      */
     public function store(Request $request)
     {
+        $correctiveMeasure = new CorrectiveMeasure();
+       
         $messages = array(
             'standard.required' => 'Izaberite standard',
             'sector.required' => 'Izaberite organizacionu celinu',
@@ -64,7 +66,7 @@ class CorrectiveMeasuresController extends Controller
             'measure' => 'required',
         ], $messages);
 
-        $correctiveMeasure = new CorrectiveMeasure();
+       
 
         $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)->where('standard_id', $request->standard)->count() + 1;
 
@@ -111,9 +113,10 @@ class CorrectiveMeasuresController extends Controller
      */
     public function edit($id)
     {
+        $corrective_measure = CorrectiveMeasure::findOrFail($id);
+        $this->authorize('update',$corrective_measure);
         $standards = Standard::all();
         $sectors = Sector::all();
-        $corrective_measure = CorrectiveMeasure::findOrFail($id);
         return view('system_processes.corrective_measures.edit', compact('corrective_measure', 'standards', 'sectors'));
     }
 
@@ -127,6 +130,7 @@ class CorrectiveMeasuresController extends Controller
     public function update(Request $request, $id)
     {
         $correctiveMeasure = CorrectiveMeasure::findOrFail($id);
+        $this->authorize('update',$correctiveMeasure);
 
         $messages = array(
             'standard.required' => 'Izaberite standard',
