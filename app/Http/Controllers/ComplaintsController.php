@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Complaint;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintsController extends Controller
 {
@@ -19,7 +20,7 @@ class ComplaintsController extends Controller
             return redirect('/');
         }
 
-        $complaints = Complaint::where('standard_id', $standardId)->get();
+        $complaints = Complaint::where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.complaints.index', compact('complaints'));
     }
 

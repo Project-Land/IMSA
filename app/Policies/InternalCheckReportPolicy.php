@@ -12,7 +12,8 @@ class InternalCheckReportPolicy
 
     public function before(User $user)
     {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
+        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' ||
+        $user->allTeams()->first()->membership->role==='editor')
         return true; 
     }
 

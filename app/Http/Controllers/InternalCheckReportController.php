@@ -16,8 +16,7 @@ class InternalCheckReportController extends Controller
 {
     public function index()
     {   
-        $internal_checks=InternalCheckReport::all();
-        return view('system_processes.internal_check.index',['internal_checks'=>$internal_checks]);
+       //
     }
 
     /**

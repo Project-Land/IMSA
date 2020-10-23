@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Standard;
-use App\Models\Sector;
-use App\Models\CorrectiveMeasure;
 use Carbon\Carbon;
+use App\Models\Sector;
+use App\Models\Standard;
+use Illuminate\Http\Request;
+use App\Models\CorrectiveMeasure;
+use Illuminate\Support\Facades\Auth;
 
 class CorrectiveMeasuresController extends Controller
 {
@@ -22,7 +23,7 @@ class CorrectiveMeasuresController extends Controller
             return redirect('/');
         }
 
-        $measures = CorrectiveMeasure::with('inconsistency')->get();
+        $measures = CorrectiveMeasure::where('team_id',Auth::user()->current_team_id)->with('inconsistency')->get();
         return view('system_processes.corrective_measures.index', compact('measures'));
     }
 
@@ -33,6 +34,7 @@ class CorrectiveMeasuresController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',CorrectiveMeasure::class);
         $standards = Standard::all();
         $sectors = Sector::all();
         return view('system_processes.corrective_measures.create', compact('standards', 'sectors'));

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ManagementSystemReview;
 use App\Models\Goal;
-use App\Models\CorrectiveMeasure;
 use App\Models\PlanIp;
 use App\Models\Supplier;
+use Illuminate\Http\Request;
 use App\Models\RiskManagement;
+use App\Models\CorrectiveMeasure;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ManagementSystemReview;
 use App\Http\Requests\StoreManagementSystemReview;
 
 class ManagementSystemReviewsController extends Controller
@@ -24,7 +25,7 @@ class ManagementSystemReviewsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $msr = ManagementSystemReview::where('standard_id', $standardId)->get();
+        $msr = ManagementSystemReview::where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.management_system_reviews.index', compact('msr'));
     }
 

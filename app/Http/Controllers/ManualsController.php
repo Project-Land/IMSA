@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManualsController extends Controller
 {
@@ -18,7 +19,7 @@ class ManualsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'manual')->where('standard_id', $standardId)->get();
+        $documents = Document::where('doc_category', 'manual')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         $folder = "manuals";
         $route_name = "manuals";
         return view('documents.index', compact('documents', 'folder', 'route_name'));

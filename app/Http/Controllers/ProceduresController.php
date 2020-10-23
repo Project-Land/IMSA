@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Document;
 use App\Models\Sector;
+use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProceduresController extends Controller
 {
@@ -19,7 +20,7 @@ class ProceduresController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'procedure')->where('standard_id', $standardId)->get();
+        $documents = Document::where('doc_category', 'procedure')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         $folder = "procedure";
         $route_name = "procedures";
         return view('documents.index', compact('documents', 'folder', 'route_name'));

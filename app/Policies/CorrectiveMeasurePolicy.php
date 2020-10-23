@@ -47,7 +47,7 @@ class CorrectiveMeasurePolicy
      */
     public function create(User $user)
     {
-        //
+       //
     }
 
     /**
