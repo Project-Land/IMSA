@@ -12,7 +12,8 @@ class InternalCheckReportPolicy
 
     public function before(User $user)
     {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
+        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' ||
+        $user->allTeams()->first()->membership->role==='editor')
         return true; 
     }
 
@@ -59,7 +60,8 @@ class InternalCheckReportPolicy
      */
     public function update(User $user, InternalCheckReport $internalCheckReport)
     {
-        //
+        if($user->id===$internalCheckReport->internalCheck->user->id)
+          return true;
     }
 
     /**
@@ -71,7 +73,8 @@ class InternalCheckReportPolicy
      */
     public function delete(User $user, InternalCheckReport $internalCheckReport)
     {
-        //
+        if($user->id===$internalCheckReport->internalCheck->user->id)
+          return true;
     }
 
     /**

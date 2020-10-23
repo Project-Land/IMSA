@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RiskManagement;
+use Illuminate\Support\Facades\Auth;
 
 class RiskManagementController extends Controller
 {
@@ -17,7 +18,7 @@ class RiskManagementController extends Controller
         if($this::getStandard() == null){
             return redirect('/');
         }
-        $riskManagements = RiskManagement::where('standard_id', $this::getStandard())->get();
+        $riskManagements = RiskManagement::where([['standard_id', $this::getStandard()],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.risk_management.index', compact('riskManagements'));
     }
 

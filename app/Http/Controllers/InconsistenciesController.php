@@ -80,7 +80,9 @@ class InconsistenciesController extends Controller
      */
     public function destroy($id)
     {
+        /*
         Inconsistency::destroy($id);
         return back()->with('status','Preporuka je uspešno izbrisana');
+        */
     }
 }

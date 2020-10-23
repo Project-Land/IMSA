@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Supplier;
 use \Carbon\Carbon;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuppliersController extends Controller
 {
@@ -18,7 +19,7 @@ class SuppliersController extends Controller
         if($this::getStandard() == null){
             return redirect('/');
         }
-        $suppliers = Supplier::where('standard_id', $this::getStandard())->get();
+        $suppliers = Supplier::where([['standard_id', $this::getStandard()],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.suppliers.index', compact('suppliers'));
     }
 

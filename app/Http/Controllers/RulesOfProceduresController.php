@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Document;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class RulesOfProceduresController extends Controller
 {
@@ -20,7 +21,7 @@ class RulesOfProceduresController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'rules_procedure')->where('standard_id', $standardId)->get();
+        $documents = Document::where('doc_category', 'rules_procedure')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         $folder = "rules_of_procedure";
         $route_name = "rules-of-procedures";
         return view('documents.index', compact('documents', 'folder', 'route_name'));

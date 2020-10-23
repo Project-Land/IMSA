@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Training;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingsController extends Controller
 {
@@ -19,7 +20,7 @@ class TrainingsController extends Controller
             return redirect('/');
         }
 
-        $trainingPlans = Training::where('standard_id', $standardId)->where('year', date('Y'))->get();
+        $trainingPlans = Training::where('standard_id', $standardId)->where([['year', date('Y')],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 

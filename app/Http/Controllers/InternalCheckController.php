@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Team;
+use App\Models\User;
 use App\Models\PlanIp;
 use Illuminate\Http\Request;
 use App\Models\InternalCheck;
-use App\Models\Team;
 use Faker\Provider\ar_JO\Internet;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+
+
 
 class InternalCheckController extends Controller
 {
@@ -16,9 +22,12 @@ class InternalCheckController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    
     public function index()
     {   
-        $internal_checks=InternalCheck::all();
+        $user=Auth::user();
+        $internal_checks=InternalCheck::where('team_id',$user->current_team_id)->get();
         return view('system_processes.internal_check.index',['internal_checks'=>$internal_checks]);
     }
 
@@ -29,6 +38,7 @@ class InternalCheckController extends Controller
      */
     public function create()
     { 
+        $this->authorize('create',InternalCheck::class);
         return view('system_processes.internal_check.create');
     }
 
@@ -40,14 +50,17 @@ class InternalCheckController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validate([
             'date' => 'required',
             'sector' => 'required',
             'leaders' => 'required',
             'standard_id' => 'required',
         ]);
-        $internalCheck=InternalCheck::create($validatedData);
+       $internalCheck=InternalCheck::create($validatedData);
        $planIp=new PlanIp();
+       //$team=Team::findOrFail(Auth::user()->current_team_id);
+       //$count=$team->internalChecks()->count();
        $planIp->save();
        $planIp->name=$planIp->id.'/'.date('Y');
        $planIp->save();
@@ -77,6 +90,7 @@ class InternalCheckController extends Controller
     public function edit($id)
     {
         $internal_check=InternalCheck::findOrFail($id);
+        $this->authorize('update',$internal_check);
         return view('system_processes.internal_check.edit',['internalCheck'=>$internal_check]);
     }
 
@@ -89,6 +103,10 @@ class InternalCheckController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $internal_check=InternalCheck::findOrfail($id);
+        $this->authorize('update',$internal_check);
+
         $validatedData = $request->validate([
             'sector' => 'required',
             'leaders' => 'required',
@@ -96,7 +114,7 @@ class InternalCheckController extends Controller
             'date'=> 'required|date'
         ]);
         
-        $internal_check=InternalCheck::findOrfail($id);
+      
         $internal_check->update($validatedData);
         
         $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
@@ -113,6 +131,8 @@ class InternalCheckController extends Controller
      */
     public function destroy($id)
     {
+        $internal_check=InternalCheck::findOrfail($id);
+        $this->authorize('delete',$internal_check);
         InternalCheck::destroy($id);
         return back()->with('status', 'Godišnji plan je uspešno uklonjen');
     }

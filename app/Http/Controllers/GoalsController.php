@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Goal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GoalsController extends Controller
 {
@@ -18,7 +19,7 @@ class GoalsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $goals = Goal::where('standard_id', $standardId)->get();
+        $goals = Goal::where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
         return view('system_processes.goals.index', ['goals' => $goals]);
     }
 

@@ -80,11 +80,11 @@ class RecommendationsController extends Controller
      */
     public function destroy($id)
     {
-        $rec=Recommendation::findOrFail($id);
+    /*  $rec=Recommendation::findOrFail($id);
+        $this->authorize('delete',$rec);
         $report=$rec->report->id;
         $rec->delete();
         return view('system_processes.internal_check_report.edit',['internalCheckReport'=>$report]);
-       // Recommendation::destroy($id);
-       // return back();
+    */
     }
 }

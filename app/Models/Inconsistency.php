@@ -9,7 +9,7 @@ class Inconsistency extends Model
 {
     use HasFactory;
 
-    public function report()
+    public function InternalCheckReport()
     {
         return $this->belongsTo('App\Models\InternalCheckReport');
     }

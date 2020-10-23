@@ -18,7 +18,7 @@ class InternalCheckPolicy
      */
     public function before(User $user)
     {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
+        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' || $user->allTeams()->first()->membership->role==='editor')
         return true; 
     }
     
@@ -36,7 +36,7 @@ class InternalCheckPolicy
      */
     public function view(User $user)
     {
-        return true;
+        //
     }
 
     /**
@@ -59,7 +59,7 @@ class InternalCheckPolicy
      */
     public function update(User $user, InternalCheck $internalCheck)
     {
-        //
+        
     }
 
     /**
