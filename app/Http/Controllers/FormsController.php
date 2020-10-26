@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreFormRequest;
+use App\Http\Requests\UpdateFormRequest;
+use App\Facades\CustomLog;
 
 class FormsController extends Controller
 {
@@ -21,8 +24,8 @@ class FormsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'form')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
-        $folder = "form";
+        $documents = Document::where([ ['doc_category', 'form'], ['standard_id', $standardId], ['team_id',Auth::user()->current_team_id] ])->get();
+        $folder = \Str::snake($this::getCompanyName())."/form";
         $route_name = "forms";
         return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
@@ -34,6 +37,7 @@ class FormsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Document::class);
         return view('documents.create',['url'=> route('forms.store'), 'back' => route('forms.index')]);
     }
 
@@ -43,28 +47,19 @@ class FormsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFormRequest $request)
     {
+        $this->authorize('create', Document::class);
         $document = new Document();
-
-        $messages = array(
-            'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u Word/Excel formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_name.unique' => 'Već postoji dokument sa takvim nazivom',
-            'document_version.required' => 'Unesite verziju dokumenta'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|unique:documents|max:255',
-            'document_version' => 'required',
-            'file' => 'required|max:10000|mimes:doc,docx,xlsx,xls'
-        ], $messages);
 
         $document->doc_category = 'form';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+
+        $document->user_id = Auth::user()->id;
+        $document->team_id = Auth::user()->current_team_id;
+
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/form";
 
         if($request->file('file')){
             $file = $request->file;
@@ -74,9 +69,10 @@ class FormsController extends Controller
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
-            $file->storeAs('/public/form', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
 
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return redirect('/forms');
         }
     }
@@ -101,6 +97,7 @@ class FormsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
         return view('documents.edit', ['document' => $document, 'url' => route('forms.update', $document->id), 'folder' => 'form', 'back' => route('forms.index')]);
     }
@@ -112,26 +109,16 @@ class FormsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFormRequest $request, $id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
-
-        $messages = array(
-            'file.mimes' => 'Fajl mora biti u Word/Excel formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_version.required' => 'Unesite verziju dokumenta'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|max:255',
-            'document_version' => 'required',
-            'file' => 'max:10000|mimes:doc,docx,xlsx,xls,csv'
-        ], $messages);
 
         $document->doc_category = 'form';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/form";
 
         if($request->file('file')){
             $file = $request->file;
@@ -139,11 +126,12 @@ class FormsController extends Controller
             $document->file_name = 'form_'.time().'.'.$file->getClientOriginalExtension();
             $standard = $this::getStandard();
             $document->standard_id = $standard;
-            $file->storeAs('/public/form', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
         }
 
         $document->save();
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return redirect('/forms');
     }
 
@@ -155,8 +143,11 @@ class FormsController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Document::find($id));
+        $doc_name = Document::find($id)->document_name;
+
         if(Document::destroy($id)){
-            //logic for deleting the file from the server
+            CustomLog::info('Dokument Obrazac "'.$doc_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');

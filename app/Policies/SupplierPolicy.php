@@ -54,10 +54,9 @@ class SupplierPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $supplier->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 
@@ -65,10 +64,9 @@ class SupplierPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $supplier->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 

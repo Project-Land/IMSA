@@ -50,7 +50,7 @@ class SectorPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if(($role == "admin" || $role == "super-admin")) {
+        if($role == "admin" || $role == "super-admin") {
             return true;
         }
     }
@@ -66,10 +66,9 @@ class SectorPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $sector->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 
@@ -84,10 +83,9 @@ class SectorPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $sector->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 

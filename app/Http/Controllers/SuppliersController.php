@@ -72,7 +72,8 @@ class SuppliersController extends Controller
         $newDateTime = Carbon::parse(Carbon::now()->toDateTimeString())->addMonths(6);
         $supplier->deadline_date = $newDateTime;
 
-        $supplier->team_id = \Auth::user()->current_team_id;
+        $supplier->team_id = Auth::user()->current_team_id;
+        $supplier->user_id = Auth::user()->id;
 
         $supplier->save();
         $request->session()->flash('status', 'Odabrani isporučilac je uspešno sačuvan!');

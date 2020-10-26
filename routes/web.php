@@ -20,6 +20,7 @@ use App\Http\Controllers\InconsistenciesController;
 use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
+
+    Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
 
     Route::resource('users', UserController::class);
     

@@ -78,6 +78,10 @@
 						<option value="0" {{ $complaint->status == 0 ? "selected" : "" }} >Zatvorena</option>
 					</select>
 				</div>
+				<div class="form-group d-none" id="closing_date_block">
+					<label for="closing_date">Datum zatvaranja:</label>
+					<input class="form-control" type="text" id="closing_date" name="closing_date" value="{{ $complaint->closing_date }}" disabled>
+				</div>
 			</div>
 			<button type="submit" class="btn btn-success">Izmeni</button>
 		</form>
@@ -95,6 +99,16 @@
 			$('#deadline_date').val('');
 			$('#responsible_person').val('');
 			$('#way_of_solving').val('');
+		}
+	})
+
+	$('#status').change( () => {
+		if($('#status').val() == 0){
+			$('#closing_date_block').removeClass('d-none');
+			$('#closing_date').val(new Date().toLocaleDateString('sr-SR', { timeZone: 'CET' }));
+		}
+		else{
+			$('#closing_date_block').addClass('d-none');
 		}
 	})
 </script>

@@ -68,8 +68,6 @@ class CorrectiveMeasuresController extends Controller
             'measure' => 'required',
         ], $messages);
 
-       
-
         $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)->where('standard_id', $request->standard)->count() + 1;
 
         $correctiveMeasure->name = "KKM ".Carbon::now()->year." / ".$counter;
@@ -89,6 +87,9 @@ class CorrectiveMeasuresController extends Controller
         $correctiveMeasure->measure_approval_reason = $request->measure_approval_reason != '' ? $request->measure_approval_reason : null;
         $correctiveMeasure->measure_effective = $request->measure_effective != null ? $request->measure_effective : null;
         $correctiveMeasure->measure_approval_date = $request->measure_approval == '1' ? Carbon::now() : null;
+
+        $correctiveMeasure->user_id = Auth::user()->id;
+        $correctiveMeasure->team_id = Auth::user()->current_team_id;
 
         $correctiveMeasure->save();
         $request->session()->flash('status', 'Korektivna mera je uspešno sačuvana!');

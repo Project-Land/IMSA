@@ -44,7 +44,7 @@
                             <tbody>
                                 @foreach($riskManagements as $risk)
                                 <tr>
-                                    <td>{{ $risk->description }}</td>
+                                    <td class="text-center">{{ $risk->description }}</td>
                                     <td class="text-center">{{ $risk->probability }}</td>
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>

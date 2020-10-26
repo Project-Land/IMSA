@@ -57,6 +57,9 @@ class RiskManagementController extends Controller
         $risk->acceptable = $request->acceptable;
         $risk->total = $request->probability * $request->frequency;
 
+        $risk->user_id = Auth::user()->id;
+        $risk->team_id = Auth::user()->current_team_id;
+
         if($risk->acceptable < $risk->total){
             $count = RiskManagement::whereNotNull('measure')->count() + 1;
             $risk->measure = "Plan za postupanje sa rizikom ".$count;

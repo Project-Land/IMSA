@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sector;
 use App\Models\Team;
+use App\Facades\CustomLog;
 
 class SectorsController extends Controller
 {
@@ -41,15 +42,19 @@ class SectorsController extends Controller
         $this->authorize('create', Sector::class);
         $messages = array(
             'name.required' => 'Unesite naziv sektora',
-            'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera',
-            'name.unique' => 'Već postoji sektor sa takvim nazivom'
+            'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera'
         );
 
         $request->validate([
-            'name' => 'required|unique:sectors|max:190'
+            'name' => 'required|max:190'
         ], $messages);
 
-        $sector = Sector::create(['name' => $request->name, 'team_id' => \Auth::user()->current_team_id, 'user_id' => \Auth::user()->id]);
+        $sector = Sector::create([
+            'name' => $request->name,
+            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => \Auth::user()->id
+        ]);
+        CustomLog::info('Sektor "'.$sector->name.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         
         $request->session()->flash('status', 'Sektor je uspešno kreiran!');
         return redirect('/sectors');
@@ -104,6 +109,8 @@ class SectorsController extends Controller
         $sector->name = $request->name;
         $sector->save();
 
+        CustomLog::info('Sektor "'.$sector->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+
         $request->session()->flash('status', 'Sektor je uspešno izmenjen!');
         return redirect('/sectors');
     }
@@ -117,19 +124,14 @@ class SectorsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', Sector::find($id));
-        
+        $name = Sector::find($id)->name;
         try{
             Sector::destroy($id);
+            CustomLog::info('Sektor "'.$name.'" obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Sektor je uspešno uklonjen');
         } catch(\Illuminate\Database\QueryException $e){
-            \App\Facades\CustomLog::warning('Neuspeli pokušaj brisanja sektora od strane korisnika: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::warning('Neuspeli pokušaj brisanja sektora. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.');
         }
-
-        /*if(Sector::destroy($id)){
-            return back()->with('status', 'Sektor je uspešno uklonjen');
-        }else{
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
-        }*/
     }
 }

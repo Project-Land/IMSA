@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreManualRequest;
+use App\Http\Requests\UpdateManualRequest;
+use App\Facades\CustomLog;
 
 class ManualsController extends Controller
 {
@@ -19,8 +22,8 @@ class ManualsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'manual')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
-        $folder = "manuals";
+        $documents = Document::where([ ['doc_category', 'manual'], ['standard_id', $standardId], ['team_id',Auth::user()->current_team_id] ])->get();
+        $folder = \Str::snake($this::getCompanyName())."/manuals";
         $route_name = "manuals";
         return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
@@ -32,7 +35,13 @@ class ManualsController extends Controller
      */
     public function create()
     {
-        return view('documents.create',['url'=> route('manuals.store'), 'back' => route('manuals.index')]);
+        $this->authorize('create', Document::class);
+        return view('documents.create',
+            [
+                'url' => route('manuals.store'),
+                'back' => route('manuals.index')
+            ]
+        );
     }
 
     /**
@@ -41,28 +50,19 @@ class ManualsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreManualRequest $request)
     {
+        $this->authorize('create', Document::class);
         $document = new Document();
-        
-        $messages = array(
-            'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_name.unique' => 'Već postoji dokument sa takvim nazivom',
-            'document_version.required' => 'Unesite verziju dokumenta'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|unique:documents|max:255',
-            'document_version' => 'required',
-            'file' => 'required|max:10000|mimes:pdf'
-        ], $messages);
 
         $document->doc_category = 'manual';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+
+        $document->user_id = Auth::user()->id;
+        $document->team_id = Auth::user()->current_team_id;
+
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/manuals";
 
         if($request->file('file')){
             $file = $request->file;
@@ -72,9 +72,10 @@ class ManualsController extends Controller
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
-            $file->storeAs('/public/manuals', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
 
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+            CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return redirect('/manuals');
         }
     }
@@ -99,8 +100,16 @@ class ManualsController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
-        return view('documents.edit',['document'=>$document,'url'=>route('manuals.update',$document->id), 'folder' => 'manuals', 'back' => route('manuals.index')]);
+        return view('documents.edit',
+            [
+                'document'=>$document,
+                'url'=>route('manuals.update',$document->id),
+                'folder' => 'manuals',
+                'back' => route('manuals.index')
+            ]
+        );
     }
 
     /**
@@ -110,26 +119,16 @@ class ManualsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateManualRequest $request, $id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
-
-        $messages = array(
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_version.required' => 'Unesite verziju dokumenta'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|max:255',
-            'document_version' => 'required',
-            'file' => 'max:10000|mimes:pdf'
-        ], $messages);
 
         $document->doc_category = 'manual';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
+        
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/manuals";
 
         if($request->file('file')){
             $file = $request->file;
@@ -137,11 +136,12 @@ class ManualsController extends Controller
             $document->file_name = 'manual_'.time().'.'.$file->getClientOriginalExtension();
             $standard = $this::getStandard();
             $document->standard_id = $standard;
-            $file->storeAs('/public/manuals', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
         }
 
         $document->save();
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return redirect('/manuals');
     }
 
@@ -153,10 +153,13 @@ class ManualsController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Document::find($id));
+        $doc_name = Document::find($id)->document_name;
+
         if(Document::destroy($id)){
-            //logic for deleting the file from the server
+            CustomLog::info('Dokument Uputstvo "'.$doc_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Dokument je uspešno uklonjen');
-        }else{
+        } else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

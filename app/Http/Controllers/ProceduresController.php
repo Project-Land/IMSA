@@ -6,6 +6,9 @@ use App\Models\Sector;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreProcedureRequest;
+use App\Http\Requests\UpdateProcedureRequest;
+use App\Facades\CustomLog;
 
 class ProceduresController extends Controller
 {
@@ -14,15 +17,16 @@ class ProceduresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     
     public function index()
     {
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where('doc_category', 'procedure')->where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
-        $folder = "procedure";
-        $route_name = "procedures";
+        $documents = Document::where([ ['doc_category', 'procedure'], ['standard_id', $standardId], ['team_id',Auth::user()->current_team_id] ])->get();
+        $folder = \Str::snake($this::getCompanyName())."/procedure";
+        $route_name = 'procedures';
         return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 
@@ -33,8 +37,9 @@ class ProceduresController extends Controller
      */
     public function create()
     {
-        $sectors = Sector::all();
-        return view('documents.create',['url'=> route('procedures.store'), 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
+        $this->authorize('create', Document::class);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
+        return view('documents.create', ['url' => route('procedures.store'), 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
     }
 
     /**
@@ -43,31 +48,20 @@ class ProceduresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProcedureRequest $request)
     {
+        $this->authorize('create', Document::class);
         $document = new Document();
 
-        $messages = array(
-            'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_name.unique' => 'Već postoji dokument sa takvim nazivom',
-            'document_version.required' => 'Unesite verziju dokumenta',
-            'sector.required' => 'Izaberite pripadajući sektor'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|unique:documents|max:255',
-            'document_version' => 'required',
-            'file' => 'required|max:10000|mimes:pdf',
-            'sector' => 'required'
-        ], $messages);
+        $document->team_id = Auth::user()->current_team_id;
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
         $document->sector_id = $request->sector;
+        $document->user_id = Auth::user()->id;
+
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/procedure";
 
         if($request->file('file')){
             $file = $request->file;
@@ -77,9 +71,10 @@ class ProceduresController extends Controller
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
-            $file->storeAs('/public/procedure', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
 
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+            CustomLog::info('Dokument Procedure "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return redirect('/procedures');
         }
     }
@@ -103,9 +98,10 @@ class ProceduresController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
-        $sectors = Sector::all();
-        return view('documents.edit',['document'=>$document,'url'=>route('procedures.update',$document->id), 'folder' => 'procedure', 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
+        return view('documents.edit', ['document'=>$document, 'url'=>route('procedures.update', $document->id), 'folder' => 'procedure', 'back' => route('procedures.index'), 'category' => 'procedures', 'sectors' => $sectors]);
     }
 
     /**
@@ -115,29 +111,17 @@ class ProceduresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProcedureRequest $request, $id)
     {
+        $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
-
-        $messages = array(
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'document_version.required' => 'Unesite verziju dokumenta',
-            'sector.required' => 'Izaberite pripadajući sektor'
-        );
-
-        $validatedData = $request->validate([
-            'document_name' => 'required|max:255',
-            'document_version' => 'required',
-            'file' => 'max:10000|mimes:pdf',
-            'sector' => 'required'
-        ], $messages);
 
         $document->doc_category = 'procedure';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
         $document->sector_id = $request->sector;
+
+        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/procedure";
 
         if($request->file('file')){
             $file = $request->file;
@@ -145,10 +129,11 @@ class ProceduresController extends Controller
             $document->file_name = 'procedure_'.time().'.'.$file->getClientOriginalExtension();
             $standard = $this::getStandard();
             $document->standard_id = $standard;
-            $file->storeAs('/public/procedure', $document->file_name);
+            $file->storeAs($upload_path, $document->file_name);
         }
 
         $document->save();
+        CustomLog::info('Dokument Procedure "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         return redirect('/procedures');
 
@@ -162,8 +147,10 @@ class ProceduresController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete', Document::find($id));
+        $doc_name = Document::find($id)->document_name;
         if(Document::destroy($id)){
-            //logic for deleting the file from the server
+            CustomLog::info('Dokument Procedure "'.$doc_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');

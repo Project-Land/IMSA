@@ -86,6 +86,9 @@ class TrainingsController extends Controller
         $trainingPlan->final_num_of_employees = $request->final_num_of_employees != null ? $request->final_num_of_employees : null;
         $trainingPlan->rating = $request->rating != null ? $request->rating : null;
 
+        $trainingPlan->user_id = Auth::user()->id;
+        $trainingPlan->team_id = Auth::user()->current_team_id;
+
         $trainingPlan->save();
         $request->session()->flash('status', 'Godišnji plan obuka je uspešno sačuvan!');
         return redirect('/trainings');

@@ -101,6 +101,10 @@
                                 </div>
 
                                 <!-- Team Settings -->
+                                <x-jet-dropdown-link href="{{ route('teams.index') }}">
+                                    {{ __('Lista svih timova') }}
+                                </x-jet-dropdown-link>
+
                                 <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                     {{ __('Podešavanja tima') }}
                                 </x-jet-dropdown-link>

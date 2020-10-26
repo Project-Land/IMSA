@@ -20,7 +20,7 @@ class StakeholderPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if(($role == "admin" || $role == "super-admin")) {
+        if($role == "admin" || $role == "super-admin") {
             return true;
         }
     }
@@ -29,10 +29,9 @@ class StakeholderPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $stakeholder->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 
@@ -40,10 +39,9 @@ class StakeholderPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $stakeholder->team_id){
-            if(($role == "admin" || $role == "super-admin")) {
+            if($role == "admin" || $role == "super-admin") {
                 return true;
             }
-            return true;
         }
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Jetstream;
+use App\Facades\CustomLOg;
 
 class UserController extends Controller
 {
@@ -21,8 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $current_team = \Auth::user()->current_team_id;
-        $users = User::select('users.*', 'teams.name as team_name, teams.id as team_id, teams.user_id', 'team_user.role')->join('team_user', 'users.id', 'team_user.user_id')->join('teams', 'teams.id', 'team_user.team_id')->where('current_team_id', $current_team)->get();
+        $users = User::where('current_team_id', \Auth::user()->current_team_id)->get();
         return view('users.index', compact('users'));
     }
 
@@ -80,6 +80,8 @@ class UserController extends Controller
         );
 
         TeamMemberAdded::dispatch($team, $newTeamMember);
+
+        CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
 
         $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         return redirect('/users');

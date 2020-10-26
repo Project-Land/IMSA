@@ -162,7 +162,7 @@
                             <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
                             <td class="text-center">
                                 <a href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                <a style="cursor: pointer;" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                <a style="cursor: pointer; color: red;" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
                             </td>
                             </tr>`;
                     allData += row;

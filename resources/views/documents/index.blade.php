@@ -25,9 +25,11 @@
         <div class="col">
 
             <div class="card">
+                @can('create', App\Models\Document::class)
                 <div class="card-header">
                     <a class="btn btn-info" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
                 </div>
+                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -47,12 +49,14 @@
                                     @if($route_name == 'procedures')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">
                                         <a href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
+                                        @canany(['update', 'delete'], $document)
                                         <a href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
                                 </tr>   
                             @endforeach

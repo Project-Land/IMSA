@@ -80,6 +80,9 @@ class ManagementSystemReviewsController extends Controller
         $msr->checks_results = PlanIp::getStats($standardId, $year);
         $msr->external_suppliers_performance = Supplier::getStats($standardId, $year);
         $msr->measures_effectiveness = RiskManagement::getStats($standardId, $year);    
+
+        $msr->user_id = Auth::user()->current_user_id;
+        $msr->team_id = Auth::user()->current_team_id;
         
         $msr->save();
 

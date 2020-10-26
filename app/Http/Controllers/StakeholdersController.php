@@ -31,7 +31,6 @@ class StakeholdersController extends Controller
     public function create()
     {
         $this->authorize('create', Stakeholder::class);
-
         return view('system_processes.stakeholders.create');
     }
 
@@ -62,7 +61,9 @@ class StakeholdersController extends Controller
             'name' => $request->name,
             'standard_id' => $this::getStandard(),
             'expectation' => $request->expectation,
-            'response' => $request->response
+            'response' => $request->response,
+            'team_id' => Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id
         ]);
 
         $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');

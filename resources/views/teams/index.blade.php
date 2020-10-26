@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista korisnika') }}
+            {{ __('Lista firmi') }}
         </h2>
     </x-slot>
 
@@ -26,9 +26,9 @@
 
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Lista korisnika</h3>
+                    <h3 class="text-lg font-medium text-gray-900">Lista firmi</h3>
                     <p class="mt-1 text-sm text-gray-600">
-                        Lista svih korisnika aplikacije za firmu {{ $users->first()->currentTeam->name }}
+                        Lista svih firmi
                     </p>
                 </div>
             </div>
@@ -36,15 +36,14 @@
             <div class="mt-5 md:mt-0 md:col-span-2">
                
                 <div class="shadow overflow-hidden sm:rounded-md">
-                    @foreach($users as $user)
+                    @foreach($teams as $team)
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
-                                    <img class="w-8 h-8 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
-                                    <div class="ml-4">{{ $user->name }}</div>
+                                    <div class="ml-4"><a href="{{ route('teams.show', $team->id) }}">{{ $team->name }}</a></div>
                                 </div>
                                 <div class="flex items-center">
-                                    <div class="ml-2 text-sm text-gray-400">{{ $user->allTeams()->first()->membership->role }}</div>
+                                    <div class="ml-2 text-sm text-gray-400">Broj korisnika: {{ $team->users->count() - 1 }}</div>
                                 </div>
                             </div>
                         </div>
