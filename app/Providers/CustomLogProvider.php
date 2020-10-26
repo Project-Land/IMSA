@@ -14,7 +14,7 @@ class CustomLogProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('cdlog', function () {
-            return new \App\Facades\ReminderMailer;
+            return new \App\Facades\CustomLog;
         });
     }
 

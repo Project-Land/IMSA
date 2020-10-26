@@ -23,9 +23,11 @@ class CreateSuppliersTable extends Migration
             $table->boolean('status');
             $table->timestamp('deadline_date');
             $table->unsignedBigInteger('standard_id');
+            $table->unsignedBigInteger('team_id');
             $table->timestamps();
 
             $table->foreign('standard_id')->references('id')->on('standards');
+            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 

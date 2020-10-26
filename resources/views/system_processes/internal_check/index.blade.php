@@ -46,7 +46,7 @@
                             </thead>
                             <tbody>
                             @forelse($internal_checks as $check)
-                                <tr>
+                            <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
                                     <td>{{ implode("/",array_reverse(explode("-",$check->date))) }}</td>
                                     <td>{{ $check->sector }}</td>
                                     <td>{{ $check->leaders }}</td>
@@ -128,7 +128,7 @@
 
     </div>
 
-
+    
 
 
 
@@ -136,6 +136,21 @@
 </x-app-layout>
 
 <script>
+  var myRe = /\binternal-check\b/g;
+  if(myRe.test(window.location.href)){
+    window.addEventListener('popstate', function (event) {
+    location.reload();
+    });
+  }
+
+let href=window.location.href;
+id=href.split('#')[1];
+if(id){
+ let e= document.getElementById('tr'+id);
+ e.style="background:#bbfca9;";
+}
+
+
     $('.yajra-datatable').DataTable({
         "language": {
             "info": "Prikaz strane _PAGE_ od _PAGES_",
