@@ -23,11 +23,13 @@
             <div class="flex justify-end">
 
                 <!-- Notifications menu -->
+                @inject('Notifications', 'Notifications')
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-jet-dropdown width="48">
                         <x-slot name="trigger">
-                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>Notifikacije</div>
+                        @can('viewAny',App\Models\Notification::class)
+                            <button class=" @if ($Notifications->count()) {{'bg-danger rounded p-2 text-white'}} @endif flex items-center text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div>{{$Notifications->count()}} </div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -35,17 +37,30 @@
                                     </svg>
                                 </div>
                             </button>
+                        @endcan
                         </x-slot>
 
                         <x-slot name="content">
+                      
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Obaveštenja') }}
                             </div>
+                            @forelse($Notifications as $not)
+                                @can('view',$not)
 
-                            <x-jet-dropdown-link href="#">
-                                {{ __('Alert 1') }}
-                            </x-jet-dropdown-link>
+                                @if ($not->notifiable_type==='App\Models\InternalCheck')
+                                <x-jet-dropdown-link href="{{'/internal-check#internalcheck'.$not->notifiable_id}}" >
+                                    {{ __($not->message) }}
+                                </x-jet-dropdown-link>
+                                @else
+                                <x-jet-dropdown-link href="{{'/suppliers#supplier'.$not->notifiable_id}}" >
+                                    {{ __($not->message) }}
+                                </x-jet-dropdown-link>
+                                @endif
+                                @endcan
+                                @empty
+                            @endforelse
                         </x-slot>
 
                     </x-jet-dropdown>

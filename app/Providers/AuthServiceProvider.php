@@ -44,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
         InternalCheckReport::class => InternalCheckReportPolicy::class,
         ManagementSystemReview::class => ManagementSystemReviewPolicy::class,
         RiskManagement::class => RiskManagementPolicy::class,
-        PlanIp::class => PlanIpPolicy::class,
+        PlanIp::class => PlanIpPolicy::class
         
         
     ];
