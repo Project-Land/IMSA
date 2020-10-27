@@ -21,14 +21,14 @@
                 <input type="text" class="form-control" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
             </div>
 
-            <div class="form-group">
-                <label for="sector">Područje promene</label>
-                <select class="form-control" id="sector" name="sector">
-                <option value="{{$internalCheck->sector}}">{{$internalCheck->sector}}</option>
-                <option value="prodaja">Prodaja</option>
-                <option>Marketing</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="sector">Područje promene</label>
+            <select class="form-control" id="sector" name="sector_id">
+            <option value="{{$internalCheck->sector->id}}">{{$internalCheck->sector->name}}</option>
+            <option value="prodaja">Prodaja</option>
+            <option>Marketing</option>
+            </select>
+        </div>
 
             <div class="form-group">
                 <label for="leaders">Vođe tima</label>

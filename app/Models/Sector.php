@@ -22,4 +22,9 @@ class Sector extends Model
     {
         return $this->belongsTo('App\Models\Team');
     }
+
+    public function internalChecks()
+    {
+        return $this->hasMany('App\Models\InternalCheck');
+    }
 }

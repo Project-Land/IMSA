@@ -36,4 +36,8 @@ class InternalCheck extends Model
     {
         return $this->morphOne('App\Models\Notification', 'notifiable');
     }
+    public function sector(){
+        return $this->belongsTo('App\Models\Sector');
+    }
+
 }

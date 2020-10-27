@@ -21,24 +21,28 @@
         </div>
 
         <div class="form-group">
-            <label for="sector">Područje promene</label>
-            <select class="form-control" id="sector" name="sector">
-                <option value="1">Sektor 1</option>
+            <label for="sector_id">Područje promene</label>
+            <select class="form-control" id="sector_id" name="sector_id">
+            @foreach($sectors as $sector)
+            <option value="{{$sector->id}}">{{$sector->name}}</option>
+            @endforeach
             </select>
         </div>
 
         <div class="form-group">
             <label for="leaders">Vođe tima</label>
-            <select class="form-control" id="leaders" name="leaders">
-                <option value="nikola">Nikola</option>
-                <option>Milos</option>
+            <select class="form-control" id="leaders" name="leaders[]" multiple>
+            @foreach($teamLeaders as $teamLeader)
+            <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
+            @endforeach
             </select>
+            <small>Držite CTRL i birajte levim klikom miša</small>
         </div>
 
         <div class="form-group">
             <label for="standard_id">Standard</label>
             <select class="form-control" id="standard_id" name="standard_id">
-                <option value="1">9001</option>
+            <option value="{{session('standard')}}">{{session('standard_name')}}</option>
             </select>
         </div>
             

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Standard;
+use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use App\Models\Inconsistency;
 use App\Models\InternalCheck;
@@ -10,7 +12,6 @@ use App\Models\Recommendation;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\DB;
 use App\Models\InternalCheckReport;
-use Exception;
 
 class InternalCheckReportController extends Controller
 {
@@ -64,27 +65,32 @@ class InternalCheckReportController extends Controller
         ]);
 
     
+        try{
+            DB::transaction(function () use ($request,$validatedData,$recommendationData,$InconsistencyData){ 
+                $report=InternalCheckReport::create($validatedData);
 
-        $report=InternalCheckReport::create($validatedData);
-
-        foreach( $InconsistencyData as $inc){
-            if($inc === "")continue;
-            $inconsistency=new Inconsistency();
-            $inconsistency->description=$inc;
-            $report->inconsistencies()->save($inconsistency);
+                foreach( $InconsistencyData as $inc){
+                    if($inc === "")continue;
+                    $inconsistency=new Inconsistency();
+                    $inconsistency->description=$inc;
+                    $report->inconsistencies()->save($inconsistency);
+                }
+                foreach( $recommendationData as $rec){
+                    if($rec === "")continue;
+                    $recommendation=new Recommendation();
+                    $recommendation->description=$rec;
+                    $report->recommendations()->save($recommendation);
+                }
+                $report->refresh();
+                $internalCheck=InternalCheck::findOrFail($request->internal_check_id);
+                $report->internalCheck()->save($internalCheck);
+                CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+                $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
+            });
+        }catch(Exception $e){
+            $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
+            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
         }
-        foreach( $recommendationData as $rec){
-            if($rec === "")continue;
-            $recommendation=new Recommendation();
-            $recommendation->description=$rec;
-            $report->recommendations()->save($recommendation);
-        }
-        $report->refresh();
-        $internalCheck=InternalCheck::findOrFail($request->internal_check_id);
-        $report->internalCheck()->save($internalCheck);
-        
-        $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
-        
         return redirect('/internal-check');
     }
 
@@ -178,96 +184,79 @@ class InternalCheckReportController extends Controller
         ]);
 
     try{
-        DB::transaction(function () use ($request,$id,$correctiveMeasureData,$validatedData,$inconsistenciesData,$recommendationsData,$newInconsistenciesData,$newRecommendationsData){
-        
-        
-        $count=1;
-        
-        $standard=Standard::where('name',$request->standard)->get()[0];
-        
-     
+        DB::transaction(function () use ($request,$id,$correctiveMeasureData,$validatedData,$inconsistenciesData,$recommendationsData,$newInconsistenciesData,$newRecommendationsData){ 
+            $count=1;
+            $standard=Standard::where('name',$request->standard)->get()[0];
+            $internal_check_report=InternalCheckReport::findOrfail($id);
+            $internal_check_report->update($validatedData);
+            
+            if(isset($inconsistenciesData['inconsistencies'])){
+                $incs=$internal_check_report->inconsistencies;
+                foreach($incs as $i){
+                    if(!in_array($i->id, array_keys($inconsistenciesData['inconsistencies']))){
+                        $i->delete();
+                    }
+                }
+            foreach($inconsistenciesData['inconsistencies'] as $k=>$v){
+                $inc=Inconsistency::findOrFail($k);
+                $inc->description=$v;
+                $internal_check_report->inconsistencies()->save($inc);
+            }
+            }
 
-        $internal_check_report=InternalCheckReport::findOrfail($id);
-        $internal_check_report->update($validatedData);
-        
-        if(isset($inconsistenciesData['inconsistencies'])){
-            $incs=$internal_check_report->inconsistencies;
-            foreach($incs as $i){
-                if(!in_array($i->id, array_keys($inconsistenciesData['inconsistencies']))){
-                    $i->delete();
+            if(isset($recommendationsData['recommendations'])){
+                $recs=$internal_check_report->recommendations;
+                foreach($recs as $r){
+                    if(!in_array($r->id, array_keys($recommendationsData['recommendations']))){
+                        $r->delete();
+                    }
+                }
+                foreach($recommendationsData['recommendations'] as $k=>$v){
+                    $rec=Recommendation::findOrFail($k);
+                    $rec->description=$v;
+                    $internal_check_report->recommendations()->save($rec);
                 }
             }
-        foreach($inconsistenciesData['inconsistencies'] as $k=>$v){
-    
-            $inc=Inconsistency::findOrFail($k);
-            $inc->description=$v;
-            $internal_check_report->inconsistencies()->save($inc);
-        }
-    }
+            foreach($newInconsistenciesData as $v){
+        
+                $inc=new Inconsistency();
+                $inc->description=$v;
+                $internal_check_report->inconsistencies()->save($inc);
+                $inc->refresh();
+                $correctiveMeasure=CorrectiveMeasure::create([
+                    'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
+                    'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
+                    'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
+                    'measure'=> $correctiveMeasureData['measure'][$count],
+                    'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
+                    'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
+                    'measure_status'=>$correctiveMeasureData['measure_status'][$count],
+                    'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                ]);
 
-    if(isset($recommendationsData['recommendations'])){
-
-        $recs=$internal_check_report->recommendations;
-        foreach($recs as $r){
-            if(!in_array($r->id, array_keys($recommendationsData['recommendations']))){
-                $r->delete();
+                $correctiveMeasure->standard()->associate($standard);
+                $count++;
+                $inc->correctiveMeasure()->save($correctiveMeasure);
             }
-        }
-        foreach($recommendationsData['recommendations'] as $k=>$v){
-    
-            $rec=Recommendation::findOrFail($k);
-            $rec->description=$v;
-            $internal_check_report->recommendations()->save($rec);
-        }
-    }
-        foreach($newInconsistenciesData as $v){
-    
-            $inc=new Inconsistency();
-            $inc->description=$v;
-            $internal_check_report->inconsistencies()->save($inc);
-            $inc->refresh();
 
-            $correctiveMeasure=CorrectiveMeasure::create([
-                'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
-                'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
-                'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
-                'measure'=> $correctiveMeasureData['measure'][$count],
-                'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
-                'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
-                'measure_status'=>$correctiveMeasureData['measure_status'][$count],
-                'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
-                
+            foreach($newRecommendationsData as $v){
+                $rec=new Recommendation();
+                $rec->description=$v;
+                $internal_check_report->recommendations()->save($rec);          
+            }
 
-            ]);
-
-           
-            $correctiveMeasure->standard()->associate($standard);
-            $count++;
-
-            $inc->correctiveMeasure()->save($correctiveMeasure);
-        }
-
-        foreach($newRecommendationsData as $v){
-    
-            $rec=new Recommendation();
-            $rec->description=$v;
-            $internal_check_report->recommendations()->save($rec);          
-           
-        }
-
+            CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Izveštaj je uspešno napravljen');
         });
 
     }catch(Exception $e){
-        $request->session()->flash('status', 'Došlo je do greske,pokušajte ponovo');
-        
+        CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        $request->session()->flash('status', 'Došlo je do greske, pokušajte ponovo');
         return redirect('/internal-check');
         exit();
-    }
-
-        
-        $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
-        
-        return redirect('/internal-check');
+    } 
+    $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
+    return redirect('/internal-check');
     }
     
 
@@ -279,7 +268,13 @@ class InternalCheckReportController extends Controller
      */
     public function destroy($id)
     {
-        InternalCheckReport::destroy($id);
-        return back()->with('status', 'Izveštaj za godišnji plan je uspešno uklonjen');
+        try{
+            InternalCheckReport::destroy($id);
+            CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            return back()->with('status', 'Izveštaj za godišnji plan je uspešno uklonjen');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
+        }
     }
 }

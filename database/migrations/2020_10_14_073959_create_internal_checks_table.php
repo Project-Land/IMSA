@@ -16,7 +16,7 @@ class CreateInternalChecksTable extends Migration
         Schema::create('internal_checks', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('sector');
+            $table->unsignedBigInteger('sector_id');
             $table->string('leaders');
             $table->unsignedBigInteger('standard_id')->nullable();
             $table->unsignedBigInteger('plan_ip_id')->nullable();
