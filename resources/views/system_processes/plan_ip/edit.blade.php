@@ -25,7 +25,7 @@
 
         <div class="form-group">
             <label for="checked_sector">Sektor</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector}}" readonly>
+            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector->name}}" readonly>
         </div>
 
         <div class="form-group">

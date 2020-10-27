@@ -14,7 +14,7 @@ class Standard extends Model
     }
 
     public function internalCheck(){
-        return $this->hasOne('App\Models\InternalCheck');
+        return $this->hasMany('App\Models\InternalCheck');
     }
 
     public function correctiveMeasure(){
