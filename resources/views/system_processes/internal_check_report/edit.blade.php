@@ -46,12 +46,12 @@
         <div class="row">
         <div class="form-group col">
             <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{$internalCheckReport->internalCheck->planIp->check_start}}" readonly>
+            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
         </div>
 
         <div class="form-group col">
             <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{$internalCheckReport->internalCheck->planIp->check_end}}" readonly>
+            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
         </div>
 
         <div class="form-group col">
@@ -67,8 +67,6 @@
         <div class="form-group">
             <span id="addInconsistencies"  class="btn btn-primary">Dodaj neusaglašenost</span>
             <span id="addRecommendations"  class="btn btn-primary">Dodaj preporuku</span>
-           
-           
         </div>
         
         <div id="inconsistenciesDiv" class="row border-top mt-2">

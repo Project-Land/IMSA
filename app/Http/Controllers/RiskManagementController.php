@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class RiskManagementController extends Controller
 {
@@ -67,7 +68,7 @@ class RiskManagementController extends Controller
         }
 
         $risk->save();
-
+        CustomLog::info('Rizik "'.$risk->description.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
         return redirect('/risk-management');
     }
@@ -129,7 +130,7 @@ class RiskManagementController extends Controller
         }
 
         $risk->save();
-
+        CustomLog::info('Rizik "'.$risk->description.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         return redirect('/risk-management');
     }
@@ -142,7 +143,9 @@ class RiskManagementController extends Controller
      */
     public function destroy($id)
     {
+        $risk = RiskManagment::findOrFail($id);
         if(RiskManagement::destroy($id)){
+            CustomLog::info('Rizik "'.$risk->description.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Rizik / plan je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
@@ -176,11 +179,11 @@ class RiskManagementController extends Controller
         $risk->cause = $request->cause;
         $risk->risk_lowering_measure = $request->risk_lowering_measure;
         $risk->responsibility = $request->responsibility;
-        $risk->deadline = $request->deadline;
+        $risk->deadline = date('Y-m-d', strtotime($request->deadline));
         $risk->status = $request->status;
 
         $risk->save();
-
+        CustomLog::info('Plan za postupanje sa rizikom "'.$risk->description.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Plan je uspešno izmenjen!');
         return redirect('/risk-management');
     }

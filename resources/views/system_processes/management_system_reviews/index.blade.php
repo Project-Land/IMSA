@@ -27,7 +27,9 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-4">
+                            @can('create', App\Models\ManagementSystemReview::class)
                             <a class="btn btn-info" href="{{ route('management-system-reviews.create') }}"><i class="fas fa-plus"></i> Kreiraj zapisnik</a>
+                            @endcan
                         </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
@@ -56,12 +58,14 @@
                                     <td class="text-center">Zapisnik sa preispitivanja {{ $m->year }}</td>
                                     <td class="text-center">
                                         <button class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
+                                        @canany(['update', 'delete'], $m)
                                         <a href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('management-system-reviews.destroy', $m->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
                                 </tr>   
                                 @endforeach

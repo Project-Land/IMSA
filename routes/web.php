@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\GoalsController;
 use App\Http\Controllers\PlanIpController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\CorrectiveMeasuresController;
+use App\Http\Controllers\RulesOfProceduresController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\InconsistenciesController;
@@ -34,9 +36,9 @@ use App\Http\Controllers\TeamController;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/', 'App\Http\Controllers\HomeController@index')->name('dashboard');
-    Route::get('/standards/{id}', 'App\Http\Controllers\HomeController@standard')->name('standard');
-    Route::resource('rules-of-procedures', 'App\Http\Controllers\RulesOfProceduresController');
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/standards/{id}', [HomeController::class, 'standard'])->name('standard');
+    Route::resource('rules-of-procedures', RulesOfProceduresController::class);
     Route::resource('policies', PoliciesController::class);
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
@@ -47,6 +49,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('internal-check', InternalCheckController::class);
     Route::resource('goals', GoalsController::class);
     Route::post('goals/filter-year', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
+    Route::post('goals/get-data', [GoalsController::class, 'getData']);
+    Route::delete('goals/delete/{id}', [GoalsController::class, 'deleteApi']);
 
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');

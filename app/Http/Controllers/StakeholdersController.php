@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Stakeholder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class StakeholdersController extends Controller
 {
@@ -66,6 +67,7 @@ class StakeholdersController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
+        CustomLog::info('Zainteresovana strana "'.$request->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');
         return redirect('/stakeholders');
     }
@@ -90,9 +92,8 @@ class StakeholdersController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize('update', Stakeholder::find($id));
-
         $stakeholder = Stakeholder::findOrFail($id);
+        $this->authorize('update', $stakeholder);
         return view('system_processes.stakeholders.edit', compact('stakeholder'));
     }
 
@@ -105,9 +106,8 @@ class StakeholdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update', Stakeholder::find($id));
-
         $stakeholder = Stakeholder::findOrFail($id);
+        $this->authorize('update', $stakeholder);
 
         $messages = array(
             'name.required' => 'Unesite naziv / ime zainteresovane strane',
@@ -129,6 +129,7 @@ class StakeholdersController extends Controller
 
         $stakeholder->save();
 
+        CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Zainteresovana strana je uspešno izmenjena!');
         return redirect('/stakeholders');
     }
@@ -142,8 +143,9 @@ class StakeholdersController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', Stakeholder::find($id));
-
+        $stakeholder = Stakeholder::findOrFail($id);
         if(Stakeholder::destroy($id)){
+            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" uklonjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Zainteresovana strana je uspešno uklonjena');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');

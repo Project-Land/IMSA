@@ -24,7 +24,7 @@
 			</div>
 			<div class="form-group">
 				<label for="submission_date">Datum podnošenja reklamacije:</label>
-				<input type="date" class="form-control" id="submission_date" name="submission_date" value="{{ old('submission_date') }}" autofocus>
+				<input type="text" class="form-control" id="submission_date" name="submission_date" value="{{ old('submission_date') }}" autofocus>
 				@error('submission_date')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -54,7 +54,7 @@
 			<div class="d-none" id="complaint_accepted">
 				<div class="form-group">
 					<label for="deadline_date">Rok za realizaciju reklamacije:</label>
-					<input type="date" class="form-control" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" autofocus>
+					<input type="text" class="form-control" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" autofocus>
 				</div>
 				<div class="form-group">
 					<label for="responsible_person">Lice odgovorno za rešavanje reklamacije:</label>
@@ -90,6 +90,16 @@
 </x-app-layout>
 
 <script>
+	$('#submission_date').datetimepicker({
+		timepicker:false,
+		format:'d.m.Y'
+	});
+
+	$('#deadline_date').datetimepicker({
+		timepicker:false,
+		format:'d.m.Y'
+	});
+
 	$('#accepted').change( () => {
 		if($('#accepted').val() == 1){
 			$('#complaint_accepted').removeClass('d-none');

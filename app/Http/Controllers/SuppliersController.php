@@ -6,6 +6,7 @@ use \Carbon\Carbon;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class SuppliersController extends Controller
 {
@@ -76,6 +77,7 @@ class SuppliersController extends Controller
         $supplier->user_id = Auth::user()->id;
 
         $supplier->save();
+        CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Odabrani isporučilac je uspešno sačuvan!');
         return redirect('/suppliers');
     }
@@ -144,6 +146,7 @@ class SuppliersController extends Controller
         $supplier->deadline_date = $newDateTime;
 
         $supplier->save();
+        CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
         return redirect('/suppliers');
     }
@@ -157,8 +160,9 @@ class SuppliersController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', Supplier::find($id));
-
+        $supplier = Supplier::findOrFail($id);
         if(Supplier::destroy($id)){
+            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Odabrani isporučilac je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');

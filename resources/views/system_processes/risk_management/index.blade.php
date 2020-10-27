@@ -49,7 +49,7 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center"><span @if($risk->measure) style="cursor: pointer"  onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
+                                    <td class="text-center"><span @if($risk->measure) style="cursor: pointer; color: blue;"  onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
                                             <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
                                         @endif

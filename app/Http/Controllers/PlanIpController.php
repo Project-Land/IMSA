@@ -82,8 +82,17 @@ class PlanIpController extends Controller
             'check_end'=>'required|date',
             'report_deadline'=>'required|date'
         ]);
-        $planIp->update($validated);
-        return redirect('/internal-check')->with('status', 'Plan IP je kreiran!');
+        $planIp->report_deadline = $request->report_deadline;
+        $planIp->check_start = date('Y-m-d H:i', strtotime($request->check_start));
+        $planIp->check_end = date('Y-m-d H:i', strtotime($request->check_end));
+        $planIp->checked_date = $request->checked_date;
+        $planIp->checked_sector = $request->checked_sector;
+        $planIp->team_for_internal_check = $request->team_for_internal_check;
+        $planIp->save();
+        
+        //$planIp->update($validated);
+
+        return redirect('/internal-check')->with('status', 'Plan IP je izmenjen!');
     }
 
     /**

@@ -24,9 +24,11 @@
         <div class="col">
 
             <div class="card">
+                @can('create', App\Models\CorrectiveMeasure::class)
                 <div class="card-header">
                     <a class="btn btn-info" href="{{ route('corrective-measures.create') }}"><i class="fas fa-plus"></i> Kreiraj novu neusaglašenost / meru</a>
                 </div>
+                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -48,12 +50,14 @@
                                     <td class="text-center">{{ $measure->measure_approval == '0'? "Otvorena" : "Zatvorena" }}</td>
                                     <td class="text-center">
                                         <button class="text-primary" onclick="showMeasure({{ $measure->id }})"><i class="fas fa-eye"></i></button>
+                                        @canany(['update', 'delete'], $measure)
                                         <a href="{{ route('corrective-measures.edit', $measure->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('corrective-measures.destroy', $measure->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
                                 </tr>   
                             @endforeach

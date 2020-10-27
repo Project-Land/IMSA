@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-group">
 				<label for="submission_date">Datum podnošenja reklamacije:</label>
-				<input type="date" class="form-control" id="submission_date" name="submission_date" value="{{ $complaint->submission_date }}" autofocus>
+				<input type="text" class="form-control" id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}">
 				@error('submission_date')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -55,7 +55,7 @@
 			<div class="{{ $complaint->accepted == 1 ? "" : "d-none" }}" id="complaint_accepted">
 				<div class="form-group">
 					<label for="deadline_date">Rok za realizaciju reklamacije:</label>
-					<input type="date" class="form-control" id="deadline_date" name="deadline_date" value="{{ $complaint->deadline_date }}" autofocus>
+					<input type="text" class="form-control" id="deadline_date" name="deadline_date" value="{{ date('d.m.Y', strtotime($complaint->deadline_date)) }}" >
 				</div>
 				<div class="form-group">
 					<label for="responsible_person">Lice odgovorno za rešavanje reklamacije:</label>
@@ -66,7 +66,7 @@
 				</div>
 				<div class="form-group">
 					<label for="way_of_solving">Način rešavanja reklamacije</label>
-					<input type="text" class="form-control" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}" autofocus>
+					<input type="text" class="form-control" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}">
 					@error('way_of_solving')
 						<span class="text-danger">{{ $message }}</span>
 					@enderror
@@ -90,6 +90,16 @@
 </x-app-layout>
 
 <script>
+	$('#submission_date').datetimepicker({
+		timepicker:false,
+		format:'d.m.Y'
+	});
+
+	$('#deadline_date').datetimepicker({
+		timepicker:false,
+		format:'d.m.Y'
+	});
+
 	$('#accepted').change( () => {
 		if($('#accepted').val() == 1){
 			$('#complaint_accepted').removeClass('d-none');

@@ -4,17 +4,12 @@ namespace App\Policies;
 
 use App\Models\CorrectiveMeasure;
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CorrectiveMeasurePolicy
 {
     use HandlesAuthorization;
-
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
-        return true; 
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -47,7 +42,10 @@ class CorrectiveMeasurePolicy
      */
     public function create(User $user)
     {
-       //
+        $role = $user->allTeams()->first()->membership->role;
+        if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
     }
 
     /**
@@ -59,8 +57,15 @@ class CorrectiveMeasurePolicy
      */
     public function update(User $user, CorrectiveMeasure $correctiveMeasure)
     {
-        if($user->id === $correctiveMeasure->inconsistency->InternalCheckReport->internalCheck->user->id)
-        return true;
+        /*if($user->id === $correctiveMeasure->inconsistency->InternalCheckReport->internalCheck->user->id){
+            return true;
+        }*/
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $correctiveMeasure->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**
@@ -72,7 +77,12 @@ class CorrectiveMeasurePolicy
      */
     public function delete(User $user, CorrectiveMeasure $correctiveMeasure)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $correctiveMeasure->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**

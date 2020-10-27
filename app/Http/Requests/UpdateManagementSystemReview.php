@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreManagementSystemReview extends FormRequest
+class UpdateManagementSystemReview extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class StoreManagementSystemReview extends FormRequest
     public function rules()
     {
         return [
-            'year' => "unique:management_system_reviews",
             'participants' => 'required',
             'measures_status' => 'required',
             'internal_external_changes' => 'required',
@@ -37,7 +36,6 @@ class StoreManagementSystemReview extends FormRequest
     public function messages()
     {
         return [
-            'year.unique' => 'Izveštaj za izabranu godinu već postoji',
             'participants.required' => 'Unesite učesnike',
             'measures_status.required' => 'Unesite status mera',
             'internal_external_changes.required' => 'Unesite promene',
@@ -52,9 +50,6 @@ class StoreManagementSystemReview extends FormRequest
         $standardId = session('standard');
 
         $this->merge([
-            'user_id' => \Auth::user()->id,
-            'team_id' => \Auth::user()->current_team_id,
-            'standard_id' => (int)$standardId,
             'objectives_scope' => \App\Models\Goal::getStats($standardId, $this->year),
             'inconsistancies_corrective_measures' => \App\Models\CorrectiveMeasure::getStats($standardId, $this->year),
             'checks_results' => \App\Models\PlanIp::getStats($standardId, $this->year),

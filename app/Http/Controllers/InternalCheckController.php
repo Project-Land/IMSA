@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\InternalCheck;
 use App\Models\Notification;
 use App\Models\Supplier;
+use App\Models\Sector;
+use App\Models\Standard;
 use Carbon\Carbon;
 use Faker\Provider\ar_JO\Internet;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +43,7 @@ class InternalCheckController extends Controller
      */
     public function create()
     { 
-        $this->authorize('create',InternalCheck::class);
+        $this->authorize('create', InternalCheck::class);
         return view('system_processes.internal_check.create');
     }
 
@@ -60,13 +62,18 @@ class InternalCheckController extends Controller
             'leaders' => 'required',
             'standard_id' => 'required',
         ]);
-       $internalCheck=InternalCheck::create($validatedData);
-       $planIp=new PlanIp();
-       //$team=Team::findOrFail(Auth::user()->current_team_id);
-       //$count=$team->internalChecks()->count();
-       $planIp->save();
-       $planIp->name=$planIp->id.'/'.date('Y');
-       $planIp->save();
+        $internalCheck=InternalCheck::create($validatedData);
+        $internalCheck->team_id = Auth::user()->current_team_id;
+        $internalCheck->user_id = Auth::user()->id;
+        $internalCheck->date = date('Y-m-d', strtotime($request->date));
+        $internalCheck->save();
+        $planIp=new PlanIp();
+        //$team=Team::findOrFail(Auth::user()->current_team_id);
+        //$count=$team->internalChecks()->count();
+        $planIp->standard_id = $request->standard_id;
+        $planIp->save();
+        $planIp->name=$planIp->id.'/'.date('Y');
+        $planIp->save();
         $planIp->internalCheck()->save($internalCheck);
         $request->session()->flash('status', 'Godišnji plan je uspešno kreiran!');
         
@@ -116,9 +123,10 @@ class InternalCheckController extends Controller
             'standard_id' => 'required',
             'date'=> 'required|date'
         ]);
-        
-      
         $internal_check->update($validatedData);
+
+        $internal_check->date = date('Y-m-d', strtotime($request->date));
+        $internal_check->save();
         
         $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
         

@@ -13,60 +13,58 @@
 
     <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
 
-		<form id="internal_check_report_create_form" action="{{route('internal-check-report.store')}}" method="POST">
+		<form id="internal_check_report_create_form" action="{{ route('internal-check-report.store') }}" method="POST">
             @csrf
         
-            <input type="hidden"  name="internal_check_id" value="{{$internalCheck->id}}" readonly>
-        <div class="form-group">
-            <label for="checked_sector">Proveravano područje</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheck->sector}}" readonly>
-        </div>
+            <input type="hidden" name="internal_check_id" value="{{ $internalCheck->id }}" readonly>
 
-        <div class="form-group">
-            <label for="standard">Standard</label>
-            <input type="text" class="form-control" id="standard" placeholder="" name="standard" value="{{$internalCheck->standard->name}}" readonly>
-        </div>
+            <div class="form-group">
+                <label for="checked_sector">Proveravano područje</label>
+                <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector}}" readonly>
+            </div>
 
-        <div class="form-group">
-            <label for="team_for_internal_check">Tim za proveru</label>
-            <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$internalCheck->leaders}}" readonly>
-        </div>
+            <div class="form-group">
+                <label for="standard">Standard</label>
+                <input type="text" class="form-control" id="standard" name="standard" value="{{$internalCheck->standard->name}}" readonly>
+            </div>
 
-    
+            <div class="form-group">
+                <label for="team_for_internal_check">Tim za proveru</label>
+                <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value="{{$internalCheck->leaders}}" readonly>
+            </div>
        
-        <div class="form-group">
-            <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{$internalCheck->planIp->check_start}}" readonly>
-        </div>
+            <div class="form-group">
+                <label for="check_start">Početak provere</label>
+                <input type="text" class="form-control" id="check_start" name="check_start" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_start)) }}" readonly>
+            </div>
 
-        <div class="form-group">
-            <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{$internalCheck->planIp->check_end}}" readonly>
-        </div>
+            <div class="form-group">
+                <label for="check_end">Završetak provere</label>
+                <input type="text" class="form-control" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_end)) }}" readonly>
+            </div>
 
-        <div class="form-group">
-            <label for="specification">Specifikacija dokumenata</label>
-            <input type="text" class="form-control" id="specification" placeholder="" name="specification">
-        </div>
+            <div class="form-group">
+                <label for="specification">Specifikacija dokumenata</label>
+                <input type="text" class="form-control" id="specification" name="specification">
+            </div>
 
-        <div class="form-group">
-            <label for="inconsistencies">Neusaglašenosti</label>
-            <select class="form-control" id="inconsistencies" name="inconsistencies" >
-            <option value="0">ne</option>
-            <option value="1">da</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="recommendations">Preporuke</label>
-            <select class="form-control" id="recommendations" name="recommendations">
-            <option value="0">ne</option>
-            <option value="1">da</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="inconsistencies">Neusaglašenosti</label>
+                <select class="form-control" id="inconsistencies" name="inconsistencies" >
+                <option value="0">ne</option>
+                <option value="1">da</option>
+                </select>
+            </div>
 
-        
-            
-        <button type="submit" class="btn btn-primary">Izmeni</button>
+            <div class="form-group">
+                <label for="recommendations">Preporuke</label>
+                <select class="form-control" id="recommendations" name="recommendations">
+                <option value="0">ne</option>
+                <option value="1">da</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Izmeni</button>
         </form>
     </div>
 

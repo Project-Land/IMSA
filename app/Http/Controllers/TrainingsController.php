@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class TrainingsController extends Controller
 {
@@ -80,7 +81,7 @@ class TrainingsController extends Controller
         $trainingPlan->year = $request->year;
         $trainingPlan->type = $request->type;
         $trainingPlan->num_of_employees = $request->num_of_employees;
-        $trainingPlan->training_date = $request->training_date;
+        $trainingPlan->training_date = date('Y-m-d H:i:s', strtotime($request->training_date));
         $trainingPlan->place = $request->place;
         $trainingPlan->resources = $request->resources;
         $trainingPlan->final_num_of_employees = $request->final_num_of_employees != null ? $request->final_num_of_employees : null;
@@ -90,6 +91,8 @@ class TrainingsController extends Controller
         $trainingPlan->team_id = Auth::user()->current_team_id;
 
         $trainingPlan->save();
+        CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+
         $request->session()->flash('status', 'Godišnji plan obuka je uspešno sačuvan!');
         return redirect('/trainings');
     }
@@ -155,13 +158,14 @@ class TrainingsController extends Controller
         $trainingPlan->year = $request->year;
         $trainingPlan->type = $request->type;
         $trainingPlan->num_of_employees = $request->num_of_employees;
-        $trainingPlan->training_date = $request->training_date;
+        $trainingPlan->training_date = date('Y-m-d H:i', strtotime($request->training_date));
         $trainingPlan->place = $request->place;
         $trainingPlan->resources = $request->resources;
         $trainingPlan->final_num_of_employees = $request->final_num_of_employees != null ? $request->final_num_of_employees : null;
         $trainingPlan->rating = $request->rating != null ? $request->rating : null;
 
         $trainingPlan->save();
+        CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Godišnji plan obuka je uspešno izmenjen!');
         return redirect('/trainings');
     }
@@ -174,13 +178,17 @@ class TrainingsController extends Controller
      */
     public function destroy($id)
     {
+        $trainingPlan = Training::findOrFail($id);
         Training::destroy($id);
+        CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return back()->with('status', 'Godišnji plan obuke je uspešno uklonjen');
     }
 
     public function deleteApi($id)
     {
+        $trainingPlan = Training::findOrFail($id);
         Training::destroy($id);
+        CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return true;
     }
 }

@@ -16,46 +16,48 @@
 		<form action="{{route('internal-check.update',$internalCheck->id)}}" method="POST">
             @csrf
             @method('PUT')
-        <div class="form-group">
-            <label for="date">Termin provere</label>
-            <input type="text" class="form-control" id="date" placeholder="" name="date" value="{{$internalCheck->date}}">
-        </div>
+            <div class="form-group">
+                <label for="date">Termin provere</label>
+                <input type="text" class="form-control" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
+            </div>
 
-        <div class="form-group">
-            <label for="sector">Područje promene</label>
-            <select class="form-control" id="sector" name="sector">
-            <option value="{{$internalCheck->sector}}">{{$internalCheck->sector}}</option>
-            <option value="prodaja">Prodaja</option>
-            <option>Marketing</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="sector">Područje promene</label>
+                <select class="form-control" id="sector" name="sector">
+                <option value="{{$internalCheck->sector}}">{{$internalCheck->sector}}</option>
+                <option value="prodaja">Prodaja</option>
+                <option>Marketing</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="leaders">Vođe tima</label>
-            <select class="form-control" id="leaders" name="leaders">
-            <option value="{{$internalCheck->leaders}}">{{$internalCheck->leaders}}</option>
-            <option value="nikola">Nikola</option>
-            <option>Milos</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="leaders">Vođe tima</label>
+                <select class="form-control" id="leaders" name="leaders">
+                <option value="{{$internalCheck->leaders}}">{{$internalCheck->leaders}}</option>
+                <option value="nikola">Nikola</option>
+                <option>Milos</option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="standard_id">Standard</label>
-            <select class="form-control" id="standard_id" name="standard_id">
-            <option value="{{$internalCheck->standard_id}}">{{$internalCheck->standard->name}}</option>
-            <option value="1">9001</option>
-            <option>1005</option>
-            </select>
-        </div>
-            
-        <button type="submit" class="btn btn-primary">Izmeni</button>
+            <div class="form-group">
+                <label for="standard_id">Standard</label>
+                <select class="form-control" id="standard_id" name="standard_id">
+                <option value="{{$internalCheck->standard_id}}">{{$internalCheck->standard->name}}</option>
+                <option value="1">9001</option>
+                <option>1005</option>
+                </select>
+            </div>
+                
+            <button type="submit" class="btn btn-primary">Izmeni</button>
         </form>
     </div>
 
     
     <script>
-        $('#date').datetimepicker();
-       
+        jQuery.datetimepicker.setLocale('sr');
+   	    $('#date').datetimepicker({
+		    format: 'd.m.Y'
+	    });
 
         $('#status').change( () => {
             if($('#status').val() == 1){
@@ -69,6 +71,5 @@
                 $('#rating').val('');
             }
         })
-
     </script>
 </x-app-layout>

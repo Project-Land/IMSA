@@ -45,7 +45,7 @@
 			</div>
             <div class="form-group">
 				<label for="deadline">Rok za realizaciju:</label>
-				<input type="date" class="form-control" id="deadline" name="deadline" value="{{ $risk->deadline }}">
+				<input type="text" class="form-control" id="deadline" name="deadline" value="{{ date('d.m.Y', strtotime($risk->deadline)) }}">
 				@error('deadline')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -62,3 +62,11 @@
     </div>
 
 </x-app-layout>
+
+<script>
+	$.datetimepicker.setLocale('sr');
+    $('#deadline').datetimepicker({
+		timepicker: false,
+		format:'d.m.Y'
+	});
+</script>

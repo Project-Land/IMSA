@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class ComplaintsController extends Controller
 {
@@ -71,19 +72,20 @@ class ComplaintsController extends Controller
         $complaint->standard_id = $this::getStandard();
         $complaint->name = $request->name;
         $complaint->description = $request->description;
-        $complaint->submission_date = $request->submission_date;
+        $complaint->submission_date = date('Y-m-d', strtotime($request->submission_date));
         $complaint->process = $request->process;
         $complaint->accepted = $request->accepted;
         $complaint->status = $request->status != null ? $request->status : 1;
         $complaint->responsible_person = $request->responsible_person;
         $complaint->way_of_solving = $request->way_of_solving;
-        $complaint->deadline_date = $request->deadline_date;
+        $complaint->deadline_date = date('Y-m-d', strtotime($request->deadline_date));
         $complaint->closing_date = $request->status == 1 ? date('Y-m-d') : null;
 
         $complaint->user_id = Auth::user()->id;
         $complaint->team_id = Auth::user()->current_team_id;
 
         $complaint->save();
+        CustomLog::info('Reklamacija "'.$complaint->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Reklamacija je uspešno sačuvana!');
         return redirect('/complaints');
     }
@@ -149,16 +151,17 @@ class ComplaintsController extends Controller
 
         $complaint->name = $request->name;
         $complaint->description = $request->description;
-        $complaint->submission_date = $request->submission_date;
+        $complaint->submission_date = date('Y-m-d', strtotime($request->submission_date));
         $complaint->process = $request->process;
         $complaint->accepted = $request->accepted;
         $complaint->status = $request->status != null ? $request->status : 1;
         $complaint->responsible_person = $request->responsible_person;
         $complaint->way_of_solving = $request->way_of_solving;
-        $complaint->deadline_date = $request->deadline_date;
+        $complaint->deadline_date = date('Y-m-d', strtotime($request->deadline_date));
         $complaint->closing_date = $request->status == 1 ? date('Y-m-d') : null;
 
         $complaint->save();
+        CustomLog::info('Reklamacija "'.$complaint->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Reklamacija je uspešno izmenjena!');
         return redirect('/complaints');
     }
@@ -172,8 +175,10 @@ class ComplaintsController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', Complaint::find($id));
+        $complaint = Complaint::findOrFail($id);
 
         if(Complaint::destroy($id)){
+            CustomLog::info('Reklamacija "'.$complaint->name.'" uklonjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Reklamacija je uspešno obrisana');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');

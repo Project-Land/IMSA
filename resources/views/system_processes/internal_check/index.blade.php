@@ -47,10 +47,10 @@
                             <tbody>
                             @forelse($internal_checks as $check)
                             <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
-                                    <td>{{ implode("/",array_reverse(explode("-",$check->date))) }}</td>
-                                    <td>{{ $check->sector }}</td>
-                                    <td>{{ $check->leaders }}</td>
-                                    <td>{{ $check->standard->name }}</td>
+                                    <td class="text-center">{{ date("d.m.Y", strtotime($check->date)) }}</td>
+                                    <td class="text-center">{{ $check->sector }}</td>
+                                    <td class="text-center">{{ $check->leaders }}</td>
+                                    <td class="text-center">{{ $check->standard->name }}</td>
                                     <td class="text-center">
                                     @if(!isset($check->planIp->checked_date))
                                        {{''}}
@@ -65,7 +65,7 @@
                                       <form class="inline" action="{{ route('plan-ip.destroy', $check->id) }}" method="POST">
                                               @method('DELETE')
                                               @csrf
-                                              <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                              <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                       </form>
                                       @endcan
                                     @endif
@@ -94,7 +94,7 @@
                                         <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     @endcan
                                     </td>
@@ -110,7 +110,7 @@
                                         <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     @endcan
                                     </td>
@@ -192,7 +192,7 @@ if(id){
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Program broj: ${data.name}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -206,7 +206,7 @@ if(id){
         <small> kreirano: ${new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' })} </small>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
       </div>
     </div>
   </div>
@@ -236,7 +236,7 @@ $("#modal").modal('show');
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Izveštaj sa interne provere</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -257,7 +257,7 @@ $("#modal").modal('show');
         <small> kreirano: ${new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' })} </small>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
       </div>
     </div>
   </div>

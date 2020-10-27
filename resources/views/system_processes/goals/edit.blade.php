@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="deadline">Rok za realizaciju</label>
-                    <input type="date" class="form-control" name="deadline" id="deadline" value="{{ $goal->deadline }}">
+                    <input type="text" class="form-control" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}">
                     @error('deadline')
 					    <span class="text-danger">{{ $message }}</span>
 				    @enderror
@@ -90,3 +90,10 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $('#deadline').datetimepicker({
+		timepicker: false,
+		format:'d.m.Y'
+	});
+</script>

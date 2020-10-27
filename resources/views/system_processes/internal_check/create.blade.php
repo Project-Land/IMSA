@@ -23,24 +23,22 @@
         <div class="form-group">
             <label for="sector">Područje promene</label>
             <select class="form-control" id="sector" name="sector">
-            <option value="prodaja">Prodaja</option>
-            <option>Marketing</option>
+                <option value="1">Sektor 1</option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="leaders">Vođe tima</label>
             <select class="form-control" id="leaders" name="leaders">
-            <option value="nikola">Nikola</option>
-            <option>Milos</option>
+                <option value="nikola">Nikola</option>
+                <option>Milos</option>
             </select>
         </div>
 
         <div class="form-group">
             <label for="standard_id">Standard</label>
             <select class="form-control" id="standard_id" name="standard_id">
-            <option value="1">9001</option>
-            <option>1005</option>
+                <option value="1">9001</option>
             </select>
         </div>
             
@@ -49,20 +47,23 @@
     </div>
 
     <script>
-   	$('#date').datetimepicker();
+        jQuery.datetimepicker.setLocale('sr');
+        $('#date').datetimepicker({
+            format: 'd.m.Y'
+        });
 
-	$('#status').change( () => {
-		if($('#status').val() == 1){
-			$('#final_num_field').css('display', '');
-			$('#rating_field').css('display', '');
-		}
-		else{
-			$('#final_num_field').css('display', 'none');
-			$('#rating_field').css('display', 'none');
-			$('#final_num_of_employees').val('');
-			$('#rating').val('');
-		}
-	})
-</script>
+        $('#status').change( () => {
+            if($('#status').val() == 1){
+                $('#final_num_field').css('display', '');
+                $('#rating_field').css('display', '');
+            }
+            else{
+                $('#final_num_field').css('display', 'none');
+                $('#rating_field').css('display', 'none');
+                $('#final_num_of_employees').val('');
+                $('#rating').val('');
+            }
+        })
+    </script>
 
 </x-app-layout>

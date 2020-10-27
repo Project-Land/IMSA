@@ -2,8 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standard') }} {{session('standard_name')}}
-           
+            {{ __('Standard') }} {{ session('standard_name') }}
         </h2>
     </x-slot>
 
@@ -29,15 +28,13 @@
                     <div class="row">
                         <div class="col-sm-4"><a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a></div>
                         <div class="col-sm-8">
-                            <form class="form-inline" action="{{ route('goals.filter-year') }}" method="POST">
-                                @csrf
-                                <label for="year" class="mr-3">Godina</label>
-                                <select name="year" id="year" class="form-control w-25 mr-2">
+                            <form class="form-inline">
+                                <label for="goals-year" class="mr-3">Godina</label>
+                                <select name="goals-year" id="goals-year" class="form-control w-25 mr-2">
                                     @foreach(range(date("Y")-1, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="btn btn-primary">Primeni</button>
                             </form>
                         </div>
                     </div>
@@ -58,7 +55,7 @@
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-body">
                             @foreach($goals as $goal)
                                 <tr>
                                     <td class="text-center">{{ $goal->year }}</td>
@@ -157,4 +154,65 @@
                 console.log(error)
             })
     }
+
+    function deleteGoal(id){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        let url = "/goals/delete/"+id;
+        
+        if(confirm('Da li ste sigurni?')){
+            $.ajax({
+                type: "delete",
+                url: url,
+                data: { 
+                    id: id
+                },
+                success: function(result) {
+                    alert('Cilj uspešno uklonjen');
+                    location.reload();
+                },
+                error: function(result) {
+                    alert('error', result);
+                }
+            });
+        }
+    }
+
+    $('#goals-year').change( () => {
+        let year = $('#goals-year').val();
+        const data = {'year': year}
+        axios.post('/goals/get-data', { data })
+        .then((response) => {
+            if(response.data.length == 0){
+                $('#table-body').html('<td colspan="10" class="dataTables_empty" valign="top">Nema podataka</td>');
+            }
+            else{
+                let allData = "";
+                $.each(response.data, function (i, item){
+                    let row = `<tr>
+                            <td class="text-center">${ item.year }</td>
+                            <td class="text-center">${ item.goal }</td>
+                            <td class="text-center">${ item.kpi }</td>
+                            <td class="text-center">${ item.activities }</td>
+                            <td class="text-center">${ item.responsibility }</td>
+                            <td class="text-center">${ new Date(item.deadline).toLocaleString('sr-SR', { timeZone: 'CET' }) }</td>
+                            <td class="text-center">${ item.resources }</td>
+                            <td class="text-center">${ item.analysis != null ? item.analysis : "/" }</td>
+                            <td class="text-center">
+                                <a href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                <a style="cursor: pointer; color: red;" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                            </td>
+                            </tr>`;
+                    allData += row;
+                });
+                $('#table-body').html(allData)
+            }
+        }, (error) => {
+            console.log(error);
+        })
+    });
+
 </script>

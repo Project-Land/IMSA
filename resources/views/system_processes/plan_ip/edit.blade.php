@@ -20,34 +20,32 @@
         <h2 class="mx-auto text-center">{{'Plan IP - '.$planIp->name}}</h2>
         <div class="form-group">
             <label for="checked_date">Termin provere</label>
-            <input type="text" class="form-control" id="checked_date" placeholder="" name="checked_date" value="{{$planIp->internalCheck->date}}" readonly>
+            <input type="text" class="form-control" id="checked_date" name="checked_date" value="{{ date('d.m.Y', strtotime( $planIp->internalCheck->date)) }}" readonly>
         </div>
 
         <div class="form-group">
             <label for="checked_sector">Sektor</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector}}" readonly>
+            <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$planIp->internalCheck->sector}}" readonly>
         </div>
 
         <div class="form-group">
             <label for="team_for_internal_check">Tim za proveru</label>
-            <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}" readonly>
+            <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}" readonly>
         </div>
-
-    
        
         <div class="form-group">
             <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start">
+            <input type="text" class="form-control" id="check_start" name="check_start" value="{{ date('d.m.Y H:i', strtotime($planIp->check_start)) }}">
         </div>
 
         <div class="form-group">
             <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end">
+            <input type="text" class="form-control" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($planIp->check_end)) }}">
         </div>
 
         <div class="form-group">
             <label for="report_deadline">Rok za dostavljanje izveštaja</label>
-            <input type="text" class="form-control" id="report_deadline" placeholder="" name="report_deadline">
+            <input type="text" class="form-control" id="report_deadline" name="report_deadline" value="{{ date('d.m.Y', strtotime($planIp->report_deadline)) }}">
         </div>
 
         
@@ -57,9 +55,10 @@
     </div>
 
     <script>
-        $('#check_start').datetimepicker();
-        $('#check_end').datetimepicker();
-        $('#report_deadline').datetimepicker();
+        jQuery.datetimepicker.setLocale('sr');
+        $('#check_start').datetimepicker({format: 'd.m.Y H:i'});
+        $('#check_end').datetimepicker({format: 'd.m.Y H:i'});
+        $('#report_deadline').datetimepicker({format: 'd.m.Y'});
 
         $('#status').change( () => {
             if($('#status').val() == 1){

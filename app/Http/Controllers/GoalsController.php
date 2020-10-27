@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Goal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Facades\CustomLog;
 
 class GoalsController extends Controller
 {
@@ -19,20 +20,24 @@ class GoalsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $goals = Goal::where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
+        $goals = Goal::where([
+                ['standard_id', $standardId],
+                ['team_id', Auth::user()->current_team_id]
+            ])->get();
         return view('system_processes.goals.index', ['goals' => $goals]);
     }
 
-    public function filterYear(Request $request)
-    {
+    public function getData(Request $request) {
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
-
-        $year = $request->year;
-        $goals = Goal::where('year', $year)->where('standard_id', $standardId)->get();
-        return view('system_processes.goals.index', compact('goals'));
+        $goal = Goal::where([
+                ['standard_id', $standardId],
+                ['year', $request->data['year']],
+                ['team_id', Auth::user()->current_team_id]
+            ])->get();
+        return response()->json($goal);
     }
 
     /**
@@ -81,7 +86,7 @@ class GoalsController extends Controller
         $goal->year = $request->year;
         $goal->responsibility = $request->resources;
         $goal->goal = $request->goal;
-        $goal->deadline = $request->deadline;
+        $goal->deadline = date('Y-m-d', strtotime($request->deadline));
         $goal->kpi = $request->kpi;
         $goal->resources = $request->resources;
         $goal->activities = $request->activities;
@@ -91,6 +96,7 @@ class GoalsController extends Controller
         $goal->user_id = Auth::user()->id;
 
         $goal->save();
+        CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
         return redirect('/goals');
     }
@@ -156,13 +162,14 @@ class GoalsController extends Controller
         $goal->year = $request->year;
         $goal->responsibility = $request->resources;
         $goal->goal = $request->goal;
-        $goal->deadline = $request->deadline;
+        $goal->deadline = date('Y-m-d', strtotime($request->deadline));
         $goal->kpi = $request->kpi;
         $goal->resources = $request->resources;
         $goal->activities = $request->activities;
         $goal->analysis = $request->analysis != null ? $request->analysis : null;
 
         $goal->save();
+        CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
         return redirect('/goals');
     }
@@ -175,10 +182,20 @@ class GoalsController extends Controller
      */
     public function destroy($id)
     {
+        $goal = Goal::findOrFail($id);
         if(Goal::destroy($id)){
+            CustomLog::info('Cilj "'.$goal->goal.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Cilj je uspešno uklonjen');
         }else{
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
+    }
+
+    public function deleteApi($id)
+    {
+        $goal = Goal::findOrFail($id);
+        Goal::destroy($id);
+        CustomLog::info('Cilj "'.$goal->name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        return true;
     }
 }
