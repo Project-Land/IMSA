@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Document;
+use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreManualRequest;
 use App\Http\Requests\UpdateManualRequest;
-use App\Facades\CustomLog;
 
 class ManualsController extends Controller
 {
@@ -66,16 +68,20 @@ class ManualsController extends Controller
 
         if($request->file('file')){
             $file = $request->file;
+            try{
+                $name = $file->getClientOriginalName();
+                $document->file_name = 'manual_'.time().'.'.$file->getClientOriginalExtension();
+                $standard = $this::getStandard();
+                $document->standard_id = $standard;
+                $document->save();
+                $file->storeAs($upload_path, $document->file_name);
 
-            $name = $file->getClientOriginalName();
-            $document->file_name = 'manual_'.time().'.'.$file->getClientOriginalExtension();
-            $standard = $this::getStandard();
-            $document->standard_id = $standard;
-            $document->save();
-            $file->storeAs($upload_path, $document->file_name);
-
-            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+                $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+                CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            }catch(Exception $e){
+                CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta uputstvo. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+                $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            }
             return redirect('/manuals');
         }
     }
@@ -138,10 +144,14 @@ class ManualsController extends Controller
             $document->standard_id = $standard;
             $file->storeAs($upload_path, $document->file_name);
         }
-
-        $document->save();
-        $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
-        CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        try{
+            $document->save();
+            $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+            CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta uputstvo. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/manuals');
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use Exception;
 
 class RiskManagementController extends Controller
 {
@@ -66,10 +67,14 @@ class RiskManagementController extends Controller
             $risk->measure = "Plan za postupanje sa rizikom ".$count;
             $risk->measure_created_at = \Carbon\Carbon::now()->toDateTimeString();
         }
-
-        $risk->save();
-        CustomLog::info('Rizik "'.$risk->description.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+        try{
+            $risk->save();
+            CustomLog::info('Rizik "'.$risk->description.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja rizika. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/risk-management');
     }
 
@@ -128,10 +133,14 @@ class RiskManagementController extends Controller
             $risk->measure = "Plan za postupanje sa rizikom ".$count;
             $risk->measure_created_at = \Carbon\Carbon::now()->toDateTimeString();
         }
-
+        try{
         $risk->save();
         CustomLog::info('Rizik "'.$risk->description.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene rizika id-'.$risk->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/risk-management');
     }
 
@@ -181,10 +190,14 @@ class RiskManagementController extends Controller
         $risk->responsibility = $request->responsibility;
         $risk->deadline = date('Y-m-d', strtotime($request->deadline));
         $risk->status = $request->status;
-
-        $risk->save();
-        CustomLog::info('Plan za postupanje sa rizikom "'.$risk->description.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Plan je uspešno izmenjen!');
+        try{
+            $risk->save();
+            CustomLog::info('Plan za postupanje sa rizikom "'.$risk->description.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Plan je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene plana za postupanje sa rizikom id-'.$risk->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/risk-management');
     }
 }

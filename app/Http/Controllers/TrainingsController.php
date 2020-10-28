@@ -6,6 +6,7 @@ use App\Models\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use Exception;
 
 class TrainingsController extends Controller
 {
@@ -101,11 +102,14 @@ class TrainingsController extends Controller
 
         $trainingPlan->user_id = Auth::user()->id;
         $trainingPlan->team_id = Auth::user()->current_team_id;
-
-        $trainingPlan->save();
-        CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-
-        $request->session()->flash('status', 'Godišnji plan obuka je uspešno sačuvan!');
+        try{
+            $trainingPlan->save();
+            CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Godišnji plan obuka je uspešno sačuvan!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja godišnjeg plana obuke. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/trainings');
     }
 
@@ -177,10 +181,14 @@ class TrainingsController extends Controller
         $trainingPlan->resources = $request->resources;
         $trainingPlan->final_num_of_employees = $request->final_num_of_employees != null ? $request->final_num_of_employees : null;
         $trainingPlan->rating = $request->rating != null ? $request->rating : null;
-
-        $trainingPlan->save();
-        CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Godišnji plan obuka je uspešno izmenjen!');
+        try{
+            $trainingPlan->save();
+            CustomLog::info('Godišnji plan obuke "'.$trainingPlan->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Godišnji plan obuka je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene godišnjeg plana obuke id-'.$trainingPlan->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/trainings');
     }
 
@@ -194,9 +202,11 @@ class TrainingsController extends Controller
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('delete', $trainingPlan);
-        Training::destroy($id);
-        CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        return back()->with('status', 'Godišnji plan obuke je uspešno uklonjen');
+        if(Training::destroy($id)){
+            CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            return back()->with('status', 'Godišnji plan obuke je uspešno uklonjen');
+        }
+        return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
     }
 
     public function deleteApi($id)

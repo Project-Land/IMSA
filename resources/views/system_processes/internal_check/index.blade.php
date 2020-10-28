@@ -178,8 +178,6 @@ if(id){
     const reportShow=document.getElementById('report.show');
     
     
-    
-    
    
 
     const planIpShowAjax=function(){

@@ -6,6 +6,7 @@ use App\Models\Complaint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use Exception;
 
 class ComplaintsController extends Controller
 {
@@ -83,10 +84,14 @@ class ComplaintsController extends Controller
 
         $complaint->user_id = Auth::user()->id;
         $complaint->team_id = Auth::user()->current_team_id;
-
+        try{
         $complaint->save();
-        CustomLog::info('Reklamacija "'.$complaint->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Reklamacija je uspešno sačuvana!');
+            CustomLog::info('Reklamacija "'.$complaint->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Reklamacija je uspešno sačuvana!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja reklamacije. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/complaints');
     }
 
@@ -159,10 +164,14 @@ class ComplaintsController extends Controller
         $complaint->way_of_solving = $request->way_of_solving;
         $complaint->deadline_date = date('Y-m-d', strtotime($request->deadline_date));
         $complaint->closing_date = $request->status == 1 ? date('Y-m-d') : null;
-
-        $complaint->save();
-        CustomLog::info('Reklamacija "'.$complaint->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Reklamacija je uspešno izmenjena!');
+        try{
+            $complaint->save();
+            CustomLog::info('Reklamacija "'.$complaint->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Reklamacija je uspešno izmenjena!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene reklamacije. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/complaints');
     }
 

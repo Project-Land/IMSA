@@ -6,6 +6,7 @@ use App\Models\Goal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use Exception;
 
 class GoalsController extends Controller
 {
@@ -106,10 +107,14 @@ class GoalsController extends Controller
 
         $goal->team_id = Auth::user()->current_team_id;
         $goal->user_id = Auth::user()->id;
-
-        $goal->save();
-        CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
+        try{
+            $goal->save();
+            CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/goals');
     }
 
@@ -181,10 +186,14 @@ class GoalsController extends Controller
         $goal->resources = $request->resources;
         $goal->activities = $request->activities;
         $goal->analysis = $request->analysis != null ? $request->analysis : null;
-
-        $goal->save();
-        CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
+        try{
+            $goal->save();
+            CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/goals');
     }
 
