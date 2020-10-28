@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standard') }} {{ session('standard_name') }}
+            {{ session('standard_name') }} - {{ __('Ciljevi') }} 
         </h2>
     </x-slot>
 
@@ -26,7 +26,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a></div>
+                        <div class="col-sm-4">
+                            @can('create', App\Models\Goal::class)
+                                <a class="btn btn-info" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a>
+                            @endcan
+                        </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
                                 <label for="goals-year" class="mr-3">Godina</label>
@@ -68,12 +72,14 @@
                                     <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
                                         <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        @canany(['update', 'delete'], $goal)
                                         <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
                                 </tr>   
                             @endforeach
@@ -198,12 +204,15 @@
                             <td class="text-center">${ item.kpi }</td>
                             <td class="text-center">${ item.activities }</td>
                             <td class="text-center">${ item.responsibility }</td>
-                            <td class="text-center">${ new Date(item.deadline).toLocaleString('sr-SR', { timeZone: 'CET' }) }</td>
+                            <td class="text-center">${ new Date(item.deadline).getUTCDate() + '.' + new Date(item.deadline).getUTCMonth() + '.' + new Date(item.deadline).getUTCFullYear() }</td>
                             <td class="text-center">${ item.resources }</td>
                             <td class="text-center">${ item.analysis != null ? item.analysis : "/" }</td>
                             <td class="text-center">
-                                <a href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                <a style="cursor: pointer; color: red;" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                <button class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <span class="${ item.isAdmin === false ? 'd-none' : '' }">
+                                    <a href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                    <a style="cursor: pointer; color: red;" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                </span>
                             </td>
                             </tr>`;
                     allData += row;

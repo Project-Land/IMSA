@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Zapisnik sa preispitivanja') }}
+            {{ session('standard_name') }} - {{ __('Zapisnici sa preispitivanja') }}
         </h2>
     </x-slot>
 
@@ -203,8 +203,11 @@
                     let row = `<tr>
                             <td class="text-center">Zapisnik sa preispitivanja ${ item.year }</td>
                             <td class="text-center">
-                                <a href="/management-system-reviews/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                <a style="cursor: pointer; color: red;" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                <button class="button text-primary" onclick="showMSR(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <span class="${ item.isAdmin === false ? 'd-none' : '' }">
+                                    <a href="/management-system-reviews/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                    <a style="cursor: pointer; color: red;" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                </span>
                             </td>
                             </tr>`;
                     allData += row;

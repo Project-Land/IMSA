@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Jetstream;
-use App\Facades\CustomLOg;
+use App\Facades\CustomLog;
 
 class UserController extends Controller
 {
@@ -24,6 +24,16 @@ class UserController extends Controller
     {
         $users = User::where('current_team_id', \Auth::user()->current_team_id)->get();
         return view('users.index', compact('users'));
+    }
+
+    public function changeCurrentTeam($teamId)
+    {
+        $user = User::findOrFail(\Auth::user()->id);
+        $user->update(['current_team_id' => $teamId]);
+        
+        session()->forget('standard');
+        session()->forget('standard_name');
+        return redirect('/');
     }
 
     /**

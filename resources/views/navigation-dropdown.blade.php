@@ -92,6 +92,11 @@
                         @endforeach
 
                         <x-slot name="content">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Trenutna firma') }}
+                            </div>
+                            <p class="block px-4 text-sm text-gray-800">{{ Auth::user()->currentTeam->name }}</p>
+                            
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Upravljanje nalogom') }}

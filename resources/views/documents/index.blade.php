@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standard') }} {{session('standard_name')}}
+            {{ Session::get('standard_name') }} - {{ __('Dokumenta') }} 
            
         </h2>
     </x-slot>

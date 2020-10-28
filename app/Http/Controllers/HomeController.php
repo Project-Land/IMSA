@@ -12,7 +12,10 @@ class HomeController extends Controller
     {
         session()->forget('standard');
         session()->forget('standard_name');
-        $standards = Standard::all();
+        $teamId = \Auth::user()->current_team_id;
+        $standards = Standard::whereHas('teams', function($q) use ($teamId) {
+            $q->where('team_id', $teamId);
+         })->get();
         return view('dashboard', compact('standards'));
     }
 

@@ -42,8 +42,25 @@
                                 <div class="flex items-center">
                                     <div class="ml-4"><a href="{{ route('teams.show', $team->id) }}">{{ $team->name }}</a></div>
                                 </div>
+
                                 <div class="flex items-center">
-                                    <div class="ml-2 text-sm text-gray-400">Broj korisnika: {{ $team->users->count() - 1 }}</div>
+                                    <div class="ml-4">
+                                        Standardi:
+                                        @foreach($team->standards as $standard)
+                                           {{ $standard->name }}</span>{{ (!$loop->last)? ",":"" }}
+                                        @endforeach
+                                        <a href="/add-new-standard-to-team/{{ $team->id }}"><i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <div class="ml-4">
+                                        <a href="/change-current-team/{{ $team->id }}">Sadržaj</a>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <div class="ml-2 text-sm text-gray-400"><p>Broj korisnika: {{ $team->users->count() - 1 }}</p></div>
                                 </div>
                             </div>
                         </div>
@@ -56,6 +73,7 @@
         <x-jet-section-border />
 
     </div>
-
+    
 </x-app-layout>
+
 

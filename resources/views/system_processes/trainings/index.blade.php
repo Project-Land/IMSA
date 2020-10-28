@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Godišnji plan obuke') }}
+            {{ session('standard_name') }} - {{ __('Godišnji planovi obuke') }}
         </h2>
     </x-slot>
 
@@ -26,7 +26,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-4"><a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a></div>
+                        <div class="col-sm-4">
+                            @can('create', App\Models\Training::class)
+                            <a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a>
+                            @endcan
+                        </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
                                 <label for="year" class="mr-3">Godina</label>
@@ -69,12 +73,14 @@
                                     <td class="text-center">{{ $tp->final_num_of_employees? : '/' }}</td>
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>
                                     <td class="text-center">
+                                        @canany(['update', 'delete'], $tp)
                                         <a href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
                                 </tr>   
                                 @endforeach
@@ -151,19 +157,21 @@
                 let allData = "";
                 $.each(response.data, function (i, item){
                     let row = `<tr>
-                            <td class="text-center">${ item.year }</td>
-                            <td class="text-center">${ item.name }</td>
-                            <td class="text-center">${ item.type }</td>
-                            <td class="text-center">${ item.description }</td>
-                            <td class="text-center">${ item.num_of_employees }</td>
-                            <td class="text-center">${ new Date(item.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }</td>
-                            <td class="text-center">${ item.resources }</td>
-                            <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
-                            <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
-                            <td class="text-center">
-                                <a href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                <a style="cursor: pointer; color: red;" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
-                            </td>
+                                <td class="text-center">${ item.year }</td>
+                                <td class="text-center">${ item.name }</td>
+                                <td class="text-center">${ item.type }</td>
+                                <td class="text-center">${ item.description }</td>
+                                <td class="text-center">${ item.num_of_employees }</td>
+                                <td class="text-center">${ new Date(item.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ item.place }</td>
+                                <td class="text-center">${ item.resources }</td>
+                                <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
+                                <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
+                                <td class="text-center">
+                                    <span class="${ item.isAdmin === false ? 'd-none' : '' }">
+                                        <a href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                        <a style="cursor: pointer; color: red;" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                    </span>
+                                </td>
                             </tr>`;
                     allData += row;
                 });

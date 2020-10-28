@@ -20,6 +20,7 @@ use App\Policies\PlanIpPolicy;
 use App\Policies\RiskManagementPolicy;
 use App\Policies\TeamPolicy;
 use App\Policies\SectorPolicy;
+use App\Policies\TrainingPolicy;
 use App\Models\Sector;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -44,8 +45,8 @@ class AuthServiceProvider extends ServiceProvider
         InternalCheckReport::class => InternalCheckReportPolicy::class,
         ManagementSystemReview::class => ManagementSystemReviewPolicy::class,
         RiskManagement::class => RiskManagementPolicy::class,
-        PlanIp::class => PlanIpPolicy::class
-        
+        PlanIp::class => PlanIpPolicy::class,
+        Training::class => TrainingPolicy::class,
         
     ];
 

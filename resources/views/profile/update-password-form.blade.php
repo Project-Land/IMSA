@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        {{ __('Koristite dugi i nasumični niz karaktera kako bi vaša šifra bila bezbednija.') }}
     </x-slot>
 
     <x-slot name="form">

@@ -20,23 +20,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f929c6f6-bdd6-48e4-ac85-2cb28c676d81" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/imsa.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ComplaintsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ComplaintsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/navigation-dropdown.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/navigation-dropdown.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/sectors/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/sectors/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/standard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/standard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GoalsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GoalsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ManagementSystemReviewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ManagementSystemReviewsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TeamController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TeamController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TrainingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TrainingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/GoalPolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/GoalPolicy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/documents/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/documents/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile/delete-user-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile/delete-user-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile/two-factor-authentication-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile/two-factor-authentication-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/profile/update-password-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile/update-password-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/system_processes/complaints/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/complaints/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/corrective_measures/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/corrective_measures/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/corrective_measures/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/corrective_measures/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/goals/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/goals/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/internal_check/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/internal_check/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/management_system_reviews/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/management_system_reviews/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/system_processes/risk_management/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/risk_management/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/suppliers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/suppliers/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/system_processes/trainings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/system_processes/trainings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/create-team-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/create-team-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/delete-team-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/delete-team-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/team-member-manager.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/team-member-manager.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/teams/update-team-name-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/teams/update-team-name-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,6 +228,7 @@
       <workItem from="1603192806811" duration="706000" />
       <workItem from="1603193540553" duration="411000" />
       <workItem from="1603194184887" duration="208000" />
+      <workItem from="1603893288278" duration="5000" />
     </task>
     <servers />
   </component>

@@ -32,12 +32,22 @@ class GoalsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $goal = Goal::where([
+        $goals = Goal::where([
                 ['standard_id', $standardId],
                 ['year', $request->data['year']],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
-        return response()->json($goal);
+
+        $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
+
+        if(!$goals->isEmpty()){
+            $goals = $goals->map(function($item, $key) use($isAdmin){
+                $item->isAdmin = $isAdmin;
+                return $item;
+            });
+        }
+        return response()->json($goals);
+        
     }
 
     /**
@@ -47,6 +57,7 @@ class GoalsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Goal::class);
         return view('system_processes.goals.create');
     }
 
@@ -58,6 +69,7 @@ class GoalsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Goal::class);
         $goal = new Goal();
 
         $messages = array(
@@ -122,6 +134,7 @@ class GoalsController extends Controller
     public function edit($id)
     {
         $goal = Goal::findOrFail($id);
+        $this->authorize('update', $goal);
         return view('system_processes.goals.edit', ['goal' => $goal]);
     }
 
@@ -135,6 +148,7 @@ class GoalsController extends Controller
     public function update(Request $request, $id)
     {
         $goal = Goal::findOrFail($id);
+        $this->authorize('update', $goal);
 
         $messages = array(
             'responsibility.required' => 'Unesite odgovornost',
@@ -183,6 +197,7 @@ class GoalsController extends Controller
     public function destroy($id)
     {
         $goal = Goal::findOrFail($id);
+        $this->authorize('delete', $goal);
         if(Goal::destroy($id)){
             CustomLog::info('Cilj "'.$goal->goal.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             return back()->with('status', 'Cilj je uspešno uklonjen');
@@ -194,6 +209,7 @@ class GoalsController extends Controller
     public function deleteApi($id)
     {
         $goal = Goal::findOrFail($id);
+        $this->authorize('delete', $goal);
         Goal::destroy($id);
         CustomLog::info('Cilj "'.$goal->name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return true;

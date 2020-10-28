@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Goal;
+use App\Models\Training;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GoalPolicy
+class TrainingPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class GoalPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Training  $training
      * @return mixed
      */
-    public function view(User $user, Goal $goal)
+    public function view(User $user, Training $training)
     {
         //
     }
@@ -42,7 +42,7 @@ class GoalPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
+        if ($role == "admin" || $role == "super-admin") {
             return true;
         }
     }
@@ -51,13 +51,13 @@ class GoalPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Training  $training
      * @return mixed
      */
-    public function update(User $user, Goal $goal)
+    public function update(User $user, Training $training)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($user->current_team_id === $goal->team_id){
+        if($user->current_team_id === $training->team_id){
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
@@ -68,13 +68,13 @@ class GoalPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Training  $training
      * @return mixed
      */
-    public function delete(User $user, Goal $goal)
+    public function delete(User $user, Training $training)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($user->current_team_id === $goal->team_id){
+        if($user->current_team_id === $training->team_id){
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
@@ -85,10 +85,10 @@ class GoalPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Training  $training
      * @return mixed
      */
-    public function restore(User $user, Goal $goal)
+    public function restore(User $user, Training $training)
     {
         //
     }
@@ -97,10 +97,10 @@ class GoalPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Goal  $goal
+     * @param  \App\Models\Training  $training
      * @return mixed
      */
-    public function forceDelete(User $user, Goal $goal)
+    public function forceDelete(User $user, Training $training)
     {
         //
     }

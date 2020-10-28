@@ -22,7 +22,10 @@ class ManagementSystemReviewsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $msr = ManagementSystemReview::where([['standard_id', $standardId],['team_id',Auth::user()->current_team_id]])->get();
+        $msr = ManagementSystemReview::where([
+                ['standard_id', $standardId],
+                ['team_id',Auth::user()->current_team_id]
+            ])->get();
         return view('system_processes.management_system_reviews.index', compact('msr'));
     }
 
@@ -31,7 +34,21 @@ class ManagementSystemReviewsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $reviews = ManagementSystemReview::where('standard_id', $standardId)->where('year', $request->data['year'])->get();
+        
+        $reviews = ManagementSystemReview::where([
+                ['standard_id', $standardId],
+                ['year', $request->data['year']]
+            ])->get();
+
+        $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
+
+        if(!$reviews->isEmpty()){
+            $reveiws = $reviews->map(function ($item, $key) use ($isAdmin){
+                $item->isAdmin = $isAdmin;
+                return $item;
+            });
+        }
+
         return response()->json($reviews);
     }
 

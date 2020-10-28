@@ -31,6 +31,16 @@ class TrainingsController extends Controller
             return redirect('/');
         }
         $trainingPlans = Training::where('standard_id', $standardId)->where('year', $request->data['year'])->get();
+
+        $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
+
+        if(!$trainingPlans->isEmpty()){
+            $trainingPlans = $trainingPlans->map(function($item, $key) use($isAdmin){
+                $item->isAdmin = $isAdmin;
+                return $item;
+            });
+        }
+
         return response()->json($trainingPlans);
     }
 
@@ -41,6 +51,7 @@ class TrainingsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Training::class);
         return view('system_processes.trainings.create');
     }
 
@@ -52,6 +63,7 @@ class TrainingsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Training::class);
         $trainingPlan = new Training();
 
         $messages = array(
@@ -118,6 +130,7 @@ class TrainingsController extends Controller
     public function edit($id)
     {
         $trainingPlan = Training::findOrFail($id);
+        $this->authorize('update', $trainingPlan);
         return view('system_processes.trainings.edit', compact('trainingPlan'));
     }
 
@@ -131,6 +144,7 @@ class TrainingsController extends Controller
     public function update(Request $request, $id)
     {
         $trainingPlan = Training::findOrFail($id);
+        $this->authorize('update', $trainingPlan);
 
         $messages = array(
             'name.required' => 'Unesite naziv obuke',
@@ -179,6 +193,7 @@ class TrainingsController extends Controller
     public function destroy($id)
     {
         $trainingPlan = Training::findOrFail($id);
+        $this->authorize('delete', $trainingPlan);
         Training::destroy($id);
         CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return back()->with('status', 'Godišnji plan obuke je uspešno uklonjen');
@@ -187,6 +202,7 @@ class TrainingsController extends Controller
     public function deleteApi($id)
     {
         $trainingPlan = Training::findOrFail($id);
+        $this->authorize('delete', $trainingPlan);
         Training::destroy($id);
         CustomLog::info('Godišnji plan obuke uklonjen "'.$trainingPlan->name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         return true;

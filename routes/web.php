@@ -43,7 +43,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
-
     Route::resource('sectors', SectorsController::class);
 
     Route::resource('internal-check', InternalCheckController::class);
@@ -74,7 +73,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('add-new-standard-to-team/{id}', [TeamController::class, 'addNewStandard']);
+    Route::post('store-new-standard-to-team', [TeamController::class, 'storeNewStandard']);
 
     Route::resource('users', UserController::class);
+    Route::get('change-current-team/{id}', [UserController::class, 'changeCurrentTeam']);
     
 });
