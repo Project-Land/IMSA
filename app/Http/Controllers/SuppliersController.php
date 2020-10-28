@@ -7,6 +7,8 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Models\Notification;
+use Exception;
 
 class SuppliersController extends Controller
 {
@@ -74,13 +76,24 @@ class SuppliersController extends Controller
         $supplier->deadline_date = $newDateTime;
 
         $supplier->team_id = Auth::user()->current_team_id;
-        $supplier->user_id = Auth::user()->id;
-
+     //   $supplier->user_id = Auth::user()->id;
+    try{
         $supplier->save();
+        $notification=Notification::create([
+            'message'=>'Datum sledećeg preispitivanja '.$supplier->deadline_date,
+            'team_id'=>Auth::user()->current_team_id,
+            'checkTime' => $supplier->deadline_date
+        ]);
+        $supplier->notification()->save($notification);
         CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
         $request->session()->flash('status', 'Odabrani isporučilac je uspešno sačuvan!');
-        return redirect('/suppliers');
+       
+    }catch(Exception $e){
+        $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        CustomLog::warning('Neuspeli pokušaj kreiranja dobavljača. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
     }
+    return redirect('/suppliers');
+}
 
     /**
      * Display the specified resource.
@@ -144,10 +157,14 @@ class SuppliersController extends Controller
 
         $newDateTime = Carbon::parse(Carbon::now()->toDateTimeString())->addMonths(6);
         $supplier->deadline_date = $newDateTime;
-
-        $supplier->save();
-        CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
+        try{
+            $supplier->save();
+            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene dobavljača. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo');
+        }
         return redirect('/suppliers');
     }
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ManagementSystemReview;
+use Exception;
+use App\Facades\CustomLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ManagementSystemReview;
 use App\Http\Requests\StoreManagementSystemReview;
 use App\Http\Requests\UpdateManagementSystemReview;
-use Illuminate\Support\Facades\Auth;
-use App\Facades\CustomLog;
 
 class ManagementSystemReviewsController extends Controller
 {
@@ -55,9 +56,14 @@ class ManagementSystemReviewsController extends Controller
     public function store(StoreManagementSystemReview $request)
     {
         $this->authorize('create', ManagementSystemReview::class);
-        $msr = ManagementSystemReview::Create($request->all());
-        CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Zapisnik je uspešno sačuvan!');
+        try{
+            $msr = ManagementSystemReview::Create($request->all());
+            CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Zapisnik je uspešno sačuvan!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja zapisnika sa preispitivanja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/management-system-reviews');
     }
 
@@ -97,10 +103,14 @@ class ManagementSystemReviewsController extends Controller
     {
         $msr = ManagementSystemReview::findOrFail($id);
         $this->authorize('update', $msr);
-
-        $msr->update($request->all());
-        CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Zapisnik je uspešno izmenjen!');
+        try{
+            $msr->update($request->all());
+            CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Zapisnik je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene zapisnika sa preispitivanja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/management-system-reviews');
     }
 

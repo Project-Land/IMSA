@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreFormRequest;
 use App\Http\Requests\UpdateFormRequest;
 use App\Facades\CustomLog;
+use Exception;
 
 class FormsController extends Controller
 {
@@ -63,16 +64,19 @@ class FormsController extends Controller
 
         if($request->file('file')){
             $file = $request->file;
-
-            $name = $file->getClientOriginalName();
-            $document->file_name = 'form_'.time().'.'.$file->getClientOriginalExtension();
-            $standard = $this::getStandard();
-            $document->standard_id = $standard;
-            $document->save();
-            $file->storeAs($upload_path, $document->file_name);
-
-            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            try{
+                $name = $file->getClientOriginalName();
+                $document->file_name = 'form_'.time().'.'.$file->getClientOriginalExtension();
+                $standard = $this::getStandard();
+                $document->standard_id = $standard;
+                $document->save();
+                $file->storeAs($upload_path, $document->file_name);
+                $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+                CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            }catch(Exception $e){
+                CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            }
             return redirect('/forms');
         }
     }
@@ -128,10 +132,14 @@ class FormsController extends Controller
             $document->standard_id = $standard;
             $file->storeAs($upload_path, $document->file_name);
         }
-
-        $document->save();
-        $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
-        CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        try{
+            $document->save();
+            $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/forms');
     }
 

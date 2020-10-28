@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Sector;
 use App\Models\Team;
 use App\Facades\CustomLog;
+use Exception;
 
 class SectorsController extends Controller
 {
@@ -48,15 +49,18 @@ class SectorsController extends Controller
         $request->validate([
             'name' => 'required|max:190'
         ], $messages);
-
-        $sector = Sector::create([
-            'name' => $request->name,
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id
-        ]);
-        CustomLog::info('Sektor "'.$sector->name.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        
-        $request->session()->flash('status', 'Sektor je uspešno kreiran!');
+        try{
+            $sector = Sector::create([
+                'name' => $request->name,
+                'team_id' => \Auth::user()->current_team_id,
+                'user_id' => \Auth::user()->id
+            ]);
+            CustomLog::info('Sektor "'.$sector->name.'" dodat. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Sektor je uspešno kreiran!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja sektora. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/sectors');
     }
 
@@ -107,11 +111,14 @@ class SectorsController extends Controller
         ], $messages);
 
         $sector->name = $request->name;
-        $sector->save();
-
-        CustomLog::info('Sektor "'.$sector->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-
-        $request->session()->flash('status', 'Sektor je uspešno izmenjen!');
+        try{
+            $sector->save();
+            CustomLog::info('Sektor "'.$sector->name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Sektor je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene sektora id-'.$sector->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/sectors');
     }
 

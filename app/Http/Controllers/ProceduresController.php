@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProcedureRequest;
 use App\Http\Requests\UpdateProcedureRequest;
 use App\Facades\CustomLog;
+use Exception;
 
 class ProceduresController extends Controller
 {
@@ -70,11 +71,15 @@ class ProceduresController extends Controller
             $document->file_name = 'procedure_'.time().'.'.$file->getClientOriginalExtension();
             $standard = $this::getStandard();
             $document->standard_id = $standard;
-            $document->save();
-            $file->storeAs($upload_path, $document->file_name);
-
-            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            CustomLog::info('Dokument Procedure "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            try{
+                $document->save();
+                $file->storeAs($upload_path, $document->file_name);
+                $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+                CustomLog::info('Dokument Procedure "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            }catch(Exception $e){
+                CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta procedure. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+                $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            }
             return redirect('/procedures');
         }
     }
@@ -131,10 +136,14 @@ class ProceduresController extends Controller
             $document->standard_id = $standard;
             $file->storeAs($upload_path, $document->file_name);
         }
-
-        $document->save();
-        CustomLog::info('Dokument Procedure "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        try{
+            $document->save();
+            CustomLog::info('Dokument Procedure "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta procedure id-'.$document->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/procedures');
 
     }

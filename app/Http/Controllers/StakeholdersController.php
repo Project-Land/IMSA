@@ -6,6 +6,7 @@ use App\Models\Stakeholder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use Exception;
 
 class StakeholdersController extends Controller
 {
@@ -58,17 +59,22 @@ class StakeholdersController extends Controller
             'response' => 'required'
         ], $messages);
 
-        $stakeholder = Stakeholder::create([
-            'name' => $request->name,
-            'standard_id' => $this::getStandard(),
-            'expectation' => $request->expectation,
-            'response' => $request->response,
-            'team_id' => Auth::user()->current_team_id,
-            'user_id' => Auth::user()->id
-        ]);
+        try{
+            $stakeholder = Stakeholder::create([
+                'name' => $request->name,
+                'standard_id' => $this::getStandard(),
+                'expectation' => $request->expectation,
+                'response' => $request->response,
+                'team_id' => Auth::user()->current_team_id,
+                'user_id' => Auth::user()->id
+            ]);
 
-        CustomLog::info('Zainteresovana strana "'.$request->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');
+            CustomLog::info('Zainteresovana strana "'.$request->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja zainteresovane strane-'.$request->name.' . Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/stakeholders');
     }
 
@@ -127,10 +133,14 @@ class StakeholdersController extends Controller
         $stakeholder->expectation = $request->expectation;
         $stakeholder->response = $request->response;
 
-        $stakeholder->save();
-
-        CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        $request->session()->flash('status', 'Zainteresovana strana je uspešno izmenjena!');
+        try{
+            $stakeholder->save();
+            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Zainteresovana strana je uspešno izmenjena!');
+        }catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene zainteresovane strane id-'.$stakeholder->id.' . Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/stakeholders');
     }
 

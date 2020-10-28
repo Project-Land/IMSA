@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Facades\CustomLog;
 use App\Http\Requests\StoreRulesOfProcedureRequest;
 use App\Http\Requests\UpdateRulesOfProcedureRequest;
+use Exception;
 
 class RulesOfProceduresController extends Controller
 {
@@ -61,15 +62,20 @@ class RulesOfProceduresController extends Controller
         $upload_path = "/public/".\Str::snake($this::getCompanyName())."/rules_of_procedure";
 
         if($request->file('file')){
-            $file = $request->file;
-            $name = $file->getClientOriginalName();
-            $document->file_name = 'rules_of_procedure_'.time().'.'.$file->getClientOriginalExtension();
-            $standard = $this::getStandard();
-            $document->standard_id = $standard;
-            $document->save();
-            $file->storeAs($upload_path, $document->file_name);
-            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            try{
+                $file = $request->file;
+                $name = $file->getClientOriginalName();
+                $document->file_name = 'rules_of_procedure_'.time().'.'.$file->getClientOriginalExtension();
+                $standard = $this::getStandard();
+                $document->standard_id = $standard;
+                $document->save();
+                $file->storeAs($upload_path, $document->file_name);
+                $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+                CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            }catch(Exception $e){
+                CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta poslovnik. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+                $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            }
             return redirect('/rules-of-procedures');
         }
     }
@@ -124,10 +130,14 @@ class RulesOfProceduresController extends Controller
             $document->standard_id = $standard;
             $file->storeAs($upload_path, $document->file_name);
         }
-
+        try{
         $document->save();
         $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        }catch(Exception $e){
+        CustomLog::warning('Neuspeli pokušaj izmene dokumenta poslovnik id-'.$document->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         return redirect('/rules-of-procedures');
     }
 
