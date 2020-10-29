@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista korisnika') }}
+            {{ $users->first()->currentTeam->name }} - {{ __('Lista korisničkih naloga') }}
         </h2>
     </x-slot>
 
@@ -18,45 +18,53 @@
         </div>
     </div>
 
-    <x-jet-validation-errors class="mb-4" />
-
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-
-            <div class="md:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Lista korisnika</h3>
-                    <p class="mt-1 text-sm text-gray-600">
-                        Lista svih korisnika aplikacije za firmu {{ $users->first()->currentTeam->name }}
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-5 md:mt-0 md:col-span-2">
-               
-                <div class="shadow overflow-hidden sm:rounded-md">
-                    @foreach($users as $user)
-                        <div class="px-4 py-3 bg-white sm:p-6">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <img class="w-8 h-8 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
-                                    <div class="ml-4">{{ $user->name }}</div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="ml-2 text-sm text-gray-400">{{ $user->allTeams()->first()->membership->role }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-        </div>
-
-        <x-jet-section-border />
-
-    </div>
+    <div class="flex flex-col">
+		<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+			<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+				<div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead>
+							<tr>
+							<th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+								Ime
+							</th>
+							<th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+								Uloga
+							</th>
+							<th class="px-6 py-3 bg-gray-50"></th>
+							</tr>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200">
+							@foreach($users as $user)
+							<tr>
+								<td class="px-6 py-4 whitespace-no-wrap">
+									<div class="flex items-center">
+										<div class="flex-shrink-0 h-10 w-10">
+											<img class="h-10 w-10 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
+										</div>
+										<div class="ml-4">
+											<div class="text-sm leading-5 font-medium text-gray-900">
+												{{ $user->name }}
+											</div>
+											<div class="text-sm leading-5 text-gray-500">
+												<a href="mailto: {{ $user->email }}">{{ $user->email }}</a>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+									{{ ($user->teamRole($user->currentTeam)->name) === "Owner" ? "Super Admin" : $user->teamRole($user->currentTeam)->name }}
+								</td>
+								<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+									<a href="#" class="text-indigo-600 hover:text-indigo-900">Izveštaj</a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </x-app-layout>
-

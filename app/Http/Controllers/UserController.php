@@ -55,7 +55,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         $messages = array(
             'name.required' => 'Unesite ime',
             'name.max' => 'Polje ne sme biti duže od 255 karaktera',
@@ -73,6 +72,7 @@ class UserController extends Controller
         ], $messages);
 
         $teamID = \Auth::user()->current_team_id;
+        
         try{
             $userID = User::create([
                 'name' => $request['name'],
@@ -87,10 +87,10 @@ class UserController extends Controller
                 ['role' => $role]
             );
             TeamMemberAdded::dispatch($team, $newTeamMember);
-            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika email-'.$request['email'].'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika email-'.$request['email'].'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/users');

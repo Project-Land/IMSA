@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dodavanje novog standarda firmi') }}
+            {{ __('Dodela novog standarda firmi ') }} {{ \Auth::user()->currentTeam->name }}
         </h2>
     </x-slot>
 
@@ -32,14 +32,16 @@
             </div>
 
             <div class="mt-5 md:mt-0 md:col-span-2">
-               
-                <form method="POST" action="/store-new-standard-to-team">
+                <form method="POST" action="{{ route('standards.store') }}">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <input type="hidden" name="team_id" value="{{ request()->route('id') }}">
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="role" value="{{ __('Standard') }}" class="block font-medium text-sm text-gray-700" />
-                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-3 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard">
+                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-3 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard" {{ $standards->isEmpty() ? "disabled" : "" }}>
+                                @if($standards->isEmpty())
+                                    <option value="0">Nema novih standarda za dodelu</option>
+                                @endif
                                 @foreach($standards as $standard)
                                     <option value="{{ $standard->id }}">{{ $standard->name }}</option>
                                 @endforeach
@@ -50,11 +52,15 @@
                         </div>
                     
                         <div class="flex items-center justify-end mt-4">
-                            <x-jet-button class="ml-4 mb-4 mr-4">
-                                {{ __('Dodaj') }}
-                            </x-jet-button>
+                            @if($standards->isNotEmpty())
+                                <a href="/teams" class="ml4 mb-4 mr-4 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 hover:no-underline transition ease-in-out duration-150">Odustani</a>
+                                <x-jet-button class="ml-4 mb-4 mr-4">
+                                    {{ __('Dodaj') }}
+                                </x-jet-button>
+                            @else
+                                <a href="/teams" class="mr-4 mb-4 mr-4 px-4 py-2 text-xs font-semibold tracking-widest uppercase hover:bg-blue-500 text-blue-700 font-semibold hover:text-white hover:no-underline py-2 px-4 border border-blue-500 hover:border-transparent rounded"><i class="fas fa-arrow-left"></i> Nazad</a>
+                            @endif
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -62,7 +68,6 @@
         </div>
 
         <x-jet-section-border />
-
 
     </div>
 

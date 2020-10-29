@@ -23,6 +23,8 @@ use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\StandardsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +75,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
-    Route::get('add-new-standard-to-team/{id}', [TeamController::class, 'addNewStandard']);
-    Route::post('store-new-standard-to-team', [TeamController::class, 'storeNewStandard']);
 
     Route::resource('users', UserController::class);
     Route::get('change-current-team/{id}', [UserController::class, 'changeCurrentTeam']);
+
+    Route::get('standards/create/{id}', [StandardsController::class, 'create'])->name('standards.create-new');
+    Route::resource('standards', StandardsController::class);
     
 });
