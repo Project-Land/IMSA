@@ -51,16 +51,20 @@
                                     <td class="text-center">{{ $risk->acceptable }}</td>
                                     <td class="text-center"><span @if($risk->measure) style="cursor: pointer; color: blue;"  onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
+                                            @can('update',$risk)
                                             <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
+                                            @endcan
                                         @endif
                                     </td>
                                     <td class="text-center">
+                                    @can('update',$risk)
                                         <a href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
+                                    @endcan
                                     </td>
                                 </tr>   
                                 @endforeach

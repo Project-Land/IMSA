@@ -47,9 +47,9 @@
                             <tbody>
                             @forelse($internal_checks as $check)
                             <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
-                                    <td>{{ implode("/",array_reverse(explode("-",$check->date))) }}</td>
+                                    <td>{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
                                     <td>{{ $check->sector->name }}</td>
-                                    <td>{{ $check->leaders }}</td>
+                                    <td>{{$check->leaders}}</td>
                                     <td>{{ $check->standard->name }}</td>
                                     <td class="text-center">
                                     @if(!isset($check->planIp->checked_date))

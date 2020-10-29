@@ -6,6 +6,8 @@ use App\Models\Stakeholder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\StoreStakeholdersRequest;
+use App\Http\Requests\UpdateStakeholdersRequest;
 use Exception;
 
 class StakeholdersController extends Controller
@@ -42,23 +44,10 @@ class StakeholdersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStakeholdersRequest $request)
     {
         $this->authorize('create', Stakeholder::class);
         
-        $messages = array(
-            'name.required' => 'Unesite naziv / ime zainteresovane strane',
-            'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'expectation.required' => 'Unesite očekivanja',
-            'response.required' => 'Unesite odgovor'
-        );
-
-        $validatedData = $request->validate([
-            'name' => 'required|max:190',
-            'expectation' => 'required',
-            'response' => 'required'
-        ], $messages);
-
         try{
             $stakeholder = Stakeholder::create([
                 'name' => $request->name,
@@ -110,23 +99,10 @@ class StakeholdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateStakeholdersRequest $request, $id)
     {
         $stakeholder = Stakeholder::findOrFail($id);
         $this->authorize('update', $stakeholder);
-
-        $messages = array(
-            'name.required' => 'Unesite naziv / ime zainteresovane strane',
-            'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'expectation.required' => 'Unesite očekivanja',
-            'response.required' => 'Unesite odgovor'
-        );
-
-        $validatedData = $request->validate([
-            'name' => 'required|max:190',
-            'expectation' => 'required',
-            'response' => 'required'
-        ], $messages);
 
         $stakeholder->standard_id = $this::getStandard();
         $stakeholder->name = $request->name;

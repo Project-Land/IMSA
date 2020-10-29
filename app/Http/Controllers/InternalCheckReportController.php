@@ -42,29 +42,23 @@ class InternalCheckReportController extends Controller
     {
         $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validate([ 
-
             'specification' => 'required'    
         ]);
 
         $recommendationData = $request->validate([
-
             'newInputRecommendation1' => 'string',
             'newInputRecommendation2' => 'string',
             'newInputRecommendation3' => 'string',
-            'newInputRecommendation4' => 'string'       
-            
+            'newInputRecommendation4' => 'string'          
         ]);
 
         $InconsistencyData = $request->validate([
             'newInput1' => 'string',
             'newInput2' => 'string',
             'newInput3' => 'string',
-            'newInput4' => 'string'
-            
-            
+            'newInput4' => 'string'     
         ]);
 
-    
         try{
             DB::transaction(function () use ($request,$validatedData,$recommendationData,$InconsistencyData){ 
                 $report=InternalCheckReport::create($validatedData);
@@ -142,45 +136,31 @@ class InternalCheckReportController extends Controller
             
         ]);
       
-       
-
-
         $validatedData = $request->validate([
             'specification' => 'required|min:3',
             //'standard_id' => 'required',
         ]);
 
         $inconsistenciesData = $request->validate([
-
-            'inconsistencies.*' => 'string|required|min:3',
-           
+            'inconsistencies.*' => 'string|required|min:3',  
         ]);
 
         $recommendationsData = $request->validate([  
-
-            'recommendations.*' => 'string|required|min:3',
-          
+            'recommendations.*' => 'string|required|min:3',  
         ]);
         
-
         $newInconsistenciesData = $request->validate([
-
             'newInput1' => 'string|min:3',
             'newInput2' => 'string|min:3',
             'newInput3' => 'string|min:3',
             'newInput4' => 'string|min:3',
-          
         ]);
 
-
         $newRecommendationsData = $request->validate([
-
             'newInputRecommendation1' => 'string|min:3',
             'newInputRecommendation2' => 'string|min:3',
             'newInputRecommendation3' => 'string|min:3',
-            'newInputRecommendation4' => 'string|min:3',
-           
-           
+            'newInputRecommendation4' => 'string|min:3',   
         ]);
 
     try{
@@ -246,7 +226,7 @@ class InternalCheckReportController extends Controller
             }
 
             CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-            $request->session()->flash('status', 'Izveštaj je uspešno napravljen');
+            $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
         });
 
     }catch(Exception $e){
@@ -255,7 +235,7 @@ class InternalCheckReportController extends Controller
         return redirect('/internal-check');
         exit();
     } 
-    $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
+    
     return redirect('/internal-check');
     }
     

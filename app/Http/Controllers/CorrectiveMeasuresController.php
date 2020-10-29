@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\StoreCorrectiveMeasuresRequest;
+use App\Http\Requests\UpdateCorrectiveMeasuresRequest;
 use Exception;
 
 class CorrectiveMeasuresController extends Controller
@@ -49,30 +51,12 @@ class CorrectiveMeasuresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCorrectiveMeasuresRequest $request)
     {
         $this->authorize('create', CorrectiveMeasure::class);
 
         $correctiveMeasure = new CorrectiveMeasure();
-       
-        $messages = array(
-            'standard.required' => 'Izaberite standard',
-            'sector.required' => 'Izaberite organizacionu celinu',
-            'noncompliance_source.required' => 'Unesite izvor informacije o neusaglašenosti',
-            'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
-            'noncompliance_cause.required' => 'Unesite uzrok neusaglašenosti',
-            'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti',
-        );
-
-        $validatedData = $request->validate([
-            'standard' => 'required',
-            'sector' => 'required',
-            'noncompliance_source' => 'required',
-            'noncompliance_description' => 'required',
-            'noncompliance_cause' => 'required',
-            'measure' => 'required',
-        ], $messages);
-
+    
         $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)->where('standard_id', $request->standard)->count() + 1;
 
         $correctiveMeasure->name = "KKM ".Carbon::now()->year." / ".$counter;
@@ -140,29 +124,11 @@ class CorrectiveMeasuresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCorrectiveMeasuresRequest $request, $id)
     {
         $correctiveMeasure = CorrectiveMeasure::findOrFail($id);
 
         $this->authorize('update', $correctiveMeasure);
-
-        $messages = array(
-            'standard.required' => 'Izaberite standard',
-            'sector.required' => 'Izaberite organizacionu celinu',
-            'noncompliance_source.required' => 'Unesite izvor informacije o neusaglašenosti',
-            'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
-            'noncompliance_cause.required' => 'Unesite uzrok neusaglašenosti',
-            'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti',
-        );
-
-        $validatedData = $request->validate([
-            'standard' => 'required',
-            'sector' => 'required',
-            'noncompliance_source' => 'required',
-            'noncompliance_description' => 'required',
-            'noncompliance_cause' => 'required',
-            'measure' => 'required',
-        ], $messages);
 
         $correctiveMeasure->standard_id = $request->standard;
         $correctiveMeasure->sector_id = $request->sector;

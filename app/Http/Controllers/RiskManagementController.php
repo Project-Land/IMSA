@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\UpdateRiskManagementPlanRequest;
 use Exception;
 
 class RiskManagementController extends Controller
@@ -167,24 +168,9 @@ class RiskManagementController extends Controller
         return view('system_processes.risk_management.edit-plan', compact('risk'));
     }
 
-    public function updatePlan(Request $request, $id)
+    public function updatePlan(UpdateRiskManagementPlanRequest $request, $id)
     {
         $risk = RiskManagement::findOrFail($id);
-
-        $messages = array(
-            'cause.required' => 'Unesite uzrok',
-            'risk_lowering_measure.required' => 'Unesite meru za smanjenje rizika',
-            'responsibility.required' => 'Unesite odgovornost',
-            'deadline.required' => 'Izaberite rok za realizaciju'
-        );
-
-        $validatedData = $request->validate([
-            'cause' => 'required',
-            'risk_lowering_measure' => 'required',
-            'responsibility' => 'required',
-            'deadline' => 'required'
-        ], $messages);
-
         $risk->cause = $request->cause;
         $risk->risk_lowering_measure = $request->risk_lowering_measure;
         $risk->responsibility = $request->responsibility;

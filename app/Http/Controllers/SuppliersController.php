@@ -7,6 +7,8 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\StoreSuppliersRequest;
+use App\Http\Requests\UpdateSuppliersRequest;
 use App\Models\Notification;
 use Exception;
 
@@ -43,21 +45,10 @@ class SuppliersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSuppliersRequest $request)
     {
         $this->authorize('create', Supplier::class);
         $supplier = new Supplier();
-
-        $messages = array(
-            'supplier_name.required' => 'Unesite naziv isporučioca',
-            'supplier_name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'subject.required' => 'Unesite predmet nabavke'
-        );
-
-        $validatedData = $request->validate([
-            'supplier_name' => 'required|max:190',
-            'subject' => 'required'
-        ], $messages);
 
         $supplier->standard_id = $this::getStandard();
         $supplier->supplier_name = $request->supplier_name;
@@ -127,23 +118,12 @@ class SuppliersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSuppliersRequest $request, $id)
     {
         $this->authorize('update', Supplier::find($id));
 
         $supplier = Supplier::findOrFail($id);
         
-        $messages = array(
-            'supplier_name.required' => 'Unesite naziv isporučioca',
-            'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'subject.required' => 'Unesite predmet nabavke'
-        );
-
-        $validatedData = $request->validate([
-            'supplier_name' => 'required|max:190',
-            'subject' => 'required'
-        ], $messages);
-
         $supplier->supplier_name = $request->supplier_name;
         $supplier->subject = $request->subject;
         $supplier->quality = $request->quality;
@@ -159,6 +139,10 @@ class SuppliersController extends Controller
         $supplier->deadline_date = $newDateTime;
         try{
             $supplier->save();
+            $notification=$supplier->notification;
+            $notification->message='Datum sledećeg preispitivanja '.$supplier->deadline_date;
+            $notification->checkTime = $supplier->deadline_date;
+            $supplier->notification()->save($notification);
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
             $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
         }catch(Exception $e){

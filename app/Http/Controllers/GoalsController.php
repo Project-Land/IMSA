@@ -6,6 +6,8 @@ use App\Models\Goal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\StoreGoalsRequest;
+use App\Http\Requests\UpdateGoalsRequest;
 use Exception;
 
 class GoalsController extends Controller
@@ -68,33 +70,11 @@ class GoalsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreGoalsRequest $request)
     {
         $this->authorize('create', Goal::class);
+        
         $goal = new Goal();
-
-        $messages = array(
-            'responsibility.required' => 'Unesite odgovornost',
-            'responsibility.max' => 'Polje može sadržati najviše 190 karaktera',
-            'goal.required' => 'Unesite cilj',
-            'goal.max' => 'Polje može sadržati najviše 190 karaktera',
-            'deadline.required' => 'Unesite rok za realizaciju',
-            'kpi.required' => 'Unesite KPI',
-            'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
-            'resources.required' => 'Unesite resurse',
-            'resources.max' => 'Polje može sadržati najviše 190 karaktera',
-            'activities.required' => 'Unesite aktivnosti'
-        );
-
-        $validatedData = $request->validate([
-            'responsibility' => 'required|max:190',
-            'goal' => 'required|max:190',
-            'deadline' => 'required',
-            'kpi' => 'required|max:190',
-            'resources' => 'required|max:190',
-            'activities' => 'required'
-        ], $messages);
-
         $goal->standard_id = $this::getStandard();
         $goal->year = $request->year;
         $goal->responsibility = $request->resources;
@@ -150,32 +130,10 @@ class GoalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateGoalsRequest $request, $id)
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
-
-        $messages = array(
-            'responsibility.required' => 'Unesite odgovornost',
-            'responsibility.max' => 'Polje može sadržati najviše 190 karaktera',
-            'goal.required' => 'Unesite cilj',
-            'goal.max' => 'Polje može sadržati najviše 190 karaktera',
-            'deadline.required' => 'Unesite rok za realizaciju',
-            'kpi.required' => 'Unesite KPI',
-            'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
-            'resources.required' => 'Unesite resurse',
-            'resources.max' => 'Polje može sadržati najviše 190 karaktera',
-            'activities.required' => 'Unesite aktivnosti'
-        );
-
-        $validatedData = $request->validate([
-            'responsibility' => 'required|max:190',
-            'goal' => 'required|max:190',
-            'deadline' => 'required',
-            'kpi' => 'required|max:190',
-            'resources' => 'required|max:190',
-            'activities' => 'required'
-        ], $messages);
 
         $goal->standard_id = $this::getStandard();
         $goal->year = $request->year;
