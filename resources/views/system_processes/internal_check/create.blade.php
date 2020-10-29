@@ -18,15 +18,21 @@
         <div class="form-group">
             <label for="date">Termin provere</label>
             <input type="text" class="form-control" id="date" placeholder="" name="date">
+            @error('date')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="form-group">
-            <label for="sector_id">Područje promene</label>
+            <label for="sector_id">Područje provere</label>
             <select class="form-control" id="sector_id" name="sector_id">
             @foreach($sectors as $sector)
             <option value="{{$sector->id}}">{{$sector->name}}</option>
             @endforeach
             </select>
+            @error('sector_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -36,7 +42,11 @@
             <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
             @endforeach
             </select>
+            @error('leaders')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
             <small>Držite CTRL i birajte levim klikom miša</small>
+            
         </div>
 
         <div class="form-group">
@@ -44,6 +54,9 @@
             <select class="form-control" id="standard_id" name="standard_id">
             <option value="{{session('standard')}}">{{session('standard_name')}}</option>
             </select>
+            @error('standard_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
             
         <button type="submit" class="btn btn-primary">Kreiraj</button>

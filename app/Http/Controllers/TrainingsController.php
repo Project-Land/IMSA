@@ -6,6 +6,8 @@ use App\Models\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
+use App\Http\Requests\StoreTrainingRequest;
+use App\Http\Requests\UpdateTrainingRequest;
 use Exception;
 
 class TrainingsController extends Controller
@@ -62,31 +64,10 @@ class TrainingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTrainingRequest $request)
     {
         $this->authorize('create', Training::class);
         $trainingPlan = new Training();
-
-        $messages = array(
-            'name.required' => 'Unesite naziv obuke',
-            'name.max' => 'Naziv može sadržati najviše 190 karaktera',
-            'desription.required' => 'Unesite opis obuke',
-            'num_of_employees.required' => 'Unesite broj zaposlenih',
-            'place.required' => 'Unesite mesto obuke',
-            'place.max' => 'Polje može sadržati najviše 190 karaktera',
-            'resources.required' => 'Unesite potrebne resurse',
-            'training_date.required' => 'Unesite datum i vreme obuke'
-        );
-
-        $validatedData = $request->validate([
-            'name' => 'required|max:190',
-            'description' => 'required',
-            'num_of_employees' => 'required',
-            'description' => 'required',
-            'place' => 'required|max:190',
-            'resources' => 'required',
-            'training_date' => 'required'
-        ], $messages);
 
         $trainingPlan->standard_id = $this::getStandard();
         $trainingPlan->name = $request->name;
@@ -145,31 +126,10 @@ class TrainingsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTrainingRequest $request, $id)
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('update', $trainingPlan);
-
-        $messages = array(
-            'name.required' => 'Unesite naziv obuke',
-            'name.max' => 'Naziv može sadržati najviše 190 karaktera',
-            'desription.required' => 'Unesite opis obuke',
-            'num_of_employees.required' => 'Unesite broj zaposlenih',
-            'place.required' => 'Unesite mesto obuke',
-            'place.max' => 'Polje može sadržati najviše 190 karaktera',
-            'resources.required' => 'Unesite potrebne resurse',
-            'training_date.required' => 'Unesite datum i vreme obuke'
-        );
-
-        $validatedData = $request->validate([
-            'name' => 'required|max:190',
-            'description' => 'required',
-            'num_of_employees' => 'required',
-            'description' => 'required',
-            'place' => 'required|max:190',
-            'resources' => 'required',
-            'training_date' => 'required'
-        ], $messages);
 
         $trainingPlan->name = $request->name;
         $trainingPlan->description = $request->description;

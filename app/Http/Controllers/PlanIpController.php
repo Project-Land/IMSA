@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\PlanIp;
 use App\Facades\CustomLog;
+use App\Http\Requests\UpdatePlanIpRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -73,18 +74,11 @@ class PlanIpController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePlanIpRequest $request, $id)
     {
         $planIp=PlanIp::findOrFail($id);
         $this->authorize('update',$planIp);
-        $validated=$request->validate([
-            'checked_date'=>'required|date',
-            'checked_sector'=>'required',
-            'team_for_internal_check'=>'required',
-            'check_start'=>'required|date',
-            'check_end'=>'required|date',
-            'report_deadline'=>'required|date'
-        ]);
+      //$validated=$request->validated();
         $planIp->report_deadline = $request->report_deadline;
         $planIp->check_start = date('Y-m-d H:i', strtotime($request->check_start));
         $planIp->check_end = date('Y-m-d H:i', strtotime($request->check_end));
@@ -100,9 +94,7 @@ class PlanIpController extends Controller
             CustomLog::warning('Neuspeli pokušaj izmene plana IP id-'.$planIp->id.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
-        
-        //$planIp->update($validated);
-
+   
         return redirect('/internal-check')->with('status', 'Plan IP je izmenjen!');
     }
 

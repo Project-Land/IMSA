@@ -19,24 +19,33 @@
             <div class="form-group">
                 <label for="date">Termin provere</label>
                 <input type="text" class="form-control" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
+                @error('date')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
         <div class="form-group">
             <label for="sector">Područje promene</label>
             <select class="form-control" id="sector" name="sector_id">
-            <option value="{{$internalCheck->sector->id}}">{{$internalCheck->sector->name}}</option>
-            <option value="prodaja">Prodaja</option>
-            <option>Marketing</option>
+            @foreach($sectors as $sector)
+            <option value="{{$sector->id}}">{{$sector->name}}</option>
+            @endforeach
             </select>
+            @error('sector_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
             <div class="form-group">
                 <label for="leaders">Vođe tima</label>
                 <select class="form-control" id="leaders" name="leaders">
-                <option value="{{$internalCheck->leaders}}">{{$internalCheck->leaders}}</option>
-                <option value="nikola">Nikola</option>
-                <option>Milos</option>
+                @foreach($teamLeaders as $teamLeader)
+                <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
+                @endforeach
                 </select>
+                @error('leaders')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -46,6 +55,9 @@
                 <option value="1">9001</option>
                 <option>1005</option>
                 </select>
+                @error('standard_id')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
                 
             <button type="submit" class="btn btn-primary">Izmeni</button>
