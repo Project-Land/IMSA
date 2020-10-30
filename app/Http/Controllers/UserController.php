@@ -23,12 +23,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
         $users = User::where('current_team_id', \Auth::user()->current_team_id)->get();
         return view('users.index', compact('users'));
     }
 
     public function changeCurrentTeam($teamId)
     {
+        $this->authorize('canChangeTeams', User::class);
         $user = User::findOrFail(\Auth::user()->id);
         $user->update(['current_team_id' => $teamId]);
         
@@ -44,6 +46,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         return view('users.create');
     }
 
@@ -55,6 +58,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $messages = array(
             'name.required' => 'Unesite ime',
             'name.max' => 'Polje ne sme biti duže od 255 karaktera',

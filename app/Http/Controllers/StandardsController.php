@@ -26,6 +26,7 @@ class StandardsController extends Controller
      */
     public function create($teamId)
     {
+        $this->authorize('create', Standard::class);
         $standards =Standard::whereDoesntHave('teams', function ($team) use ($teamId){
             $team->whereId($teamId);
         })->get();
@@ -40,6 +41,8 @@ class StandardsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Standard::class);
+
         $standard_id = $request->standard;
         $teamId = $request->team_id;
         
@@ -99,6 +102,8 @@ class StandardsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $this->authorize('delete', Standard::find($id));
+
         $team_id = $request->team_id;
         $standard = Standard::find($id);
         $team = Team::find($team_id);

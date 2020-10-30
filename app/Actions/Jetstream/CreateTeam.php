@@ -5,6 +5,7 @@ namespace App\Actions\Jetstream;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\CreatesTeams;
+use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Jetstream;
 
 class CreateTeam implements CreatesTeams
@@ -24,9 +25,18 @@ class CreateTeam implements CreatesTeams
             'name' => ['required', 'string', 'max:255'],
         ])->validateWithBag('createTeam');
 
-        return $user->ownedTeams()->create([
+        $team = $user->ownedTeams()->create([
             'name' => $input['name'],
             'personal_team' => false,
         ]);
+
+        $team->users()->attach(
+            $newTeamMember = $user,
+            ['role' => 'super-admin']
+        );
+
+        TeamMemberAdded::dispatch($team, $newTeamMember);
+
+        return $team;
     }
 }

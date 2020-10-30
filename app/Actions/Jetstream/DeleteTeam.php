@@ -14,6 +14,8 @@ class DeleteTeam implements DeletesTeams
      */
     public function delete($team)
     {
+        $currentTeamId = \App\Models\Team::all()->first()->id;
+        \App\Models\User::find(\Auth::user()->id)->update(['current_team_id' => $currentTeamId]);
         $team->purge();
     }
 }
