@@ -16,11 +16,7 @@ class InternalCheckPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' || $user->allTeams()->first()->membership->role==='editor')
-        return true; 
-    }
+
     
     public function viewAny(User $user)
     {
@@ -47,7 +43,10 @@ class InternalCheckPolicy
      */
     public function create(User $user)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
     }
 
     /**
@@ -59,7 +58,12 @@ class InternalCheckPolicy
      */
     public function update(User $user, InternalCheck $internalCheck)
     {
-        
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $internalCheck->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**

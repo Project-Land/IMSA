@@ -20,22 +20,24 @@ class ComplaintPolicy
         //
     }
 
-    public function before(User $user)
+
+
+    public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if ($role == "admin" || $role == "super-admin") {
+        if($role == "admin" || $role == "super-admin" || $role == "editor") {
             return true;
         }
     }
 
-    public function create(User $user)
-    {
-        
-    }
-
     public function update(User $user, Complaint $complaint)
     {
-        
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $complaint->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     public function delete(User $user, Complaint $complaint)

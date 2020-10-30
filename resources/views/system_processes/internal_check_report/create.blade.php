@@ -20,7 +20,7 @@
 
             <div class="form-group">
                 <label for="checked_sector">Proveravano područje</label>
-                <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector}}" readonly>
+                <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector->name}}" readonly>
             </div>
 
             <div class="form-group">
@@ -94,6 +94,64 @@
             div.classList="form-group mt-3";
             div.id="newInputDiv"+counter;
             document.getElementById("newInputDiv"+(counter-1)).after(div);
+
+
+
+            const div2=document.createElement('div');
+            div2.innerHTML+=
+            `<div style="background:#5c9c6a;padding:10px;">
+            <h2>Popuni karton korektivne mere</h2>
+			<div class="form-group">
+				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
+				<input type="text" class="form-control" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+			
+			</div>
+			<div class="form-group">
+				<label for="noncompliance_description">Opis neusaglašenosti:</label>
+				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
+				
+			</div>
+			<div class="form-group">
+				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
+			
+			</div>
+			<div class="form-group">
+				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
+				
+			</div>
+			<div class="form-group">
+				<label for="measure_approval">Odobravanje mere:</label>
+				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval">
+					<option value="1" >DA</option>
+					<option value="0" >NE</option>
+				</select>
+			</div>
+			<div class="form-group" id="measure_reason_field" style="display: none">
+				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
+			</div>
+			<div class="form-group">
+				<label for="measure_status">Status mere:</label>
+				<select class="form-control" name="measure_status[${counter}]" id="measure_status">
+					<option value="0" >NE</option>
+					<option value="1"  >DA</option>
+				</select>
+			</div>
+			<div class="form-group" id="measure_effective_field" style="display: none">
+				<label for="measure_effective">Mera efektivna:</label>
+				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective">
+					<option value="">Izaberi...</option>
+					<option value="1"  >DA</option>
+					<option value="0">NE</option>
+				</select>
+			</div>
+            </div>`; 
+            div.append(div2);
+
+
+
             div.append(addNewInconsistencies);
             
             counter++;
@@ -125,6 +183,65 @@
             div.append(newInput);
             div.classList="form-group mt-3";
             div.id="newInputDiv"+counter;
+
+
+
+            const div2=document.createElement('div');
+            div2.innerHTML+=
+            `<div style="background:#5c9c6a;padding:10px;">
+            <h2>Popuni karton korektivne mere</h2>
+			<div class="form-group">
+				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
+				<input type="text" class="form-control" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+			
+			</div>
+			<div class="form-group">
+				<label for="noncompliance_description">Opis neusaglašenosti:</label>
+				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
+				
+			</div>
+			<div class="form-group">
+				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
+			
+			</div>
+			<div class="form-group">
+				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
+				
+			</div>
+			<div class="form-group">
+				<label for="measure_approval">Odobravanje mere:</label>
+				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval">
+					<option value="1" >DA</option>
+					<option value="0" >NE</option>
+				</select>
+			</div>
+			<div class="form-group" id="measure_reason_field" style="display: none">
+				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
+			</div>
+			<div class="form-group">
+				<label for="measure_status">Status mere:</label>
+				<select class="form-control" name="measure_status[${counter}]" id="measure_status">
+					<option value="0" >NE</option>
+					<option value="1"  >DA</option>
+				</select>
+			</div>
+			<div class="form-group" id="measure_effective_field" style="display: none">
+				<label for="measure_effective">Mera efektivna:</label>
+				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective">
+					<option value="">Izaberi...</option>
+					<option value="1"  >DA</option>
+					<option value="0">NE</option>
+				</select>
+			</div>
+            </div>`; 
+            div.append(div2);
+
+
+
+            
             inconsistencies.after(div);
             div.append(addNewInconsistencies);
             

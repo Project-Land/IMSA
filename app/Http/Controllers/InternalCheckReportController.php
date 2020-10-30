@@ -78,7 +78,7 @@ class InternalCheckReportController extends Controller
                 $report->refresh();
                 $internalCheck=InternalCheck::findOrFail($request->internal_check_id);
                 $report->internalCheck()->save($internalCheck);
-                CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
                 $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
             });
         }catch(Exception $e){

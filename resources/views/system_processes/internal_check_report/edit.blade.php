@@ -27,7 +27,7 @@
         <div class="row">
         <div class="form-group col" >
             <label for="checked_sector">Proveravano područje</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector}}" readonly>
+            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
            
         </div>
 

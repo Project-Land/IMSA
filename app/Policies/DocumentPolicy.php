@@ -10,11 +10,6 @@ class DocumentPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
-        return true; 
-    }
 
     /**
      * Determine whether the user can view any models.
