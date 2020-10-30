@@ -43,14 +43,7 @@
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="year">Godina:</label>
-				<select class="form-control" name="year" id="year">
-					@foreach(range(date('Y')-1, date('Y')+10) as $year)
-						<option value="{{ $year }}" {{ $year == old('year') ? "selected": "" }} >{{ $year }}</option>
-					@endforeach
-				</select>
-			</div>
+
 			<div class="form-group">
 				<label for="training_date">Planirani termin:</label>
 				<input type="text" class="form-control" id="training_date" name="training_date" value="{{ old('training_date') }}">

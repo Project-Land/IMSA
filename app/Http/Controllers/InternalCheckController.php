@@ -37,8 +37,14 @@ class InternalCheckController extends Controller
     
     public function index()
     {   
-        $user=Auth::user();
-        $internal_checks=InternalCheck::where('team_id',$user->current_team_id)->get();
+        $standardId = $this::getStandard();
+        if($standardId == null){
+            return redirect('/');
+        }
+        $internal_checks=InternalCheck::where([
+            ['standard_id', $standardId],
+            ['team_id', Auth::user()->current_team_id]
+        ])->get();
         return view('system_processes.internal_check.index',['internal_checks'=>$internal_checks]);
     }
 
@@ -79,12 +85,13 @@ class InternalCheckController extends Controller
             DB::transaction(function () use ($request,$validatedData){
                 $internalCheck=InternalCheck::create($validatedData);
                 $notification=Notification::create([
-                'message'=>'Interna provera za '.$internalCheck->date,
+                'message'=>'Interna provera za '.date('d.m.Y', strtotime($internalCheck->date)),
                 'team_id'=>Auth::user()->current_team_id,
                 'checkTime' => $internalCheck->date
                 ]);
                 $internalCheck->notification()->save($notification);
                 $planIp=new PlanIp();
+                $planIp->standard_id = $request->standard_id;
                 $planIp->save();
                 $planIp->name=$planIp->id.'/'.date('Y');
                 $planIp->save();

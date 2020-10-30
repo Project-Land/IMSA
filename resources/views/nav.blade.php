@@ -1,5 +1,3 @@
-
-
 <div class="row">
 
     <div class="col">
@@ -11,7 +9,7 @@
                 Dokumentacija
             </button>
             <div class="dropdown-menu">
-                <!-- Dropdown menu links -->
+
                 <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
                 <a class="dropdown-item" href="/policies">Politike</a>
                 <a class="dropdown-item" href="/procedures">Procedure</a>
@@ -25,7 +23,7 @@
                 Sistemski procesi
             </button>
             <div class="dropdown-menu">
-                <!-- Dropdown menu links -->
+         
                 <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
                 <a class="dropdown-item" href="/internal-check">Interne provere</a>
                 <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
@@ -43,7 +41,7 @@
                 Sektori
             </button>
             <div class="dropdown-menu">
-                <!-- Dropdown menu links -->
+                
                 <a class="dropdown-item" href="/sectors">Lista sektora</a>
                 @can('create', App\Models\Sector::class)<a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>@endcan
             </div>

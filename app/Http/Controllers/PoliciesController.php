@@ -24,7 +24,12 @@ class PoliciesController extends Controller
         if($standardId == null){
             return redirect('/');
         }
-        $documents = Document::where([ ['doc_category', 'policy'], ['standard_id', $standardId], ['team_id',Auth::user()->current_team_id]])->get();
+
+        $documents = Document::where([
+                ['doc_category', 'policy'],
+                ['standard_id', $standardId],
+                ['team_id',Auth::user()->current_team_id]
+            ])->get();
         $folder = \Str::snake($this::getCompanyName())."/policy";
         $route_name = "policies";
         return view('documents.index', compact('documents', 'folder', 'route_name'));
@@ -55,27 +60,29 @@ class PoliciesController extends Controller
         $document->doc_category = 'policy';
         $document->document_name = $request->document_name;
         $document->version = $request->document_version;
-
         $document->user_id = Auth::user()->id;
         $document->team_id = Auth::user()->current_team_id;
 
         $upload_path = "/public/".\Str::snake($this::getCompanyName())."/policy";
 
-        if($request->file('file')){
+        try{
             $file = $request->file;
-
             $name = $file->getClientOriginalName();
             $document->file_name = 'policy_'.time().'.'.$file->getClientOriginalExtension();
+            $file->storeAs($upload_path, $document->file_name);
+
             $standard = $this::getStandard();
             $document->standard_id = $standard;
             $document->save();
-            $file->storeAs($upload_path, $document->file_name);
 
-            CustomLog::info('Dokument Politike "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-
+            CustomLog::info('Dokument Politike "'.$document->document_name.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            return redirect('/policies');
+        } catch(\Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Politike "'.$document->document_name.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
+        
+        return redirect('/policies');
     }
 
     /**
@@ -120,18 +127,23 @@ class PoliciesController extends Controller
 
         $upload_path = "/public/".\Str::snake($this::getCompanyName())."/policy";
 
-        if($request->file('file')){
-            $file = $request->file;
-            $name = $file->getClientOriginalName();
-            $document->file_name = 'policy_'.time().'.'.$file->getClientOriginalExtension();
-            $standard = $this::getStandard();
-            $document->standard_id = $standard;
-            $file->storeAs($upload_path, $document->file_name);
-        }
+        try{
+            if($request->file('file')){
+                $file = $request->file;
+                $name = $file->getClientOriginalName();
+                $document->file_name = 'policy_'.time().'.'.$file->getClientOriginalExtension();
+                $standard = $this::getStandard();
+                $document->standard_id = $standard;
+                $file->storeAs($upload_path, $document->file_name);
+            }
 
-        $document->save();
-        $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
-        CustomLog::info('Dokument Politike "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $document->save();
+            $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+            CustomLog::info('Dokument Politike "'.$document->document_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+        } catch(\Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Politike '.$doc_name.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
         return redirect('/policies');
     }
 
@@ -146,10 +158,12 @@ class PoliciesController extends Controller
         $this->authorize('delete', Document::find($id));
         $doc_name = Document::find($id)->document_name;
         
-        if(Document::destroy($id)){
-            CustomLog::info('Dokument Politike "'.$doc_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+        try{
+            Document::destroy($id);
+            CustomLog::info('Dokument Politike "'.$doc_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno uklonjen');
-        }else{
+        }catch(\Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Politike '.$doc_name.'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

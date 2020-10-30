@@ -72,7 +72,7 @@ class TrainingsController extends Controller
         $trainingPlan->standard_id = $this::getStandard();
         $trainingPlan->name = $request->name;
         $trainingPlan->description = $request->description;
-        $trainingPlan->year = $request->year;
+        $trainingPlan->year = date('Y', strtotime($request->training_date));
         $trainingPlan->type = $request->type;
         $trainingPlan->num_of_employees = $request->num_of_employees;
         $trainingPlan->training_date = date('Y-m-d H:i:s', strtotime($request->training_date));
@@ -133,7 +133,7 @@ class TrainingsController extends Controller
 
         $trainingPlan->name = $request->name;
         $trainingPlan->description = $request->description;
-        $trainingPlan->year = $request->year;
+        $trainingPlan->year = date('Y', strtotime($request->training_date));
         $trainingPlan->type = $request->type;
         $trainingPlan->num_of_employees = $request->num_of_employees;
         $trainingPlan->training_date = date('Y-m-d H:i', strtotime($request->training_date));
