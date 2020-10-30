@@ -11,25 +11,25 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto md:w-3/5 mt-1 p-10 rounded">
 
-		<form action="{{ route('corrective-measures.store') }}" method="POST">
+		<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('corrective-measures.store') }}" method="POST">
 			@csrf
-			<div class="form-group">
-				<label for="standard">Sistem menadžmenta:</label>
-				<select class="form-control" name="standard" id="standard">
+			<div class="mb-4">
+				<label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžmenta:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard">
 					<option value="">Izaberi...</option>
 					@foreach($standards as $standard)
 						<option value="{{ $standard->id }}">{{ $standard->name }}</option>
 					@endforeach
 				</select>
 				@error('standard')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
-				<select class="form-control" name="noncompliance_source" id="noncompliance_source">
+			<div class="mb-4">
+				<label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source">
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera" {{ old('noncompliance_source') == "Eksterna provera" ? "selected" : "" }}>Eksterna provera</option>
 					<option value="Interna provera" {{ old('noncompliance_source') == "Interna provera" ? "selected" : "" }}>Interna provera</option>
@@ -38,69 +38,69 @@
 					<option value="Ostalo" {{ old('noncompliance_source') == "Ostalo" ? "selected" : "" }}>Ostalo</option>
 				</select>
 				@error('noncompliance_source')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="sector">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
-				<select class="form-control" name="sector" id="sector">
+			<div class="mb-4">
+				<label for="sector" class="block text-gray-700 text-sm font-bold mb-2">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector" id="sector">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}">{{ $sector->name }}</option>
 					@endforeach
 				</select>
 				@error('sector')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description" name="noncompliance_description">{{ old('noncompliance_description') }}</textarea>
+			<div class="mb-4">
+				<label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description">{{ old('noncompliance_description') }}</textarea>
 				@error('noncompliance_description')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause" name="noncompliance_cause">{{ old('noncompliance_cause') }}</textarea>
+			<div class="mb-4">
+				<label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause">{{ old('noncompliance_cause') }}</textarea>
 				@error('noncompliance_cause')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure" name="measure">{{ old('measure') }}</textarea>
+			<div class="mb-4">
+				<label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure">{{ old('measure') }}</textarea>
 				@error('measure')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="measure_approval">Odobravanje mere:</label>
-				<select class="form-control" name="measure_approval" id="measure_approval">
+			<div class="mb-4">
+				<label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
 					<option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >DA</option>
 					<option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >NE</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_reason_field" style="display: none">
-				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason" id="measure_approval_reason">
+			<div class="mb-4" id="measure_reason_field" style="display: none">
+				<label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
+				<input type="text" class="appearance-none border w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="measure_approval_reason" id="measure_approval_reason">
 			</div>
-			<div class="form-group">
-				<label for="measure_status">Status mere:</label>
-				<select class="form-control" name="measure_status" id="measure_status">
+			<div class="mb-4">
+				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
 					<option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >NE</option>
 					<option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >DA</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_effective_field" style="display: none">
-				<label for="measure_effective">Mera efektivna:</label>
-				<select class="form-control" name="measure_effective" id="measure_effective">
+			<div class="mb-4" id="measure_effective_field" style="display: none">
+				<label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective">
 					<option value="">Izaberi...</option>
 					<option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >DA</option>
 					<option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
 				</select>
 			</div>
-			<button type="submit" class="btn btn-success">Kreiraj</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
 
