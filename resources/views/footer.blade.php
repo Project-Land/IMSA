@@ -1,4 +1,4 @@
-<nav id="footer" class="bg-gray-500">
+<nav id="footer" class="bg-gray-500 bg-success" >
     <div class="container mx-auto pt-4 pb-2">
         <div class="pt-1 flex items-center justify-center">
             <ul>

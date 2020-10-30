@@ -11,65 +11,99 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto w-75 mt-10  p-10 rounded" style="background:#f0f9f0;">
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 		<form id="internal_check_report_create_form" action="{{ route('internal-check-report.store') }}" method="POST">
             @csrf
         
             <input type="hidden" name="internal_check_id" value="{{ $internalCheck->id }}" readonly>
+            <div class="row"> 
+                <div class="form-group col">
+                    <label for="checked_sector">Proveravano područje</label>
+                    <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector->name}}" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="checked_sector">Proveravano područje</label>
-                <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector->name}}" readonly>
-            </div>
+                <div class="form-group col">
+                    <label for="standard">Standard</label>
+                    <input type="text" class="form-control" id="standard" name="standard" value="{{$internalCheck->standard->name}}" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="standard">Standard</label>
-                <input type="text" class="form-control" id="standard" name="standard" value="{{$internalCheck->standard->name}}" readonly>
+                <div class="form-group col">
+                    <label for="team_for_internal_check">Tim za proveru</label>
+                    <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value="{{$internalCheck->leaders}}" readonly>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="team_for_internal_check">Tim za proveru</label>
-                <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value="{{$internalCheck->leaders}}" readonly>
-            </div>
+            <div class="row">
        
-            <div class="form-group">
-                <label for="check_start">Početak provere</label>
-                <input type="text" class="form-control" id="check_start" name="check_start" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_start)) }}" readonly>
-            </div>
+                <div class="form-group col">
+                    <label for="check_start">Početak provere</label>
+                    <input type="text" class="form-control" id="check_start" name="check_start" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_start)) }}" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="check_end">Završetak provere</label>
-                <input type="text" class="form-control" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_end)) }}" readonly>
-            </div>
+                <div class="form-group col">
+                    <label for="check_end">Završetak provere</label>
+                    <input type="text" class="form-control" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_end)) }}" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="specification">Specifikacija dokumenata</label>
-                <input type="text" class="form-control" id="specification" name="specification">
+                <div class="form-group col">
+                    <label for="specification">Specifikacija dokumenata</label>
+                    <input type="text" class="form-control" id="specification" name="specification">
+                    @error('specification')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label for="inconsistencies">Neusaglašenosti</label>
+                    <select class="form-control" id="inconsistencies" name="inconsistencies" >
+                    <option value="0">ne</option>
+                    <option value="1">da</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="inconsistencies">Neusaglašenosti</label>
-                <select class="form-control" id="inconsistencies" name="inconsistencies" >
-                <option value="0">ne</option>
-                <option value="1">da</option>
-                </select>
+                <div class="form-group col">
+                    <label for="recommendations">Preporuke</label>
+                    <select class="form-control" id="recommendations" name="recommendations">
+                    <option value="0">ne</option>
+                    <option value="1">da</option>
+                    </select>
+                </div>
             </div>
-
             <div class="form-group">
-                <label for="recommendations">Preporuke</label>
-                <select class="form-control" id="recommendations" name="recommendations">
-                <option value="0">ne</option>
-                <option value="1">da</option>
-                </select>
-            </div>
+            <button type="submit" class="btn btn-success">Izmeni</button>
+             </div>
+          
+           
 
-            <button type="submit" class="btn btn-primary">Izmeni</button>
         </form>
     </div>
 
     <script>
     let counter=1;
+
+    
+
+    function removeInput(){
+   
+   if(this.dataset.counter=='counter'){}
+   // counter--;
+   if(this.dataset.counter=='coun'){}
+  //  coun--;
+   this.closest("div").remove();
+}
+
+
     const addSecondInconsistencies=function(){
         if(document.getElementById("newInput"+(counter-1)).value==="")
         return;
@@ -78,7 +112,16 @@
             const div=document.createElement('div');
             const label=document.createElement('label');
             const addNewInconsistencies=document.createElement('button');
-            addNewInconsistencies.classList="btn btn-primary";
+
+            let deletebutton=document.createElement('button');
+        deletebutton.classList="btn btn-danger";
+        deletebutton.setAttribute("data-counter", "counter");
+        deletebutton.id="button"+counter;
+        deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+        deletebutton.addEventListener('click',removeInput);
+
+
+            addNewInconsistencies.classList="btn btn-success";
             addNewInconsistencies.type="button";
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
@@ -151,24 +194,37 @@
             div.append(div2);
 
 
-
             div.append(addNewInconsistencies);
-            
+            div.append(deletebutton);
+            newInput.focus();
             counter++;
     }
     const form=document.getElementById('internal_check_report_create_form');
     const inconsistencies=document.getElementById('inconsistencies');
     const recommendations=document.getElementById('recommendations');
+    
 
     const addInput=function(){
         let inconsistencies=document.getElementById('inconsistencies');
         const form=document.getElementById('internal_check_report_create_form');
+
+
+        let deletebutton=document.createElement('button');
+        deletebutton.classList="btn btn-danger";
+        deletebutton.setAttribute("data-counter", "counter");
+        deletebutton.id="button"+counter;
+        deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+        deletebutton.addEventListener('click',removeInput);
+
+
+        
         if(inconsistencies.value==1){
             const newInput=document.createElement('textarea');
             const div=document.createElement('div');
+          
             const label=document.createElement('label');
             const addNewInconsistencies=document.createElement('button');
-            addNewInconsistencies.classList="btn btn-primary";
+            addNewInconsistencies.classList="btn btn-success";
             addNewInconsistencies.type="button";
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
@@ -244,8 +300,30 @@
             
             inconsistencies.after(div);
             div.append(addNewInconsistencies);
-            
+            div.append(deletebutton);
+            newInput.focus();
             counter++;
+
+            
+            $('#measure_approval').change( () => {
+        
+		if($('#measure_approval').val() == 0){
+			$('#measure_reason_field').css('display', '');
+		}
+		else{
+			$('#measure_reason_field').css('display', 'none');
+			$('#measure_reason').val('');
+		}
+	})
+
+	$('#measure_status').change( () => {
+		if($('#measure_status').val() == 1){
+			$('#measure_effective_field').css('display', '');
+		}
+		else{
+			$('#measure_effective_field').css('display', 'none');
+		}
+	})
         
         }else{
             let newInputs=document.querySelectorAll("[id^='newInputDiv']");
@@ -278,11 +356,21 @@ let coun=1;
             const div=document.createElement('div');
             const label=document.createElement('label');
             const addNewRecommendations=document.createElement('button');
-            addNewRecommendations.classList="btn btn-primary";
+            addNewRecommendations.classList="btn btn-success";
             addNewRecommendations.type="button";
             addNewRecommendations.id="buttonRecommedations"+coun;
             addNewRecommendations.addEventListener('click',addSecondRecommedation);
             addNewRecommendations.textContent="Dodaj još jednu preporuku"
+            document.getElementById('buttonRecommedations'+(coun-1)).remove();
+
+            const deletebutton=document.createElement('button');
+            deletebutton.classList="btn btn-danger";
+            deletebutton.setAttribute("data-counter", "coun");
+            deletebutton.id="buttonRecommedations"+coun;
+            deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+            deletebutton.addEventListener('click',removeInput);
+
+
             label.for="newInputRecommendation"+coun;
             div.append(label);
             label.textContent="Upiši preporuku";
@@ -295,23 +383,37 @@ let coun=1;
             div.id="newInputRecommendationDiv"+coun;
             document.getElementById("newInputRecommendationDiv"+(coun-1)).after(div);
             div.append(addNewRecommendations);
+            div.append(deletebutton);
             
             coun++;
+            newInput.focus();
     }
     
 
     const addInputRecommedation=function(){
        
         if(recommendations.value==1){
+           
             const newInput=document.createElement('textarea');
             const div=document.createElement('div');
             const label=document.createElement('label');
             const addNewRecommendations=document.createElement('button');
-            addNewRecommendations.classList="btn btn-primary";
+           
+            addNewRecommendations.classList="btn btn-success";
             addNewRecommendations.type="button";
             addNewRecommendations.id="buttonRecommedations"+coun;
             addNewRecommendations.addEventListener('click',addSecondRecommedation);
             addNewRecommendations.textContent="Dodaj još jednu preporuku"
+
+
+            const deletebutton=document.createElement('button');
+            deletebutton.classList="btn btn-danger";
+            deletebutton.setAttribute("data-counter", "coun");
+            deletebutton.id="buttonRecommedations"+coun;
+            deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+            deletebutton.addEventListener('click',removeInput);
+
+
             label.for="newInputRecommendation"+coun;
             div.append(label);
             label.textContent="Upiši preporuku";
@@ -324,8 +426,10 @@ let coun=1;
             div.id="newInputRecommendationDiv"+coun;
             recommendations.after(div);
             div.append(addNewRecommendations);
+            div.append(deletebutton);
             
             coun++;
+            newInput.focus();
         
         }else{
             let newInputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
@@ -337,9 +441,10 @@ let coun=1;
 
     }
 
-
+  
     inconsistencies.addEventListener('change', addInput);
     recommendations.addEventListener('change', addInputRecommedation);
+
         
     </script>
 

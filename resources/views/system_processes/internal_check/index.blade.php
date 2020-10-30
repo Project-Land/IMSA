@@ -233,22 +233,22 @@ $("#modal").modal('show');
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Izveštaj sa interne provere</h5>
+        <h4 class="modal-title text-info">Izveštaj sa interne provere</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <p><h2>Specifikacija: </h2>${data.specification}</p>`;
+      <p><h5>Specifikacija </h5>${data.specification}</p>`;
       let num=1;
       for( let inc of data.inconsistencies){
-        modal+=`<p><h3>Neusaglašenost ${num}: </h3>${inc.description}</p>`;
+        modal+=`<p class="border-top"><h5>Neusaglašenost ${num} </h5>${inc.description}</p>`;
         num++;
       }
 
         num=1;
       for( let rec of data.recommendations){
-        modal+=`<p><h3>Preporuka ${num}: </h3>${rec.description}</p>`;
+        modal+=`<p class="border-top"><h5>Preporuka ${num} </h5>${rec.description}</p>`;
         num++;
       }
        modal+=`

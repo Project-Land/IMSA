@@ -12,6 +12,7 @@ use App\Models\Recommendation;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\DB;
 use App\Models\InternalCheckReport;
+use Illuminate\Support\Facades\Auth;
 
 class InternalCheckReportController extends Controller
 {
@@ -56,11 +57,25 @@ class InternalCheckReportController extends Controller
             'newInput1' => 'string',
             'newInput2' => 'string',
             'newInput3' => 'string',
-            'newInput4' => 'string'     
+            'newInput4' => 'string',    
+        ]);
+        
+        $correctiveMeasureData=$request->validate([
+            'noncompliance_source.*' => 'string|required',
+            'noncompliance_description.*' => 'string|required',
+            'noncompliance_cause.*' => 'string|required',
+            'measure.*' => 'string|required', 
+            'measure_approval.*' => 'string|required',
+            'measure_approval_reason.*' => 'string|nullable',
+            'measure_status.*' => 'string|required',
+            'measure_effective.*' => 'string|nullable'
+            
         ]);
 
         try{
-            DB::transaction(function () use ($request,$validatedData,$recommendationData,$InconsistencyData){ 
+            DB::transaction(function () use ($request,$validatedData,$recommendationData,$InconsistencyData,$correctiveMeasureData){ 
+                $count=1;
+                $standard=Standard::where('name',$request->standard)->get()[0];
                 $report=InternalCheckReport::create($validatedData);
 
                 foreach( $InconsistencyData as $inc){
@@ -68,6 +83,24 @@ class InternalCheckReportController extends Controller
                     $inconsistency=new Inconsistency();
                     $inconsistency->description=$inc;
                     $report->inconsistencies()->save($inconsistency);
+
+
+                    $correctiveMeasure=CorrectiveMeasure::create([
+                        'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
+                        'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
+                        'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
+                        'measure'=> $correctiveMeasureData['measure'][$count],
+                        'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
+                        'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
+                        'measure_status'=>$correctiveMeasureData['measure_status'][$count],
+                        'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                        'team_id' => \Auth::user()->current_team_id
+                    ]);
+    
+                    $correctiveMeasure->standard()->associate($standard);
+                    $count++;
+                    $inconsistency->correctiveMeasure()->save($correctiveMeasure);
+
                 }
                 foreach( $recommendationData as $rec){
                     if($rec === "")continue;
@@ -212,6 +245,7 @@ class InternalCheckReportController extends Controller
                     'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
                     'measure_status'=>$correctiveMeasureData['measure_status'][$count],
                     'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                    'team_id' => \Auth::user()->current_team_id
                 ]);
 
                 $correctiveMeasure->standard()->associate($standard);

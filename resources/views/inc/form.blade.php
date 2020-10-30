@@ -11,7 +11,7 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto w-50 mb-10 p-10 rounded" style="background:#f5f5f0;">
 
 		<form action="{{ $url }}" method="POST" enctype="multipart/form-data">
 			@csrf
@@ -47,7 +47,7 @@
 			</div>
 			@endif
 			<div class="form-group">
-				<label for="name_file" class="btn btn-primary">Izaberi Fajl</label>
+				<label for="name_file" class="btn btn-success">Izaberi Fajl</label>
 				<input type="file" class="form-control-file" id="name_file" name="file" style="display: none;">
 				<span id="old_document">Fajl nije izabran</span>
 				@error('file')

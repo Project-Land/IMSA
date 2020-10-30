@@ -11,7 +11,7 @@
      	</div>
     </div>
   
-    <div class="mx-auto w-75 mt-10 bg-secondary p-10 rounded container">
+    <div class="mx-auto w-75 mt-10 p-10 rounded container border" style="background:#f0f9f0;">
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -64,9 +64,9 @@
         </div>
 
 
-        <div class="form-group">
-            <span id="addInconsistencies"  class="btn btn-primary">Dodaj neusaglašenost</span>
-            <span id="addRecommendations"  class="btn btn-primary">Dodaj preporuku</span>
+        <div class="form-group mt-2">
+            <span id="addInconsistencies"  class="btn btn-success">Dodaj neusaglašenost</span>
+            <span id="addRecommendations"  class="btn btn-success">Dodaj preporuku</span>
         </div>
         
         <div id="inconsistenciesDiv" class="row border-top mt-2">
@@ -102,7 +102,7 @@
                 @endforeach
         </div>
             
-        <button type="submit" id="submitForm" class="btn btn-primary" >Izmeni</button>
+        <button type="submit" id="submitForm" class="btn btn-success mt-5" >Izmeni</button>
         </form>
     </div>
 
@@ -114,21 +114,26 @@
 let counter=1;
 let coun=1;
 
-function removeInput(){
-   
-   if(this.dataset.counter=='counter')
-    counter--;
-   if(this.dataset.counter=='coun')
-    coun--;
-   this.closest("div").remove();
-   let els=document.querySelector('#inconsistenciesDiv');
+const els=document.querySelector('#inconsistenciesDiv');
    let childs=els.childElementCount;
    if(childs %2 !== 0){
     let e=els.lastElementChild;
     e.style="margin-right:10px;";
    }
 
+function removeInput(){
    
+   if(this.dataset.counter=='counter'){}
+   // counter--;
+   if(this.dataset.counter=='coun'){}
+   // coun--;
+   this.closest("div").remove();
+ //  let els=document.querySelector('#inconsistenciesDiv');
+ //  let childs=els.childElementCount;
+ //  if(childs %2 !== 0){
+//    let e=els.lastElementChild;
+ //   e.style="margin-right:10px;";
+  // } 
 }
 
     const form=document.getElementById('internal_check_report_edit_form');
@@ -139,6 +144,11 @@ function removeInput(){
     
 
     const addInput=function(){
+
+        if(document.getElementById("newInput"+(counter-1))!=null){
+            if(document.getElementById("newInput"+(counter-1)).value==="")
+                return;
+        }
         
         const form=document.getElementById('internal_check_report_update_form');
        
@@ -241,21 +251,15 @@ function removeInput(){
 			$('#measure_effective_field').css('display', 'none');
 		}
 	})
-
-
-
-
-
-
-
-    
     
     }
 
 
     const addInputRecommedation=function(){
-       
-       
+        if(document.getElementById("newInputRecommendation"+(coun-1))!=null){
+            if(document.getElementById("newInputRecommendation"+(coun-1)).value==="")
+                return;
+        }
             const newInput=document.createElement('textarea');
             const div=document.createElement('div');
             const label=document.createElement('label');
@@ -286,6 +290,7 @@ function removeInput(){
             coun++;
         
     }
+
 
 
     inconsistencies.addEventListener('click', addInput);

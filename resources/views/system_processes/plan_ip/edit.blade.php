@@ -30,22 +30,22 @@
 
         <div class="form-group">
             <label for="team_for_internal_check">Tim za proveru</label>
-            <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}" readonly>
+            <input type="text" class="form-control" id="team_for_internal_check" name="team_for_internal_check" value=" {{$planIp->internalCheck->leaders}}" readonly>
         </div>
        
         <div class="form-group">
             <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" name="check_start" value="{{ date('d.m.Y H:i', strtotime($planIp->check_start)) }}">
+            <input type="text" class="form-control" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif">
         </div>
 
         <div class="form-group">
             <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($planIp->check_end)) }}">
+            <input type="text" class="form-control" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif">
         </div>
 
         <div class="form-group">
             <label for="report_deadline">Rok za dostavljanje izveštaja</label>
-            <input type="text" class="form-control" id="report_deadline" name="report_deadline" value="{{ date('d.m.Y', strtotime($planIp->report_deadline)) }}">
+            <input type="text" class="form-control" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif">
         </div>
 
         
