@@ -10,11 +10,6 @@ class RiskManagementPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
-        return true; 
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -47,7 +42,10 @@ class RiskManagementPolicy
      */
     public function create(User $user)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($role == "admin" || $role == "super-admin") {
+            return true;
+        }
     }
 
     /**
@@ -59,7 +57,12 @@ class RiskManagementPolicy
      */
     public function update(User $user, RiskManagement $riskManagement)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $riskManagement->team_id){
+            if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+        }
     }
 
     /**

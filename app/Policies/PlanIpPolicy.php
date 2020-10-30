@@ -10,12 +10,6 @@ class PlanIpPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' ||
-        $user->allTeams()->first()->membership->role==='editor')
-        return true; 
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -48,7 +42,10 @@ class PlanIpPolicy
      */
     public function create(User $user)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
     }
 
     /**
@@ -60,7 +57,12 @@ class PlanIpPolicy
      */
     public function update(User $user, PlanIp $planIp)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $planIp->internalCheck->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**

@@ -10,13 +10,6 @@ class InternalCheckReportPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin' ||
-        $user->allTeams()->first()->membership->role==='editor')
-        return true; 
-    }
-
     /**
      * Determine whether the user can view any models.
      *
@@ -48,7 +41,10 @@ class InternalCheckReportPolicy
      */
     public function create(User $user)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
     }
 
     /**
@@ -60,8 +56,12 @@ class InternalCheckReportPolicy
      */
     public function update(User $user, InternalCheckReport $internalCheckReport)
     {
-        if($user->id===$internalCheckReport->internalCheck->user->id)
-          return true;
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $internalCheckReport->internalCheck->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**

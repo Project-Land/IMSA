@@ -10,11 +10,6 @@ class NotificationPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user)
-    {
-        if($user->allTeams()->first()->membership->role==='super-admin' || $user->allTeams()->first()->membership->role==='admin')
-        return true; 
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -24,7 +19,7 @@ class NotificationPolicy
      */
     public function viewAny(User $user)
     {
-        if($user->allTeams()->first()->membership->role==='editor')
+        if($user->allTeams()->first()->membership->role==='editor' || $user->allTeams()->first()->membership->role==='admin' || $user->allTeams()->first()->membership->role==='super-admin')
         return true;
     }
 
@@ -37,7 +32,7 @@ class NotificationPolicy
      */
     public function view(User $user, Notification $notification)
     {
-        if($user->allTeams()->first()->membership->role==='editor' && $notification->type==='internal_check')
+        if(($user->allTeams()->first()->membership->role==='editor' && $notification->notifiable_type==='App\Models\InternalCheck') || $user->allTeams()->first()->membership->role==='admin' || $user->allTeams()->first()->membership->role==='super-admin')
             return true;
     }
 

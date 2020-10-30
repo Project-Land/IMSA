@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Carbon\Carbon;
+use App\Models\Team;
 use App\Models\Sector;
 use App\Models\Standard;
+use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\Auth;
-use App\Facades\CustomLog;
 use App\Http\Requests\StoreCorrectiveMeasuresRequest;
 use App\Http\Requests\UpdateCorrectiveMeasuresRequest;
-use Exception;
 
 class CorrectiveMeasuresController extends Controller
 {
@@ -39,8 +40,8 @@ class CorrectiveMeasuresController extends Controller
     public function create()
     {
         $this->authorize('create', CorrectiveMeasure::class);
-
-        $standards = Standard::all();
+        $team=Team::findOrFail(Auth::user()->current_team_id);
+        $standards = $team->standards;
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('system_processes.corrective_measures.create', compact('standards', 'sectors'));
     }
@@ -57,7 +58,7 @@ class CorrectiveMeasuresController extends Controller
 
         $correctiveMeasure = new CorrectiveMeasure();
     
-        $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)->where('standard_id', $request->standard)->count() + 1;
+        $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)->where([['standard_id', $request->standard],['team_id',Auth::user()->current_team_id]])->count() + 1;
 
         $correctiveMeasure->name = "KKM ".Carbon::now()->year." / ".$counter;
 
@@ -112,7 +113,8 @@ class CorrectiveMeasuresController extends Controller
     {
         $corrective_measure = CorrectiveMeasure::findOrFail($id);
         $this->authorize('update', $corrective_measure);
-        $standards = Standard::all();
+        $team=Team::findOrFail(Auth::user()->current_team_id);
+        $standards = $team->standards;
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('system_processes.corrective_measures.edit', compact('corrective_measure', 'standards', 'sectors'));
     }
