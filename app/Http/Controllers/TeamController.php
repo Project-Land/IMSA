@@ -9,6 +9,7 @@ class TeamController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAllTeams', Team::class);
         $teams = Team::with('standards')->get();
         return view('teams.index', compact('teams'));
     }

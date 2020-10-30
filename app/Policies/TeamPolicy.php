@@ -19,7 +19,8 @@ class TeamPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        //return true;
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -31,7 +32,13 @@ class TeamPolicy
      */
     public function view(User $user, Team $team)
     {
-        return $user->belongsToTeam($team);
+        //return $user->belongsToTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+    }
+    
+    public function viewAllTeams(User $user){
+
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -42,7 +49,7 @@ class TeamPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -54,7 +61,8 @@ class TeamPolicy
      */
     public function update(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        //return $user->ownsTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -66,7 +74,8 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        //return $user->ownsTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -78,7 +87,8 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        //return $user->ownsTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -90,7 +100,8 @@ class TeamPolicy
      */
     public function removeTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        //return $user->ownsTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 
     /**
@@ -102,6 +113,7 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        //return $user->ownsTeam($team);
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
 }

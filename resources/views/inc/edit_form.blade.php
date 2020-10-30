@@ -18,28 +18,28 @@
 			@method('PUT')
 			<div class="form-group">
 				<label for="dokument_name">Naziv dokumenta:</label>
-        		<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Naziv dokumenta" value="{{ $document->document_name }}" autofocus>
+        		<input type="text" class="form-control" id="document_name" name="document_name" value="{{ $document->document_name }}" autofocus>
 				@error('document_name')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
-				<label for="document_version">Verzija:</label>
-				<input type="text" class="form-control" id="document_version" name="document_version" placeholder="Verzija" value="{{ $document->version }}">
-				@error('document_version')
+				<label for="version">Verzija:</label>
+				<input type="text" class="form-control" id="version" name="version" value="{{ $document->version }}">
+				@error('version')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
 			@if(isset($category) && $category == 'procedures')
 			<div class="form-group">
-				<label for="sector">Izaberi sektor</label>
-				<select class="form-control" name="sector" id="sector">
+				<label for="sector_id">Izaberi sektor</label>
+				<select class="form-control" name="sector_id" id="sector_id">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}" {{ $document->sector_id == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
 					@endforeach
 				</select>
-				@error('sector')
+				@error('sector_id')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>

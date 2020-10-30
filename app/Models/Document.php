@@ -9,6 +9,8 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function sector()
     {
         return $this->belongsTo('App\Models\Sector');
