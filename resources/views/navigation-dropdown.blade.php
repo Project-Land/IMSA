@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-16 mt-2">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
@@ -11,12 +11,70 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Standardi') }}
-                    </x-jet-nav-link>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-lg p-4">
+                
+                <x-jet-dropdown>
+                    <x-slot name="trigger">
+                    <a  type="button" href="/" class="btn trigger" style="@if(request()->is(['/'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    </x-slot>  <div class="dropdown-menu">
+                    <x-slot name="content">
+                        <a class="d-none"></a>
+                    </x-slot>
+                    </div>
+                    </x-jet-dropdown>
+               
+                    <x-jet-dropdown>
+                    <x-slot name="trigger">
+                    <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray'}} @endif">Dokumentacija</button>
+                    </x-slot> 
+                    <div class="dropdown-menu">
+                    <x-slot name="content">
+                  
+                    <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
+                    <a class="dropdown-item" href="/policies">Politike</a>
+                    <a class="dropdown-item" href="/procedures">Procedure</a>
+                    <a class="dropdown-item" href="/manuals">Uputstva</a>
+                    <a class="dropdown-item" href="/forms">Obrasci</a>          
+                    </x-slot>
+                    </div>
+                    </x-jet-dropdown>
+
+
+                    <x-jet-dropdown width="60">
+                    <x-slot name="trigger">
+                    <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray'}} @endif">Sistemski procesi</button>
+                    </x-slot> 
+                    <div class="dropdown-menu">
+                    <x-slot name="content">
+                  
+                    <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
+                    <a class="dropdown-item" href="/internal-check">Interne provere</a>
+                    <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
+                    <a class="dropdown-item" href="/trainings">Obuke</a>
+                    <a class="dropdown-item" href="/goals">Ciljevi</a>
+                    <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
+                    <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
+                    <a class="dropdown-item" href="/complaints">Upravljanje reklamacijama</a>
+                    <a class="dropdown-item" href="/management-system-reviews">Preispitivanje sistema menadžmenta</a>     
+                    </x-slot>
+                    </div>
+                    </x-jet-dropdown>
+
+                    <x-jet-dropdown>
                    
-                 
+            <div class="dropdown-menu">
+            <x-slot name="trigger">
+            <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray'}} @endif">Sektori</button>
+            </x-slot>
+            <x-slot name="content">
+                <a class="dropdown-item" href="/sectors">Lista sektora</a>
+                @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>  @endcan    
+            </x-slot> 
+           
+            </div>
+            </x-jet-dropdown>
+
+                    
                 </div>
             </div>
 
@@ -186,9 +244,77 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
+           
+            <x-jet-dropdown>
+            <x-slot name="trigger">
+                    <a type="button" href="/" class="btn trigger">Standardi</a>
+                    </x-slot>  <div class="dropdown-menu">
+                    <x-slot name="content">
+                        <a class="d-none"></a>
+                    </x-slot>
+                    </div>
+            </x-jet-dropdown>
+        
+
+            <x-jet-dropdown>
+                    <x-slot name="trigger">
+                    <button type="button" class="btn trigger">Dokumentacija</button>
+                    </x-slot> 
+                    <div class="dropdown-menu">
+                    <x-slot name="content">
+                  
+                    <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
+                    <a class="dropdown-item" href="/policies">Politike</a>
+                    <a class="dropdown-item" href="/procedures">Procedure</a>
+                    <a class="dropdown-item" href="/manuals">Uputstva</a>
+                    <a class="dropdown-item" href="/forms">Obrasci</a>          
+                    </x-slot>
+                    </div>
+                    </x-jet-dropdown>
+           
+
+            <x-jet-dropdown width="60">
+                    <x-slot name="trigger">
+                    <button type="button" class="btn trigger">Sistemski procesi</button>
+                    </x-slot> 
+                    <div class="dropdown-menu">
+                    <x-slot name="content">
+                  
+                    <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
+                    <a class="dropdown-item" href="/internal-check">Interne provere</a>
+                    <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
+                    <a class="dropdown-item" href="/trainings">Obuke</a>
+                    <a class="dropdown-item" href="/goals">Ciljevi</a>
+                    <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
+                    <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
+                    <a class="dropdown-item" href="/complaints">Upravljanje reklamacijama</a>
+                    <a class="dropdown-item" href="/management-system-reviews">Preispitivanje sistema menadžmenta</a>     
+                    </x-slot>
+                    </div>
+                    </x-jet-dropdown>
+
+
+                    <x-jet-dropdown>
+                   
+                   <div class="dropdown-menu">
+                   <x-slot name="trigger">
+                   <button type="button" class="btn trigger">Sektori</button>
+                   </x-slot>
+                   <x-slot name="content">
+                       <a class="dropdown-item" href="/sectors">Lista sektora</a>
+                       @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>  @endcan    
+                   </x-slot> 
+                  
+                   </div>
+                   </x-jet-dropdown>
+
+
+           
+
+
+
+
+
         </div>
 
         <!-- Responsive Settings Options -->
