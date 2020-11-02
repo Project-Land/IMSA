@@ -115,6 +115,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
+        "order": [[ 6, "desc" ]]
     });
 
     function showGoal(id){
@@ -167,6 +168,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        
         let url = "/goals/delete/"+id;
         
         if(confirm('Da li ste sigurni?')){

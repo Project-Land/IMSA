@@ -26,7 +26,7 @@ class Controller extends BaseController
 
     public static function getCompanyName()
     {
-        $company = \Auth::user()->allTeams()->first()->name;
+        $company = \Auth::user()->currentTeam->name;
         return $company;
     }
 }

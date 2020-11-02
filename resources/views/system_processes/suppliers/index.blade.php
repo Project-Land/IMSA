@@ -94,19 +94,20 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
+        "order": [[ 4, "desc" ]]
     }); 
 
     var myRe = /\bsuppliers\b/g;
-  if(myRe.test(window.location.href)){
-    window.addEventListener('popstate', function (event) {
-    location.reload();
-    });
-  }
+    if(myRe.test(window.location.href)){
+        window.addEventListener('popstate', function (event) {
+            location.reload();
+        });
+    }
   
-let href=window.location.href;
-id=href.split('#')[1];
-if(id){
- let e= document.getElementById('tr'+id);
- e.style="background:#bbfca9;";
-}
+    let href=window.location.href;
+    id = href.split('#')[1];
+    if(id){
+        let e= document.getElementById('tr'+id);
+        e.style="background:#bbfca9;";
+    }
 </script>

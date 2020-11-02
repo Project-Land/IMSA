@@ -8,7 +8,6 @@ use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ComplaintsRequest;
-use App\Http\Requests\UpdateComplaintRequest;
 
 class ComplaintsController extends Controller
 {
@@ -20,7 +19,10 @@ class ComplaintsController extends Controller
             return redirect('/');
         }
 
-        $complaints = Complaint::where([ ['standard_id', $standardId], ['team_id',Auth::user()->current_team_id] ])->get();
+        $complaints = Complaint::where([
+                ['standard_id', $standardId],
+                ['team_id',Auth::user()->current_team_id]
+            ])->get();
         return view('system_processes.complaints.index', compact('complaints'));
     }
 
@@ -64,7 +66,7 @@ class ComplaintsController extends Controller
         $this->authorize('update', Complaint::find($id));
 
         $complaint = Complaint::findOrFail($id);
-        
+
         try{
             $complaint->update($request->all());
             CustomLog::info('Reklamacija "'.$complaint->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);

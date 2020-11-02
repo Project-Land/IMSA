@@ -43,7 +43,7 @@ class SuppliersController extends Controller
             $notification = Notification::create([
                 'message' => 'Datum sledećeg preispitivanja '.date('d.m.Y', strtotime($supplier->deadline_date)),
                 'team_id' => Auth::user()->current_team_id,
-                'checkTime' => date('d.m.Y', strtotime($supplier->deadline_date))
+                'checkTime' => $supplier->deadline_date
             ]);
 
             $supplier->notification()->save($notification);
@@ -81,7 +81,7 @@ class SuppliersController extends Controller
 
             /*$notification = $supplier->notification;
             $notification->message = 'Datum sledećeg preispitivanja '.date('d.m.Y', strtotime($supplier->deadline_date));
-            $notification->checkTime = date('d.m.Y', strtotime($supplier->deadline_date));
+            $notification->checkTime = $supplier->deadline_date;
             $supplier->notification()->save($notification);*/
 
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
@@ -97,6 +97,7 @@ class SuppliersController extends Controller
     {
         $this->authorize('delete', Supplier::find($id));
         $supplier = Supplier::findOrFail($id);
+        
         try{
             Supplier::destroy($id);
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);

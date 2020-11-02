@@ -42,6 +42,11 @@ class ComplaintPolicy
 
     public function delete(User $user, Complaint $complaint)
     {
-
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $complaint->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 }

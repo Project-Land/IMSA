@@ -54,9 +54,9 @@ class ComplaintsRequest extends FormRequest
             'team_id' => \Auth::user()->current_team_id,
             'standard_id' => session('standard'),
             'submission_date' => date('Y-m-d', strtotime($this->submission_date)),
-            'deadline_date' => date('Y-m-d', strtotime($this->deadline_date)),
+            'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'status' => $this->status != null ? $this->status : 1,
-            'closing_date' => $this->status == 1 ? date('Y-m-d') : null
+            'closing_date' => $this->status === 1 ? date('Y-m-d') : null
         ]);
     }
 }
