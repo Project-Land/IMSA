@@ -16,14 +16,14 @@
 		<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('corrective-measures.store') }}" method="POST">
 			@csrf
 			<div class="mb-4">
-				<label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžmenta:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard">
+				<label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžment:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard_id" id="standard_id">
 					<option value="">Izaberi...</option>
 					@foreach($standards as $standard)
-						<option value="{{ $standard->id }}">{{ $standard->name }}</option>
+						<option value="{{ $standard->id }}" {{ $standard->id == Session::get('standard')? "selected":"" }} >{{ $standard->name }}</option>
 					@endforeach
 				</select>
-				@error('standard')
+				@error('standard_id')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
@@ -42,14 +42,14 @@
 				@enderror
 			</div>
 			<div class="mb-4">
-				<label for="sector" class="block text-gray-700 text-sm font-bold mb-2">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector" id="sector">
+				<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}">{{ $sector->name }}</option>
 					@endforeach
 				</select>
-				@error('sector')
+				@error('sector_id')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>

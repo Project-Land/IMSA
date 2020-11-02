@@ -13,6 +13,7 @@ use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\DB;
 use App\Models\InternalCheckReport;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class InternalCheckReportController extends Controller
 {
@@ -69,7 +70,6 @@ class InternalCheckReportController extends Controller
             'measure_approval_reason.*' => 'string|nullable',
             'measure_status.*' => 'string|required',
             'measure_effective.*' => 'string|nullable'
-            
         ]);
 
         try{
@@ -84,6 +84,12 @@ class InternalCheckReportController extends Controller
                     $inconsistency->description=$inc;
                     $report->inconsistencies()->save($inconsistency);
 
+                    $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
+                    ->where([
+                        ['standard_id', session('standard')],
+                        ['team_id', \Auth::user()->current_team_id]
+                    ])
+                    ->count() + 1;
 
                     $correctiveMeasure=CorrectiveMeasure::create([
                         'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
@@ -94,7 +100,14 @@ class InternalCheckReportController extends Controller
                         'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
                         'measure_status'=>$correctiveMeasureData['measure_status'][$count],
                         'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
-                        'team_id' => \Auth::user()->current_team_id
+                        'team_id' => \Auth::user()->current_team_id,
+                        'user_id' =>\Auth::user()->id,
+                        'standard_id' => session('standard'),
+                        'sector_id' => 1,
+                        'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                        'noncompliance_cause_date' => Carbon::now(),
+                        'measure_date' => Carbon::now(),
+                        'measure_approval_date' => $correctiveMeasureData['measure_approval'][$count] == '1' ? Carbon::now() : null
                     ]);
     
                     $correctiveMeasure->standard()->associate($standard);
@@ -111,12 +124,12 @@ class InternalCheckReportController extends Controller
                 $report->refresh();
                 $internalCheck=InternalCheck::findOrFail($request->internal_check_id);
                 $report->internalCheck()->save($internalCheck);
-                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
                 $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
             });
         }catch(Exception $e){
             $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
-            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
         }
         return redirect('/internal-check');
     }
@@ -144,7 +157,7 @@ class InternalCheckReportController extends Controller
         $internal_check_report=InternalCheckReport::where('id',$id)->with('internalCheck','recommendations','inconsistencies')->get();
         $internal_check_report=$internal_check_report[0];
         $this->authorize('update',$internal_check_report);
-        return view('system_processes.internal_check_report.edit',['internalCheckReport'=>$internal_check_report]);
+        return view('system_processes.internal_check_report.edit', ['internalCheckReport' => $internal_check_report]);
     }
 
     /**
@@ -236,6 +249,14 @@ class InternalCheckReportController extends Controller
                 $inc->description=$v;
                 $internal_check_report->inconsistencies()->save($inc);
                 $inc->refresh();
+
+                $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
+                    ->where([
+                        ['standard_id', session('standard')],
+                        ['team_id', \Auth::user()->current_team_id]
+                    ])
+                    ->count() + 1;
+
                 $correctiveMeasure=CorrectiveMeasure::create([
                     'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
                     'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
@@ -245,7 +266,14 @@ class InternalCheckReportController extends Controller
                     'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
                     'measure_status'=>$correctiveMeasureData['measure_status'][$count],
                     'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
-                    'team_id' => \Auth::user()->current_team_id
+                    'team_id' => \Auth::user()->current_team_id,
+                    'user_id' => \Auth::user()->id,
+                    'sector_id' => 1,
+                    'standard_id' => session('standard'),
+                    'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                    'noncompliance_cause_date' => Carbon::now(),
+                    'measure_date' => Carbon::now(),
+                    'measure_approval_date' => $correctiveMeasureData['measure_approval'][$count] == '1' ? Carbon::now() : null
                 ]);
 
                 $correctiveMeasure->standard()->associate($standard);
@@ -259,12 +287,12 @@ class InternalCheckReportController extends Controller
                 $internal_check_report->recommendations()->save($rec);          
             }
 
-            CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
         });
 
     }catch(Exception $e){
-        CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere "'.$internal_check_report->specification.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
         $request->session()->flash('status', 'Došlo je do greske, pokušajte ponovo');
         return redirect('/internal-check');
         exit();
@@ -284,10 +312,10 @@ class InternalCheckReportController extends Controller
     {
         try{
             InternalCheckReport::destroy($id);
-            CustomLog::info('Izveštaj za internu proveru id-"'.$internal_check_report->id.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Izveštaj za godišnji plan je uspešno uklonjen');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
         }
     }

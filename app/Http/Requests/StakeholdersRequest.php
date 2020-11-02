@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateStakeholdersRequest extends FormRequest
+class StakeholdersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,5 +38,14 @@ class UpdateStakeholdersRequest extends FormRequest
             'expectation.required' => 'Unesite očekivanja',
             'response.required' => 'Unesite odgovor'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'standard_id' => session('standard'),
+            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => \Auth::user()->id
+        ]);
     }
 }

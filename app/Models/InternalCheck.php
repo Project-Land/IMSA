@@ -9,17 +9,20 @@ class InternalCheck extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function standard(){
+    public function standard()
+    {
         return $this->belongsTo('App\Models\Standard');
     }
 
-    public function planIp(){
+    public function planIp()
+    {
         return $this->belongsTo('App\Models\PlanIp');
     }
 
-    public function internalCheckReport(){
+    public function internalCheckReport()
+    {
         return $this->belongsTo('App\Models\InternalCheckReport');
     }
 
@@ -27,6 +30,7 @@ class InternalCheck extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
     public function team()
     {
         return $this->belongsTo('App\Models\Team');
@@ -36,8 +40,9 @@ class InternalCheck extends Model
     {
         return $this->morphOne('App\Models\Notification', 'notifiable');
     }
-    public function sector(){
+
+    public function sector()
+    {
         return $this->belongsTo('App\Models\Sector');
     }
-
 }

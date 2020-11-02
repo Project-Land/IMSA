@@ -9,8 +9,21 @@ class Goal extends Model
 {
     use HasFactory;
 
-    public function standard(){
+    protected $guarded = [];
+
+    public function standard()
+    {
         return $this->hasOne('App\Models\Standard');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
     }
 
     public static function getStats($standardId, $year)
@@ -24,14 +37,5 @@ class Goal extends Model
             $os_percentage = ($os_fulfilled / $os_total) * 100;
         }
         return "Ostvareno ".$os_fulfilled." ciljeva od ukupno ".$os_total." što čini ".round($os_percentage)."%";
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-    public function team()
-    {
-        return $this->belongsTo('App\Models\Team');
     }
 }

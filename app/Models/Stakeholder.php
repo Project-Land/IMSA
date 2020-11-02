@@ -9,7 +9,7 @@ class Stakeholder extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'standard_id', 'expectation', 'response', 'team_id', 'user_id'];
+    protected $guarded = [];
 
     public function user()
     {

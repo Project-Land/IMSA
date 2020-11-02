@@ -120,7 +120,7 @@
     function showGoal(id){
         axios.get('/goals/'+id)
             .then((response) => {
-                let modal = `<div class="modal" id="showData" tabindex="-1" role="dialog">
+                let modal = `<div class="modal" id="showData-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content rounded-0">
                                         <div class="modal-header text-center">
@@ -154,7 +154,7 @@
                                 </div>
                             </div>`;
                 $("body").append(modal);
-                $('#showData').modal();
+                $('#showData-'+id).modal();
             })
             .catch((error) => {
                 console.log(error)

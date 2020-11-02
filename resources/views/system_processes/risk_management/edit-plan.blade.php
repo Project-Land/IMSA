@@ -45,7 +45,7 @@
 			</div>
             <div class="form-group">
 				<label for="deadline">Rok za realizaciju:</label>
-				<input type="text" class="form-control" id="deadline" name="deadline" value="{{ date('d.m.Y', strtotime($risk->deadline)) }}">
+				<input type="text" class="form-control" id="deadline" name="deadline" value="{{ $risk->deadline != null ? date('d.m.Y', strtotime($risk->deadline)) : date('d.m.Y') }}">
 				@error('deadline')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
@@ -53,8 +53,8 @@
             <div class="form-group">
 				<label for="status">Status:</label>
 				<select class="form-control" name="status" id="status">
-                    <option value="1" {{ ($risk->status == 1)? "selected" : "" }} >Otvorena</option>
-                    <option value="0" {{ ($risk->status == 0)? "selected" : "" }} >Zatvorena</option>
+                    <option value="1" {{ ($risk->status === 1 || $risk->status == null)? "selected" : "" }} >Otvorena</option>
+                    <option value="0" {{ ($risk->status === 0)? "selected" : "" }} >Zatvorena</option>
                 </select>
 			</div>
 			<button type="submit" class="btn btn-success">Primeni</button>

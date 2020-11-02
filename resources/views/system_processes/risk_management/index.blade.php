@@ -119,13 +119,13 @@
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Opis rizika / prilike</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Uzrok</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause != null ? response.data.cause : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera za smanjenje rizika</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility != null ? response.data.responsibility : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline != null ? new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Status</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 0 ? "Zatvorena" : "Otvorena" }</p></div>
                                             </div>

@@ -37,7 +37,7 @@ class CustomLog extends Facade
         $file = isset($args[1]) ? $args[1] : 'laravel';
 
         // Maximum number of lines in one log file
-        $max = 10000;
+        $max = 50000;
 
         // Get Monolog Instance
         $logger = Log::getLogger();

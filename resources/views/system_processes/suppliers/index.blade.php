@@ -37,7 +37,7 @@
                                     <th>Naziv isporučioca</th>
                                     <th>Predmet nabavke</th>
                                     <th>Status</th>
-                                    <th>Datum ažuriranja</th>
+                                    <th>Datum kreiranja</th>
                                     <th>Datum sledećeg preispitivanja</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>

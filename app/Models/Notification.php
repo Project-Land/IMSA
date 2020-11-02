@@ -11,7 +11,7 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function team()
     {
