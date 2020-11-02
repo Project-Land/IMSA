@@ -11,9 +11,9 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto w-50 mt-10 p-10 rounded" style="background:#f0f9f0; border:3px solid #ccffcc;">
 
-		<form action="{{route('internal-check.store')}}" method="POST">
+		<form action="{{route('internal-check.store')}}" method="POST"  autocomplete="off">
 			@csrf
         <div class="form-group">
             <label for="date">Termin provere</label>
@@ -59,7 +59,7 @@
             @enderror
         </div>
             
-        <button type="submit" class="btn btn-primary">Kreiraj</button>
+        <button type="submit" class="btn btn-success">Kreiraj</button>
         </form>
     </div>
 

@@ -8,8 +8,7 @@
             <button type="button" class="btn btn-success dropdown-toggle rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dokumentacija
             </button>
-            <div class="dropdown-menu">
-
+            <div class="dropdown-menu"> 
                 <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
                 <a class="dropdown-item" href="/policies">Politike</a>
                 <a class="dropdown-item" href="/procedures">Procedure</a>
@@ -41,9 +40,10 @@
                 Sektori
             </button>
             <div class="dropdown-menu">
-                
+            
                 <a class="dropdown-item" href="/sectors">Lista sektora</a>
                 @can('create', App\Models\Sector::class)<a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>@endcan
+
             </div>
         </div>
 
