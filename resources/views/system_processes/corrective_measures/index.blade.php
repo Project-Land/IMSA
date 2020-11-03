@@ -90,9 +90,10 @@
             }
         },
         "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
+            "targets": 'no-sort',
+            "orderable": false,
         }],
+        "order": [[ 2, "desc" ]]
     }); 
 
     function showMeasure(id){

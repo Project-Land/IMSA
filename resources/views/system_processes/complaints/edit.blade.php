@@ -55,11 +55,11 @@
 			<div class="{{ $complaint->accepted == 1 ? "" : "d-none" }}" id="complaint_accepted">
 				<div class="form-group">
 					<label for="deadline_date">Rok za realizaciju reklamacije:</label>
-					<input type="text" class="form-control" id="deadline_date" name="deadline_date" value="{{ date('d.m.Y', strtotime($complaint->deadline_date)) }}" >
+					<input type="text" class="form-control" id="deadline_date" name="deadline_date" value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" >
 				</div>
 				<div class="form-group">
 					<label for="responsible_person">Lice odgovorno za rešavanje reklamacije:</label>
-					<input type="text" class="form-control" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}" autofocus>
+					<input type="text" class="form-control" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}">
 					@error('responsible_person')
 						<span class="text-danger">{{ $message }}</span>
 					@enderror

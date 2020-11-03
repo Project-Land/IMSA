@@ -40,4 +40,11 @@ class UpdateRiskManagementPlanRequest extends FormRequest
             'deadline.required' => 'Izaberite rok za realizaciju'
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'deadline' => date('Y-m-d', strtotime($this->deadline))
+        ]);
+    }
 }

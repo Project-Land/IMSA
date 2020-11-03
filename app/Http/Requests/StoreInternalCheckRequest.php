@@ -27,6 +27,7 @@ class StoreInternalCheckRequest extends FormRequest
             'date' => 'required',
             'sector_id' => 'required',
             'standard_id' => 'required',
+            'leaders' => 'required'
         ];
     }
 
@@ -34,8 +35,8 @@ class StoreInternalCheckRequest extends FormRequest
     {
         return [
             'date.required' => 'Unesite termin provere',
-            'standard_id.required' => 'Unesite područje provere',
-            'sector_id.required' => 'Unesite standard',
+            'standard_id.required' => 'Izaberite standard',
+            'sector_id.required' => 'Izaberite područje provere',
             'leaders.required'=> 'Unesite proveravače'
         ];
     }

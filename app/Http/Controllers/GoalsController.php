@@ -6,23 +6,19 @@ use App\Models\Goal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
-use App\Http\Requests\StoreGoalsRequest;
-use App\Http\Requests\UpdateGoalsRequest;
+use App\Http\Requests\GoalsRequest;
 use Exception;
 
 class GoalsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
+
         $goals = Goal::where([
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
@@ -32,9 +28,7 @@ class GoalsController extends Controller
 
     public function getData(Request $request) {
         $standardId = $this::getStandard();
-        if($standardId == null){
-            return redirect('/');
-        }
+
         $goals = Goal::where([
                 ['standard_id', $standardId],
                 ['year', $request->data['year']],
@@ -53,69 +47,33 @@ class GoalsController extends Controller
         
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('create', Goal::class);
         return view('system_processes.goals.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreGoalsRequest $request)
+    public function store(GoalsRequest $request)
     {
         $this->authorize('create', Goal::class);
-        
-        $goal = new Goal();
-        $goal->standard_id = $this::getStandard();
-        $goal->year = $request->year;
-        $goal->responsibility = $request->resources;
-        $goal->goal = $request->goal;
-        $goal->deadline = date('Y-m-d', strtotime($request->deadline));
-        $goal->kpi = $request->kpi;
-        $goal->resources = $request->resources;
-        $goal->activities = $request->activities;
-        $goal->analysis = $request->analysis != null ? $request->analysis : null;
 
-        $goal->team_id = Auth::user()->current_team_id;
-        $goal->user_id = Auth::user()->id;
         try{
-            $goal->save();
-            CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $goal = Goal::create($request->all());
+            CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $goal = Goal::findOrFail($id);
         return response()->json($goal);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $goal = Goal::findOrFail($id);
@@ -123,52 +81,33 @@ class GoalsController extends Controller
         return view('system_processes.goals.edit', ['goal' => $goal]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateGoalsRequest $request, $id)
+    public function update(GoalsRequest $request, $id)
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
 
-        $goal->standard_id = $this::getStandard();
-        $goal->year = $request->year;
-        $goal->responsibility = $request->resources;
-        $goal->goal = $request->goal;
-        $goal->deadline = date('Y-m-d', strtotime($request->deadline));
-        $goal->kpi = $request->kpi;
-        $goal->resources = $request->resources;
-        $goal->activities = $request->activities;
-        $goal->analysis = $request->analysis != null ? $request->analysis : null;
         try{
-            $goal->save();
-            CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+            $goal->update($request->all());
+            CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('delete', $goal);
-        if(Goal::destroy($id)){
-            CustomLog::info('Cilj "'.$goal->goal.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+
+        try{
+            Goal::destroy($id);
+            CustomLog::info('Cilj "'.$goal->goal.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Cilj je uspešno uklonjen');
-        }else{
+        } catch (Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -177,8 +116,14 @@ class GoalsController extends Controller
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('delete', $goal);
-        Goal::destroy($id);
-        CustomLog::info('Cilj "'.$goal->name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-        return true;
+
+        try{
+            Goal::destroy($id);
+            CustomLog::info('Cilj "'.$goal->name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            return true;
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return false;
+        }
     }
 }

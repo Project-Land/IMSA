@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSuppliersRequest extends FormRequest
+class SectorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,23 @@ class StoreSuppliersRequest extends FormRequest
     public function rules()
     {
         return [
-            'supplier_name' => 'required|max:190',
-            'subject' => 'required'
+            'name' => 'required|max:190'
         ];
     }
 
     public function messages()
     {
         return [
-            'supplier_name.required' => 'Unesite naziv isporučioca',
-            'supplier_name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'subject.required' => 'Unesite predmet nabavke'
+            'name.required' => 'Unesite naziv sektora',
+            'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => \Auth::user()->id
+        ]);
     }
 }

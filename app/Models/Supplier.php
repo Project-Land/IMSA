@@ -9,6 +9,23 @@ class Supplier extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
+
+    public function notification()
+    {
+        return $this->morphOne('App\Models\Notification', 'notifiable');
+    }
+
     public static function getStats($standardId, $year)
     {
         $sup_total = Supplier::where('standard_id', $standardId)->whereYear('created_at', $year)->count();
@@ -22,19 +39,5 @@ class Supplier extends Model
         }
 
         return "Odobreno ".$sup_approved. " isporučilaca od ukupno ".$sup_total.", što čini ".round($sup_percentage)."%";
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-    public function team()
-    {
-        return $this->belongsTo('App\Models\Team');
-    }
-
-    public function notification()
-    {
-        return $this->morphOne('App\Models\Notification', 'notifiable');
     }
 }

@@ -73,8 +73,14 @@ class InternalCheckReportPolicy
      */
     public function delete(User $user, InternalCheckReport $internalCheckReport)
     {
-        if($user->id===$internalCheckReport->internalCheck->user->id)
-          return true;
+        //if($user->id === $internalCheckReport->internalCheck->user->id)
+        //    return true;
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $internalCheckReport->internalCheck->team_id){
+            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+        }
     }
 
     /**

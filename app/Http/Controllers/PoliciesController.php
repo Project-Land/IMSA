@@ -23,8 +23,10 @@ class PoliciesController extends Controller
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
+            
         $folder = \Str::snake($this::getCompanyName())."/policy";
         $route_name = "policies";
+
         return view('documents.index', compact('documents', 'folder', 'route_name'));
     }
 

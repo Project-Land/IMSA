@@ -68,7 +68,8 @@
     <script>
         jQuery.datetimepicker.setLocale('sr');
    	    $('#date').datetimepicker({
-		    format: 'd.m.Y'
+		    format: 'd.m.Y',
+            dayOfWeekStart: 1
 	    });
 
         $('#status').change( () => {

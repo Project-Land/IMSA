@@ -74,7 +74,12 @@ class RiskManagementPolicy
      */
     public function delete(User $user, RiskManagement $riskManagement)
     {
-        //
+        $role = $user->allTeams()->first()->membership->role;
+        if($user->current_team_id === $riskManagement->team_id){
+            if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+        }
     }
 
     /**

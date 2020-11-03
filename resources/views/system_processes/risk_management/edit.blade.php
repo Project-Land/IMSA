@@ -18,7 +18,7 @@
             @method('PUT')
 			<div class="form-group">
 				<label for="description">Opis:</label>
-				<textarea class="form-control" id="description" name="description" placeholder="Opis" autofocus>{{ $risk->description }}</textarea>
+				<textarea class="form-control" id="description" name="description" autofocus>{{ $risk->description }}</textarea>
 				@error('description')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror

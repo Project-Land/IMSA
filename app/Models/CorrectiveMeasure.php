@@ -21,6 +21,21 @@ class CorrectiveMeasure extends Model
         return $this->belongsTo('App\Models\Sector');
     }
 
+    public function inconsistency()
+    {
+        return $this->belongsTo('App\Models\Inconsistency');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
+
     public static function getStats($standardId, $year)
     {
         $icm_total = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->count();
@@ -32,19 +47,5 @@ class CorrectiveMeasure extends Model
             $icm_percentage = ($icm_approved / $icm_total) * 100;
         }
         return "Odobreno ".$icm_approved." mera od ukupno ".$icm_total." što čini ".round($icm_percentage)."%";
-    }
-    
-    public function inconsistency()
-    {
-        return $this->belongsTo('App\Models\Inconsistency');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
-    public function team()
-    {
-        return $this->belongsTo('App\Models\Team');
     }
 }

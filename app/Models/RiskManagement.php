@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class RiskManagement extends Model
 {
+    use HasFactory;
+
     protected $table = "risk_managements";
 
-    use HasFactory;
+    protected $guarded = [];
 
     public static function getStats($standardId, $year)
     {
@@ -28,6 +30,7 @@ class RiskManagement extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    
     public function team()
     {
         return $this->belongsTo('App\Models\Team');

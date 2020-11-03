@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTrainingRequest extends FormRequest
+class TrainingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class UpdateTrainingRequest extends FormRequest
         return [
             'name' => 'required|max:190',
             'description' => 'required',
-            'num_of_employees' => 'required',
+            'num_of_employees' => 'required|numeric',
             'description' => 'required',
             'place' => 'required|max:190',
             'resources' => 'required',
@@ -41,10 +41,24 @@ class UpdateTrainingRequest extends FormRequest
             'name.max' => 'Naziv može sadržati najviše 190 karaktera',
             'desription.required' => 'Unesite opis obuke',
             'num_of_employees.required' => 'Unesite broj zaposlenih',
+            'num_of_employees.numeric' => 'Polje mora biti broj',
             'place.required' => 'Unesite mesto obuke',
             'place.max' => 'Polje može sadržati najviše 190 karaktera',
             'resources.required' => 'Unesite potrebne resurse',
             'training_date.required' => 'Unesite datum i vreme obuke'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'standard_id' => session('standard'),
+            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => \Auth::user()->id,
+            'year' => date('Y', strtotime($this->training_date)),
+            'training_date' => date('Y-m-d H:i:s', strtotime($this->training_date)),
+            'final_num_of_employees' => $this->final_num_of_employees != null ? $this->final_num_of_employees : null,
+            'rating' => $this->rating != null ? $this->rating : null
+        ]);
     }
 }

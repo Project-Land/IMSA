@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGoalsRequest extends FormRequest
+class GoalsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -47,5 +47,16 @@ class StoreGoalsRequest extends FormRequest
             'resources.max' => 'Polje može sadržati najviše 190 karaktera',
             'activities.required' => 'Unesite aktivnosti'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'standard_id' => session('standard'),
+            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => \Auth::user()->id,
+            'deadline' => date('Y-m-d', strtotime($this->deadline)),
+            'analysis' => $this->analysis != null ? $this->analysis : null
+        ]);
     }
 }

@@ -22,12 +22,16 @@ class HomeController extends Controller
     public function standard($id)
     {
         try{
-            $standard = Standard::findorFail($id);
+            $teamId = \Auth::user()->current_team_id;
+            $standard = Standard::whereHas('teams', function($q) use ($teamId) {
+                $q->where('team_id', $teamId);
+            })->findOrFail($id);
+            
             session(['standard' => $id]);
             session(['standard_name' => $standard->name]);
             return view('standard', compact('standard'));
         }
-        catch(ModelNotFoundException $err){
+        catch(ModelNotFoundException $e){
             return redirect('/');
         }
     }

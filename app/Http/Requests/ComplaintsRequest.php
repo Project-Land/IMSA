@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateComplaintRequest extends FormRequest
+class ComplaintsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -45,5 +45,18 @@ class UpdateComplaintRequest extends FormRequest
             'responsible_person.max' => 'Polje može sadržati najviše 190 karaktera',
             'way_of_solving.max' => 'Polje može sadržati najviše 190 karaktera'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => \Auth::user()->id,
+            'team_id' => \Auth::user()->current_team_id,
+            'standard_id' => session('standard'),
+            'submission_date' => date('Y-m-d', strtotime($this->submission_date)),
+            'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
+            'status' => $this->status != null ? $this->status : 1,
+            'closing_date' => $this->status === 1 ? date('Y-m-d') : null
+        ]);
     }
 }

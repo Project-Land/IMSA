@@ -9,9 +9,10 @@ class InternalCheckReport extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function internalCheck(){
+    public function internalCheck()
+    {
         return $this->hasOne('App\Models\InternalCheck');
     }
 

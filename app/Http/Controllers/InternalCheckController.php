@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\PlanIp;
+use App\Models\InternalCheckReport;
 
 use App\Models\Standard;
 use App\Models\Supplier;
@@ -19,72 +20,63 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\InternalCheck;
 
-use Faker\Provider\ar_JO\Internet;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 
 class InternalCheckController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    
     public function index()
     {   
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
+
         $internal_checks=InternalCheck::where([
-            ['standard_id', $standardId],
-            ['team_id', Auth::user()->current_team_id]
-        ])->get();
-        return view('system_processes.internal_check.index',['internal_checks'=>$internal_checks]);
+                ['standard_id', $standardId],
+                ['team_id', Auth::user()->current_team_id]
+            ])->get();
+
+        return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     { 
-        $this->authorize('create',InternalCheck::class);
-        $team=Team::findOrFail(Auth::user()->current_team_id);
-        $sectors=$team->sectors;
-        $teamLeaders=$team->users;
+        $this->authorize('create', InternalCheck::class);
+
+        $team = Team::findOrFail(Auth::user()->current_team_id);
+        $sectors = $team->sectors;
+        $teamLeaders = $team->users;
+
         $leaders = $teamLeaders->filter(function ($value) {  
-            return $value->allTeams()->first()->membership->role==='editor';
+            return $value->allTeams()->first()->membership->role === 'editor';
         });
         
-        return view('system_processes.internal_check.create',['sectors'=>$sectors,'teamLeaders'=>$leaders]);
+        return view('system_processes.internal_check.create',
+            [
+                'sectors' => $sectors,
+                'teamLeaders' => $leaders
+            ]
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreInternalCheckRequest $request)
-    { $c=DB::table('plan_ips')
+    {    $c=DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
         ->where('internal_checks.team_id','<>',Auth::user()->current_team_id)->get()->count();
         $lastid=PlanIp::latest()->first();
         $planId=$lastid->id-$c;
         $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validated();
-        $validatedLeaders=$request->validate([ 'leaders' => 'required']);
-        $leaders=implode(",",$validatedLeaders['leaders']);
-        $validatedData['leaders']=$leaders;
-        $validatedData['team_id']=Auth::user()->current_team_id;
+        $validatedLeaders = $request->validate([ 'leaders' => 'required']);
+        $leaders = implode(",", $validatedLeaders['leaders']);
+
+        $validatedData['leaders'] = $leaders;
+        $validatedData['team_id'] = Auth::user()->current_team_id;
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
+
         try{
             DB::transaction(function () use ($request,$validatedData,$planId){
                 $internalCheck=InternalCheck::create($validatedData);
@@ -94,100 +86,102 @@ class InternalCheckController extends Controller
                 'checkTime' => $internalCheck->date
                 ]);
                 $internalCheck->notification()->save($notification);
-                $planIp=new PlanIp();
+
+                $planIp = new PlanIp();
                 $planIp->standard_id = $request->standard_id;
                 $planIp->save();
                // $c=PlanIp::where('team_id','<>',Auth::user()->current_team_id)->count()->get();
                 $planIp->name=$planId.'/'.date('Y');
                 $planIp->save();
+                
                 $planIp->internalCheck()->save($internalCheck);
-                CustomLog::info('Interna provera id-"'.$internalCheck->id.'" je kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+                CustomLog::info('Interna provera id-"'.$internalCheck->id.'" je kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
                 $request->session()->flash('status', 'Godišnji plan je uspešno kreiran!');
             });
-            }catch(Exception $e){
-                CustomLog::warning('Neuspeli pokušaj kreiranja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
-                $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
-            }
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+        }
         
-            return redirect('/internal-check');
+        return redirect('/internal-check');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $internal_check=InternalCheck::findOrFail($id);
-        $this->authorize('update',$internal_check);
-        $team=Team::findOrFail(Auth::user()->current_team_id);
-        $sectors=$team->sectors;
-        $teamLeaders=$team->users;
+        $internal_check = InternalCheck::findOrFail($id);
+        $this->authorize('update', $internal_check);
+
+        $team = Team::findOrFail(Auth::user()->current_team_id);
+        $sectors = $team->sectors;
+        $teamLeaders = $team->users;
+
         $leaders = $teamLeaders->filter(function ($value) {  
-            return $value->allTeams()->first()->membership->role==='editor';
+            return $value->allTeams()->first()->membership->role === 'editor';
         });
-        return view('system_processes.internal_check.edit',['internalCheck'=>$internal_check,'sectors'=>$sectors,'teamLeaders'=>$leaders]);
+
+        return view('system_processes.internal_check.edit',
+            [
+                'internalCheck' => $internal_check,
+                'sectors'=> $sectors,
+                'teamLeaders' => $leaders
+            ]
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateInternalCheckRequest $request, $id)
     {
-        $internal_check=InternalCheck::findOrfail($id);
-        $this->authorize('update',$internal_check);
+        $internal_check = InternalCheck::findOrfail($id);
+        $this->authorize('update', $internal_check);
+
         $validatedData =  $request->validated();
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
+
         try{
             $internal_check->update($validatedData); 
+<<<<<<< HEAD
             $notification=$internal_check->notification;
             $notification->message='Interna provera za '.date('d.m.Y', strtotime($request->date));
+=======
+
+            /*$notification = $internal_check->notification;
+            $notification->message = 'Interna provera za '.date('d.m.Y', strtotime($internal_check->date));
+>>>>>>> 3c6b3ec37d161e070dd54e7350a132c4ce8d1e37
             $notification->checkTime = $internal_check->date;
-            $internal_check->notification()->save($notification);
+            $internal_check->notification()->save($notification);*/
+
             $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!'); 
-            CustomLog::info('Interna provera id-"'.$internal_check->id.'" je izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
-                $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+            CustomLog::info('Interna provera id-"'.$internal_check->id.'" je izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene interne provere id-"'.$internal_check->id.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/internal-check');
     }
     
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $internal_check=InternalCheck::findOrfail($id);
-        $this->authorize('delete',$internal_check);
+        $internal_check = InternalCheck::findOrfail($id);
+        $this->authorize('delete', $internal_check);
+
         try{
             InternalCheck::destroy($id);
+<<<<<<< HEAD
             CustomLog::info('Godišnji plan interne provere id-"'.$internal_check->id.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);
+=======
+            PlanIp::destroy($internal_check->plan_ip_id);
+            InternalCheckReport::destroy($internal_check->internal_check_report_id);
+            
+            CustomLog::info('Godišnji plan interne provere id-"'.$internal_check->id.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+>>>>>>> 3c6b3ec37d161e070dd54e7350a132c4ce8d1e37
             return back()->with('status', 'Godišnji plan je uspešno uklonjen');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), 'Firma-'.\Auth::user()->current_team_id);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id-"'.$internal_check->id.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
         }
     }

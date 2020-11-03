@@ -17,14 +17,14 @@
 			@csrf
 			@method('PUT')
 			<div class="form-group">
-				<label for="standard">Sistem menadžmenta:</label>
-				<select class="form-control" name="standard" id="standard">
+				<label for="standard_id">Sistem menadžment:</label>
+				<select class="form-control" name="standard_id" id="standard_id">
 					<option value="">Izaberi...</option>
 					@foreach($standards as $standard)
 						<option value="{{ $standard->id }}" {{ $corrective_measure->standard_id == $standard->id ? "selected" : "" }} >{{ $standard->name }}</option>
 					@endforeach
 				</select>
-				@error('standard')
+				@error('standard_id')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>
@@ -43,14 +43,14 @@
 				@enderror
 			</div>
 			<div class="form-group">
-				<label for="sector">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
-				<select class="form-control" name="sector" id="sector">
+				<label for="sector_id">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
+				<select class="form-control" name="sector_id" id="sector_id">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}" {{ $corrective_measure->sector_id == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
 					@endforeach
 				</select>
-				@error('sector')
+				@error('sector_id')
 					<span class="text-danger">{{ $message }}</span>
 				@enderror
 			</div>

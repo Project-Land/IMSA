@@ -9,15 +9,18 @@ class Standard extends Model
 {
     use HasFactory;
 
-    public function goal(){
+    public function goal()
+    {
         return $this->hasOne('App\Models\Goal');
     }
 
-    public function internalCheck(){
+    public function internalCheck()
+    {
         return $this->hasMany('App\Models\InternalCheck');
     }
 
-    public function correctiveMeasure(){
+    public function correctiveMeasure()
+    {
         return $this->belongsTo('App\Models\CorrectiveMeasure');
     }
 
@@ -25,6 +28,7 @@ class Standard extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
     public function teams()
     {
         return $this->belongsToMany('App\Models\Team');
