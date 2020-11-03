@@ -11,7 +11,7 @@
      	</div>
     </div>
   
-    <div class="mx-auto w-75 mt-10 p-10 rounded container border" style="background:#f0f9f0;">
+    <div class="mx-auto md:w-5/5 mt-1 md:p-10 sm:p-2 rounded">
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -21,7 +21,7 @@
         </ul>
     </div>
 @endif
-		<form id="internal_check_report_edit_form" action="{{route('internal-check-report.update',$internalCheckReport->id)}}" method="POST">
+		<form id="internal_check_report_edit_form" action="{{route('internal-check-report.update',$internalCheckReport->id)}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
         <div class="row">
@@ -64,12 +64,12 @@
         </div>
 
 
-        <div class="form-group mt-2">
-            <span id="addInconsistencies"  class="btn btn-success">Dodaj neusaglašenost</span>
-            <span id="addRecommendations"  class="btn btn-success">Dodaj preporuku</span>
+        <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
+            <span id="addInconsistencies"  class="btn btn-success mb-2">Dodaj neusaglašenost</span>
+            <span id="addRecommendations"  class="btn btn-success mb-2">Dodaj preporuku</span>
         </div>
         
-        <div id="inconsistenciesDiv" class="row border-top mt-2">
+        <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
             @foreach($internalCheckReport->inconsistencies as $inc)
             <div class="form-group col-6 mt-3">
         

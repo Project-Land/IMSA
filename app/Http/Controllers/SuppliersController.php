@@ -71,7 +71,7 @@ class SuppliersController extends Controller
     try{
         $supplier->save();
         $notification=Notification::create([
-            'message'=>'Datum sledećeg preispitivanja '.$supplier->deadline_date,
+            'message'=>'Datum sledećeg preispitivanja '.$supplier->deadline_date->format('d.m.Y'),
             'team_id'=>Auth::user()->current_team_id,
             'checkTime' => $supplier->deadline_date
         ]);
@@ -140,7 +140,7 @@ class SuppliersController extends Controller
         try{
             $supplier->save();
             $notification=$supplier->notification;
-            $notification->message='Datum sledećeg preispitivanja '.$supplier->deadline_date;
+            $notification->message='Datum sledećeg preispitivanja '.$supplier->deadline_date->format('d.m.Y');
             $notification->checkTime = $supplier->deadline_date;
             $supplier->notification()->save($notification);
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), 'Firma-'.\Auth::user()->current_team_id);

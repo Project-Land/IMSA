@@ -11,11 +11,11 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 p-10 rounded" style="background:#f0f9f0; border:3px solid #ccffcc;">
+    <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded" >
 
-		<form action="{{route('internal-check.store')}}" method="POST"  autocomplete="off">
+		<form action="{{route('internal-check.store')}}" method="POST"  autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
-        <div class="form-group">
+        <div class="mb-4">
             <label for="date">Termin provere</label>
             <input type="text" class="form-control" id="date" placeholder="" name="date">
             @error('date')
@@ -23,7 +23,7 @@
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label for="sector_id">Područje provere</label>
             <select class="form-control" id="sector_id" name="sector_id">
             @foreach($sectors as $sector)
@@ -35,7 +35,7 @@
             @enderror
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label for="leaders">Vođe tima</label>
             <select class="form-control" id="leaders" name="leaders[]" multiple>
             @foreach($teamLeaders as $teamLeader)
@@ -49,7 +49,7 @@
             
         </div>
 
-        <div class="form-group">
+        <div class="mb-4">
             <label for="standard_id">Standard</label>
             <select class="form-control" id="standard_id" name="standard_id">
             <option value="{{session('standard')}}">{{session('standard_name')}}</option>

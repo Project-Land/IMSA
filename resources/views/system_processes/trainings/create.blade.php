@@ -11,9 +11,9 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-50 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('trainings.store') }}" method="POST">
+		<form action="{{ route('trainings.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			<div class="form-group">
 				<label for="name">Naziv obuke:</label>

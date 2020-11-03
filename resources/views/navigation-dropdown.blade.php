@@ -15,7 +15,7 @@
                 
                 <x-jet-dropdown>
                     <x-slot name="trigger">
-                    <a  type="button" href="/" class="btn trigger" style="@if(request()->is(['/'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    <a  type="button" href="/" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
                     </x-slot>  <div class="dropdown-menu">
                     <x-slot name="content">
                         <a class="d-none"></a>

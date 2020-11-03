@@ -11,9 +11,9 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-75 mt-10 bg-secondary p-10 rounded">
+    <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('goals.store') }}" method="POST">
+		<form action="{{ route('goals.store') }}" method="POST"  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             <div class="form-row">
                 <div class="form-group col-md-6">

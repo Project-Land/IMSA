@@ -15,7 +15,7 @@
 		<div class="col-sm-6 offset-sm-3">
 			<div class="card shadow-sm">
 				<div class="card-body">
-					<form action="{{ route('stakeholders.store') }}" method="POST">
+					<form action="{{ route('stakeholders.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 						@csrf
 						<div class="form-group">
 							<label for="name">Naziv / Ime:</label>

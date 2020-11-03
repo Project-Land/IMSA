@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('corrective-measures.store') }}" method="POST">
+		<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('corrective-measures.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			<div class="mb-4">
 				<label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžmenta:</label>

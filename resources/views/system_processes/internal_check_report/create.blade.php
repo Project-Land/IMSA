@@ -11,7 +11,7 @@
      	</div>
     </div>
 
-    <div class="mx-auto w-75 mt-10  p-10 rounded" style="background:#f0f9f0;">
+    <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
 
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -23,7 +23,7 @@
     </div>
 @endif
 
-		<form id="internal_check_report_create_form" action="{{ route('internal-check-report.store') }}" method="POST">
+		<form id="internal_check_report_create_form" action="{{ route('internal-check-report.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
         
             <input type="hidden" name="internal_check_id" value="{{ $internalCheck->id }}" readonly>
