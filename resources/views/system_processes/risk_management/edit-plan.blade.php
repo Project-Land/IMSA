@@ -19,35 +19,35 @@
             </div>
         </div>
 
-		<form action="{{ route('risk-management.update-plan', $risk->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('risk-management.update-plan', $risk->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
             @method('PUT')
 			<div class="form-group">
 				<label for="cause">Uzrok:</label>
 				<input type="text" class="form-control" id="cause" name="cause" value="{{ $risk->cause }}" autofocus>
 				@error('cause')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
             <div class="form-group">
 				<label for="risk_lowering_measure">Mera za smanjenje rizika:</label>
 				<input type="text" class="form-control" id="risk_lowering_measure" name="risk_lowering_measure" value="{{ $risk->risk_lowering_measure }}">
 				@error('risk_lowering_measure')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
             <div class="form-group">
 				<label for="responsibility">Odgovoronost:</label>
 				<input type="text" class="form-control" id="responsibility" name="responsibility" value="{{ $risk->responsibility }}">
 				@error('responsibility')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
             <div class="form-group">
 				<label for="deadline">Rok za realizaciju:</label>
 				<input type="text" class="form-control" id="deadline" name="deadline" value="{{ $risk->deadline != null ? date('d.m.Y', strtotime($risk->deadline)) : date('d.m.Y') }}">
 				@error('deadline')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
             <div class="form-group">

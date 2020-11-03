@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kreiraj novi Plan IP za standard ') }} {{session('standard_name')}}
+        {{session('standard_name').' - Plan IP - Kreiranje/Izmena'}}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{route('plan-ip.update',$planIp->id)}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{route('plan-ip.update',$planIp->id)}}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
 
@@ -36,16 +36,25 @@
         <div class="form-group">
             <label for="check_start">Početak provere</label>
             <input type="text" class="form-control" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif">
+            @error('check_start')
+				<span class="text-red-700 italic text-sm">{{ $message }}</span>
+			@enderror
         </div>
 
         <div class="form-group">
             <label for="check_end">Završetak provere</label>
             <input type="text" class="form-control" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif">
+            @error('check_end')
+				<span class="text-red-700 italic text-sm">{{ $message }}</span>
+			@enderror
         </div>
 
         <div class="form-group">
             <label for="report_deadline">Rok za dostavljanje izveštaja</label>
             <input type="text" class="form-control" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif">
+            @error('report_deadline')
+				<span class="text-red-700 italic text-sm">{{ $message }}</span>
+			@enderror
         </div>
 
         

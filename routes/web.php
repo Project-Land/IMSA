@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/standards/{id}', [HomeController::class, 'standard'])->name('standard');
     Route::resource('rules-of-procedures', RulesOfProceduresController::class);
     Route::resource('policies', PoliciesController::class);
+    Route::get('/procedures/{id?}', [ProceduresController::class, 'index'])->name('procedures.index');
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
@@ -84,5 +85,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('standards', StandardsController::class);
 
     Route::get('/logs/{company}', [LogsController::class, 'show'])->name('logs.show');
+    Route::get('procedures/bySector/{id}', [ProceduresController::class, 'bySector'])->name('procedures.bySector');
     
 });

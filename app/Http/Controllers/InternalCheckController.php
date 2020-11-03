@@ -85,11 +85,14 @@ class InternalCheckController extends Controller
     }
 
     public function store(StoreInternalCheckRequest $request)
-    {    $c=DB::table('plan_ips')
+    {   
+        //Calculate planIp name
+         $c=DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
         ->where('internal_checks.team_id','<>',Auth::user()->current_team_id)->get()->count();
         $lastid=PlanIp::latest()->first();
         $planId=$lastid->id-$c;
+
         $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validated();
         $validatedLeaders = $request->validate([ 'leaders' => 'required']);
@@ -112,7 +115,6 @@ class InternalCheckController extends Controller
                 $planIp = new PlanIp();
                 $planIp->standard_id = $request->standard_id;
                 $planIp->save();
-               // $c=PlanIp::where('team_id','<>',Auth::user()->current_team_id)->count()->get();
                 $planIp->name=$planId.'/'.date('Y');
                 $planIp->save();
                 
@@ -165,11 +167,10 @@ class InternalCheckController extends Controller
 
         try{
             $internal_check->update($validatedData); 
-
-            /*$notification = $internal_check->notification;
-            $notification->message = 'Interna provera za '.date('d.m.Y', strtotime($internal_check->date));
+            $notification=$internal_check->notification;
+            $notification->message='Interna provera za '.date('d.m.Y', strtotime($request->date));
             $notification->checkTime = $internal_check->date;
-            $internal_check->notification()->save($notification);*/
+            $internal_check->notification()->save($notification);
 
             $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!'); 
             CustomLog::info('Interna provera id-"'.$internal_check->id.'" je izmenjena, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);

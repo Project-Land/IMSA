@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kreiraj novi dokument za Standard') }} {{session('standard_name')}}
+		{{session("standard_name").' - '.$doc_type.' - Kreiranje'}}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ $url }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ $url }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off">
 			@csrf
 			@isset($method)
 				@method('{{ $method }}')
@@ -22,14 +22,14 @@
 				<label for="dokument_name">Naziv dokumenta:</label>
 				<input type="text" class="form-control" id="document_name" name="document_name" value="{{ old('document_name') }}" autofocus>
 				@error('document_name')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="mb-4">
 				<label for="version">Verzija:</label>
 				<input type="text" class="form-control" id="version" name="version" value="{{ old('version') }}" >
 				@error('version')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			@if(isset($category) && $category == 'procedures')
@@ -42,7 +42,7 @@
 					@endforeach
 				</select>
 				@error('sector_id')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			@endif
@@ -56,7 +56,7 @@
 				<input type="file" class="form-control-file" id="name_file" name="file" style="display: none;">
 				<span id="old_document" class="font-italic text-s">Fajl nije izabran</span>
 				@error('file')
-					<br><span class="text-danger">{{ $message }}</span>
+					<br><span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div> 
 
@@ -73,7 +73,7 @@
 				</div>
 
 				@error('file')
-					<br><span class="text-danger">{{ $message }}</span>
+					<br><span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 -->

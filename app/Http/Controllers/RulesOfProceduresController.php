@@ -24,7 +24,8 @@ class RulesOfProceduresController extends Controller
             ])->get();
         $folder = \Str::snake($this::getCompanyName())."/rules_of_procedure";
         $route_name = "rules-of-procedures";
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $doc_type="Poslovnik";
+        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
     }
 
     public function create()
@@ -33,7 +34,8 @@ class RulesOfProceduresController extends Controller
         return view('documents.create',
             [
                 'url' => route('rules-of-procedures.store'),
-                'back' => route('rules-of-procedures.index')
+                'back' => route('rules-of-procedures.index'),
+                'doc_type'=>'Poslovnici'
             ]
         );
     }
@@ -70,7 +72,8 @@ class RulesOfProceduresController extends Controller
                 'document' => $document,
                 'url' => route('rules-of-procedures.update', $document->id),
                 'folder' => 'rules_of_procedure',
-                'back' => route('rules-of-procedures.index')
+                'back' => route('rules-of-procedures.index'),
+                'doc_type'=>'Poslovnici'
             ]
         );
     }

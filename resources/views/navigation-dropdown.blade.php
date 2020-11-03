@@ -12,13 +12,17 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-lg p-4">
-                
+                @inject('standards', 'standards')
                 <x-jet-dropdown>
                     <x-slot name="trigger">
-                    <a  type="button" href="/" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
-                    </x-slot>  <div class="dropdown-menu">
+                    <a  type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    
+                    </x-slot> 
+                    <div class="dropdown-menu"> 
                     <x-slot name="content">
-                        <a class="d-none"></a>
+                        @foreach($standards as $standard)
+                        <a class="dropdown-item" href="{{'/standards/'.$standard->id}}">{{$standard->name}}</a>
+                        @endforeach
                     </x-slot>
                     </div>
                     </x-jet-dropdown>
@@ -109,6 +113,10 @@
 
                                 @if ($not->notifiable_type==='App\Models\InternalCheck')
                                 <x-jet-dropdown-link href="{{'/internal-check#internalcheck'.$not->notifiable_id}}" >
+                                    {{ __($not->message) }}
+                                </x-jet-dropdown-link>
+                                @elseif ($not->notifiable_type==='App\Models\Goal')
+                                <x-jet-dropdown-link href="{{'/goals#goal'.$not->notifiable_id}}" >
                                     {{ __($not->message) }}
                                 </x-jet-dropdown-link>
                                 @else
@@ -247,10 +255,14 @@
            
             <x-jet-dropdown>
             <x-slot name="trigger">
-                    <a type="button" href="/" class="btn trigger">Standardi</a>
-                    </x-slot>  <div class="dropdown-menu">
+                    <a  type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    
+                    </x-slot> 
+                    <div class="dropdown-menu"> 
                     <x-slot name="content">
-                        <a class="d-none"></a>
+                        @foreach($standards as $standard)
+                        <a class="dropdown-item" href="{{'/standards/'.$standard->id}}">{{$standard->name}}</a>
+                        @endforeach
                     </x-slot>
                     </div>
             </x-jet-dropdown>

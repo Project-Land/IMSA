@@ -61,7 +61,7 @@
                             </thead>
                             <tbody id="table-body">
                             @foreach($goals as $goal)
-                                <tr>
+                                <tr id='trgoal{{$goal->id}}'><a id='goal{{$goal->id}}'></a>
                                     <td class="text-center">{{ $goal->year }}</td>
                                     <td class="text-center">{{ $goal->goal }}</td>
                                     <td class="text-center">{{ $goal->kpi }}</td>
@@ -96,6 +96,22 @@
 </x-app-layout>
 
 <script>
+
+var myRe = /\bgoals\b/g;
+  	if(myRe.test(window.location.href)){
+    	window.addEventListener('popstate', function (event) {
+    		location.reload();
+    	});
+  	}
+
+	let href = window.location.href;
+	id=href.split('#')[1];
+	if(id){
+		let e = document.getElementById('tr' + id);
+		e.style = "background:#bbfca9;";
+	}
+
+
     $('.yajra-datatable').DataTable({
         "language": {
             "info": "Prikaz strane _PAGE_ od _PAGES_",

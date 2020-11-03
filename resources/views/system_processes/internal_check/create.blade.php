@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kreiraj novi dokument za Standard') }} {{session('standard_name')}}
+         {{session('standard_name').' - Godišnji plan internih provera - Kreiranje'}}
         </h2>
     </x-slot>
 
@@ -19,7 +19,7 @@
             <label for="date">Termin provere</label>
             <input type="text" class="form-control" id="date" placeholder="" name="date">
             @error('date')
-            <span class="text-danger">{{ $message }}</span>
+            <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
         </div>
 
@@ -31,7 +31,7 @@
             @endforeach
             </select>
             @error('sector_id')
-            <span class="text-danger">{{ $message }}</span>
+            <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
         </div>
 
@@ -43,7 +43,7 @@
             @endforeach
             </select>
             @error('leaders')
-            <span class="text-danger">{{ $message }}</span>
+            <span class="text-red-700 italic text-sm">{{ $message }}</span><br>
             @enderror
             <small>Držite CTRL i birajte levim klikom miša</small>
             
@@ -55,7 +55,7 @@
             <option value="{{session('standard')}}">{{session('standard_name')}}</option>
             </select>
             @error('standard_id')
-            <span class="text-danger">{{ $message }}</span>
+            <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
         </div>
             

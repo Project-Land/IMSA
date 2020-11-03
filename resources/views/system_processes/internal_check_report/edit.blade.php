@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Izveštaj sa interne provere ') }} 
+        {{session('standard_name').' - Izveštaj sa interne provere - Izmena'}}
         </h2>
     </x-slot>
 
@@ -16,12 +16,12 @@
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <li class="text-red-700 italic text-sm">{{ $error }}</li>
             @endforeach
         </ul>
     </div>
-@endif
-		<form id="internal_check_report_edit_form" action="{{route('internal-check-report.update',$internalCheckReport->id)}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    @endif
+		<form id="internal_check_report_edit_form" action="{{route('internal-check-report.update',$internalCheckReport->id)}}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
         <div class="row">
@@ -53,14 +53,16 @@
             <label for="check_end">Završetak provere</label>
             <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
         </div>
-
+        </div>
+        <div class="row">
         <div class="form-group col">
             <label for="specification">Specifikacija dokumenata</label>
-            <input type="text" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required>
+            <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required></textarea>
             @error('specification')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
         </div>
+       
         </div>
 
 
@@ -76,7 +78,7 @@
                 <label for="inconsistencies">Neusaglašenost</label>
             <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->description}}</textarea>
             @error('inconsistencies.'.$inc->id)
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
             <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
             <a href="{{route('corrective-measures.edit',$inc->correctiveMeasure->id)}}" >Korektivna mera</a>
@@ -94,7 +96,7 @@
                     <label for="recommendations">Preporuka</label>
                 <textarea class="form-control" name="recommendations[{{$rec->id}}]" required>{{$rec->description}}</textarea>
                 @error('recommendations.'.$rec->id)
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			    @enderror
                 <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
                 
@@ -181,8 +183,15 @@ function removeInput(){
             `<div style="background:#5c9c6a;padding:10px;">
             <h2>Popuni karton korektivne mere</h2>
 			<div class="form-group">
-				<label for="noncompliance_source">Izvor informacije o neusaglašenostima:</label>
-				<input type="text" class="form-control" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+            <label for="noncompliance_source[${counter}]">Izvor informacije o neusaglašenostima:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+					<option value="">Izaberi...</option>
+					<option value="Eksterna provera">Eksterna provera</option>
+					<option value="Interna provera" >Interna provera</option>
+					<option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
+					<option value="Žalba" >Žalba</option>
+					<option value="Ostalo" >Ostalo</option>
+				</select>
 			
 			</div>
 			<div class="form-group">

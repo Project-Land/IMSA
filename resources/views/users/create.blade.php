@@ -33,7 +33,7 @@
 
             <div class="mt-5 md:mt-0 md:col-span-2">
                
-                <form method="POST" action="{{ route('users.store') }}">
+                <form method="POST" action="{{ route('users.store') }}" autocomplete="off">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
 

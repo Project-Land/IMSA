@@ -13,35 +13,35 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('complaints.update', $complaint->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('complaints.update', $complaint->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
             @method('PUT')
             <div class="form-group">
 				<label for="name">Oznaka:</label>
 				<input type="text" class="form-control" id="name" name="name" value="{{ $complaint->name }}" autofocus>
 				@error('name')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="submission_date">Datum podnošenja reklamacije:</label>
 				<input type="text" class="form-control" id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}">
 				@error('submission_date')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="description">Opis reklamacije:</label>
                 <textarea class="form-control" id="description" name="description">{{ $complaint->description }}</textarea>
 				@error('description')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="process">Proces na koji se reklamacija odnosi:</label>
 				<input type="text" class="form-control" id="process" name="process" value="{{ $complaint->process }}">
 				@error('process')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
@@ -61,14 +61,14 @@
 					<label for="responsible_person">Lice odgovorno za rešavanje reklamacije:</label>
 					<input type="text" class="form-control" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}">
 					@error('responsible_person')
-						<span class="text-danger">{{ $message }}</span>
+						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
 				</div>
 				<div class="form-group">
 					<label for="way_of_solving">Način rešavanja reklamacije</label>
 					<input type="text" class="form-control" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}">
 					@error('way_of_solving')
-						<span class="text-danger">{{ $message }}</span>
+						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
 				</div>
 				<div class="form-group">
