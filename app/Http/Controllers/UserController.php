@@ -92,10 +92,10 @@ class UserController extends Controller
                 ['role' => $role]
             );
             TeamMemberAdded::dispatch($team, $newTeamMember);
-            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika email-'.$request['email'].'. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika email-'.$request['email'].', '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/users');

@@ -37,10 +37,10 @@ class StakeholdersController extends Controller
         
         try{
             $stakeholder = Stakeholder::create($request->all());
-            CustomLog::info('Zainteresovana strana "'.$request->name.'" kreirana. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "'.$request->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Zainteresovana strana je uspešno sačuvana!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja zainteresovane strane. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja zainteresovane strane, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/stakeholders');
@@ -66,10 +66,10 @@ class StakeholdersController extends Controller
 
         try{
             $stakeholder->update($request->all());
-            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Zainteresovana strana je uspešno izmenjena!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene zainteresovane strane '.$stakeholder->name.' . Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene zainteresovane strane '.$stakeholder->name.', '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/stakeholders');
@@ -82,10 +82,10 @@ class StakeholdersController extends Controller
         
         try{
             Stakeholder::destroy($id);
-            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" uklonjena. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" uklonjena, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Zainteresovana strana je uspešno uklonjena');
         } catch (Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja zainteresovane strane '.$stakeholder->name.' . Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja zainteresovane strane '.$stakeholder->name.', '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

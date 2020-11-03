@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
+use App\Observers\SectorObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultstringLength(191);
+        \App\Models\Sector::observe(SectorObserver::class);
     }
 }

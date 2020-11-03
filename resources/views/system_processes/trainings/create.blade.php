@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Godišnji plan obuka') }}  - {{ __('Kreiranje') }}
+            {{ session('standard_name') }} - {{ __('Kreiranje obuke') }}
         </h2>
     </x-slot>
 
@@ -109,6 +109,8 @@
 	$.datetimepicker.setLocale('sr');
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
+		minDate: 0,
+		dayOfWeekStart: 1,
 	});
 
 	$('#status').change( () => {

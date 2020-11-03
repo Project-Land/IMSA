@@ -27,8 +27,6 @@ class SuppliersRequest extends FormRequest
         return [
             'supplier_name' => 'required|max:190',
             'subject' => 'required',
-            'email' => 'required',
-            'phone_number' => 'required'
         ];
     }
 
@@ -38,8 +36,6 @@ class SuppliersRequest extends FormRequest
             'supplier_name.required' => 'Unesite naziv isporučioca',
             'supplier_name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
             'subject.required' => 'Unesite predmet nabavke',
-            'email.required' => 'Unesite email adresu isporučioca',
-            'phone_number.required' => 'Unesite broj telefona isporučioca'
         ];
     }
 

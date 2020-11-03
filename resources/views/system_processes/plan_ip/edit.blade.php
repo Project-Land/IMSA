@@ -55,10 +55,25 @@
     </div>
 
     <script>
+
         jQuery.datetimepicker.setLocale('sr');
-        $('#check_start').datetimepicker({format: 'd.m.Y H:i'});
-        $('#check_end').datetimepicker({format: 'd.m.Y H:i'});
-        $('#report_deadline').datetimepicker({format: 'd.m.Y'});
+        $('#check_start').datetimepicker({
+            format: 'd.m.Y H:i',
+            minDate: 0,
+            dayOfWeekStart: 1,
+        });
+
+        $('#check_end').datetimepicker({
+            format: 'd.m.Y H:i',
+            minDate: 0,
+            dayOfWeekStart: 1,
+        });
+
+        $('#report_deadline').datetimepicker({
+            format: 'd.m.Y',
+            minDate: 0,
+            dayOfWeekStart: 1,
+        });
 
         $('#status').change( () => {
             if($('#status').val() == 1){

@@ -66,8 +66,10 @@
     <script>
         jQuery.datetimepicker.setLocale('sr');
         $('#date').datetimepicker({
+            timepicker: false,
             format: 'd.m.Y',
-            dayOfWeekStart: 1
+            dayOfWeekStart: 1,
+            minDate: 0
         });
 
         $('#status').change( () => {

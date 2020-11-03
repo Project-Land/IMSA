@@ -24,7 +24,7 @@ use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StandardsController;
-
+use App\Http\Controllers\LogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +48,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('sectors', SectorsController::class);
 
     Route::resource('internal-check', InternalCheckController::class);
+    Route::post('internal-check/get-data', [InternalCheckController::class, 'getData']);
     Route::resource('goals', GoalsController::class);
     Route::post('goals/filter-year', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
     Route::post('goals/get-data', [GoalsController::class, 'getData']);
@@ -81,5 +82,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('standards/create/{id}', [StandardsController::class, 'create'])->name('standards.create-new');
     Route::resource('standards', StandardsController::class);
+
+    Route::get('/logs/{company}', [LogsController::class, 'show'])->name('logs.show');
     
 });

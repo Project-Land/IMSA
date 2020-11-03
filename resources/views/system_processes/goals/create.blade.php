@@ -94,6 +94,8 @@
 	$.datetimepicker.setLocale('sr');
     $('#deadline').datetimepicker({
 		timepicker: false,
-		format:'d.m.Y'
+		format:'d.m.Y',
+        minDate: 0,
+		dayOfWeekStart: 1
 	});
 </script>

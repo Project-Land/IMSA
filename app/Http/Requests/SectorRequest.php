@@ -36,11 +36,11 @@ class SectorRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation(): void
+    /*protected function prepareForValidation(): void
     {
         $this->merge([
             'team_id' => \Auth::user()->current_team_id,
             'user_id' => \Auth::user()->id
         ]);
-    }
+    }*/
 }

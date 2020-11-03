@@ -26,9 +26,25 @@
 
             <div class="card">
                 <div class="card-header">
-					@can('create', App\Models\InternalCheck::class)
-						<a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
-					@endcan
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @can('create', App\Models\InternalCheck::class)
+						        <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
+					        @endcan
+                        </div>
+                        <div class="col-sm-8">
+                            <form class="form-inline" method="post" action="/internal-check/get-data">
+                                @csrf
+                                <label for="year" class="mr-3">Godina</label>
+                                <select name="year" id="year" class="form-control w-25 mr-2">
+                                    @foreach(range(date("Y")-1, date("Y")+10) as $year))
+                                        <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="btn btn-primary">Primeni</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -44,7 +60,7 @@
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-body">
                             @forelse($internal_checks as $check)
                             <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
                                     <td class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
@@ -265,5 +281,37 @@
     for(report of document.querySelectorAll('.reportShow')){
     	report.addEventListener('click', reportShowAjax);
     }
+
+    $('#ic-year').change( () => {
+        let year = $('#ic-year').val();
+        const data = {'year': year}
+        axios.post('/internal-check/get-data', { data })
+        .then((response) => {
+            if(response.data.length == 0){
+                $('#table-body').html('<td colspan="10" class="dataTables_empty" valign="top">Nema podataka</td>');
+            }
+            else{
+                let allData = "";
+                console.log(response.data);
+                $.each(response.data, function (i, item){
+                    let row = `<tr>
+                                <td class="text-center">${ new Date(item.date).getUTCDate() + '.' + new Date(item.date).getUTCMonth() + '.' + new Date(item.date).getUTCFullYear() }</td>
+                                <td class="text-center">${ item.sector_id }</td>
+                                <td class="text-center">${ item.leaders }</td>
+                                <td class="text-center">${ item.standard_id }</td>
+                                <td class="text-center">${ item.plan_ip_id != null ? "PIP "+item.plan_ip_id+"/"+year : "/" }</td>
+                                <td class="text-center">${ item.internal_check_report_id != null ? item.internal_check_report_id : "/" }</td>
+                                <td class="text-center">
+                                    
+                                </td>
+                            </tr>`;
+                    allData += row;
+                });
+                $('#table-body').html(allData)
+            }
+        }, (error) => {
+            console.log(error);
+        })
+    });
    
 </script>

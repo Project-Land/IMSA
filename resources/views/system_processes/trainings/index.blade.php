@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\Training::class)
-                            <a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Kreiraj godišnji plan obuke</a>
+                            <a class="btn btn-info" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> Dodaj obuku</a>
                             @endcan
                         </div>
                         <div class="col-sm-8">

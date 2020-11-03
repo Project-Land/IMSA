@@ -91,13 +91,17 @@
 
 <script>
 	$('#submission_date').datetimepicker({
-		timepicker:false,
-		format:'d.m.Y'
+		timepicker: false,
+		format: 'd.m.Y',
+		minDate: 0,
+		dayOfWeekStart: 1
 	});
 
 	$('#deadline_date').datetimepicker({
-		timepicker:false,
-		format:'d.m.Y'
+		timepicker: false,
+		format:' d.m.Y',
+		minDate: 0,
+		dayOfWeekStart: 1
 	});
 
 	$('#accepted').change( () => {

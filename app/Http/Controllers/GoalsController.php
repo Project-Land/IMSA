@@ -23,6 +23,7 @@ class GoalsController extends Controller
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
+
         return view('system_processes.goals.index', ['goals' => $goals]);
     }
 
@@ -44,7 +45,6 @@ class GoalsController extends Controller
             });
         }
         return response()->json($goals);
-        
     }
 
     public function create()
@@ -59,10 +59,10 @@ class GoalsController extends Controller
 
         try{
             $goal = Goal::create($request->all());
-            CustomLog::info('Cilj "'.$goal->goal.'" kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Cilj "'.$goal->goal.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja cilja. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja cilja, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
@@ -88,10 +88,10 @@ class GoalsController extends Controller
 
         try{
             $goal->update($request->all());
-            CustomLog::info('Cilj "'.$goal->goal.'" izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Cilj "'.$goal->goal.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene cilja "'.$goal->goal.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
@@ -104,10 +104,10 @@ class GoalsController extends Controller
 
         try{
             Goal::destroy($id);
-            CustomLog::info('Cilj "'.$goal->goal.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Cilj "'.$goal->goal.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Cilj je uspešno uklonjen');
         } catch (Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -119,10 +119,10 @@ class GoalsController extends Controller
 
         try{
             Goal::destroy($id);
-            CustomLog::info('Cilj "'.$goal->name.'" uklonjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Cilj "'.$goal->name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return true;
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return false;
         }
     }

@@ -117,12 +117,12 @@ class InternalCheckReportController extends Controller
                 $report->refresh();
                 $internalCheck = InternalCheck::findOrFail($request->internal_check_id);
                 $report->internalCheck()->save($internalCheck);
-                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
                 $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
             });
         }catch(Exception $e){
             $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
-            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
         }
         return redirect('/internal-check');
     }
@@ -261,12 +261,12 @@ class InternalCheckReportController extends Controller
                     $internal_check_report->recommendations()->save($rec);          
                 }
 
-                CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je izmenjen. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+                CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je izmenjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
                 $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno izmenjen!');
             });
 
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere "'.$internal_check_report->specification.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere "'.$internal_check_report->specification.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greske, pokušajte ponovo');
             return redirect('/internal-check');
             exit();
@@ -282,10 +282,10 @@ class InternalCheckReportController extends Controller
 
         try{
             InternalCheckReport::destroy($id);
-            CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je obrisan. Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->specification.'" je obrisan, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Izveštaj za godišnji plan interne provere je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja izveštaja za internu proveru "'.$internal_check_report->specification.'". Korisnik: '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y').' u '.date('H:i:s').' Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja izveštaja za internu proveru "'.$internal_check_report->specification.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
         }
     }
