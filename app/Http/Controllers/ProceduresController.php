@@ -12,7 +12,7 @@ use Exception;
 
 class ProceduresController extends Controller
 {
-    public function index()
+    public function index($id=null)
     {
         $standardId = $this::getStandard();
         if($standardId == null){
@@ -22,10 +22,14 @@ class ProceduresController extends Controller
                 ['doc_category', 'procedure'],
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->when($id, function ($query, $id) {
+                return $query->where('sector_id', $id);
+            })->get();
+         
         $folder = \Str::snake($this::getCompanyName())."/procedure";
         $route_name = 'procedures';
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $doc_type="Procedure";
+        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
     }
 
     public function create()
@@ -37,7 +41,8 @@ class ProceduresController extends Controller
                 'url' => route('procedures.store'),
                 'back' => route('procedures.index'),
                 'category' => 'procedures',
-                'sectors' => $sectors
+                'sectors' => $sectors,
+                'doc_type'=>'Procedure'
             ]
         );
     }
@@ -75,7 +80,8 @@ class ProceduresController extends Controller
                 'folder' => 'procedure',
                 'back' => route('procedures.index'),
                 'category' => 'procedures',
-                'sectors' => $sectors
+                'sectors' => $sectors,
+                'doc_type'=>'Procedure'
             ]
         );
     }
@@ -113,4 +119,6 @@ class ProceduresController extends Controller
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
+
+   
 }

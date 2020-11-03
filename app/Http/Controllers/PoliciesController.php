@@ -26,8 +26,8 @@ class PoliciesController extends Controller
             
         $folder = \Str::snake($this::getCompanyName())."/policy";
         $route_name = "policies";
-
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $doc_type="Politike";
+        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
     }
 
     public function create()
@@ -36,7 +36,8 @@ class PoliciesController extends Controller
         return view('documents.create',
             [
                 'url' => route('policies.store'),
-                'back' => route('policies.index')
+                'back' => route('policies.index'),
+                'doc_type'=>'Politike'
             ]
         );
     }
@@ -74,7 +75,8 @@ class PoliciesController extends Controller
                 'document' => $document,
                 'url' => route('policies.update', $document->id),
                 'folder' => 'policy',
-                'back' => route('policies.index')
+                'back' => route('policies.index'),
+                'doc_type'=>'Politike'
             ]
         );
     }

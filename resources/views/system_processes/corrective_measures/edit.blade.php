@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('corrective-measures.update', $corrective_measure->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('corrective-measures.update', $corrective_measure->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
 			<div class="form-group">
@@ -25,7 +25,7 @@
 					@endforeach
 				</select>
 				@error('standard_id')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
@@ -39,7 +39,7 @@
 					<option value="Ostalo" {{ $corrective_measure->noncompliance_source == "Ostalo" ? "selected" : "" }}>Ostalo</option>
 				</select>
 				@error('noncompliance_source')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
@@ -51,28 +51,28 @@
 					@endforeach
 				</select>
 				@error('sector_id')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_description">Opis neusaglašenosti:</label>
 				<textarea class="form-control" id="noncompliance_description" name="noncompliance_description">{{ $corrective_measure->noncompliance_description }}</textarea>
 				@error('noncompliance_description')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
 				<textarea class="form-control" id="noncompliance_cause" name="noncompliance_cause">{{ $corrective_measure->noncompliance_cause }}</textarea>
 				@error('noncompliance_cause')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
 				<textarea class="form-control" id="measure" name="measure">{{ $corrective_measure->measure }}</textarea>
 				@error('measure')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">

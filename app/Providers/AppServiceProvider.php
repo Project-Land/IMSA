@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Standard;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,14 @@ class AppServiceProvider extends ServiceProvider
                 return Notification::active()->get();
             else 
                 return [];
+        });
+
+        $this->app->bind('standards', function ($app) {
+            $teamId = \Auth::user()->current_team_id;
+            $standards = Standard::whereHas('teams', function($q) use ($teamId) {
+                $q->where('team_id', $teamId);
+             })->get();
+             return $standards;
         });
     }
 

@@ -79,4 +79,6 @@ class SectorsController extends Controller
             return back()->with('status', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.');
         }
     }
+
+   
 }

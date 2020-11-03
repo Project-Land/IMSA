@@ -25,7 +25,8 @@ class FormsController extends Controller
             ])->get();
         $folder = \Str::snake($this::getCompanyName())."/form";
         $route_name = "forms";
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $doc_type="Obrasci";
+        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
     }
 
     public function create()
@@ -34,7 +35,8 @@ class FormsController extends Controller
         return view('documents.create',
             [
                 'url' => route('forms.store'),
-                'back' => route('forms.index')
+                'back' => route('forms.index'),
+                'doc_type'=>'Obrasci'
             ]
         );
     }
@@ -72,7 +74,8 @@ class FormsController extends Controller
                 'document' => $document,
                 'url' => route('forms.update', $document->id),
                 'folder' => 'form',
-                'back' => route('forms.index')
+                'back' => route('forms.index'),
+                'doc_type'=>'Obrasci'
             ]
         );
     }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kreiraj novi dokument za Standard') }} {{session('standard_name')}}
+        {{session('standard_name').' - Godišnji plan internih provera - Izmena'}}
         </h2>
     </x-slot>
 
@@ -13,14 +13,14 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{route('internal-check.update',$internalCheck->id)}}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{route('internal-check.update',$internalCheck->id)}}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
             <div class="form-group">
                 <label for="date">Termin provere</label>
                 <input type="text" class="form-control" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
                 @error('date')
-                <span class="text-danger">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -32,7 +32,7 @@
             @endforeach
             </select>
             @error('sector_id')
-            <span class="text-danger">{{ $message }}</span>
+            <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
         </div>
 
@@ -44,7 +44,7 @@
                 @endforeach
                 </select>
                 @error('leaders')
-                <span class="text-danger">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -56,7 +56,7 @@
                 <option>1005</option>
                 </select>
                 @error('standard_id')
-                <span class="text-danger">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
                 

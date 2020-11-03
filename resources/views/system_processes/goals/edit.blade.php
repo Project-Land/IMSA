@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('goals.update', $goal->id) }}" method="POST"  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('goals.update', $goal->id) }}" method="POST" autocomplete="off"  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
             <div class="form-row">
@@ -30,7 +30,7 @@
                     <label for="responsibility">Odgovornost</label>
                     <input type="text" class="form-control" name="responsibility" id="responsibility" value="{{ $goal->responsibility }}">
                     @error('responsibility')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
                 
@@ -41,14 +41,14 @@
                     <label for="goal">Cilj</label>
                     <input type="text" class="form-control" name="goal" id="goal" value="{{ $goal->goal }}">
                     @error('goal')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
                     <label for="deadline">Rok za realizaciju</label>
                     <input type="text" class="form-control" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}">
                     @error('deadline')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
             </div>
@@ -58,14 +58,14 @@
                     <label for="kpi">KPI</label>
                     <input type="text" class="form-control" name="kpi" id="kpi" value="{{ $goal->kpi }}">
                     @error('kpi')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
                     <label for="resources">Resursi</label>
                     <input type="text" class="form-control" name="resources" id="resources" value="{{ $goal->resources }}">
                     @error('resources')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     <label for="activities">Aktivnosti</label>
                     <textarea rows="10" style="height:200px;" class="form-control" name="activities" id="activities">{{ $goal->activities }}</textarea>
                     @error('activities')
-					    <span class="text-danger">{{ $message }}</span>
+					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
 

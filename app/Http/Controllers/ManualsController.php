@@ -26,7 +26,8 @@ class ManualsController extends Controller
             ])->get();
         $folder = \Str::snake($this::getCompanyName())."/manuals";
         $route_name = "manuals";
-        return view('documents.index', compact('documents', 'folder', 'route_name'));
+        $doc_type="Uputstva";
+        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
     }
 
     public function create()
@@ -35,7 +36,8 @@ class ManualsController extends Controller
         return view('documents.create',
             [
                 'url' => route('manuals.store'),
-                'back' => route('manuals.index')
+                'back' => route('manuals.index'),
+                'doc_type'=>'Uputstva'
             ]
         );
     }
@@ -73,7 +75,8 @@ class ManualsController extends Controller
                 'document' => $document,
                 'url' => route('manuals.update',$document->id),
                 'folder' => 'manuals',
-                'back' => route('manuals.index')
+                'back' => route('manuals.index'),
+                'doc_type'=>'Uputstva'
             ]
         );
     }

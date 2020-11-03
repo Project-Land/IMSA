@@ -41,7 +41,7 @@
                             <tbody>
                             @foreach($sectors as $sector)
                                 <tr>
-                                    <td class="text-center">{{ $sector->name }}</td>
+                                    <td class="text-center"><a href="{{'/procedures/'.$sector->id}}">{{ $sector->name }}</a></td>
                                     @canany(['update', 'delete'], $sector)
                                     <td class="text-center">
                                         <a href="{{ route('sectors.edit', $sector->id) }}"><i class="fas fa-edit"></i></a>

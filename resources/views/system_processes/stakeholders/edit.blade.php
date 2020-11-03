@@ -15,28 +15,28 @@
 		<div class="col-sm-6 offset-sm-3">
 			<div class="card shadow-sm">
 				<div class="card-body">
-					<form action="{{ route('stakeholders.update', $stakeholder->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+					<form action="{{ route('stakeholders.update', $stakeholder->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 						@csrf
 						@method('PUT')
 						<div class="form-group">
 							<label for="name">Naziv / Ime:</label>
 							<input type="text" class="form-control" id="name" name="name" autofocus value="{{ $stakeholder->name }}">
 							@error('name')
-								<span class="text-danger">{{ $message }}</span>
+								<span class="text-red-700 italic text-sm">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
 							<label for="expectation">Potrebe i očekivanja zainteresovane strane:</label>
 							<textarea class="form-control" id="expectation" name="expectation">{{ $stakeholder->expectation }}</textarea>
 							@error('expectation')
-								<span class="text-danger">{{ $message }}</span>
+								<span class="text-red-700 italic text-sm">{{ $message }}</span>
 							@enderror
 						</div>
 						<div class="form-group">
 							<label for="response">Odgovor preduzeća na potrebe i očekivanja:</label>
 							<textarea class="form-control" id="response" name="response">{{ $stakeholder->response }}</textarea>
 							@error('response')
-								<span class="text-danger">{{ $message }}</span>
+								<span class="text-red-700 italic text-sm">{{ $message }}</span>
 							@enderror
 						</div>
 						<button type="submit" class="btn btn-success btn-block">Izmeni</button>

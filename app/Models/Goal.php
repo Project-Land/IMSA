@@ -38,4 +38,9 @@ class Goal extends Model
         }
         return "Ostvareno ".$os_fulfilled." ciljeva od ukupno ".$os_total." što čini ".round($os_percentage)."%";
     }
+
+    public function notification()
+    {
+        return $this->morphOne('App\Models\Notification', 'notifiable');
+    }
 }

@@ -13,20 +13,20 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('trainings.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('trainings.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			<div class="form-group">
 				<label for="name">Naziv obuke:</label>
 				<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" autofocus>
 				@error('name')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="description">Opis obuke:</label>
                 <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
 				@error('description')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
@@ -40,7 +40,7 @@
 				<label for="num_of_employees">Broj zaposlenih:</label>
 				<input type="number" min="1" class="form-control" id="num_of_employees" name="num_of_employees" value="{{ old('num_of_employees') }}">
 				@error('num_of_employees')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
@@ -48,21 +48,21 @@
 				<label for="training_date">Planirani termin:</label>
 				<input type="text" class="form-control" id="training_date" name="training_date" value="{{ old('training_date') }}">
 				@error('training_date')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="place">Mesto obuke:</label>
 				<input type="text" class="form-control" id="place" name="place" value="{{ old('place') }}">
 				@error('place')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="resources">Resursi:</label>
 				<textarea class="form-control" id="resources" name="resources">{{ old('resources') }}</textarea>
 				@error('resources')
-					<span class="text-danger">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
