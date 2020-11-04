@@ -30,7 +30,7 @@ class TrainingRequest extends FormRequest
             'description' => 'required',
             'place' => 'required|max:190',
             'resources' => 'required',
-            'training_date' => 'required'
+            'training_date' => 'required|after:yesterday'
         ];
     }
 
@@ -39,13 +39,14 @@ class TrainingRequest extends FormRequest
         return [
             'name.required' => 'Unesite naziv obuke',
             'name.max' => 'Naziv može sadržati najviše 190 karaktera',
-            'desription.required' => 'Unesite opis obuke',
+            'description.required' => 'Unesite opis obuke',
             'num_of_employees.required' => 'Unesite broj zaposlenih',
             'num_of_employees.numeric' => 'Polje mora biti broj',
             'place.required' => 'Unesite mesto obuke',
             'place.max' => 'Polje može sadržati najviše 190 karaktera',
             'resources.required' => 'Unesite potrebne resurse',
-            'training_date.required' => 'Unesite datum i vreme obuke'
+            'training_date.required' => 'Unesite datum i vreme obuke',
+            'training_date.after' => 'Unesite budući datum'
         ];
     }
 
@@ -56,7 +57,7 @@ class TrainingRequest extends FormRequest
             'team_id' => \Auth::user()->current_team_id,
             'user_id' => \Auth::user()->id,
             'year' => date('Y', strtotime($this->training_date)),
-            'training_date' => date('Y-m-d H:i:s', strtotime($this->training_date)),
+            'training_date' => $this->training_date != null ? date('Y-m-d H:i:s', strtotime($this->training_date)) : null,
             'final_num_of_employees' => $this->final_num_of_employees != null ? $this->final_num_of_employees : null,
             'rating' => $this->rating != null ? $this->rating : null
         ]);

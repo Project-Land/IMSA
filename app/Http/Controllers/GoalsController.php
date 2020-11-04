@@ -96,6 +96,7 @@ class GoalsController extends Controller
         $this->authorize('update', $goal);
 
         try{
+
             $goal->update($request->all());
 
             $notification = $goal->notification;

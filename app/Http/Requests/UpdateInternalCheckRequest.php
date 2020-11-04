@@ -24,7 +24,7 @@ class UpdateInternalCheckRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
+            'date' => 'required|after:yesterday',
             'sector_id' => 'required',
             'standard_id' => 'required',
             'leaders' => 'required'
@@ -35,9 +35,10 @@ class UpdateInternalCheckRequest extends FormRequest
     {
         return [
             'date.required' => 'Unesite termin provere',
+            'date.after' => 'Unesite budući datum',
             'standard_id.required' => 'Unesite područje provere',
-            'sector_id.required' => 'Unesite standard',
-            'leaders.required'=> 'Unesite proveravače'
+            'sector_id.required' => 'Izaberite standard',
+            'leaders.required'=> 'Izaberite proveravače'
         ];
     }
 }

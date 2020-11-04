@@ -27,7 +27,7 @@ class UpdateRiskManagementPlanRequest extends FormRequest
             'cause' => 'required',
             'risk_lowering_measure' => 'required',
             'responsibility' => 'required',
-            'deadline' => 'required'
+            'deadline' => 'required|after:yesterday'
         ];
     }
 
@@ -37,14 +37,15 @@ class UpdateRiskManagementPlanRequest extends FormRequest
             'cause.required' => 'Unesite uzrok',
             'risk_lowering_measure.required' => 'Unesite meru za smanjenje rizika',
             'responsibility.required' => 'Unesite odgovornost',
-            'deadline.required' => 'Izaberite rok za realizaciju'
+            'deadline.required' => 'Unesite rok za realizaciju',
+            'deadline.after' => 'Unesite budući datum'
         ];
     }
 
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'deadline' => date('Y-m-d', strtotime($this->deadline))
+            'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null
         ]);
     }
 }

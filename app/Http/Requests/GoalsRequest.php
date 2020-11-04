@@ -26,7 +26,7 @@ class GoalsRequest extends FormRequest
         return [
             'responsibility' => 'required|max:190',
             'goal' => 'required|max:190',
-            'deadline' => 'required',
+            'deadline' => 'required|after:yesterday',
             'kpi' => 'required|max:190',
             'resources' => 'required|max:190',
             'activities' => 'required'
@@ -41,6 +41,7 @@ class GoalsRequest extends FormRequest
             'goal.required' => 'Unesite cilj',
             'goal.max' => 'Polje može sadržati najviše 190 karaktera',
             'deadline.required' => 'Unesite rok za realizaciju',
+            'deadline.after' => 'Unesite budući datum',
             'kpi.required' => 'Unesite KPI',
             'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
             'resources.required' => 'Unesite resurse',
@@ -55,7 +56,7 @@ class GoalsRequest extends FormRequest
             'standard_id' => session('standard'),
             'team_id' => \Auth::user()->current_team_id,
             'user_id' => \Auth::user()->id,
-            'deadline' => date('Y-m-d', strtotime($this->deadline)),
+            'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
             'analysis' => $this->analysis != null ? $this->analysis : null
         ]);
     }
