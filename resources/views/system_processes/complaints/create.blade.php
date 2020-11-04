@@ -104,6 +104,13 @@
 		dayOfWeekStart: 1
 	});
 
+	$('#submission_date').change( () => {
+		let start_date = $('#submission_date').val().split(" ")[0].split(".").reverse().join("/").toString();
+		$('#deadline_date').datetimepicker({
+			minDate: start_date
+		})
+	})
+
 	$('#accepted').change( () => {
 		if($('#accepted').val() == 1){
 			$('#complaint_accepted').removeClass('d-none');

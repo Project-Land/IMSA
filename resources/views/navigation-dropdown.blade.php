@@ -15,7 +15,7 @@
                 @inject('standards', 'standards')
                 <x-jet-dropdown>
                     <x-slot name="trigger">
-                    <a  type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    <a  type="button" class="btn trigger rounded-0" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
                     
                     </x-slot> 
                     <div class="dropdown-menu"> 
@@ -29,7 +29,7 @@
                
                     <x-jet-dropdown>
                     <x-slot name="trigger">
-                    <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray'}} @endif">Dokumentacija</button>
+                    <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
                     </x-slot> 
                     <div class="dropdown-menu">
                     <x-slot name="content">
@@ -46,7 +46,7 @@
 
                     <x-jet-dropdown width="60">
                     <x-slot name="trigger">
-                    <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray'}} @endif">Sistemski procesi</button>
+                    <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
                     </x-slot> 
                     <div class="dropdown-menu">
                     <x-slot name="content">
@@ -68,7 +68,7 @@
                    
             <div class="dropdown-menu">
             <x-slot name="trigger">
-            <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray'}} @endif">Sektori</button>
+            <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sektori</button>
             </x-slot>
             <x-slot name="content">
                 <a class="dropdown-item" href="/sectors">Lista sektora</a>

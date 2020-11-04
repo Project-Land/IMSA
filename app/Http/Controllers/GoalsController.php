@@ -57,16 +57,17 @@ class GoalsController extends Controller
     public function store(GoalsRequest $request)
     {
         $this->authorize('create', Goal::class);
-       
 
         try{
             $goal = Goal::create($request->all());
+
             $notification = Notification::create([
                     'message'=>'Analiza cilja za '.date('d.m.Y', strtotime($goal->deadline)),
                     'team_id'=>Auth::user()->current_team_id,
                     'checkTime' => $goal->deadline
                 ]);
             $goal->notification()->save($notification);
+            
             CustomLog::info('Cilj "'.$goal->goal.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
         } catch(Exception $e){
@@ -96,10 +97,12 @@ class GoalsController extends Controller
 
         try{
             $goal->update($request->all());
-            $notification=$goal->notification;dd($notification);
-            $notification->message='Analiza cilja za '.date('d.m.Y', strtotime($request->deadline));
+
+            $notification = $goal->notification;
+            $notification->message = 'Analiza cilja za '.date('d.m.Y', strtotime($request->deadline));
             $notification->checkTime = $goal->deadline;
             $goal->notification()->save($notification);
+
             CustomLog::info('Cilj "'.$goal->goal.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
         } catch(Exception $e){

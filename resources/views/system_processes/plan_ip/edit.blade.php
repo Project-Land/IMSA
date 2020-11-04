@@ -66,6 +66,7 @@
     <script>
 
         jQuery.datetimepicker.setLocale('sr');
+
         $('#check_start').datetimepicker({
             format: 'd.m.Y H:i',
             minDate: 0,
@@ -83,6 +84,20 @@
             minDate: 0,
             dayOfWeekStart: 1,
         });
+
+        $('#check_start').change( () => {
+            let start_date = $('#check_start').val().split(" ")[0].split(".").reverse().join("/").toString();
+            $('#check_end').datetimepicker({
+                minDate: start_date
+            })
+        })
+
+        $('#check_end').change( () => {
+            let start_date = $('#check_end').val().split(" ")[0].split(".").reverse().join("/").toString();
+            $('#report_deadline').datetimepicker({
+                minDate: start_date
+            })
+        })
 
         $('#status').change( () => {
             if($('#status').val() == 1){

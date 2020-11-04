@@ -30,7 +30,7 @@ class CorrectiveMeasuresController extends Controller
     {
         $this->authorize('create', CorrectiveMeasure::class);
         $team = Team::findOrFail(Auth::user()->current_team_id);
-        $standards = $team->standards;
+        $standards = $team->standards->where('id', session('standard'));
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('system_processes.corrective_measures.create', compact('standards', 'sectors'));
     }
@@ -61,7 +61,7 @@ class CorrectiveMeasuresController extends Controller
         $this->authorize('update', $corrective_measure);
 
         $team = Team::findOrFail(Auth::user()->current_team_id);
-        $standards = $team->standards;
+        $standards = $team->standards->where('id', session('standard'));
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('system_processes.corrective_measures.edit', compact('corrective_measure', 'standards', 'sectors'));
     }

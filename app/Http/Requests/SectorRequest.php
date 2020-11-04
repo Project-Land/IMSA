@@ -35,12 +35,4 @@ class SectorRequest extends FormRequest
             'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera'
         ];
     }
-
-    /*protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id
-        ]);
-    }*/
 }

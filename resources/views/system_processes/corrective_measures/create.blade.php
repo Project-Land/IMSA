@@ -17,7 +17,7 @@
 			@csrf
 			<div class="mb-4">
 				<label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžment:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard_id" id="standard_id">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard_id" id="standard_id">
 					<option value="">Izaberi...</option>
 					@foreach($standards as $standard)
 						<option value="{{ $standard->id }}" {{ $standard->id == Session::get('standard')? "selected":"" }} >{{ $standard->name }}</option>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="mb-4">
 				<label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source">
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera" {{ old('noncompliance_source') == "Eksterna provera" ? "selected" : "" }}>Eksterna provera</option>
 					<option value="Interna provera" {{ old('noncompliance_source') == "Interna provera" ? "selected" : "" }}>Interna provera</option>
@@ -43,7 +43,7 @@
 			</div>
 			<div class="mb-4">
 				<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}">{{ $sector->name }}</option>
@@ -76,25 +76,25 @@
 			</div>
 			<div class="mb-4">
 				<label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
 					<option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >DA</option>
 					<option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >NE</option>
 				</select>
 			</div>
 			<div class="mb-4" id="measure_reason_field" style="display: none">
 				<label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-				<input type="text" class="appearance-none border w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="measure_approval_reason" id="measure_approval_reason">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="measure_approval_reason" id="measure_approval_reason">
 			</div>
 			<div class="mb-4">
 				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
 					<option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >NE</option>
 					<option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >DA</option>
 				</select>
 			</div>
 			<div class="mb-4" id="measure_effective_field" style="display: none">
 				<label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective">
 					<option value="">Izaberi...</option>
 					<option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >DA</option>
 					<option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
