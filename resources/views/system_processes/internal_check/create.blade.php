@@ -17,7 +17,7 @@
 			@csrf
         <div class="mb-4">
             <label for="date">Termin provere</label>
-            <input type="text" class="form-control" id="date" placeholder="" name="date">
+            <input type="text" class="form-control" id="date" placeholder="xx.xx.xxxx" name="date">
             @error('date')
             <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
@@ -69,7 +69,8 @@
             timepicker: false,
             format: 'd.m.Y',
             dayOfWeekStart: 1,
-            minDate: 0
+            minDate: 0,
+            scrollInput: false
         });
 
         $('#status').change( () => {

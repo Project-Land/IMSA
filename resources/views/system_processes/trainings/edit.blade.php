@@ -104,9 +104,11 @@
 </style>
 
 <script>
-	jQuery.datetimepicker.setLocale('sr');
+	$.datetimepicker.setLocale('sr');
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
+		dayOfWeekStart: 1,
+		scrollInput: false
 	});
 
 	$('#status').change( () => {

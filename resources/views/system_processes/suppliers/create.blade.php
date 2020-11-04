@@ -15,69 +15,75 @@
 
 		<form action="{{ route('suppliers.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
-			<div class="form-group">
-				<label for="supplier_name">Naziv isporučioca:</label>
-				<input type="text" class="form-control" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" autofocus>
+
+			<div class="mb-4">
+				<label for="supplier_name" class="block text-gray-700 text-sm font-bold mb-2">Naziv isporučioca:</label>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" autofocus>
 				@error('supplier_name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="subject">Predmet nabavke:</label>
-                <textarea class="form-control" id="subject" name="subject">{{ old('subject') }}</textarea>
+
+			<div class="mb-4">
+				<label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Predmet nabavke:</label>
+                <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subject" name="subject">{{ old('subject') }}</textarea>
 				@error('subject')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="personal_info">Ime:</label>
-				<input type="text" class="form-control" id="personal_info" name="personal_info" value="{{ old('personal_info') }}">
+
+			<div class="mb-4">
+				<label for="personal_info" class="block text-gray-700 text-sm font-bold mb-2">Ime:</label>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="personal_info" name="personal_info" value="{{ old('personal_info') }}">
 				@error('personal_info')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="phone_number">Broj telefona:</label>
-				<input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number') }}">
+
+			<div class="mb-4">
+				<label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Broj telefona:</label>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone_number" name="phone_number" value="{{ old('phone_number') }}">
 				@error('phone_number')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="email">Email:</label>
-				<input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+
+			<div class="mb-4">
+				<label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+				<input type="email" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" value="{{ old('email') }}">
 				@error('email')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="quality">Kvalitet:</label>
-				<select class="form-control" name="quality" id="quality">
+
+			<div class="mb-4">
+				<label for="quality" class="block text-gray-700 text-sm font-bold mb-2">Kvalitet:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="quality" id="quality">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
 				</select>
 			</div>
 
-			<div class="form-group">
-				<label for="price">Cena:</label>
-				<select class="form-control" name="price" id="price">
+			<div class="mb-4">
+				<label for="price" class="block text-gray-700 text-sm font-bold mb-2">Cena:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="price" id="price">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
 				</select>
 			</div>
 
-			<div class="form-group">
-				<label for="shippment_deadline">Rok isporuke:</label>
-				<select class="form-control" name="shippment_deadline" id="shippment_deadline">
+			<div class="mb-4">
+				<label for="shippment_deadline" class="block text-gray-700 text-sm font-bold mb-2">Rok isporuke:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="shippment_deadline" id="shippment_deadline">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
 				</select>
 			</div>
             
-			<button type="submit" class="btn btn-success">Kreiraj</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
 

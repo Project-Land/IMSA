@@ -25,7 +25,7 @@
 
         <div class="form-group">
             <label for="checked_sector">Sektor</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$planIp->internalCheck->sector->name}}" readonly>
+            <input type="text" class="form-control" id="checked_sector" name="checked_sector" value="{{$planIp->internalCheck->sector->name}}" readonly>
         </div>
 
         <div class="form-group">
@@ -35,7 +35,7 @@
        
         <div class="form-group">
             <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif">
+            <input type="text" class="form-control" placeholder="xx.xx.xxxx xx:xx" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif">
             @error('check_start')
 				<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
@@ -43,7 +43,7 @@
 
         <div class="form-group">
             <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif">
+            <input type="text" class="form-control" placeholder="xx.xx.xxxx xx:xx" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif">
             @error('check_end')
 				<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
@@ -51,7 +51,7 @@
 
         <div class="form-group">
             <label for="report_deadline">Rok za dostavljanje izveštaja</label>
-            <input type="text" class="form-control" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif">
+            <input type="text" class="form-control" placeholder="xx.xx.xxxx" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif">
             @error('report_deadline')
 				<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
@@ -71,18 +71,21 @@
             format: 'd.m.Y H:i',
             minDate: 0,
             dayOfWeekStart: 1,
+            scrollInput: false
         });
 
         $('#check_end').datetimepicker({
             format: 'd.m.Y H:i',
             minDate: 0,
             dayOfWeekStart: 1,
+            scrollInput: false
         });
 
         $('#report_deadline').datetimepicker({
             format: 'd.m.Y',
             minDate: 0,
             dayOfWeekStart: 1,
+            scrollInput: false
         });
 
         $('#check_start').change( () => {

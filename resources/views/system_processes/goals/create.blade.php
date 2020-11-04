@@ -72,7 +72,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="activities" class="block text-gray-700 text-sm font-bold mb-2">Aktivnosti</label>
-                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="activities" id="activities">{{ old('activities') }}</textarea>
+                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="activities" id="activities">{{ old('activities') }}</textarea>
                     @error('activities')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
@@ -80,7 +80,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="analysis" class="block text-gray-700 text-sm font-bold mb-2">Analiza</label>
-                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
+                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
                 </div>
             </div>
             
@@ -96,6 +96,7 @@
 		timepicker: false,
 		format:'d.m.Y',
         minDate: 0,
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+        scrollInput: false
 	});
 </script>

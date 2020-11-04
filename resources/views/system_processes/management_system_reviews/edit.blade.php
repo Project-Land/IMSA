@@ -16,100 +16,101 @@
 		<form action="{{ route('management-system-reviews.update', $msr->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
-			<div class="form-group">
-				<label for="year">Godina:</label>
-				<select class="form-control" name="year" id="year">
+
+			<div class="mb-4">
+				<label for="year" class="block text-gray-700 text-sm font-bold mb-2">Godina:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="year" id="year">
 					@foreach(range(date('Y')-1, date('Y')+10) as $year)
 						<option value="{{ $year }}" {{ $year == $msr->year ? "selected" : "" }}>{{ $year }}</option>
 					@endforeach
 				</select>
 			</div>
 
-			<div class="form-group">
-				<label for="participants">Učestvovali u preispitivanju:</label>
-				<textarea class="form-control" id="participants" name="participants">{{ $msr->participants }}</textarea>
+			<div class="mb-4">
+				<label for="participants" class="block text-gray-700 text-sm font-bold mb-2">Učestvovali u preispitivanju:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="participants" name="participants">{{ $msr->participants }}</textarea>
 				@error('participants')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="measures_status">Status mera iz prethodnog preispitivanja:</label>
-				<textarea class="form-control" id="measures_status" name="measures_status">{{ $msr->measures_status }}</textarea>
+			<div class="mb-4">
+				<label for="measures_status" class="block text-gray-700 text-sm font-bold mb-2">Status mera iz prethodnog preispitivanja:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measures_status" name="measures_status">{{ $msr->measures_status }}</textarea>
 				@error('measures_status')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="internal_external_changes">Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta:</label>
-				<textarea class="form-control" id="internal_external_changes" name="internal_external_changes">{{ $msr->internal_external_changes }}</textarea>
+			<div class="mb-4">
+				<label for="internal_external_changes" class="block text-gray-700 text-sm font-bold mb-2">Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="internal_external_changes" name="internal_external_changes">{{ $msr->internal_external_changes }}</textarea>
 				@error('internal_external_changes')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="customer_satisfaction">Zadovoljstvo korisnika:</label>
-				<textarea class="form-control" id="customer_satisfaction" name="customer_satisfaction">{{ $msr->customer_satisfaction }}</textarea>
+			<div class="mb-4">
+				<label for="customer_satisfaction" class="block text-gray-700 text-sm font-bold mb-2">Zadovoljstvo korisnika:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customer_satisfaction" name="customer_satisfaction">{{ $msr->customer_satisfaction }}</textarea>
 				@error('customer_satisfaction')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<p class="h5">Performanse procesa i usaglašenost proizvoda i usluga</p><hr>
+			<p class="text-lg">Performanse procesa i usaglašenost proizvoda i usluga</p><hr>
 
-			<div class="form-group">
-				<label for="monitoring_measurement_results">Rezultati praćenja i merenja:</label>
-				<textarea class="form-control" id="monitoring_measurement_results" name="monitoring_measurement_results">{{ $msr->monitoring_measurement_results }}</textarea>
+			<div class="mb-4">
+				<label for="monitoring_measurement_results" class="block text-gray-700 text-sm font-bold mb-2">Rezultati praćenja i merenja:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="monitoring_measurement_results" name="monitoring_measurement_results">{{ $msr->monitoring_measurement_results }}</textarea>
 				@error('monitoring_measurement_results')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="checks_results_desc">Dodatni opis rezultata internih provera:</label>
-				<textarea class="form-control" id="checks_results_desc" name="checks_results_desc">{{ $msr->checks_results_desc }}</textarea>
+			<div class="mb-4">
+				<label for="checks_results_desc" class="block text-gray-700 text-sm font-bold mb-2">Dodatni opis rezultata internih provera:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checks_results_desc" name="checks_results_desc">{{ $msr->checks_results_desc }}</textarea>
 				@error('checks_results_desc')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="resource_adequacy">Adekvatnost resursa:</label>
-				<textarea class="form-control" id="resource_adequacy" name="resource_adequacy">{{ $msr->resource_adequacy }}</textarea>
+			<div class="mb-4">
+				<label for="resource_adequacy" class="block text-gray-700 text-sm font-bold mb-2">Adekvatnost resursa:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resource_adequacy" name="resource_adequacy">{{ $msr->resource_adequacy }}</textarea>
 				@error('resource_adequacy')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<p class="h5">Izlazne tačke preispitivanja</p><hr>
+			<p class="text-lg">Izlazne tačke preispitivanja</p><hr>
 
-			<div class="form-group">
-				<label for="improvement_opportunities ">Prilike za poboljšanje:</label>
-				<textarea class="form-control" id="improvement_opportunities" name="improvement_opportunities">{{ $msr->improvement_opportunities }}</textarea>
+			<div class="mb-4">
+				<label for="improvement_opportunities" class="block text-gray-700 text-sm font-bold mb-2">Prilike za poboljšanje:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="improvement_opportunities" name="improvement_opportunities">{{ $msr->improvement_opportunities }}</textarea>
 				@error('improvement_opportunities')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="needs_for_change ">Potrebe za izmenama u sistemu menadžmenta:</label>
-				<textarea class="form-control" id="needs_for_change" name="needs_for_change">{{ $msr->needs_for_change }}</textarea>
+			<div class="mb-4">
+				<label for="needs_for_change" class="block text-gray-700 text-sm font-bold mb-2">Potrebe za izmenama u sistemu menadžmenta:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="needs_for_change" name="needs_for_change">{{ $msr->needs_for_change }}</textarea>
 				@error('needs_for_change')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
-			<div class="form-group">
-				<label for="needs_for_resources ">Potrebe za resursima:</label>
-				<textarea class="form-control" id="needs_for_resources" name="needs_for_resources">{{ $msr->needs_for_resources }}</textarea>
+			<div class="mb-4">
+				<label for="needs_for_resources" class="block text-gray-700 text-sm font-bold mb-2">Potrebe za resursima:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="needs_for_resources" name="needs_for_resources">{{ $msr->needs_for_resources }}</textarea>
 				@error('needs_for_resources')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
             
-			<button type="submit" class="btn btn-success">Izmeni</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
 		</form>
     </div>
 

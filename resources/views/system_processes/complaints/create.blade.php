@@ -76,19 +76,19 @@
 					@enderror
 				</div>
 				<div class="form-group">
-					<label for="status">Status reklamacije:</label>
-					<select  class="form-control" id="status" name="status">
+					<label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status reklamacije:</label>
+					<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" name="status">
 						<option value="1" selected>Otvorena</option>
 						<option value="0">Zatvorena</option>
 					</select>
 				</div>
 				<div class="form-group d-none" id="closing_date_block">
-					<label for="closing_date">Datum zatvaranja:</label>
-					<input class="form-control" type="text" id="closing_date" name="closing_date" disabled>
+					<label for="closing_date" class="block text-gray-700 text-sm font-bold mb-2">Datum zatvaranja:</label>
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" disabled>
 				</div>
 			</div>
             
-			<button type="submit" class="btn btn-success">Kreiraj</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
 
@@ -99,14 +99,16 @@
 		timepicker: false,
 		format: 'd.m.Y',
 		minDate: 0,
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+    	scrollInput: false
 	});
 
 	$('#deadline_date').datetimepicker({
 		timepicker: false,
 		format:' d.m.Y',
 		minDate: 0,
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+		scrollInput: false
 	});
 
 	$('#submission_date').change( () => {

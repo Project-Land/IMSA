@@ -49,9 +49,9 @@
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			<div class="form-group">
-				<label for="accepted">Da li je reklamacija opravdana / prihvaćena:</label>
-				<select  class="form-control" id="accepted" name="accepted">
+			<div class="mb-4">
+				<label for="accepted" class="block text-gray-700 text-sm font-bold mb-2">Da li je reklamacija opravdana / prihvaćena:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="accepted" name="accepted">
 					<option value="0" {{ $complaint->accepted == 0 ? "selected" : "" }} >NE</option>
 					<option value="1" {{ $complaint->accepted == 1 ? "selected" : "" }} >DA</option>
 				</select>
@@ -80,19 +80,19 @@
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
 				</div>
-				<div class="form-group">
-					<label for="status">Status reklamacije:</label>
-					<select  class="form-control" id="status" name="status">
+				<div class="mb-4">
+					<label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status reklamacije:</label>
+					<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" name="status">
 						<option value="1" {{ $complaint->status == 1 ? "selected" : "" }} >Otvorena</option>
 						<option value="0" {{ $complaint->status == 0 ? "selected" : "" }} >Zatvorena</option>
 					</select>
 				</div>
-				<div class="form-group d-none" id="closing_date_block">
-					<label for="closing_date">Datum zatvaranja:</label>
-					<input class="form-control" type="text" id="closing_date" name="closing_date" value="{{ $complaint->closing_date }}" disabled>
+				<div class="mb-4 d-none" id="closing_date_block">
+					<label for="closing_date" class="block text-gray-700 text-sm font-bold mb-2">Datum zatvaranja:</label>
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" value="{{ $complaint->closing_date }}" disabled>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success">Izmeni</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
 		</form>
     </div>
 
@@ -102,14 +102,16 @@
 	$('#submission_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+		scrollInput: false
 	});
 
 	$('#deadline_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',
 		minDate: 0,
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+		scrollInput: false
 	});
 
 	$('#accepted').change( () => {
