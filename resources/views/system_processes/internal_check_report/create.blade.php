@@ -58,7 +58,8 @@
                 <div class="row">
                 <div class="form-group col">
                     <label for="specification">Specifikacija dokumenata</label>
-                    <textarea rows="3" class="form-control" id="specification" name="specification"></textarea>
+                    <textarea rows="3" class="form-control" id="specification" name="specification" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
+                oninput="this.setCustomValidity('')">{{old('specification')}}</textarea>
                     @error('specification')
                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
                     @enderror
@@ -82,7 +83,7 @@
                 </div>
             </div>
             <div class="form-group">
-            <button type="submit" class="btn btn-success">Izmeni</button>
+            <button type="submit" class="btn btn-success float-right">Izmeni</button>
              </div>
           
            
@@ -149,7 +150,8 @@
 				<label for="noncompliance_source[${counter}]">Izvor informacije o neusaglašenostima:</label>
 
 
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera">Eksterna provera</option>
 					<option value="Interna provera" >Interna provera</option>
@@ -160,41 +162,46 @@
 			
 			</div>
 			<div class="form-group">
-				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
+				<label for="noncompliance_description${counter}">Opis neusaglašenosti:</label>
+				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                oninput="this.setCustomValidity('')" ></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                oninput="this.setCustomValidity('')"></textarea>
 			
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                oninput="this.setCustomValidity('')"></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="measure_approval">Odobravanje mere:</label>
-				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval">
+				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval${counter}">
 					<option value="1" >DA</option>
 					<option value="0" >NE</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_reason_field" style="display: none">
+			<div class="form-group" id="measure_reason_field${counter}" style="display: none">
 				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
+                oninput="this.setCustomValidity('')">
 			</div>
 			<div class="form-group">
 				<label for="measure_status">Status mere:</label>
-				<select class="form-control" name="measure_status[${counter}]" id="measure_status">
+				<select class="form-control" name="measure_status[${counter}]" id="measure_status${counter}">
 					<option value="0" >NE</option>
 					<option value="1"  >DA</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_effective_field" style="display: none">
+			<div class="form-group" id="measure_effective_field${counter}" style="display: none">
 				<label for="measure_effective">Mera efektivna:</label>
-				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective">
+				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective${counter}" required oninvalid="this.setCustomValidity('Polje mera efektivna nije popunnjeno')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					<option value="1"  >DA</option>
 					<option value="0">NE</option>
@@ -207,7 +214,34 @@
             div.append(addNewInconsistencies);
             div.append(deletebutton);
             newInput.focus();
-            counter++;
+            
+
+
+            let id=`#measure_approval${counter}`;
+ let id_ms=`#measure_status${counter}`;
+ let id_mef=`#measure_effective_field${counter}`;
+ let id_mrf=`#measure_reason_field${counter}`;
+ let id_mar=`measure_approval_reason${counter}`;
+            $(id).change( () => {
+        
+		if($(id).val() == 0){
+			$(id_mrf).css('display', '');
+		}
+		else{
+			$(id_mrf).css('display', 'none');
+			$(id_mar).val('');
+		}
+	})
+
+	$(id_ms).change( () => {
+		if($(id_ms).val() == 1){
+			$(id_mef).css('display', '');
+		}
+		else{
+			$(id_mef).css('display', 'none');
+		}
+	})
+    counter++;
     }
     const form=document.getElementById('internal_check_report_create_form');
     const inconsistencies=document.getElementById('inconsistencies');
@@ -258,7 +292,8 @@
             <h2>Popuni karton korektivne mere</h2>
 			<div class="form-group">
 				<label for="noncompliance_source[${counter}]">Izvor informacije o neusaglašenostima:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera">Eksterna provera</option>
 					<option value="Interna provera" >Interna provera</option>
@@ -269,17 +304,20 @@
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
+				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                oninput="this.setCustomValidity('')"></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                oninput="this.setCustomValidity('')"></textarea>
 			
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                oninput="this.setCustomValidity('')"></textarea>
 				
 			</div>
 			<div class="form-group">
@@ -291,7 +329,8 @@
 			</div>
 			<div class="form-group" id="measure_reason_field" style="display: none">
 				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
+                oninput="this.setCustomValidity('')">
 			</div>
 			<div class="form-group">
 				<label for="measure_status">Status mere:</label>
@@ -302,7 +341,8 @@
 			</div>
 			<div class="form-group" id="measure_effective_field" style="display: none">
 				<label for="measure_effective">Mera efektivna:</label>
-				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective">
+				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					<option value="1"  >DA</option>
 					<option value="0">NE</option>

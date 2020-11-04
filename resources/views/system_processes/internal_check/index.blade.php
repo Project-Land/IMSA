@@ -202,7 +202,7 @@
 							<p>Početak provere: ${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
 							<p>Završetak provere: ${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
 							<p>Rok za dostavljanje izveštaja: ${new Date(data.report_deadline).toLocaleString('sr-SR', { timeZone: 'CET' }) } </p>
-							<small>Kreirano: ${ new Date(data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </small>
+							<small>Izmenjeno: ${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </small>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>

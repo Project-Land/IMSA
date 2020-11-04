@@ -43,26 +43,38 @@ class InternalCheckReportController extends Controller
             'newInputRecommendation1' => 'string',
             'newInputRecommendation2' => 'string',
             'newInputRecommendation3' => 'string',
-            'newInputRecommendation4' => 'string'          
+            'newInputRecommendation4' => 'string',
+            'newInputRecommendation5' => 'string'          
         ]);
 
         $InconsistencyData = $request->validate([
             'newInput1' => 'string',
             'newInput2' => 'string',
             'newInput3' => 'string',
-            'newInput4' => 'string',    
+            'newInput4' => 'string',  
+            'newInput5' => 'string',    
         ]);
         
         $correctiveMeasureData=$request->validate([
-            'noncompliance_source.*' => 'string|required',
-            'noncompliance_description.*' => 'string|required',
-            'noncompliance_cause.*' => 'string|required',
-            'measure.*' => 'string|required', 
-            'measure_approval.*' => 'string|required',
-            'measure_approval_reason.*' => 'string|nullable',
-            'measure_status.*' => 'string|required',
-            'measure_effective.*' => 'string|nullable'
-        ]);
+            'noncompliance_source.*' => 'required',
+            'noncompliance_description.*' => 'required',
+            'noncompliance_cause.*' => 'required',
+            'measure.*' => 'required', 
+            'measure_approval.*' => 'required',
+            'measure_approval_reason.*' => 'nullable',
+            'measure_status.*' => 'required',
+            'measure_effective.*' => 'nullable'
+        ],[
+            'noncompliance_source.*.required' => 'Izvor informacije o neusaglašenostima nije izabran',
+            'noncompliance_description.*.required' => 'Opis neusaglašenosti nije popunjen',
+            'noncompliance_cause.*.required' => 'Uzrok neusaglašenosti nije popunjen',
+            'measure.*.required' => 'Mera za otklanjanje neusaglašenosti nije popunjena', 
+            'measure_approval.*.required' => 'Razlog neodobravanja mere nije popunjen',
+            'measure_status.*.required' => 'Polje mera efektivna nije popunjeno',
+           
+           
+        ]
+    );
 
         try{
             DB::transaction(function () use ($request, $validatedData, $recommendationData, $InconsistencyData, $correctiveMeasureData){ 

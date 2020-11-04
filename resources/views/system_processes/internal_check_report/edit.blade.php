@@ -57,7 +57,8 @@
         <div class="row">
         <div class="form-group col">
             <label for="specification">Specifikacija dokumenata</label>
-            <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required></textarea>
+            <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
+                oninput="this.setCustomValidity('')">{{$internalCheckReport->specification}}</textarea>
             @error('specification')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
@@ -104,7 +105,7 @@
                 @endforeach
         </div>
             
-        <button type="submit" id="submitForm" class="btn btn-success mt-5" >Izmeni</button>
+        <button type="submit" id="submitForm" class="btn btn-success mt-5 float-right" >Izmeni</button>
         </form>
     </div>
 
@@ -184,7 +185,7 @@ function removeInput(){
             <h2>Popuni karton korektivne mere</h2>
 			<div class="form-group">
             <label for="noncompliance_source[${counter}]">Izvor informacije o neusaglašenostima:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" require>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]"  required>
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera">Eksterna provera</option>
 					<option value="Interna provera" >Interna provera</option>
@@ -201,35 +202,35 @@ function removeInput(){
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" require></textarea>
+				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required></textarea>
 			
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" require></textarea>
+				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" required></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="measure_approval">Odobravanje mere:</label>
-				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval">
+				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval${counter}">
 					<option value="1" >DA</option>
 					<option value="0" >NE</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_reason_field" style="display: none">
+			<div class="form-group" id="measure_reason_field${counter}" style="display: none">
 				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason" require>
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
 			</div>
 			<div class="form-group">
 				<label for="measure_status">Status mere:</label>
-				<select class="form-control" name="measure_status[${counter}]" id="measure_status">
+				<select class="form-control" name="measure_status[${counter}]" id="measure_status${counter}">
 					<option value="0" >NE</option>
 					<option value="1"  >DA</option>
 				</select>
 			</div>
-			<div class="form-group" id="measure_effective_field" style="display: none">
+			<div class="form-group" id="measure_effective_field${counter}" style="display: none">
 				<label for="measure_effective">Mera efektivna:</label>
-				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective">
+				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective${counter}">
 					<option value="">Izaberi...</option>
 					<option value="1"  >DA</option>
 					<option value="0">NE</option>
@@ -239,27 +240,33 @@ function removeInput(){
             div.append(div2);
             inconsistenciesDiv.append(div);
             newInput.focus();
-            counter++;
-
-            $('#measure_approval').change( () => {
+           
+ let id=`#measure_approval${counter}`;
+ let id_ms=`#measure_status${counter}`;
+ let id_mef=`#measure_effective_field${counter}`;
+ let id_mrf=`#measure_reason_field${counter}`;
+ let id_mar=`measure_approval_reason${counter}`;
+            $(id).change( () => {
         
-		if($('#measure_approval').val() == 0){
-			$('#measure_reason_field').css('display', '');
+		if($(id).val() == 0){
+			$(id_mrf).css('display', '');
 		}
 		else{
-			$('#measure_reason_field').css('display', 'none');
-			$('#measure_reason').val('');
+			$(id_mrf).css('display', 'none');
+			$(id_mar).val('');
 		}
 	})
 
-	$('#measure_status').change( () => {
-		if($('#measure_status').val() == 1){
-			$('#measure_effective_field').css('display', '');
+	$(id_ms).change( () => {
+		if($(id_ms).val() == 1){
+			$(id_mef).css('display', '');
 		}
 		else{
-			$('#measure_effective_field').css('display', 'none');
+			$(id_mef).css('display', 'none');
 		}
 	})
+
+    counter++;
     
     }
 
