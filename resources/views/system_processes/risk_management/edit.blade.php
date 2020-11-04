@@ -18,14 +18,14 @@
             @method('PUT')
 			<div class="form-group">
 				<label for="description">Opis:</label>
-				<textarea class="form-control" id="description" name="description" autofocus>{{ $risk->description }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus>{{ $risk->description }}</textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="probability">Verovatnoća:</label>
-                <select class="form-control" name="probability" id="probability">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->probability) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
@@ -33,7 +33,7 @@
 			</div>
             <div class="form-group">
 				<label for="frequency">Učestalost:</label>
-                <select class="form-control" name="frequency" id="frequency">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->frequency) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
@@ -41,17 +41,17 @@
 			</div>
             <div class="form-group">
 				<label for="total">Ukupno:</label>
-				<input class="form-control" type="text" name="total" id="total" disabled value="{{ $risk->total }}">
+				<input class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="total" id="total" disabled value="{{ $risk->total }}">
 			</div>
             <div class="form-group">
 				<label for="acceptable">Prihvatljivo:</label>
-                <select class="form-control" name="acceptable" id="acceptable">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable">
                     @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->acceptable) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
                 </select>
 			</div>
-			<button type="submit" class="btn btn-success">Izmeni</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
 		</form>
     </div>
 

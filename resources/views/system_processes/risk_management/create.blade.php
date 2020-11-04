@@ -16,41 +16,41 @@
 		<form action="{{ route('risk-management.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			<div class="form-group">
-				<label for="description">Opis:</label>
-				<textarea class="form-control" id="description" name="description" autofocus></textarea>
+				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">Opis:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus></textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
-				<label for="probability">Verovatnoća:</label>
-                <select class="form-control" name="probability" id="probability">
+				<label for="probability" class="block text-gray-700 text-sm font-bold mb-2">Verovatnoća:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
 			</div>
             <div class="form-group">
-				<label for="frequency">Učestalost:</label>
-                <select class="form-control" name="frequency" id="frequency">
+				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">Učestalost:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
 			</div>
             <div class="form-group">
-				<label for="total">Ukupno:</label>
-				<input class="form-control" type="text" name="total" id="total" disabled value="1">
+				<label for="total" class="block text-gray-700 text-sm font-bold mb-2">Ukupno:</label>
+				<input class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="total" id="total" disabled value="1">
 			</div>
             <div class="form-group">
-				<label for="acceptable">Prihvatljivo:</label>
-                <select class="form-control" name="acceptable" id="acceptable">
+				<label for="acceptable" class="block text-gray-700 text-sm font-bold mb-2">Prihvatljivo:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable">
                     @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
 			</div>
-			<button type="submit" class="btn btn-success">Kreiraj</button>
+			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
 

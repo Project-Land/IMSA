@@ -17,8 +17,8 @@
             @csrf
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="year">Godina</label>
-                    <select class="form-control" id="year" name="year">
+                    <label for="year" class="block text-gray-700 text-sm font-bold mb-2">Godina</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="year" name="year">
                         @foreach(range(date("Y")-1, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == date('Y') ? "selected" : "" }}>{{ $year }}</option>
                         @endforeach
@@ -26,8 +26,8 @@
                 </div>
                 
                 <div class="form-group col-md-6">
-                    <label for="responsibility">Odgovornost</label>
-                    <input type="text" class="form-control" name="responsibility" id="responsibility" value="{{ old('responsibility') }}">
+                    <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">Odgovornost</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="responsibility" id="responsibility" value="{{ old('responsibility') }}">
                     @error('responsibility')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
@@ -37,15 +37,15 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="goal">Cilj</label>
-                    <input type="text" class="form-control" name="goal" id="goal" value="{{ old('goal') }}">
+                    <label for="goal" class="block text-gray-700 text-sm font-bold mb-2">Cilj</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="goal" id="goal" value="{{ old('goal') }}">
                     @error('goal')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="deadline">Rok za realizaciju</label>
-                    <input type="text" class="form-control" name="deadline" id="deadline" value="{{ old('deadline') }}">
+                    <label for="deadline" class="block text-gray-700 text-sm font-bold mb-2">Rok za realizaciju</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="deadline" id="deadline" value="{{ old('deadline') }}">
                     @error('deadline')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
@@ -54,15 +54,15 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="kpi">KPI</label>
-                    <input type="text" class="form-control" name="kpi" id="kpi" value="{{ old('kpi') }}">
+                    <label for="kpi" class="block text-gray-700 text-sm font-bold mb-2">KPI</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="kpi" id="kpi" value="{{ old('kpi') }}">
                     @error('kpi')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="resources">Resursi</label>
-                    <input type="text" class="form-control" name="resources" id="resources" value="{{ old('resources') }}">
+                    <label for="resources" class="block text-gray-700 text-sm font-bold mb-2">Resursi</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="resources" id="resources" value="{{ old('resources') }}">
                     @error('resources')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
@@ -71,20 +71,20 @@
             
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="activities">Aktivnosti</label>
-                    <textarea rows="10" style="height:200px;" class="form-control" name="activities" id="activities">{{ old('activities') }}</textarea>
+                    <label for="activities" class="block text-gray-700 text-sm font-bold mb-2">Aktivnosti</label>
+                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="activities" id="activities">{{ old('activities') }}</textarea>
                     @error('activities')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="analysis">Analiza</label>
-                    <textarea rows="10" style="height:200px;" class="form-control" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
+                    <label for="analysis" class="block text-gray-700 text-sm font-bold mb-2">Analiza</label>
+                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary">Kreairaj</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
         </form>
     </div>
 
