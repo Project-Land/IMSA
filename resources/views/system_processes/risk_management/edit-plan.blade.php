@@ -69,6 +69,7 @@
 		timepicker: false,
 		format:'d.m.Y',
 		minDate: 0,
-		dayOfWeekStart: 1
+		dayOfWeekStart: 1,
+		scrollInput: false
 	});
 </script>

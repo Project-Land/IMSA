@@ -95,7 +95,8 @@
 									<a href="/change-current-team/{{ $team->id }}">Sadržaj</a>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-									{{ $team->users->count() - 1 }}
+                                    Trenutno: {{ $team->users->count() - 1 }}<br>
+                                    <span class="cursor-pointer text-blue-500 hover:text-blue-700" id="teamStats" onclick="showStats({{ $team->id }})">Statistika</span>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     <a href="{{ route('logs.show', $team->name) }}">Log</a>
@@ -113,3 +114,45 @@
 	</div>
 
 </x-app-layout>
+
+<script>
+    
+    function showStats(id)
+    {
+        axios.get('/show-team-stats/'+id)
+            .then((response) => {
+                let modal = `<div class="modal" id="showTeamStats-${ id }" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h5 class="modal-title font-weight-bold">NAZIV FIRME: ${response.data[0].team_id}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">`;
+                                        
+                                        $.each(response.data, function (i, item){
+                                            modal +=`
+                                            <div class="row mt-3">
+                                                <div class="col-sm-5 border-bottom font-weight-bold"><p>Datum: ${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</p></div>
+                                                <div class="col-sm-7 border-bottom"><p>Broj korisnika: ${item.total}</p></div>
+                                            </div>`
+                                        })
+
+                                        modal +=`</div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $("body").append(modal);
+                $('#showTeamStats-'+id).modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })        
+    }
+
+</script>

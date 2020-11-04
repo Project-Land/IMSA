@@ -102,8 +102,10 @@ class Team extends JetstreamTeam
     {
         return $this->belongsToMany('App\Models\Standard');
     }
+
     public function notifications()
     {
         return $this->hasMany('App\Models\Notification');
     }
+
 }

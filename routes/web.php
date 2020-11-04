@@ -77,6 +77,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('show-team-stats/{id}', [TeamController::class, 'showTeamUserStats']);
 
     Route::resource('users', UserController::class);
     Route::get('change-current-team/{id}', [UserController::class, 'changeCurrentTeam']);
@@ -86,5 +87,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/logs/{company}', [LogsController::class, 'show'])->name('logs.show');
     Route::get('procedures/bySector/{id}', [ProceduresController::class, 'bySector'])->name('procedures.bySector');
-    
+
 });

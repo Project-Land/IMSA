@@ -15,9 +15,6 @@
 
 		<form action="{{ $url }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off">
 			@csrf
-			@isset($method)
-				@method('{{ $method }}')
-			@endisset
 
 			<div class="mb-4">
 				<label for="dokument_name" class="block text-gray-700 text-sm font-bold mb-2">Naziv dokumenta:</label>
@@ -36,29 +33,29 @@
 			</div>
 
 			@if(isset($category) && $category == 'procedures')
-			<div class="mb-4">
-				<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Izaberi sektor</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
-					<option value="">Izaberi...</option>
-					@foreach($sectors as $sector)
-						<option value="{{ $sector->id }}" {{ old('sector_id') == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
-					@endforeach
-				</select>
-				@error('sector_id')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
+				<div class="mb-4">
+					<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Izaberi sektor</label>
+					<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
+						<option value="">Izaberi...</option>
+						@foreach($sectors as $sector)
+							<option value="{{ $sector->id }}" {{ old('sector_id') == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
+						@endforeach
+					</select>
+					@error('sector_id')
+						<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					@enderror
+				</div>
 			@endif
 
 			<div class="mb-4">
-				<label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-					<svg class="w-6 h-6 mx-auto" fill="green" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+				<label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+					<svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
 						<path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
 					</svg>
 					<small>Izaberi fajl</small>
 				</label>
 				<input type="file" class="form-control-file" id="name_file" name="file" style="display: none;">
-				<span id="old_document" class="font-italic text-s">Fajl nije izabran</span>
+				<span class="font-italic text-s ml-2" id="old_document">Fajl nije izabran</span>
 				@error('file')
 					<br><span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
