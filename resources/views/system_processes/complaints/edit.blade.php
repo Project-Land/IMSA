@@ -18,28 +18,33 @@
             @method('PUT')
             <div class="form-group">
 				<label for="name">Oznaka:</label>
-				<input type="text" class="form-control" id="name" name="name" value="{{ $complaint->name }}" autofocus>
+				<input type="text" class="form-control" id="name" name="name" value="{{ $complaint->name }}" autofocus required oninvalid="this.setCustomValidity('Oznaka nije popunjena')"
+                oninput="this.setCustomValidity('')">
 				@error('name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="submission_date">Datum podnošenja reklamacije:</label>
-				<input type="text" class="form-control" id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}">
+				<input type="text" class="form-control" id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="izaberite datum" required oninvalid="this.setCustomValidity('Datum podnošenja reklamacije nije popunjen')"
+                oninput="this.setCustomValidity('')">
+				
 				@error('submission_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="description">Opis reklamacije:</label>
-                <textarea class="form-control" id="description" name="description">{{ $complaint->description }}</textarea>
+                <textarea class="form-control" id="description" name="description" required oninvalid="this.setCustomValidity('Opis reklamacije nije popunjen')"
+                oninput="this.setCustomValidity('')">{{ $complaint->description }}</textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="process">Proces na koji se reklamacija odnosi:</label>
-				<input type="text" class="form-control" id="process" name="process" value="{{ $complaint->process }}">
+				<input type="text" class="form-control" id="process" name="process" value="{{ $complaint->process }}" required oninvalid="this.setCustomValidity('Proces na koji se reklamacija odnosi nije popunjen')"
+                oninput="this.setCustomValidity('')">
 				@error('process')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -55,18 +60,22 @@
 			<div class="{{ $complaint->accepted == 1 ? "" : "d-none" }}" id="complaint_accepted">
 				<div class="form-group">
 					<label for="deadline_date">Rok za realizaciju reklamacije:</label>
-					<input type="text" class="form-control" id="deadline_date" name="deadline_date" value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" >
+					<input type="text" class="form-control" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" required placeholder="izaberite datum" oninvalid="this.setCustomValidity('Rok za realizaciju reklamacije nije popunjen')"
+                oninput="this.setCustomValidity('')">
 				</div>
 				<div class="form-group">
 					<label for="responsible_person">Lice odgovorno za rešavanje reklamacije:</label>
-					<input type="text" class="form-control" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}">
+					<input type="text" class="form-control" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}" required oninvalid="this.setCustomValidity('Lice odgovorno za rešavanje reklamacije nije popunjeno')"
+                oninput="this.setCustomValidity('')">
 					@error('responsible_person')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
 				</div>
 				<div class="form-group">
 					<label for="way_of_solving">Način rešavanja reklamacije</label>
-					<input type="text" class="form-control" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}">
+					<input type="text" class="form-control" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}" 
+					required oninvalid="this.setCustomValidity('Način rešavanja reklamacije nije popunjen')"
+                oninput="this.setCustomValidity('')">
 					@error('way_of_solving')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror

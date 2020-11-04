@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/standards/{id}', [HomeController::class, 'standard'])->name('standard');
     Route::resource('rules-of-procedures', RulesOfProceduresController::class);
     Route::resource('policies', PoliciesController::class);
+    Route::get('/procedures/create', [ProceduresController::class, 'create'])->name('procedures.create');
     Route::get('/procedures/{id?}', [ProceduresController::class, 'index'])->name('procedures.index');
     Route::resource('procedures', ProceduresController::class);
     Route::resource('manuals', ManualsController::class);
