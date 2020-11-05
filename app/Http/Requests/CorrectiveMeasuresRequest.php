@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class CorrectiveMeasuresRequest extends FormRequest
 {
@@ -30,7 +31,8 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_source' => 'required',
             'noncompliance_description' => 'required',
             'noncompliance_cause' => 'required',
-            'measure' => 'required'
+            'measure' => 'required',
+           // 'measure_approval_reason'=> Rule::requiredIf(request()->has('measure_approval_reason')),
         ];
     }
 
@@ -42,7 +44,8 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_source.required' => 'Unesite izvor informacije o neusaglašenosti',
             'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
             'noncompliance_cause.required' => 'Unesite uzrok neusaglašenosti',
-            'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti'
+            'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti',
+           
         ];
     }
 

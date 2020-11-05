@@ -18,7 +18,8 @@
 			@method('PUT')
 			<div class="form-group">
 				<label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">Sistem menadžment:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard_id" id="standard_id">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="standard_id" id="standard_id" required oninvalid="this.setCustomValidity('Sistem menadžment nije popunjen')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					@foreach($standards as $standard)
 						<option value="{{ $standard->id }}" {{ $corrective_measure->standard_id == $standard->id ? "selected" : "" }} >{{ $standard->name }}</option>
@@ -30,7 +31,8 @@
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source" required oninvalid="this.setCustomValidity('Izvor informacije o neusaglašenostima nije popunjen')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera" {{ $corrective_measure->noncompliance_source == "Eksterna provera" ? "selected" : "" }} >Eksterna provera</option>
 					<option value="Interna provera" {{ $corrective_measure->noncompliance_source == "Interna provera" ? "selected" : "" }} >Interna provera</option>
@@ -44,7 +46,8 @@
 			</div>
 			<div class="form-group">
 				<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Organizaciona celina u kojoj je utvrđena neusaglašenost:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id" required oninvalid="this.setCustomValidity('Organizaciona celina u kojoj je utvrđena neusaglašenost nije popunjena')"
+                oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					@foreach($sectors as $sector)
 						<option value="{{ $sector->id }}" {{ $corrective_measure->sector_id == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
@@ -56,21 +59,24 @@
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description">{{ $corrective_measure->noncompliance_description }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('Opis neusaglašenosti nije popunjen')"
+                oninput="this.setCustomValidity('')">{{ $corrective_measure->noncompliance_description }}</textarea>
 				@error('noncompliance_description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause">{{ $corrective_measure->noncompliance_cause }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('Uzrok neusaglašenosti nije popunjen')"
+                oninput="this.setCustomValidity('')">{{ $corrective_measure->noncompliance_cause }}</textarea>
 				@error('noncompliance_cause')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure">{{ $corrective_measure->measure }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('Mera za otklanjanje neusaglšenosti nije popunjena')"
+                oninput="this.setCustomValidity('')">{{ $corrective_measure->measure }}</textarea>
 				@error('measure')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -85,6 +91,9 @@
 			<div class="form-group" id="measure_reason_field" style="{{ ($corrective_measure->measure_approval == "0")? 'display:' : 'display: none' }}">
 				<label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason" id="measure_approval_reason" value="{{ $corrective_measure->measure_approval_reason }}">
+				@error('measure_approval_reason')
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+				@enderror
 			</div>
 			<div class="form-group">
 				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
@@ -95,7 +104,8 @@
 			</div>
 			<div class="form-group" id="measure_effective_field" style="{{ ($corrective_measure->measure_status == "1")? 'display:' : 'display: none' }}">
 				<label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective"  
+				
 					<option value="">Izaberi...</option>
 					<option value="1" {{ $corrective_measure->measure_effective == "1" ? "selected" : "" }} >DA</option>
 					<option value="0" {{ $corrective_measure->measure_effective == "0" ? "selected" : "" }} >NE</option>
