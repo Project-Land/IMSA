@@ -28,11 +28,11 @@
             <div class="max-w-sm overflow-hidden shadow-lg divide-y divide-gray-400">
                 <div class="px-6 py-4"><div class="font-bold text-xl text-center">DOKUMENTACIJA</div></div>
                 <div class="px-6 py-4">
-                  <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/rules-of-procedures">Poslovnik</a></div>
-                  <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/policies">Politike</a></div>
-                  <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/procedures">Procedure</a></div>
-                  <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/manuals">Uputstva</a></div>
-                  <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/forms">Obrasci</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/policies') }}">Politike</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/procedures') }}">Procedure</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/manuals') }}">Uputstva</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/forms') }}">Obrasci</a></div>
                 </div>
             </div>
         </div>
@@ -41,15 +41,15 @@
             <div class="max-w-sm overflow-hidden shadow-lg divide-y divide-gray-400">
                 <div class="px-6 py-4"><div class="font-bold text-xl text-center">SISTEMSKI PROCESI</div></div>
                 <div class="px-6 py-4">
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/risk-management">Upravljanje rizikom</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/internal-check">Interne provere</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/corrective-measures">Neusaglašenosti i korektivne mere</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/trainings">Obuke</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/goals">Ciljevi</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/suppliers">Odabrani isporučioci</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/stakeholders">Zainteresovane strane</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/complaints">Upravljanje reklamacijama</a></div>
-                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="/management-system-reviews">Preispitivanje sistema menadžmenta</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/internal-check') }}">Interne provere</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/trainings') }}">Obuke</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/goals') }}">Ciljevi</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/suppliers') }}">Odabrani isporučioci</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a></div>
+                    <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a></div>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <img src="/images/logo.png" alt="imsa-logo">
+            <img src="{{ asset('/images/logo.png') }}" alt="imsa-logo">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

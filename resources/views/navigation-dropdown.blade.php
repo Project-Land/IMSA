@@ -6,79 +6,82 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                    <img src="/images/logo.png" class="w-20 h-20 mt-2">
+                        <img src="{{ asset('/images/logo.png') }}" class="w-20 h-20 mt-2">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-lg p-4">
-                @inject('standards', 'standards')
-                <x-jet-dropdown>
-                    <x-slot name="trigger">
-                    <a  type="button" class="btn trigger rounded-0" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
-                    
-                    </x-slot> 
-                    <div class="dropdown-menu"> 
-                    <x-slot name="content">
-                        @foreach($standards as $standard)
-                        <a class="dropdown-item" href="{{'/standards/'.$standard->id}}">{{$standard->name}}</a>
-                        @endforeach
-                    </x-slot>
-                    </div>
+                    @inject('standards', 'standards')
+                    <x-jet-dropdown>
+
+                        <x-slot name="trigger">
+                            <a type="button" class="btn trigger rounded-0" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                        </x-slot> 
+
+                        <div class="dropdown-menu"> 
+                            <x-slot name="content">
+                                @foreach($standards as $standard)
+                                    <a class="dropdown-item" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
+                                @endforeach
+                            </x-slot>
+                        </div>
+
                     </x-jet-dropdown>
                
                     <x-jet-dropdown>
-                    <x-slot name="trigger">
-                    <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
-                    </x-slot> 
-                    <div class="dropdown-menu">
-                    <x-slot name="content">
-                  
-                    <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
-                    <a class="dropdown-item" href="/policies">Politike</a>
-                    <a class="dropdown-item" href="/procedures">Procedure</a>
-                    <a class="dropdown-item" href="/manuals">Uputstva</a>
-                    <a class="dropdown-item" href="/forms">Obrasci</a>          
-                    </x-slot>
-                    </div>
+
+                        <x-slot name="trigger">
+                            <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
+                        </x-slot> 
+
+                        <div class="dropdown-menu">
+                            <x-slot name="content">
+                                <a class="dropdown-item" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
+                                <a class="dropdown-item" href="{{ asset('/policies') }}">Politike</a>
+                                <a class="dropdown-item" href="{{ asset('/procedures') }}">Procedure</a>
+                                <a class="dropdown-item" href="{{ asset('/manuals') }}">Uputstva</a>
+                                <a class="dropdown-item" href="{{ asset('/forms') }}">Obrasci</a>          
+                            </x-slot>
+                        </div>
+
                     </x-jet-dropdown>
 
 
                     <x-jet-dropdown width="60">
-                    <x-slot name="trigger">
-                    <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
-                    </x-slot> 
-                    <div class="dropdown-menu">
-                    <x-slot name="content">
-                  
-                    <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
-                    <a class="dropdown-item" href="/internal-check">Interne provere</a>
-                    <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
-                    <a class="dropdown-item" href="/trainings">Obuke</a>
-                    <a class="dropdown-item" href="/goals">Ciljevi</a>
-                    <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
-                    <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
-                    <a class="dropdown-item" href="/complaints">Upravljanje reklamacijama</a>
-                    <a class="dropdown-item" href="/management-system-reviews">Preispitivanje sistema menadžmenta</a>     
-                    </x-slot>
-                    </div>
+                        <x-slot name="trigger">
+                            <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
+                        </x-slot> 
+                        <div class="dropdown-menu">
+                            <x-slot name="content">
+                                <a class="dropdown-item" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
+                                <a class="dropdown-item" href="{{ asset('/internal-check') }}">Interne provere</a>
+                                <a class="dropdown-item" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
+                                <a class="dropdown-item" href="{{ asset('/trainings') }}">Obuke</a>
+                                <a class="dropdown-item" href="{{ asset('/goals') }}">Ciljevi</a>
+                                <a class="dropdown-item" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
+                                <a class="dropdown-item" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
+                                <a class="dropdown-item" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
+                                <a class="dropdown-item" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
+                            </x-slot>
+                        </div>
                     </x-jet-dropdown>
 
                     <x-jet-dropdown>
                    
-            <div class="dropdown-menu">
-            <x-slot name="trigger">
-            <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sektori</button>
-            </x-slot>
-            <x-slot name="content">
-                <a class="dropdown-item" href="/sectors">Lista sektora</a>
-                @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>  @endcan    
-            </x-slot> 
-           
-            </div>
-            </x-jet-dropdown>
+                        <div class="dropdown-menu">
+                            <x-slot name="trigger">
+                                <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sektori</button>
+                            </x-slot>
 
-                    
+                            <x-slot name="content">
+                                <a class="dropdown-item" href="{{ asset('/sectors') }}">Lista sektora</a>
+                                @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>  @endcan    
+                            </x-slot> 
+           
+                        </div>
+                    </x-jet-dropdown>
+
                 </div>
             </div>
 
@@ -111,16 +114,16 @@
                             @forelse($Notifications as $not)
                                 @can('view',$not)
 
-                                @if ($not->notifiable_type==='App\Models\InternalCheck')
-                                <x-jet-dropdown-link href="{{'/internal-check#internalcheck'.$not->notifiable_id}}" >
+                                @if ($not->notifiable_type === 'App\Models\InternalCheck')
+                                <x-jet-dropdown-link href="{{ '/internal-check#internalcheck'.$not->notifiable_id }}" >
                                     {{ __($not->message) }}
                                 </x-jet-dropdown-link>
-                                @elseif ($not->notifiable_type==='App\Models\Goal')
-                                <x-jet-dropdown-link href="{{'/goals#goal'.$not->notifiable_id}}" >
+                                @elseif ($not->notifiable_type === 'App\Models\Goal')
+                                <x-jet-dropdown-link href="{{ '/goals#goal'.$not->notifiable_id }}" >
                                     {{ __($not->message) }}
                                 </x-jet-dropdown-link>
                                 @else
-                                <x-jet-dropdown-link href="{{'/suppliers#supplier'.$not->notifiable_id}}" >
+                                <x-jet-dropdown-link href="{{ '/suppliers#supplier'.$not->notifiable_id }}" >
                                     {{ __($not->message) }}
                                 </x-jet-dropdown-link>
                                 @endif
@@ -254,78 +257,69 @@
         <div class="pt-2 pb-3 space-y-1">
            
             <x-jet-dropdown>
-            <x-slot name="trigger">
-                    <a  type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
-                    
-                    </x-slot> 
-                    <div class="dropdown-menu"> 
+                <x-slot name="trigger">
+                    <a type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                </x-slot> 
+
+                <div class="dropdown-menu"> 
                     <x-slot name="content">
                         @foreach($standards as $standard)
-                        <a class="dropdown-item" href="{{'/standards/'.$standard->id}}">{{$standard->name}}</a>
+                            <a class="dropdown-item" href="{{ asset("'/standards/'.$standard->id") }}">{{$standard->name}}</a>
                         @endforeach
                     </x-slot>
-                    </div>
+                </div>
             </x-jet-dropdown>
         
 
             <x-jet-dropdown>
-                    <x-slot name="trigger">
+                <x-slot name="trigger">
                     <button type="button" class="btn trigger">Dokumentacija</button>
-                    </x-slot> 
-                    <div class="dropdown-menu">
+                </x-slot>
+
+                <div class="dropdown-menu">
                     <x-slot name="content">
-                  
-                    <a class="dropdown-item" href="/rules-of-procedures">Poslovnik</a>
-                    <a class="dropdown-item" href="/policies">Politike</a>
-                    <a class="dropdown-item" href="/procedures">Procedure</a>
-                    <a class="dropdown-item" href="/manuals">Uputstva</a>
-                    <a class="dropdown-item" href="/forms">Obrasci</a>          
+                        <a class="dropdown-item" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
+                        <a class="dropdown-item" href="{{ asset('/policies') }}">Politike</a>
+                        <a class="dropdown-item" href="{{ asset('/procedures') }}">Procedure</a>
+                        <a class="dropdown-item" href="{{ asset('/manuals') }}">Uputstva</a>
+                        <a class="dropdown-item" href="{{ asset('/forms') }}">Obrasci</a>          
                     </x-slot>
-                    </div>
-                    </x-jet-dropdown>
+                </div>
+            </x-jet-dropdown>
            
 
             <x-jet-dropdown width="60">
-                    <x-slot name="trigger">
+                <x-slot name="trigger">
                     <button type="button" class="btn trigger">Sistemski procesi</button>
-                    </x-slot> 
-                    <div class="dropdown-menu">
+                </x-slot> 
+
+                <div class="dropdown-menu">
                     <x-slot name="content">
-                  
-                    <a class="dropdown-item" href="/risk-management">Upravljanje rizikom</a>
-                    <a class="dropdown-item" href="/internal-check">Interne provere</a>
-                    <a class="dropdown-item" href="/corrective-measures">Neusaglašenosti i korektivne mere</a>
-                    <a class="dropdown-item" href="/trainings">Obuke</a>
-                    <a class="dropdown-item" href="/goals">Ciljevi</a>
-                    <a class="dropdown-item" href="/suppliers">Odobreni isporučioci</a>
-                    <a class="dropdown-item" href="/stakeholders">Zainteresovane strane</a>
-                    <a class="dropdown-item" href="/complaints">Upravljanje reklamacijama</a>
-                    <a class="dropdown-item" href="/management-system-reviews">Preispitivanje sistema menadžmenta</a>     
+                        <a class="dropdown-item" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
+                        <a class="dropdown-item" href="{{ asset('/internal-check') }}">Interne provere</a>
+                        <a class="dropdown-item" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
+                        <a class="dropdown-item" href="{{ asset('/trainings') }}">Obuke</a>
+                        <a class="dropdown-item" href="{{ asset('/goals') }}">Ciljevi</a>
+                        <a class="dropdown-item" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
+                        <a class="dropdown-item" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
+                        <a class="dropdown-item" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
+                        <a class="dropdown-item" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
                     </x-slot>
-                    </div>
-                    </x-jet-dropdown>
+                </div>
+            </x-jet-dropdown>
 
+            <x-jet-dropdown>
+                <div class="dropdown-menu">
+                    <x-slot name="trigger">
+                        <button type="button" class="btn trigger">Sektori</button>
+                    </x-slot>
 
-                    <x-jet-dropdown>
-                   
-                   <div class="dropdown-menu">
-                   <x-slot name="trigger">
-                   <button type="button" class="btn trigger">Sektori</button>
-                   </x-slot>
-                   <x-slot name="content">
-                       <a class="dropdown-item" href="/sectors">Lista sektora</a>
-                       @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="/sectors/create">Dodaj sektor</a>  @endcan    
-                   </x-slot> 
-                  
-                   </div>
-                   </x-jet-dropdown>
-
-
-           
-
-
-
-
+                    <x-slot name="content">
+                       <a class="dropdown-item" href="{{ asset('/sectors') }}">Lista sektora</a>
+                       @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>  @endcan    
+                    </x-slot> 
+                </div>
+            </x-jet-dropdown>
 
         </div>
 
@@ -374,30 +368,38 @@
                     </div>
 
                     <!-- Team Settings -->
+                    <x-jet-responsive-nav-link href="{{ route('teams.index') }}" :active="request()->routeIs('teams.index')">
+                        {{ __('Lista svih timova') }}
+                    </x-jet-responsive-nav-link>
+
                     <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
                         {{ __('Podešavanja tima') }}
                     </x-jet-responsive-nav-link>
 
-                    <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                        {{ __('Kreiraj novi tim') }}
-                    </x-jet-responsive-nav-link>
+                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                            {{ __('Kreiraj novi tim') }}
+                        </x-jet-responsive-nav-link>
+                    @endcan
 
                     <div class="border-t border-gray-200"></div>
 
-                    <!-- User management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Upravljanje korisnicima') }}
-                    </div>
+                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                        <!-- User management -->
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            {{ __('Upravljanje korisnicima') }}
+                        </div>
 
-                    <x-jet-dropdown-link href="{{ route('users.index') }}">
-                        {{ __('Lista korisnika') }}
-                    </x-jet-dropdown-link>
-    
-                    <x-jet-dropdown-link href="{{ route('users.create') }}">
-                        {{ __('Kreiraj novog korisnika') }}
-                    </x-jet-dropdown-link>
-    
-                    <div class="border-t border-gray-100"></div>
+                        <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                            {{ __('Lista korisnika') }}
+                        </x-jet-responsive-nav-link>
+        
+                        <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
+                            {{ __('Kreiraj novog korisnika') }}
+                        </x-jet-responsive-nav-link>
+        
+                        <div class="border-t border-gray-100"></div>
+                    @endif
                 @endif
 
             </div>

@@ -56,7 +56,7 @@
 									{{ ($user->teamRole($user->currentTeam)->name) === "Owner" ? "Super Admin" : $user->teamRole($user->currentTeam)->name }}
 								</td>
 								<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-									<a href="#" class="text-indigo-600 hover:text-indigo-900">Izveštaj</a>
+									<!-- <a href="#" class="text-indigo-600 hover:text-indigo-900">Izveštaj</a> -->
 								</td>
 							</tr>
 							@endforeach
