@@ -18,7 +18,7 @@ class TeamController extends Controller
 
     public function showTeamUserStats($id)
     {
-        $stats = TeamStats::where('team_id', $id)->orderBy('check_date', 'desc')->get();
+        $stats = TeamStats::where('team_id', $id)->with('team')->orderBy('check_date', 'desc')->get();
         return response()->json($stats);
     }
     

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Document;
+use App\Models\Sector;
 use App\Facades\CustomLog;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -19,11 +20,17 @@ class ManualsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
+        $sector = Sector::where('is_global', 1)->get()->first()->id;
         $documents = Document::where([
                 ['doc_category', 'manual'],
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
+            ])->orWhere([
+                ['sector_id', $sector],
+                ['doc_category', 'manual'],
+                ['team_id', Auth::user()->current_team_id]
             ])->get();
+
         $folder = \Str::snake($this::getCompanyName())."/manuals";
         $route_name = "manuals";
         $doc_type="Uputstva";
@@ -33,11 +40,14 @@ class ManualsController extends Controller
     public function create()
     {
         $this->authorize('create', Document::class);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('documents.create',
             [
                 'url' => route('manuals.store'),
                 'back' => route('manuals.index'),
-                'doc_type'=>'Uputstva'
+                'doc_type'=>'Uputstva',
+                'sectors' => $sectors,
+                'category' => 'manuals'
             ]
         );
     }
@@ -70,13 +80,16 @@ class ManualsController extends Controller
     {
         $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('documents.edit',
             [
                 'document' => $document,
                 'url' => route('manuals.update',$document->id),
                 'folder' => 'manuals',
                 'back' => route('manuals.index'),
-                'doc_type'=>'Uputstva'
+                'doc_type' => 'Uputstva',
+                'sectors' => $sectors,
+                'category' => 'manuals'
             ]
         );
     }

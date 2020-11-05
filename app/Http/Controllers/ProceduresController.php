@@ -12,19 +12,25 @@ use Exception;
 
 class ProceduresController extends Controller
 {
-    public function index($id=null)
+    public function index($id = null)
     {
         $standardId = $this::getStandard();
         if($standardId == null){
             return redirect('/');
         }
+        $sector = Sector::where('is_global', 1)->get()->first()->id;
+
         $documents = Document::where([
                 ['doc_category', 'procedure'],
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
             ])->when($id, function ($query, $id) {
                 return $query->where('sector_id', $id);
-            })->get();
+            })->orWhere([
+                ['sector_id', $sector],
+                ['doc_category', 'procedure'],
+                ['team_id', Auth::user()->current_team_id]
+            ])->get();
          
         $folder = \Str::snake($this::getCompanyName())."/procedure";
         $route_name = 'procedures';

@@ -37,7 +37,7 @@
                                 <tr class="text-center">
                                     <th>Naziv dokumenta</th>
                                     <th>Verzija</th>
-                                    @if($route_name == 'procedures')<th>Sektor</th>@endif
+                                    @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>Sektor</th>@endif
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <td class="text-center">{{ $document->document_name }}</td>
                                     <td class="text-center">{{ $document->version }}</td>
-                                    @if($route_name == 'procedures')<td class="text-center">{{ $document->sector->name }}</th>@endif
+                                    @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">
                                         <a href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
                                         @canany(['update', 'delete'], $document)

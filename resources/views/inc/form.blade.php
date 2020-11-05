@@ -32,7 +32,7 @@
 				@enderror
 			</div>
 
-			@if(isset($category) && $category == 'procedures')
+			@if(isset($category) && ($category == 'procedures' || $category == 'forms' || $category == 'manuals'))
 				<div class="mb-4">
 					<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Izaberi sektor</label>
 					<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">

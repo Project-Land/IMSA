@@ -92,7 +92,7 @@
                                     </div>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-									<a href="/change-current-team/{{ $team->id }}">Sadržaj</a>
+									<a href="/change-current-team/{{ $team->id }}">Pregled</a>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     Trenutno: {{ $team->users->count() - 1 }}<br>
@@ -122,11 +122,11 @@
         axios.get('/show-team-stats/'+id)
             .then((response) => {
                 let modal = `<div class="modal" id="showTeamStats-${ id }" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-dialog bg-white modal-lg rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header text-center">
-                                            <h5 class="modal-title font-weight-bold">NAZIV FIRME: ${response.data[0].team_id}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <div class="flex justify-between mb-2">
+                                            <h5 class="px-3 py-4 font-bold text-center">Broj korisnika po datumima: ${response.data[0].team.name}</h5>
+                                            <button type="button" class="close px-4 py-1" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -134,15 +134,15 @@
                                         
                                         $.each(response.data, function (i, item){
                                             modal +=`
-                                            <div class="row mt-3">
-                                                <div class="col-sm-5 border-bottom font-weight-bold"><p>Datum: ${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</p></div>
-                                                <div class="col-sm-7 border-bottom"><p>Broj korisnika: ${item.total}</p></div>
+                                            <div class="row mt-1 text-sm">
+                                                <div class="col-sm-5 border-bottom mt-2"><p><b>Datum:</b> <i>${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</i></p></div>
+                                                <div class="col-sm-7 border-bottom mt-2"><p><b>Broj korisnika</b>: ${item.total - 1}</p></div>
                                             </div>`
                                         })
 
                                         modal +=`</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                        <div class="modal-footer px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>

@@ -27,7 +27,8 @@ class FormsRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'version' => 'required',
-            'file' => 'required|max:10000|mimes:doc,docx,xlsx,xls,csv'
+            'file' => 'required|max:10000|mimes:doc,docx,xlsx,xls,csv',
+            'sector_id' => 'required'
         ];
     }
 
@@ -36,7 +37,8 @@ class FormsRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'version' => 'required',
-            'file' => 'max:10000|mimes:doc,docx,xlsx,xls,csv'
+            'file' => 'max:10000|mimes:doc,docx,xlsx,xls,csv',
+            'sector_id' => 'required'
         ];
     }
 
@@ -57,7 +59,8 @@ class FormsRequest extends FormRequest
             'file.mimes' => 'Fajl mora biti u Word/Excel formatu',
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'version.required' => 'Unesite verziju dokumenta'
+            'version.required' => 'Unesite verziju dokumenta',
+            'sector_id.required' => 'Izaberite pripadajući sektor'
         ];
     }
 

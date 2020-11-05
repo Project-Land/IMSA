@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Sector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\FormsRequest;
@@ -18,11 +19,18 @@ class FormsController extends Controller
         if($standardId == null){
             return redirect('/');
         }
+        $sector = Sector::where('is_global', 1)->get()->first()->id;
+
         $documents = Document::where([
                 ['doc_category', 'form'],
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
+            ])->orWhere([
+                ['sector_id', $sector],
+                ['doc_category', 'form'],
+                ['team_id', Auth::user()->current_team_id]
             ])->get();
+
         $folder = \Str::snake($this::getCompanyName())."/form";
         $route_name = "forms";
         $doc_type="Obrasci";
@@ -32,11 +40,14 @@ class FormsController extends Controller
     public function create()
     {
         $this->authorize('create', Document::class);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('documents.create',
             [
                 'url' => route('forms.store'),
                 'back' => route('forms.index'),
-                'doc_type'=>'Obrasci'
+                'sectors' => $sectors,
+                'doc_type' => 'Obrasci',
+                'category' => 'forms'
             ]
         );
     }
@@ -69,13 +80,16 @@ class FormsController extends Controller
     {
         $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
+        $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('documents.edit',
             [
                 'document' => $document,
                 'url' => route('forms.update', $document->id),
                 'folder' => 'form',
                 'back' => route('forms.index'),
-                'doc_type'=>'Obrasci'
+                'doc_type' => 'Obrasci',
+                'sectors' => $sectors,
+                'category' => 'forms'
             ]
         );
     }

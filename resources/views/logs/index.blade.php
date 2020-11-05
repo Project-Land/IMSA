@@ -24,7 +24,7 @@
 
 			<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 
-                <div class="pl-4 py-2 bg-white shadow rounded">
+                <div class="pl-4 pt-3 pb-1 bg-white shadow rounded">
                     <p><b>Poslednja promena:</b> <i>{{ date('d.m.Y H:i:s', strtotime($data['lastModified'])) }}</i></p>
                     <p><b>Veličina fajla:</b> {{ round($data['size'] / 1024) }} KB</p>
                 </div>
