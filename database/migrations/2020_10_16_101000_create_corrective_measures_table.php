@@ -15,11 +15,13 @@ class CreateCorrectiveMeasuresTable extends Migration
     {
         Schema::create('corrective_measures', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('sector_id')->constrained();
+            $table->foreignId('inconsistency_id')->nullable()->constrained()->onDelete('set null');
             $table->string('name');
-            $table->unsignedBigInteger('standard_id');
             $table->string('noncompliance_source');
-            $table->unsignedBigInteger('sector_id');
-            $table->unsignedBigInteger('inconsistency_id')->nullable();
             $table->text('noncompliance_description');
             $table->text('noncompliance_cause');
             $table->date('noncompliance_cause_date');
@@ -30,12 +32,7 @@ class CreateCorrectiveMeasuresTable extends Migration
             $table->date('measure_approval_date')->nullable();
             $table->boolean('measure_status');
             $table->boolean('measure_effective')->nullable();
-
             $table->timestamps();
-
-            $table->foreign('standard_id')->references('id')->on('standards');
-            $table->foreign('sector_id')->references('id')->on('sectors');
-            $table->foreign('inconsistency_id')->references('id')->on('inconsistencies');
         });
     }
 

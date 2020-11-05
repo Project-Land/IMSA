@@ -15,7 +15,10 @@ class CreateSectorsTable extends Migration
     {
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->boolean('is_global')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateSectorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sectors');
+        //Schema::dropIfExists('sectors');
     }
 }

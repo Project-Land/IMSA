@@ -15,7 +15,9 @@ class CreateManagementSystemReviewsTable extends Migration
     {
         Schema::create('management_system_reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('standard_id');
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->year('year');
             $table->text('participants');
             $table->text('measures_status');
@@ -33,8 +35,6 @@ class CreateManagementSystemReviewsTable extends Migration
             $table->text('needs_for_change')->nullable();
             $table->text('needs_for_resources')->nullable();
             $table->timestamps();
-
-            $table->foreign('standard_id')->references('id')->on('standards');
         });
     }
 

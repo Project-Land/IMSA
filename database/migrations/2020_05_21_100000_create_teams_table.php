@@ -29,6 +29,10 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('teams');
+        /*Schema::table('teams', function (Blueprint $table){
+            $table->dropIndex(['user_id']);
+        });*/
+
+        //Schema::drop('teams');
     }
 }

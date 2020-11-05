@@ -15,6 +15,9 @@ class CreateTrainingsTable extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->year('year');
             $table->string('name');
             $table->text('description');

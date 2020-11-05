@@ -14,11 +14,8 @@ class CreateStandardTeamTable extends Migration
     public function up()
     {
         Schema::create('standard_team', function (Blueprint $table) {
-        
-            $table->unsignedbigInteger('standard_id')->nullable();
-            $table->unsignedbigInteger('team_id')->nullable();
-            $table->foreign('standard_id')->references('id')->on('standards')->onDelete('cascade');
-            $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+            $table->foreignId('standard_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->primary(['standard_id', 'team_id']);
         });
@@ -31,6 +28,6 @@ class CreateStandardTeamTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('standard_team_');
+        Schema::dropIfExists('standard_team');
     }
 }

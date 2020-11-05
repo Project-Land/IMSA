@@ -15,6 +15,10 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('sector_id')->nullable()->constrained()->onDelete('set null');
             $table->string('document_name');
             $table->string('version');
             $table->enum('doc_category', ['rules_procedure', 'policy', 'procedure', 'manual', 'form']);

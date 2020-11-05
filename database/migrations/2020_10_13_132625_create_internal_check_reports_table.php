@@ -27,6 +27,6 @@ class CreateInternalCheckReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('internal_check_reports');
+        //Schema::dropIfExists('internal_check_reports');
     }
 }

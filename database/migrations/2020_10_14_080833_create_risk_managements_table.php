@@ -15,15 +15,22 @@ class CreateRiskManagementsTable extends Migration
     {
         Schema::create('risk_managements', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->text('description');
             $table->integer('probability');
             $table->integer('frequency');
             $table->integer('total');
             $table->integer('acceptable');
-            $table->unsignedBigInteger('standard_id');
+            $table->string('measure')->nullable();
+            $table->timestamp('measure_created_at')->nullable();
+            $table->string('cause')->nullable();
+            $table->string('risk_lowering_measure')->nullable();
+            $table->string('responsibility')->nullable();
+            $table->date('deadline')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
-            
-            $table->foreign('standard_id')->references('id')->on('standards');
         });
     }
 

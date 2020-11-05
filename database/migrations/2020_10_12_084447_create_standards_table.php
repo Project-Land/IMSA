@@ -27,6 +27,6 @@ class CreateStandardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('standards');
+        //Schema::dropIfExists('standards');
     }
 }

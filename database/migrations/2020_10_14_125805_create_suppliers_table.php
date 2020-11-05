@@ -15,19 +15,20 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->string('supplier_name');
             $table->text('subject');
             $table->integer('quality');
             $table->integer('price');
             $table->integer('shippment_deadline');
             $table->boolean('status');
+            $table->string('personal_info')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->timestamp('deadline_date');
-            $table->unsignedBigInteger('standard_id');
-            $table->unsignedBigInteger('team_id');
             $table->timestamps();
-
-            $table->foreign('standard_id')->references('id')->on('standards');
-            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 

@@ -15,15 +15,15 @@ class CreateInternalChecksTable extends Migration
     {
         Schema::create('internal_checks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sector_id')->constrained();
+            $table->foreignId('plan_ip_id')->constrained();
+            $table->foreignId('internal_check_report_id')->constrained();
             $table->date('date');
-            $table->unsignedBigInteger('sector_id');
             $table->string('leaders');
-            $table->unsignedBigInteger('standard_id')->nullable();
-            $table->unsignedBigInteger('plan_ip_id')->nullable();
-            $table->unsignedBigInteger('internal_check_report_id')->nullable();
             $table->timestamps();
-            $table->foreign('standard_id')->references('id')->on('standards');
-           
         });
     }
 

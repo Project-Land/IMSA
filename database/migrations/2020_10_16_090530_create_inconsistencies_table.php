@@ -15,17 +15,15 @@ class CreateInconsistenciesTable extends Migration
     {
         Schema::create('inconsistencies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('internal_check_report_id')->constrained();
             $table->string('description');
-            $table->unsignedBigInteger('internal_check_report_id');
-            $table->foreign('internal_check_report_id')->references('id')->on('internal_check_reports');
             $table->timestamps();
         });
 
         Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('internal_check_report_id')->constrained();
             $table->string('description');
-            $table->unsignedBigInteger('internal_check_report_id');
-            $table->foreign('internal_check_report_id')->references('id')->on('internal_check_reports');
             $table->timestamps();
         });
     }

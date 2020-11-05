@@ -15,6 +15,9 @@ class CreateGoalsTable extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->year('year');
             $table->string('goal');
             $table->string('kpi');
@@ -23,9 +26,7 @@ class CreateGoalsTable extends Migration
             $table->date('deadline');
             $table->string('resources');
             $table->text('analysis')->nullable();
-            $table->unsignedBigInteger('standard_id');
             $table->timestamps();
-            $table->foreign('standard_id')->references('id')->on('standards');
         });
     }
 

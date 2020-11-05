@@ -34,6 +34,6 @@ class CreatePlanIpsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_ips');
+        //Schema::dropIfExists('plan_ips');
     }
 }
