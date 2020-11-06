@@ -16,10 +16,10 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
-            $table->string('notifiable_type');
+            $table->string('notifiable_type')->nullable();
             $table->dateTime('checkTime');
             $table->string('message');
-            $table->unsignedBigInteger('notifiable_id');
+            $table->unsignedBigInteger('notifiable_id')->nullable();
             $table->timestamps();
         });
     }

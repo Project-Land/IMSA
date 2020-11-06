@@ -15,10 +15,10 @@ class CreatePlanIpsTable extends Migration
     {
         Schema::create('plan_ips', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('standard_id')->constrained();
             $table->string('name')->nullable();
             $table->date('checked_date')->nullable();
             $table->string('checked_sector')->nullable();
-            $table->string('standard')->nullable();
             $table->string('team_for_internal_check')->nullable();
             $table->dateTime('check_start')->nullable();
             $table->dateTime('check_end')->nullable();

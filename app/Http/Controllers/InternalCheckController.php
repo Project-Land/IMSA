@@ -50,6 +50,17 @@ class InternalCheckController extends Controller
             ['team_id', Auth::user()->current_team_id],
         ])->whereYear('date', '=', $request->year)->get();
 
+        /*$isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
+
+        if(!$internal_checks->isEmpty()){
+            $internal_checks = $internal_checks->map(function($item, $key) use($isAdmin){
+                $item->isAdmin = $isAdmin;
+                return $item;
+            });
+        }
+
+        return response()->json($internal_checks);*/
+
         return view('system_processes.internal_check.index', compact('internal_checks'));
     }
 
@@ -76,26 +87,25 @@ class InternalCheckController extends Controller
     public function store(StoreInternalCheckRequest $request)
     {   
         //Calculate planIp name
-        $c=DB::table('plan_ips')
+         $c=DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
         ->where('internal_checks.team_id','<>',Auth::user()->current_team_id)->get()->count();
-        $lastid = PlanIp::latest()->first();
-
-        if(!empty($lastid)){
-            $planId = $lastid->id-$c;
-        }
-        else{
+        $lastid=PlanIp::latest()->first();
+        if(empty($lastid)){
             $planId = 1;
         }
-        
+        else{
+            $planId=$lastid->id-$c;
+        }
+
         $this->authorize('create',InternalCheck::class);
         $validatedData = $request->validated();
         $validatedLeaders = $request->validate([ 'leaders' => 'required']);
         $leaders = implode(",", $validatedLeaders['leaders']);
 
         $validatedData['leaders'] = $leaders;
-        $validatedData['plan_ip_id'] = $planId;
         $validatedData['team_id'] = Auth::user()->current_team_id;
+        $validatedData['user_id'] = Auth::user()->id;
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
 
         try{

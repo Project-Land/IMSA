@@ -45,10 +45,10 @@ class PlanIpController extends Controller
         $planIp = PlanIp::findOrFail($id);
         $this->authorize('update', $planIp);
 
-        $planIp->report_deadline = $request->report_deadline;
+        $planIp->report_deadline = date('Y-m-d', strtotime($request->report_deadline));
         $planIp->check_start = date('Y-m-d H:i', strtotime($request->check_start));
         $planIp->check_end = date('Y-m-d H:i', strtotime($request->check_end));
-        $planIp->checked_date = $request->checked_date;
+        $planIp->checked_date = date('Y-m-d', strtotime($request->checked_date));
         $planIp->checked_sector = $request->checked_sector;
         $planIp->team_for_internal_check = $request->team_for_internal_check;
 

@@ -16,51 +16,50 @@
 		<form action="{{route('internal-check.update',$internalCheck->id)}}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
-            <div class="form-group">
-                <label for="date">Termin provere</label>
+
+            <div class="mb-4">
+                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Termin provere</label>
                 <input type="text" class="form-control" placeholder="xx.xx.xxxx" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
                 @error('date')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
-        <div class="form-group">
-            <label for="sector">Područje promene</label>
-            <select class="form-control" id="sector" name="sector_id">
-            @foreach($sectors as $sector)
-            <option value="{{$sector->id}}">{{$sector->name}}</option>
-            @endforeach
-            </select>
-            @error('sector_id')
-            <span class="text-red-700 italic text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-
-            <div class="form-group">
-                <label for="leaders">Vođe tima</label>
-                <select class="form-control" id="leaders" name="leaders">
-                @foreach($teamLeaders as $teamLeader)
-                <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
-                @endforeach
+            <div class="mb-4">
+                <label for="sector" class="block text-gray-700 text-sm font-bold mb-2">Područje promene</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector" name="sector_id">
+                    @foreach($sectors as $sector)
+                        <option value="{{$sector->id}}">{{$sector->name}}</option>
+                    @endforeach
                 </select>
-                @error('leaders')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                @error('sector_id')
+                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label for="standard_id">Standard</label>
-                <select class="form-control" id="standard_id" name="standard_id">
-                <option value="{{$internalCheck->standard_id}}">{{$internalCheck->standard->name}}</option>
-                <option value="1">9001</option>
-                <option>1005</option>
+            <div class="mb-4">
+                <label for="leaders" class="block text-gray-700 text-sm font-bold mb-2">Vođe tima</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders">
+                    @foreach($teamLeaders as $teamLeader)
+                        <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
+                    @endforeach
+                </select>
+                @error('leaders')
+                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">Standard</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="standard_id" name="standard_id">
+                    <option value="{{ $internalCheck->standard_id }}" selected>{{ $internalCheck->standard->name }}</option>
                 </select>
                 @error('standard_id')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
                 
-            <button type="submit" class="btn btn-primary">Izmeni</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
         </form>
     </div>
 
