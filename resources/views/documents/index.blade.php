@@ -48,7 +48,7 @@
                                     <td class="text-center">{{ $document->version }}</td>
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">
-                                        <a href='{{ asset("$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
+                                        <a href='{{ "../storage/$folder/$document->file_name" }}'><i class="fas fa-download"></i></a>
                                         @canany(['update', 'delete'], $document)
                                         <a href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
