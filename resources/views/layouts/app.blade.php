@@ -37,15 +37,12 @@
                 position: static;
                 float: none;
             }
-             .dropdown-item {   
-                background-color: #f5f5ef;
-               
-            }
 
-            .dropdown-item:hover{
-                background:#ebebe0;
+            @media (max-width: 640px) {  
+                .dataTables_length, .dataTables_filter, .pagination, .dataTables_info, .yajra-datatable {
+                    font-size: 12px;
+                }
             }
-            
         </style>
     </head>
     <body class="font-sans antialiased">
@@ -60,10 +57,8 @@
                 </div>
 
                 <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
-                   @if (!Request::is('/'))
-                 <!--    @include('nav')  -->
-                    @else
-                    <h1 class="h1 text-center" >{{ 'IZABERITE STANDARD' }}</h1>
+                    @if(Request::is('/'))
+                        <h1 class="h1 text-center" >{{ 'IZABERITE STANDARD' }}</h1>
                     @endif
                 </div>
             </header>

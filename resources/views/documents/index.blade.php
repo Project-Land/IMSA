@@ -3,7 +3,6 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ Session::get('standard_name') }} - {{ $doc_type }} 
-           
         </h2>
     </x-slot>
 
@@ -26,9 +25,9 @@
 
             <div class="card">
                 @can('create', App\Models\Document::class)
-                <div class="card-header">
-                    <a class="btn btn-info" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
-                </div>
+                    <div class="card-header">
+                        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
+                    </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -48,7 +47,7 @@
                                     <td class="text-center">{{ $document->version }}</td>
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">
-                                        <a href='{{ storage_path("app/public/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
+                                        <a href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
                                         @canany(['update', 'delete'], $document)
                                         <a href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">

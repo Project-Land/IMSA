@@ -20,7 +20,7 @@ class CreateInternalChecksTable extends Migration
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->foreignId('sector_id')->constrained();
             $table->foreignId('plan_ip_id')->constrained();
-            $table->foreignId('internal_check_report_id')->constrained();
+            $table->foreignId('internal_check_report_id')->nullable()->constrained();
             $table->date('date');
             $table->string('leaders');
             $table->timestamps();

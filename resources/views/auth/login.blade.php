@@ -1,7 +1,8 @@
 <x-guest-layout>
     <x-jet-authentication-card>
+        
         <x-slot name="logo">
-            <img src="{{ asset('/images/logo.png') }}" alt="imsa-logo">
+            <img src="{{ asset('/images/logo.png') }}" class="w-3/5 ml-1/5" alt="company-logo">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
@@ -43,6 +44,8 @@
                     {{ __('Prijava') }}
                 </x-jet-button>
             </div>
+
         </form>
+
     </x-jet-authentication-card>
 </x-guest-layout>

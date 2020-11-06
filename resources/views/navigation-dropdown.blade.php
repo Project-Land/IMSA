@@ -3,6 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 mt-2">
             <div class="flex">
+
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
@@ -12,121 +13,121 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex text-lg p-4">
+
                     @inject('standards', 'standards')
                     <x-jet-dropdown>
-
                         <x-slot name="trigger">
-                            <a type="button" class="btn trigger rounded-0" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                            <button type="button" class="hover:no-underline hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
                         </x-slot> 
 
                         <div class="dropdown-menu"> 
                             <x-slot name="content">
                                 @foreach($standards as $standard)
-                                    <a class="dropdown-item" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
+                                    <a class="hover:no-underline block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
                                 @endforeach
                             </x-slot>
                         </div>
-
                     </x-jet-dropdown>
                
                     <x-jet-dropdown>
-
                         <x-slot name="trigger">
-                            <button type="button" class="btn trigger" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
+                            <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
                         </x-slot> 
 
                         <div class="dropdown-menu">
                             <x-slot name="content">
-                                <a class="dropdown-item" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
-                                <a class="dropdown-item" href="{{ asset('/policies') }}">Politike</a>
-                                <a class="dropdown-item" href="{{ asset('/procedures') }}">Procedure</a>
-                                <a class="dropdown-item" href="{{ asset('/manuals') }}">Uputstva</a>
-                                <a class="dropdown-item" href="{{ asset('/forms') }}">Obrasci</a>          
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/policies') }}">Politike</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">Procedure</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">Uputstva</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">Obrasci</a>          
                             </x-slot>
                         </div>
-
                     </x-jet-dropdown>
 
 
-                    <x-jet-dropdown width="60">
+                    <x-jet-dropdown>
                         <x-slot name="trigger">
-                            <button type="button" class="btn trigger" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
+                            <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
                         </x-slot> 
+
                         <div class="dropdown-menu">
                             <x-slot name="content">
-                                <a class="dropdown-item" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
-                                <a class="dropdown-item" href="{{ asset('/internal-check') }}">Interne provere</a>
-                                <a class="dropdown-item" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
-                                <a class="dropdown-item" href="{{ asset('/trainings') }}">Obuke</a>
-                                <a class="dropdown-item" href="{{ asset('/goals') }}">Ciljevi</a>
-                                <a class="dropdown-item" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
-                                <a class="dropdown-item" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
-                                <a class="dropdown-item" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
-                                <a class="dropdown-item" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/internal-check') }}">Interne provere</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/trainings') }}">Obuke</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/goals') }}">Ciljevi</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
                             </x-slot>
                         </div>
                     </x-jet-dropdown>
 
                     <x-jet-dropdown>
-                   
                         <div class="dropdown-menu">
                             <x-slot name="trigger">
-                                <button type="button" class="btn trigger" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sektori</button>
+                                <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['sectors*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sektori</button>
                             </x-slot>
 
                             <x-slot name="content">
-                                <a class="dropdown-item" href="{{ asset('/sectors') }}">Lista sektora</a>
-                                @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>  @endcan    
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors') }}">Lista sektora</a>
+                                @can('create', App\Models\Sector::class)
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>
+                                @endcan    
                             </x-slot> 
-           
                         </div>
                     </x-jet-dropdown>
 
                 </div>
+
             </div>
 
             <div class="flex justify-end">
 
                 <!-- Notifications menu -->
                 @inject('Notifications', 'Notifications')
+
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-jet-dropdown width="48">
-                        <x-slot name="trigger">
-                        @can('viewAny',App\Models\Notification::class)
-                            <button class=" @if ($Notifications->count()) {{'bg-danger rounded p-2 text-white'}} @endif flex items-center text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>{{$Notifications->count()}} </div>
 
-                                <div class="ml-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        @endcan
+                        <x-slot name="trigger">
+                            @can('viewAny',App\Models\Notification::class)
+                                <button class=" @if ($Notifications->count()) {{'bg-danger rounded p-2 text-white'}} @endif flex items-center text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    <div>{{$Notifications->count()}} </div>
+
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            @endcan
                         </x-slot>
 
                         <x-slot name="content">
-                      
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Obaveštenja') }}
                             </div>
-                            @forelse($Notifications as $not)
-                                @can('view',$not)
 
-                                @if ($not->notifiable_type === 'App\Models\InternalCheck')
-                                <x-jet-dropdown-link href="{{ '/internal-check#internalcheck'.$not->notifiable_id }}" >
-                                    {{ __($not->message) }}
-                                </x-jet-dropdown-link>
-                                @elseif ($not->notifiable_type === 'App\Models\Goal')
-                                <x-jet-dropdown-link href="{{ '/goals#goal'.$not->notifiable_id }}" >
-                                    {{ __($not->message) }}
-                                </x-jet-dropdown-link>
-                                @else
-                                <x-jet-dropdown-link href="{{ '/suppliers#supplier'.$not->notifiable_id }}" >
-                                    {{ __($not->message) }}
-                                </x-jet-dropdown-link>
-                                @endif
+                            @forelse($Notifications as $not)
+                                @can('view', $not)
+                                    @if ($not->notifiable_type === 'App\Models\InternalCheck')
+                                        <x-jet-dropdown-link href="{{ asset('/internal-check#internalcheck'.$not->notifiable_id) }}" >
+                                            {{ __($not->message) }}
+                                        </x-jet-dropdown-link>
+                                    @elseif ($not->notifiable_type === 'App\Models\Goal')
+                                        <x-jet-dropdown-link href="{{ asset('/goals#goal'.$not->notifiable_id) }}" >
+                                            {{ __($not->message) }}
+                                        </x-jet-dropdown-link>
+                                    @else
+                                        <x-jet-dropdown-link href="{{ asset('/suppliers#supplier'.$not->notifiable_id) }}" >
+                                            {{ __($not->message) }}
+                                        </x-jet-dropdown-link>
+                                    @endif
                                 @endcan
                                 @empty
                             @endforelse
@@ -137,7 +138,9 @@
 
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
+
                     <x-jet-dropdown align="right" width="48">
+
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
@@ -227,15 +230,17 @@
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
                                                     onclick="event.preventDefault();
                                                                 this.closest('form').submit();">
                                     {{ __('Odjava') }}
                                 </x-jet-dropdown-link>
                             </form>
+
                         </x-slot>
+
                     </x-jet-dropdown>
+                    
                 </div>
 
             </div>
@@ -249,16 +254,23 @@
                     </svg>
                 </button>
             </div>
+
         </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+
+            <div class="border-t border-gray-200"></div>
+
+            <div class="block px-4 py-2 text-xs text-gray-400">
+                {{ __('Meni') }}
+            </div>
            
             <x-jet-dropdown>
                 <x-slot name="trigger">
-                    <a type="button" class="btn trigger" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
+                    <button type="button" class="block w-full pl-3 text-left pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
                 </x-slot> 
 
                 <div class="dropdown-menu"> 
@@ -273,7 +285,7 @@
 
             <x-jet-dropdown>
                 <x-slot name="trigger">
-                    <button type="button" class="btn trigger">Dokumentacija</button>
+                    <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Dokumentacija</button>
                 </x-slot>
 
                 <div class="dropdown-menu">
@@ -290,7 +302,7 @@
 
             <x-jet-dropdown width="60">
                 <x-slot name="trigger">
-                    <button type="button" class="btn trigger">Sistemski procesi</button>
+                    <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Sistemski procesi</button>
                 </x-slot> 
 
                 <div class="dropdown-menu">
@@ -311,7 +323,7 @@
             <x-jet-dropdown>
                 <div class="dropdown-menu">
                     <x-slot name="trigger">
-                        <button type="button" class="btn trigger">Sektori</button>
+                        <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Sektori</button>
                     </x-slot>
 
                     <x-slot name="content">

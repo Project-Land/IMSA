@@ -25,27 +25,32 @@
         <div class="col">
 
             <div class="card">
+
                 <div class="card-header">
                     <div class="row">
+
                         <div class="col-sm-4">
                             @can('create', App\Models\InternalCheck::class)
 						        <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
 					        @endcan
                         </div>
-                        <div class="col-sm-8">
+
+                        <div class="col-sm-8 mt-3 mt-md-0">
                             <form class="form-inline" method="post" action="/internal-check/get-data">
                                 @csrf
-                                <label for="year" class="mr-3">Godina</label>
-                                <select name="year" id="year" class="form-control w-25 mr-2">
+                                <label for="year" class="mr-3 mt-sm-0 mt-2">Godina</label>
+                                <select name="year" id="year" class="form-control w-25">
                                     @foreach(range(date("Y")-1, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="btn btn-primary">Primeni</button>
+                                <button type="submit" class="btn btn-primary ml-2">Primeni</button>
                             </form>
                         </div>
+
                     </div>
                 </div>
+
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
