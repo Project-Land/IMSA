@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="form-group">
-            <button type="submit" class="btn btn-success float-right">Izmeni</button>
+            <button type="submit" class="btn btn-primary float-right">Izmeni</button>
              </div>
           
            
@@ -123,7 +123,7 @@
         deletebutton.addEventListener('click',removeInput);
 
 
-            addNewInconsistencies.classList="btn btn-success";
+            addNewInconsistencies.classList="btn btn-primary";
             addNewInconsistencies.type="button";
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
@@ -268,7 +268,7 @@
           
             const label=document.createElement('label');
             const addNewInconsistencies=document.createElement('button');
-            addNewInconsistencies.classList="btn btn-success";
+            addNewInconsistencies.classList="btn btn-primary";
             addNewInconsistencies.type="button";
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
@@ -412,7 +412,7 @@ let coun=1;
             const div=document.createElement('div');
             const label=document.createElement('label');
             const addNewRecommendations=document.createElement('button');
-            addNewRecommendations.classList="btn btn-success";
+            addNewRecommendations.classList="btn btn-primary";
             addNewRecommendations.type="button";
             addNewRecommendations.id="buttonRecommedations"+coun;
             addNewRecommendations.addEventListener('click',addSecondRecommedation);
@@ -455,7 +455,7 @@ let coun=1;
             const label=document.createElement('label');
             const addNewRecommendations=document.createElement('button');
            
-            addNewRecommendations.classList="btn btn-success";
+            addNewRecommendations.classList="btn btn-primary";
             addNewRecommendations.type="button";
             addNewRecommendations.id="buttonRecommedations"+coun;
             addNewRecommendations.addEventListener('click',addSecondRecommedation);

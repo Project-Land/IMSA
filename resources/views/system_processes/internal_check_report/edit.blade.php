@@ -68,8 +68,8 @@
 
 
         <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-            <span id="addInconsistencies"  class="btn btn-success mb-2">Dodaj neusaglašenost</span>
-            <span id="addRecommendations"  class="btn btn-success mb-2">Dodaj preporuku</span>
+            <span id="addInconsistencies"  class="btn btn-primary mb-2">Dodaj neusaglašenost</span>
+            <span id="addRecommendations"  class="btn btn-primary mb-2">Dodaj preporuku</span>
         </div>
         
         <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
@@ -105,7 +105,7 @@
                 @endforeach
         </div>
             
-        <button type="submit" id="submitForm" class="btn btn-success mt-5 float-right" >Izmeni</button>
+        <button type="submit" id="submitForm" class="btn btn-primary mt-5 float-right" >Izmeni</button>
         </form>
     </div>
 
