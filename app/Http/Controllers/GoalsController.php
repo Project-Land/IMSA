@@ -134,6 +134,7 @@ class GoalsController extends Controller
         $this->authorize('delete', $goal);
 
         try{
+            $goal->notification()->delete();
             Goal::destroy($id);
             CustomLog::info('Cilj "'.$goal->name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return true;

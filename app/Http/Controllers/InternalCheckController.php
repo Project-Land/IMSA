@@ -80,12 +80,14 @@ class InternalCheckController extends Controller
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
         ->where('internal_checks.team_id','<>',Auth::user()->current_team_id)->get()->count();
         $lastid = PlanIp::latest()->first();
-
-        if(!empty($lastid)){
-            $planId = $lastid->id-$c;
-        }
-        else{
-            $planId = 1;
+        if(!$lastid){
+            $planId=1;
+        }else{
+            if($lastid->id==1){
+                $planId=2;
+            }else{
+                $planId=$lastid->id-$c+1;
+            }
         }
         
         $this->authorize('create',InternalCheck::class);
@@ -94,7 +96,6 @@ class InternalCheckController extends Controller
         $leaders = implode(",", $validatedLeaders['leaders']);
 
         $validatedData['leaders'] = $leaders;
-        $validatedData['plan_ip_id'] = $planId;
         $validatedData['team_id'] = Auth::user()->current_team_id;
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
 
@@ -184,6 +185,7 @@ class InternalCheckController extends Controller
         $this->authorize('delete', $internal_check);
 
         try{
+            $internal_check->notification()->delete();
             InternalCheck::destroy($id);
             PlanIp::destroy($internal_check->plan_ip_id);
             InternalCheckReport::destroy($internal_check->internal_check_report_id);

@@ -77,12 +77,12 @@ class SuppliersController extends Controller
         $supplier = Supplier::findOrFail($id);
 
         try{
-            $supplier->update($request->except('deadline_date'));
+            $supplier->update($request->all());
 
-            /*$notification = $supplier->notification;
+            $notification = $supplier->notification;
             $notification->message = 'Preispitivanje isporučilaca za '.date('d.m.Y', strtotime($supplier->deadline_date));
             $notification->checkTime = $supplier->deadline_date;
-            $supplier->notification()->save($notification);*/
+            $supplier->notification()->save($notification);
 
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
@@ -99,6 +99,7 @@ class SuppliersController extends Controller
         $supplier = Supplier::findOrFail($id);
         
         try{
+            $supplier->notification()->delete();
             Supplier::destroy($id);
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Odabrani isporučilac je uspešno uklonjen');
