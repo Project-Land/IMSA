@@ -53,40 +53,40 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($logs as $key => $log)
                                 <tr>
-                                    <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-center {{ $log['status'] == "WARNING" ? "text-red-700":"text-blue-700" }}">
+                                    <td class="py-2 px-6 whitespace-no-wrap text-sm leading-5 text-center {{ $log['status'] == "WARNING" ? "text-red-700":"text-blue-700" }}">
                                         {{ $log['status'] }}
                                     </td>
-                                    <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5">
+                                    <td class="py-2 px-6 whitespace-no-wrap text-sm leading-5">
                                         {{ $log['message'] }}
-                                        @if(!empty($log['error']))
-                                        <br> <p style="cursor: pointer; color: blue;" id="error-{{ $key }}" onclick="showError({{ $key }})">Greška</p>
-                                        <div class="modal" id="showError-{{ $key }}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content rounded-0">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title font-weight-bold">Greška</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col overflow-auto text-wrap">{{ $log['error'] }}</div>
+                                        @if(!empty($log['error']) && \Auth::user()->hasTeamRole(\Auth::user()->currentTeam, 'super-admin'))
+                                            <br> <p style="cursor: pointer; color: blue;" id="error-{{ $key }}" onclick="showError({{ $key }})">Greška</p>
+                                            <div class="modal" id="showError-{{ $key }}" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content rounded-0">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title font-weight-bold">Greška</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
                                                         </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col overflow-auto text-wrap">{{ $log['error'] }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         {{ Str::of($log['user'])->split('/[,]+/')[0] }}<br>
                                         {{ Str::of($log['user'])->split('/[,]+/')[1] }}
                                     </td>
-                                    <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="py-2 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         {{ Str::of($log['time'])->split('/[\s]+/')[0] }} u {{ Str::of($log['time'])->split('/[\s]+/')[1] }}
                                     </td>
                                 </tr>

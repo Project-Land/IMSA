@@ -27,7 +27,7 @@ class CreateTeam implements CreatesTeams
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'logo' => ['required', 'mimes:png,jpg,jpeg', 'max:1024']
+            'logo' => ['required', 'mimes:png,jpg,jpeg,bmp,svg,gif', 'max:1024']
         ])->validateWithBag('createTeam');
 
         $this->logo = $input['logo'];

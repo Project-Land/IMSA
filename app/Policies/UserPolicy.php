@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');;
     }
 
     /**
@@ -45,7 +45,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
 
     /**
@@ -69,7 +69,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
 
     /**

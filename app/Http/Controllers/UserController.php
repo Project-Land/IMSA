@@ -77,7 +77,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'username' => ['required', 'string', 'min:4', 'max:20', 'unique:users'],
-            'email' => ['max:255', 'unique:users'],
+            'email' => ['nullable', 'max:255', 'unique:users'],
             'password' => $this->passwordRules()
         ], $messages);
 
@@ -96,7 +96,6 @@ class UserController extends Controller
 
             $team = Team::find($teamID);
             $team->users()->attach(
-                //$newTeamMember = Jetstream::findUserByEmailOrFail($request['email']),
                 $newTeamMember = User::where('username', $request['username'])->firstOrFail(),
                 ['role' => $role]
             );
@@ -153,6 +152,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('delete', User::find($id));
+        $user = User::findOrFail($id);
+
+        try{
+            User::destroy($id);
+            $user->teams()->detach();
+            CustomLog::info('Obrisan korisnički nalog "'.$user->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Korisnički nalog je uspešno obrisan');
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+        }
     }
 }

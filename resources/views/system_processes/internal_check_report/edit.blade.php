@@ -25,47 +25,46 @@
 		<form id="internal_check_report_edit_form" action="{{ route('internal-check-report.update',$internalCheckReport->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
-        <div class="row">
-        <div class="form-group col" >
-            <label for="checked_sector">Proveravano područje</label>
-            <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
-           
-        </div>
 
-        <div class="form-group col">
-            <label for="standard">Standard</label>
-            <input type="text" class="form-control" id="standard" placeholder="" name="standard" value="{{$internalCheckReport->internalCheck->standard->name}}" readonly>
-        </div>
+            <div class="row">
+                <div class="form-group col" >
+                    <label for="checked_sector">Proveravano područje</label>
+                    <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
+                
+                </div>
 
-        <div class="form-group col">
-            <label for="team_for_internal_check">Tim za proveru</label>
-            <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$internalCheckReport->internalCheck->leaders}}" readonly>
-        </div>
+                <div class="form-group col">
+                    <label for="standard">Standard</label>
+                    <input type="text" class="form-control" id="standard" placeholder="" name="standard" value="{{$internalCheckReport->internalCheck->standard->name}}" readonly>
+                </div>
 
-        </div>
+                <div class="form-group col">
+                    <label for="team_for_internal_check">Tim za proveru</label>
+                    <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$internalCheckReport->internalCheck->leaders}}" readonly>
+                </div>
+            </div>
 
-        <div class="row">
-        <div class="form-group col">
-            <label for="check_start">Početak provere</label>
-            <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
-        </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label for="check_start">Početak provere</label>
+                    <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
+                </div>
 
-        <div class="form-group col">
-            <label for="check_end">Završetak provere</label>
-            <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
-        </div>
-        </div>
-        <div class="row">
-        <div class="form-group col">
-            <label for="specification">Specifikacija dokumenata</label>
-            <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
-                oninput="this.setCustomValidity('')">{{$internalCheckReport->specification}}</textarea>
-            @error('specification')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-			@enderror
-        </div>
-       
-        </div>
+                <div class="form-group col">
+                    <label for="check_end">Završetak provere</label>
+                    <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label for="specification">Specifikacija dokumenata</label>
+                    <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
+                        oninput="this.setCustomValidity('')">{{$internalCheckReport->specification}}</textarea>
+                    @error('specification')
+                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
 
 
         <div class="form-group mt-2" style="border-bottom:solid 2px gray;">

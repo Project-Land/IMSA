@@ -24,7 +24,7 @@ class UpdateTeamName implements UpdatesTeamNames
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'logo' => ['mimes:png,jpg,jpeg', 'max:1024']
+            'logo' => ['mimes:png,jpg,jpeg,bmp,gif,svg', 'max:1024']
         ])->validateWithBag('updateTeamName');
 
         if(count($input) > 1){

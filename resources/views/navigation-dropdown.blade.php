@@ -211,7 +211,7 @@
                             @endif
 
                             <!-- User Management -->
-                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('userManagement', $team))
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Upravljanje korisnicima') }}
                                 </div>
@@ -276,12 +276,11 @@
                 <div class="dropdown-menu"> 
                     <x-slot name="content">
                         @foreach($standards as $standard)
-                            <a class="dropdown-item" href="{{ asset("'/standards/'.$standard->id") }}">{{$standard->name}}</a>
+                            <a class="dropdown-item" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
                         @endforeach
                     </x-slot>
                 </div>
             </x-jet-dropdown>
-        
 
             <x-jet-dropdown>
                 <x-slot name="trigger">
@@ -298,7 +297,6 @@
                     </x-slot>
                 </div>
             </x-jet-dropdown>
-           
 
             <x-jet-dropdown width="60">
                 <x-slot name="trigger">
@@ -372,7 +370,7 @@
                 </form>
 
                 <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
                     <div class="border-t border-gray-200"></div>
 
                     <div class="block px-4 py-2 text-xs text-gray-400">
@@ -396,7 +394,7 @@
 
                     <div class="border-t border-gray-200"></div>
 
-                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('userManagement', $team))
                         <!-- User management -->
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('Upravljanje korisnicima') }}

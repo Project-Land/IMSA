@@ -116,4 +116,9 @@ class TeamPolicy
         //return $user->ownsTeam($team);
         return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
+
+    public function userManagement(User $user, Team $team)
+    {
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
+    }
 }

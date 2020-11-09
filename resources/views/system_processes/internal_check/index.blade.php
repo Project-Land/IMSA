@@ -201,16 +201,16 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<p>Termin provere: ${ new Date(data.checked_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p>Sektor: ${ data.checked_sector}</p>
-							<p>Tim za proveru: ${ data.team_for_internal_check}</p>
-							<p>Početak provere: ${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p>Završetak provere: ${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p>Rok za dostavljanje izveštaja: ${new Date(data.report_deadline).toLocaleString('sr-SR', { timeZone: 'CET' }) } </p>
-							<small>Izmenjeno: ${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </small>
+							<p><b>Termin provere:</b> ${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
+							<p><b>Sektor:</b> ${ data.checked_sector}</p>
+							<p><b>Tim za proveru:</b> ${ data.team_for_internal_check}</p>
+							<p><b>Početak provere:</b> ${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+							<p><b>Završetak provere:</b> ${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+							<p><b>Rok za dostavljanje izveštaja:</b> ${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } </p>
+							<small><b>Izmenjeno:</b> <i> ${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </i></small>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
 						</div>
 					</div>
 				</div>
@@ -258,7 +258,7 @@
 								num++;
 							}
 							modal+=`
-							<small> Kreirano: ${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) } </small>
+							<small> <b>Kreirano:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>

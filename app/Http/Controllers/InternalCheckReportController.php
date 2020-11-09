@@ -137,11 +137,7 @@ class InternalCheckReportController extends Controller
             });
         }catch(Exception $e){
             $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
-<<<<<<< HEAD
-            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '. \Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-=======
             CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
->>>>>>> 808857c1b09bdd3ec2f7847eb1581975ed08fda5
         }
         return redirect('/internal-check');
     }
