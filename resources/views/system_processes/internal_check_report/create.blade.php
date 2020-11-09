@@ -161,19 +161,19 @@
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_description${counter}" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
                     oninput="this.setCustomValidity('')" ></textarea>
                     
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
                     oninput="this.setCustomValidity('')"></textarea>
                 
                 </div>
                 <div class="form-group">
                     <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure[${counter}]" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
                     oninput="this.setCustomValidity('')"></textarea>
                     
                 </div>
@@ -209,7 +209,7 @@
 
                 div.append(addNewInconsistencies);
                 div.append(deletebutton);
-               // newInput.focus();
+                document.getElementById('noncompliance_description'+counter).focus();
                 
 
 
@@ -307,19 +307,19 @@
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
                     oninput="this.setCustomValidity('')"></textarea>
                     
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
                     oninput="this.setCustomValidity('')"></textarea>
                 
                 </div>
                 <div class="form-group">
                     <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure[${counter}]" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
                     oninput="this.setCustomValidity('')"></textarea>
                     
                 </div>
@@ -358,7 +358,7 @@
                 inconsistencies.after(div);
                 div.append(addNewInconsistencies);
                 div.append(deletebutton);
-               // newInput.focus();
+                document.getElementById('noncompliance_description'+counter).focus();
                 
 
     let id=`#measure_approval${counter}`;
