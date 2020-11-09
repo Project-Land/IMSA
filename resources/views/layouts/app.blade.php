@@ -32,6 +32,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/custom.js') }}"></script>
 
         <style>
             .dropdown-menu {
@@ -53,14 +54,8 @@
 
             <!-- Page Heading -->
             <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto pt-4 pb-0 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto pt-4 pb-4 px-4 sm:px-6 lg:px-8">
                     {{ $header }} 
-                </div>
-
-                <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
-                    @if(Request::is('/'))
-                        <h1 class="h1 text-center" >{{ 'IZABERITE STANDARD' }}</h1>
-                    @endif
                 </div>
             </header>
 

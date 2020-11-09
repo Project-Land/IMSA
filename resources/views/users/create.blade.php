@@ -38,9 +38,17 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
 
                         <div class="px-4 py-3 bg-white sm:p-6">
-                            <x-jet-label for="name" value="{{ __('Korisničko ime') }}" class="block font-medium text-sm text-gray-700" />
+                            <x-jet-label for="name" value="{{ __('Ime') }}" class="block font-medium text-sm text-gray-700" />
                             <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus autocomplete="name" />
                             @error('name')
+                                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="px-4 py-3 bg-white sm:p-6">
+                            <x-jet-label for="username" value="{{ __('Korisničko ime') }}" class="block font-medium text-sm text-gray-700" />
+                            <x-jet-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" />
+                            @error('username')
                                 <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                             @enderror
                         </div>
@@ -51,6 +59,7 @@
                             @error('email')
                                 <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                             @enderror
+                            <span class="text-xs text-gray-500">Polje nije obavezno</span>
                         </div>
 
                         <div class="px-4 py-3 bg-white sm:p-6">

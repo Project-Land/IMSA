@@ -62,8 +62,12 @@ class UserController extends Controller
 
         $messages = array(
             'name.required' => 'Unesite ime',
-            'name.max' => 'Polje ne sme biti duže od 255 karaktera',
-            'email.required' => 'Unesite email adresu',
+            'name.min' => 'Ime mora sadržati minimum 2 karaktera',
+            'name.max' => 'Ime ne sme biti duže od 50 karaktera',
+            'username.required' => 'Unesite korisničko ime',
+            'username.min' => 'Korisničko ime mora sadržati minimum 4 karaktera',
+            'username.max' => 'Korisničko ime ne sme biti duže od 20 karaktera',
+            'username.unique' => 'Već postoji korisnik sa takvim korisničkim imenom',
             'email.unique' => 'Već postoji korisnik sa takvom email adresom',
             'password.required' => 'Unesite lozinku',
             'password.string' => 'Lozinka mora sadržati minimum 8 karaktera',
@@ -71,8 +75,9 @@ class UserController extends Controller
         );
 
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'username' => ['required', 'string', 'min:4', 'max:20', 'unique:users'],
+            'email' => ['max:255', 'unique:users'],
             'password' => $this->passwordRules()
         ], $messages);
 
@@ -81,21 +86,26 @@ class UserController extends Controller
         try{
             $userID = User::create([
                 'name' => $request['name'],
+                'username' => $request['username'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
                 'current_team_id' => $teamID
             ]);
+
             $role = $request['role'];
+
             $team = Team::find($teamID);
             $team->users()->attach(
-                $newTeamMember = Jetstream::findUserByEmailOrFail($request['email']),
+                //$newTeamMember = Jetstream::findUserByEmailOrFail($request['email']),
+                $newTeamMember = User::where('username', $request['username'])->firstOrFail(),
                 ['role' => $role]
             );
             TeamMemberAdded::dispatch($team, $newTeamMember);
-            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+
+            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
-        }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika email-'.$request['email'].', '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/users');

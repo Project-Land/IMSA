@@ -31,7 +31,7 @@
 
                         <div class="col-sm-4">
                             @can('create', App\Models\InternalCheck::class)
-						        <a class="btn btn-info" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
+						        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
 					        @endcan
                         </div>
 
@@ -258,10 +258,10 @@
 								num++;
 							}
 							modal+=`
-							<small> kreirano: ${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) } </small>
+							<small> Kreirano: ${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) } </small>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
 						</div>
 					</div>
 				</div>
@@ -286,37 +286,5 @@
     for(report of document.querySelectorAll('.reportShow')){
     	report.addEventListener('click', reportShowAjax);
     }
-
-    $('#ic-year').change( () => {
-        let year = $('#ic-year').val();
-        const data = {'year': year}
-        axios.post('/internal-check/get-data', { data })
-        .then((response) => {
-            if(response.data.length == 0){
-                $('#table-body').html('<td colspan="10" class="dataTables_empty" valign="top">Nema podataka</td>');
-            }
-            else{
-                let allData = "";
-                console.log(response.data);
-                $.each(response.data, function (i, item){
-                    let row = `<tr>
-                                <td class="text-center">${ new Date(item.date).getUTCDate() + '.' + new Date(item.date).getUTCMonth() + '.' + new Date(item.date).getUTCFullYear() }</td>
-                                <td class="text-center">${ item.sector_id }</td>
-                                <td class="text-center">${ item.leaders }</td>
-                                <td class="text-center">${ item.standard_id }</td>
-                                <td class="text-center">${ item.plan_ip_id != null ? "PIP "+item.plan_ip_id+"/"+year : "/" }</td>
-                                <td class="text-center">${ item.internal_check_report_id != null ? item.internal_check_report_id : "/" }</td>
-                                <td class="text-center">
-                                    
-                                </td>
-                            </tr>`;
-                    allData += row;
-                });
-                $('#table-body').html(allData)
-            }
-        }, (error) => {
-            console.log(error);
-        })
-    });
    
 </script>

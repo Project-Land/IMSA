@@ -27,9 +27,9 @@ class UpdatePlanIpRequest extends FormRequest
             'checked_date'=>'required|date|after:yesterday',
             'checked_sector'=>'required',
             'team_for_internal_check'=>'required',
-            'check_start'=>'required|date|after:yesterday',
-            'check_end'=>'required|date|after:yesterday',
-            'report_deadline'=>'required|date|after:yesterday'
+            'check_start'=>'required|date|after:checked_date',
+            'check_end'=>'required|date|after:check_start',
+            'report_deadline'=>'required|date|after:check_end'
         ];
     }
 
@@ -41,15 +41,17 @@ class UpdatePlanIpRequest extends FormRequest
             'checked_sector.required'=>'Unesite sektor',
             'team_for_internal_check.required'=>'Unesite tim za proveru',
             'check_start.required'=>'Unesite početak provere',
-            'check_start.after' => 'Unesite budući datum',
+            'check_start.after' => 'Unesite datum noviji od termina provere',
             'check_end.required'=>'Unesite završetak provere',
-            'check_end.after' => 'Unesite budući datum',
+            'check_end.after' => 'Unesite datum noviji od početka provere',
             'report_deadline.required'=>'Unesite rok za dostavljanje izveštaja',
-            'report_deadline.after' => 'Unesite budući datum',
+            'report_deadline.after' => 'Unesite datum noviji od završetka provere',
             'checked_date.date'=>'Format datuma nije odgovarajuć',
             'check_start.date'=>'Format datuma nije odgovarajuć',
             'check_end.date'=>'Format datuma nije odgovarajuć',
             'report_deadline.date'=>'Format datuma nije odgovarajuć',
         ];
     }
+
+    
 }

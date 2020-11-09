@@ -7,7 +7,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('/images/logo.png') }}" class="w-20 h-20 mt-2">
+                        <img src="{{ asset('/storage/logos/'.\Auth::user()->currentTeam->logo) }}" alt="{{ \Auth::user()->currentTeam->name }}" class="w-20 h-20 mt-2">
                     </a>
                 </div>
 

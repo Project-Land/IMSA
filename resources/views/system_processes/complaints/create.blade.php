@@ -59,17 +59,19 @@
 				</select>
 			</div>
 
-			<div class="d-none" id="complaint_accepted">
+			<div class="{{ old('accepted') == 0 ? "d-none" : "" }}" id="complaint_accepted">
 
 				<div class="mb-4">
-					<label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">Rok za realizaciju reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" required placeholder="xx.xx.xxxx">
+					<label for="submission_date" class="block text-gray-700 text-sm font-bold mb-2">Datum podnošenja reklamacije:</label>
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline" name="deadline_date" placeholder="xx.xx.xxxx">
+					@error('deadline_date')
+						<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					@enderror
 				</div>
 
 				<div class="mb-4">
 					<label for="responsible_person" class="block text-gray-700 text-sm font-bold mb-2">Lice odgovorno za rešavanje reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ old('responsible_person') }}" required oninvalid="this.setCustomValidity('Lice odgovorno za rešavanje reklamacije nije popunjen')"
-                oninput="this.setCustomValidity('')">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ old('responsible_person') }}">
 					@error('responsible_person')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -77,8 +79,7 @@
 
 				<div class="mb-4">
 					<label for="way_of_solving" class="block text-gray-700 text-sm font-bold mb-2">Način rešavanja reklamacije</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ old('way_of_solving') }}" required oninvalid="this.setCustomValidity('Način rešavanja reklamacije nije popunjen')"
-                oninput="this.setCustomValidity('')">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ old('way_of_solving') }}">
 					@error('way_of_solving')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -114,17 +115,17 @@
     	scrollInput: false
 	});
 
-	$('#deadline_date').datetimepicker({
+	$('#deadline').datetimepicker({
 		timepicker: false,
-		format:' d.m.Y',
+		format: 'd.m.Y',
 		minDate: 0,
 		dayOfWeekStart: 1,
-		scrollInput: false
+    	scrollInput: false
 	});
 
 	$('#submission_date').change( () => {
-		let start_date = $('#submission_date').val().split(" ")[0].split(".").reverse().join("/").toString();
-		$('#deadline_date').datetimepicker({
+		let start_date = $('#submission_date').val().split(" ")[0].split(".").reverse().join("/").toString().trim();
+		$('#deadline').datetimepicker({
 			minDate: start_date
 		})
 	})

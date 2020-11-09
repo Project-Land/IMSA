@@ -62,18 +62,19 @@
 				</select>
 			</div>
 
-			<div class="{{ $complaint->accepted == 1 ? "" : "d-none" }}" id="complaint_accepted">
+			<div class="{{ $complaint->accepted == 0 ? "" : "d-none" }}" id="complaint_accepted">
 
 				<div class="mb-4">
 					<label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">Rok za realizaciju reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" required placeholder="xx.xx.xxxx" oninvalid="this.setCustomValidity('Rok za realizaciju reklamacije nije popunjen')"
-                oninput="this.setCustomValidity('')">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" autocomplete="off" placeholder="xx.xx.xxxx">
+					@error('deadline_date')
+						<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					@enderror
 				</div>
 
 				<div class="mb-4">
 					<label for="responsible_person" class="block text-gray-700 text-sm font-bold mb-2">Lice odgovorno za rešavanje reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}" required oninvalid="this.setCustomValidity('Lice odgovorno za rešavanje reklamacije nije popunjeno')"
-                oninput="this.setCustomValidity('')">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}">
 					@error('responsible_person')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -81,9 +82,7 @@
 
 				<div class="mb-4">
 					<label for="way_of_solving" class="block text-gray-700 text-sm font-bold mb-2">Način rešavanja reklamacije</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}" 
-					required oninvalid="this.setCustomValidity('Način rešavanja reklamacije nije popunjen')"
-                oninput="this.setCustomValidity('')">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}">
 					@error('way_of_solving')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
