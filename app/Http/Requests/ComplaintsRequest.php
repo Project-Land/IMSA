@@ -30,7 +30,7 @@ class ComplaintsRequest extends FormRequest
             'process' => 'required',
             'responsible_person' => 'max:190',
             'way_of_solving' => 'max:190',
-            'deadline_date' => 'after:yesterday'
+            'deadline_date' => 'after:submission_date'
         ];
     }
 
@@ -46,7 +46,7 @@ class ComplaintsRequest extends FormRequest
             'process.max' => 'Polje može sadržati najviše 190 karaktera',
             'responsible_person.max' => 'Polje može sadržati najviše 190 karaktera',
             'way_of_solving.max' => 'Polje može sadržati najviše 190 karaktera',
-            'deadline_date.after' => 'Unesite budući datum'
+            'deadline_date.after' => 'Unesite datum noviji od datuma podnošenja reklamacije'
         ];
     }
 

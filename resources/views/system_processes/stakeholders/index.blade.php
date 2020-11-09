@@ -26,7 +26,7 @@
             <div class="card">
                 @can('create', App\Models\Stakeholder::class)
                 <div class="card-header">
-                    <a class="btn btn-info" href="{{ route('stakeholders.create') }}"><i class="fas fa-plus"></i> Kreiraj zainteresovanu stranu</a>
+                    <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('stakeholders.create') }}"><i class="fas fa-plus"></i> Kreiraj zainteresovanu stranu</a>
                 </div>
                 @endcan
                 <div class="card-body bg-white mt-3">

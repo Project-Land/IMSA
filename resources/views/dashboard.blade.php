@@ -1,27 +1,34 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Standardi') }}
+            {{ __('Početna') }}
         </h2>
     </x-slot>
 
-    <div class="row mt-5">
+    <div class="flex items-center justify-center">
+        <div class="container mt-4">
 
-        <div class="col">
-
-            <div class="card-columns">
-                @foreach($standards as $standard)
-                    <div class="card bg-light shadow-sm rounded-0">
-                        <div class="card-body text-center">
-                            <p class="card-text display-4">
-                                <a class="text-decoration-none" href="{{ route('standard', $standard->id) }}">{{ $standard->name }}</a>
-                            </p>
+            <div class="row mt-1">
+                <div class="col mx-2">
+                    @if(Session::has('status'))
+                        <div class="alert alert-secondary alert-dismissible fade show">
+                            {{ Session::get('status') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>   
-                @endforeach
+                    @endif
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-5 md:p-20 mx-2">
+                <div class="text-center">
+                    <img class="inline-block items-center" src="{{ 'storage/logos/'.\Auth::user()->currentTeam->logo }}" alt="{{ \Auth::user()->currentTeam->name }} Logo">
+                    <h3 class='text-xl md:text-3xl mt-1'>Sistem Menadžment</h3>
+                </div>
             </div>
 
         </div>
-        
     </div>
+
 </x-app-layout>

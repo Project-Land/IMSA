@@ -47,7 +47,7 @@
 												{{ $user->name }}
 											</div>
 											<div class="text-sm leading-5 text-gray-500">
-												<a href="mailto: {{ $user->email }}">{{ $user->email }}</a>
+												{{ $user->username }}
 											</div>
 										</div>
 									</div>

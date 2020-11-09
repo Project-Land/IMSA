@@ -26,6 +26,38 @@
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autofocus />
             <x-jet-input-error for="name" class="mt-2" />
         </div>
+
+        <!-- Logo File Input -->
+        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+            <input type="file" class="hidden"
+                        wire:model="state.logo"
+                        x-ref="photo"
+                        x-on:change="
+                                photoName = $refs.photo.files[0].name;
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    photoPreview = e.target.result;
+                                };
+                                reader.readAsDataURL($refs.photo.files[0]);
+                        " />
+
+            <x-jet-label for="photo" value="{{ __('Logo') }}" />
+
+            <!--Logo Preview -->
+            <div class="mt-2" x-show="photoPreview">
+                <span class="block rounded-full w-20 h-20"
+                      x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
+                </span>
+            </div>
+
+            <div wire:loading wire:target="photo">Postavlja se...</div>
+
+            <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                {{ __('Izaberite Logo') }}
+            </x-jet-secondary-button>
+
+            <x-jet-input-error for="photo" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">

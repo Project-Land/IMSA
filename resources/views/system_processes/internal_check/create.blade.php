@@ -18,7 +18,7 @@
             
             <div class="mb-4">
                 <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Termin provere</label>
-                <input type="text" class="form-control" id="date" placeholder="xx.xx.xxxx" name="date">
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" placeholder="xx.xx.xxxx" name="date">
                 @error('date')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror

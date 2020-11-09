@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CreateTeam implements CreatesTeams
 {
@@ -17,16 +19,24 @@ class CreateTeam implements CreatesTeams
      * @param  array  $input
      * @return mixed
      */
+    public $logo;
+
     public function create($user, array $input)
     {
         Gate::forUser($user)->authorize('create', Jetstream::newTeamModel());
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+            'logo' => ['required', 'mimes:png,jpg,jpeg', 'max:1024']
         ])->validateWithBag('createTeam');
+
+        $this->logo = $input['logo'];
+        $filename = Str::kebab($input['name']).'-logo.'.$this->logo->getClientOriginalExtension();
+        $this->logo->storeAs('public/logos', $filename);
 
         $team = $user->ownedTeams()->create([
             'name' => $input['name'],
+            'logo' => $filename,
             'personal_team' => false,
         ]);
 
