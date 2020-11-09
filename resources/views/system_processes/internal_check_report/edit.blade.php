@@ -84,63 +84,7 @@
 			@enderror
             <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
             <a href="{{route('corrective-measures.edit',$inc->id)}}" >Korektivna mera</a>
-
-            <div class="row">
-                <div class="form-group col" >
-                    <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">Proveravano područje</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
-                </div>
-
-                <div class="form-group col">
-                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Standard</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="standard" name="standard" value="{{$internalCheckReport->internalCheck->standard->name}}" readonly>
-                </div>
-
-                <div class="form-group col">
-                    <label for="team_for_internal_check" class="block text-gray-700 text-sm font-bold mb-2">Tim za proveru</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" name="team_for_internal_check" value="{{$internalCheckReport->internalCheck->leaders}}" readonly>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col">
-                    <label for="check_start" class="block text-gray-700 text-sm font-bold mb-2">Početak provere</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_start" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
-                </div>
-
-                <div class="form-group col">
-                    <label for="check_end" class="block text-gray-700 text-sm font-bold mb-2">Završetak provere</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_end" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col">
-                    <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">Specifikacija dokumenata</label>
-                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
-                        oninput="this.setCustomValidity('')">{{ $internalCheckReport->specification }}</textarea>
-                    @error('specification')
-                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-
-            <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-                <span id="addInconsistencies" class="mb-2 inline-block cursor-pointer bg-blue-500 text-sm hover:bg-blue-700 text-white py-2 px-3 focus:outline-none focus:shadow-outline"><i class="fas fa-plus mr-1"></i> Dodaj neusaglašenost</span>
-                <span id="addRecommendations" class="mb-2 inline-block cursor-pointer bg-blue-500 text-sm hover:bg-blue-700 text-white py-2 px-3 focus:outline-none focus:shadow-outline"><i class="fas fa-plus mr-1"></i> Dodaj preporuku</span>
-            </div>
-        
-            <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
-                @foreach($internalCheckReport->inconsistencies as $inc)
-                    <div class="form-group col-6 mt-3">
-                        <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>
-                        <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->description}}</textarea>
-                        @error('inconsistencies.'.$inc->id)
-                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
-                        @enderror
-                        <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
-                        <a href="{{ route('corrective-measures.edit', $inc->correctiveMeasure->id) }}" >Korektivna mera</a>
+ 
                     </div>
                 @endforeach
             </div>
@@ -218,10 +162,6 @@
           //  div.append(label);
            // label.textContent="Upiši neusaglašenost";
           //  label.classList="mt-3";
-            label.for="newInput"+counter;
-            label.classList="block text-gray-700 text-sm font-bold mb-2 mt-1";
-            div.append(label);
-            label.textContent="Upiši neusaglašenost";
             newInput.id='newInput'+counter;
             newInput.name='newInput'+counter;
             newInput.type='text';
@@ -229,7 +169,6 @@
             newInput.style="background:#dbffe5;"
             newInput.required = true;
             newInput.classList="form-control d-none";
-           // newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
             addNewInconsistencies.addEventListener('click',removeInput);
             div.append(newInput);	 
             div.classList="form-group col-6";
@@ -254,17 +193,17 @@
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description[${counter}]" name="noncompliance_description[${counter}]" require></textarea>
+				<textarea class="form-control" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" require></textarea>
 				
 			</div>
 			<div class="form-group">
 				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause[${counter}]" name="noncompliance_cause[${counter}]" required></textarea>
+				<textarea class="form-control" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required></textarea>
 			
 			</div>
 			<div class="form-group">
 				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure[${counter}]" name="measure[${counter}]" required></textarea>
+				<textarea class="form-control" id="measure${counter}" name="measure[${counter}]" required></textarea>
 				
 			</div>
 			<div class="form-group">
@@ -296,7 +235,7 @@
             </div>`; 
             div.append(div2);
             inconsistenciesDiv.append(div);
-            newInput.focus();
+            document.getElementById('noncompliance_description'+counter).focus();
            
  let id=`#measure_approval${counter}`;
  let id_ms=`#measure_status${counter}`;
@@ -354,11 +293,6 @@
            // div.append(label);
           //  label.textContent="Upiši preporuku";
           //  label.classList="mt-3";
-            label.for="newInputRecommendation"+coun;
-            label.classList="block text-gray-700 text-sm font-bold mb-2 mt-1";
-            div.append(label);
-            label.textContent="Upiši preporuku";
-            label.classList="mt-3";
             newInput.id='newInputRecommendation'+coun;
             newInput.name='newInputRecommendation'+coun;
             newInput.type='text';
