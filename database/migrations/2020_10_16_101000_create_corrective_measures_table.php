@@ -19,7 +19,7 @@ class CreateCorrectiveMeasuresTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('sector_id')->constrained();
-            $table->foreignId('inconsistency_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('internal_check_report_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('noncompliance_source');
             $table->text('noncompliance_description');

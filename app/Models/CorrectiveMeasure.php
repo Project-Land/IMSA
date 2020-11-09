@@ -36,6 +36,11 @@ class CorrectiveMeasure extends Model
         return $this->belongsTo('App\Models\Team');
     }
 
+    public function internal_check_report()
+    {
+        return $this->belongsTo('App\Models\InternalCheckReport');
+    }
+
     public static function getStats($standardId, $year)
     {
         $icm_total = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->count();

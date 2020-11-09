@@ -105,8 +105,8 @@
 
 
         const addSecondInconsistencies=function(){
-            if(document.getElementById("newInput"+(counter-1)).value==="")
-            return;
+           // if(document.getElementById("newInput"+(counter-1)).value==="")
+           // return;
             document.getElementById("button"+(counter-1)).style="display:none;";
             const newInput=document.createElement('textarea');
                 const div=document.createElement('div');
@@ -126,14 +126,15 @@
                 addNewInconsistencies.id="button"+counter;
                 addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
                 addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
-                label.for="newInput"+counter;
-                label.classList="block text-gray-700 text-sm font-bold mb-2";
-                div.append(label);
-                label.textContent="Upiši neusaglašenost";
+           //    label.for="newInput"+counter;
+               // label.classList="block text-gray-700 text-sm font-bold mb-2";
+               // div.append(label);
+               // label.textContent="Upiši neusaglašenost";
                 newInput.id='newInput'+counter;
                 newInput.name='newInput'+counter;
                 newInput.type='text';
-                newInput.classList="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+                newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+                newInput.textContent=counter;
                 div.append(newInput);
                 div.classList="form-group mt-3";
                 div.id="newInputDiv"+counter;
@@ -185,8 +186,7 @@
                 </div>
                 <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
-                    oninput="this.setCustomValidity('')">
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
                 </div>
                 <div class="form-group">
                     <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
@@ -197,8 +197,7 @@
                 </div>
                 <div class="form-group" id="measure_effective_field${counter}" style="display: none">
                     <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" required oninvalid="this.setCustomValidity('Polje mera efektivna nije popunnjeno')"
-                    oninput="this.setCustomValidity('')">
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
                         <option value="">Izaberi...</option>
                         <option value="1"  >DA</option>
                         <option value="0">NE</option>
@@ -210,32 +209,37 @@
 
                 div.append(addNewInconsistencies);
                 div.append(deletebutton);
-                newInput.focus();
+               // newInput.focus();
                 
 
 
-                let id=`#measure_approval${counter}`;
+    let id=`#measure_approval${counter}`;
     let id_ms=`#measure_status${counter}`;
     let id_mef=`#measure_effective_field${counter}`;
     let id_mrf=`#measure_reason_field${counter}`;
-    let id_mar=`measure_approval_reason${counter}`;
+    let id_mar=`#measure_approval_reason${counter}`;
+    let id_me=`#measure_effective${counter}`;
                 $(id).change( () => {
             
             if($(id).val() == 0){
                 $(id_mrf).css('display', '');
+                $(id_mar).attr('required', true);
             }
             else{
                 $(id_mrf).css('display', 'none');
                 $(id_mar).val('');
+                $(id_mar).attr('required', false);
             }
         })
 
         $(id_ms).change( () => {
             if($(id_ms).val() == 1){
                 $(id_mef).css('display', '');
+                $(id_me).attr('required', true);
             }
             else{
                 $(id_mef).css('display', 'none');
+                $(id_me).attr('required', false);
             }
         })
         counter++;
@@ -270,14 +274,15 @@
                 addNewInconsistencies.id="button"+counter;
                 addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
                 addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
-                label.for="newInput"+counter;
-                label.className = "block text-gray-700 text-sm font-bold mb-2";
-                div.append(label);
-                label.textContent="Upiši neusaglašenost";
+              //  label.for="newInput"+counter;
+              //  label.className = "block text-gray-700 text-sm font-bold mb-2";
+              //  div.append(label);
+              //  label.textContent="Upiši neusaglašenost";
                 newInput.id='newInput'+counter;
                 newInput.name='newInput'+counter;
                 newInput.type='text';
-                newInput.classList="form-control";
+                newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+                newInput.textContent=counter;
                 div.append(newInput);
                 div.classList="form-group mt-3";
                 div.id="newInputDiv"+counter;
@@ -320,27 +325,25 @@
                 </div>
                 <div class="form-group">
                     <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval">
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
                         <option value="1" >DA</option>
                         <option value="0" >NE</option>
                     </select>
                 </div>
-                <div class="form-group" id="measure_reason_field" style="display: none">
+                <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
-                    oninput="this.setCustomValidity('')">
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
                 </div>
                 <div class="form-group">
                     <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status">
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status${counter}">
                         <option value="0" >NE</option>
                         <option value="1"  >DA</option>
                     </select>
                 </div>
-                <div class="form-group" id="measure_effective_field" style="display: none">
+                <div class="form-group" id="measure_effective_field${counter}" style="display: none">
                     <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" required oninvalid="this.setCustomValidity('Unesite razlog neodobravanja mere')"
-                    oninput="this.setCustomValidity('')">
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight " name="measure_effective[${counter}]" id="measure_effective${counter}">
                         <option value="">Izaberi...</option>
                         <option value="1"  >DA</option>
                         <option value="0">NE</option>
@@ -355,29 +358,42 @@
                 inconsistencies.after(div);
                 div.append(addNewInconsistencies);
                 div.append(deletebutton);
-                newInput.focus();
-                counter++;
-
+               // newInput.focus();
                 
-                $('#measure_approval').change( () => {
+
+    let id=`#measure_approval${counter}`;
+    let id_ms=`#measure_status${counter}`;
+    let id_mef=`#measure_effective_field${counter}`;
+    let id_mrf=`#measure_reason_field${counter}`;
+    let id_mar=`#measure_approval_reason${counter}`;
+    let id_me=`#measure_effective${counter}`;
+
+    $(id).change( () => {
             
-            if($('#measure_approval').val() == 0){
-                $('#measure_reason_field').css('display', '');
+            if($(id).val() == 0){
+                $(id_mrf).css('display', '');
+                $(id_mar).attr('required', true);
             }
             else{
-                $('#measure_reason_field').css('display', 'none');
-                $('#measure_reason').val('');
+                $(id_mrf).css('display', 'none');
+                $(id_mar).val('');
+                $(id_mar).attr('required', false);
+                
             }
         })
 
-        $('#measure_status').change( () => {
-            if($('#measure_status').val() == 1){
-                $('#measure_effective_field').css('display', '');
+        $(id_ms).change( () => {
+            if($(id_ms).val() == 1){
+                $(id_mef).css('display', '');
+                $(id_me).attr('required', true);
             }
             else{
-                $('#measure_effective_field').css('display', 'none');
+                $(id_mef).css('display', 'none');
+                $(id_me).attr('required', false);
             }
         })
+
+        counter++;
             
             }else{
                 let newInputs=document.querySelectorAll("[id^='newInputDiv']");
@@ -386,6 +402,9 @@
                     counter=1;
                 }
             }
+
+
+           
 
         }
 

@@ -34,4 +34,9 @@ class InternalCheckReport extends Model
     {
         return $this->belongsTo('App\Models\Team');
     }
+
+    public function correctiveMeasures()
+    {
+        return $this->hasMany('App\Models\CorrectiveMeasure');
+    }
 }

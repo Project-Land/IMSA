@@ -73,16 +73,16 @@
         </div>
         
         <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
-            @foreach($internalCheckReport->inconsistencies as $inc)
+            @foreach($internalCheckReport->correctiveMeasures as $inc)
             <div class="form-group col-6 mt-3">
         
                 <label for="inconsistencies">Neusaglašenost</label>
-            <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->description}}</textarea>
+            <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->noncompliance_description}}</textarea>
             @error('inconsistencies.'.$inc->id)
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
             <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
-            <a href="{{route('corrective-measures.edit',$inc->correctiveMeasure->id)}}" >Korektivna mera</a>
+            <a href="{{route('corrective-measures.edit',$inc->id)}}" >Korektivna mera</a>
                 </div>
     
             @endforeach
@@ -163,16 +163,17 @@ function removeInput(){
             addNewInconsistencies.setAttribute("data-counter", "counter");
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.innerHTML='<i class="fas fa-trash"></i>';
-            label.for="newInput"+counter;
-            div.append(label);
-            label.textContent="Upiši neusaglašenost";
-            label.classList="mt-3";
+           // label.for="newInput"+counter;
+          //  div.append(label);
+           // label.textContent="Upiši neusaglašenost";
+          //  label.classList="mt-3";
             newInput.id='newInput'+counter;
             newInput.name='newInput'+counter;
             newInput.type='text';
+            newInput.textContent=counter;
             newInput.style="background:#dbffe5;"
             newInput.required = true;
-            newInput.classList="form-control";
+            newInput.classList="form-control d-none";
             addNewInconsistencies.addEventListener('click',removeInput);
             div.append(newInput);	 
             div.classList="form-group col-6";
@@ -219,7 +220,7 @@ function removeInput(){
 			</div>
 			<div class="form-group" id="measure_reason_field${counter}" style="display: none">
 				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
+				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}">
 			</div>
 			<div class="form-group">
 				<label for="measure_status">Status mere:</label>
@@ -245,24 +246,30 @@ function removeInput(){
  let id_ms=`#measure_status${counter}`;
  let id_mef=`#measure_effective_field${counter}`;
  let id_mrf=`#measure_reason_field${counter}`;
- let id_mar=`measure_approval_reason${counter}`;
+ let id_mar=`#measure_approval_reason${counter}`;
+ let id_me=`#measure_effective${counter}`;
             $(id).change( () => {
         
 		if($(id).val() == 0){
-			$(id_mrf).css('display', '');
+            $(id_mrf).css('display', '');
+            $(id_mar).attr('required', true);
+           
 		}
 		else{
 			$(id_mrf).css('display', 'none');
-			$(id_mar).val('');
+            $(id_mar).val('');
+            $(id_mar).attr('required', false);
 		}
 	})
 
 	$(id_ms).change( () => {
 		if($(id_ms).val() == 1){
-			$(id_mef).css('display', '');
+            $(id_mef).css('display', '');
+            $(id_me).attr('required', true);
 		}
 		else{
-			$(id_mef).css('display', 'none');
+            $(id_mef).css('display', 'none');
+            $(id_me).attr('required', false);
 		}
 	})
 
@@ -285,10 +292,10 @@ function removeInput(){
             addNewRecommendations.id="buttonRecommedations"+coun;
            
             addNewRecommendations.innerHTML='<i class="fas fa-trash"></i>';
-            label.for="newInputRecommendation"+coun;
-            div.append(label);
-            label.textContent="Upiši preporuku";
-            label.classList="mt-3";
+           // label.for="newInputRecommendation"+coun;
+           // div.append(label);
+          //  label.textContent="Upiši preporuku";
+          //  label.classList="mt-3";
             newInput.id='newInputRecommendation'+coun;
             newInput.name='newInputRecommendation'+coun;
             newInput.type='text';

@@ -6,7 +6,6 @@ use Exception;
 use App\Models\Standard;
 use App\Facades\CustomLog;
 use Illuminate\Http\Request;
-use App\Models\Inconsistency;
 use App\Models\InternalCheck;
 use App\Models\Recommendation;
 use App\Models\CorrectiveMeasure;
@@ -33,7 +32,7 @@ class InternalCheckReportController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('create', InternalCheck::class);
+        $this->authorize('create', InternalCheck::class);//dd($request->all());
 
         $validatedData = $request->validate([ 
             'specification' => 'required'    
@@ -54,6 +53,7 @@ class InternalCheckReportController extends Controller
             'newInput4' => 'string',  
             'newInput5' => 'string',    
         ]);
+        
         
         $correctiveMeasureData=$request->validate([
             'noncompliance_source.*' => 'required',
@@ -83,10 +83,11 @@ class InternalCheckReportController extends Controller
                 $report = InternalCheckReport::create($validatedData);
 
                 foreach( $InconsistencyData as $inc){
-                    if($inc === "")continue;
-                    $inconsistency = new Inconsistency();
-                    $inconsistency->description = $inc;
-                    $report->inconsistencies()->save($inconsistency);
+                  //  if($inc === "")continue;
+                  //  $inconsistency = new Inconsistency();
+                  //  $inconsistency->description = $inc;
+                  //  $report->inconsistencies()->save($inconsistency);
+                  
 
                     $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                     ->where([
@@ -96,29 +97,31 @@ class InternalCheckReportController extends Controller
                     ->count() + 1;
 
                     $correctiveMeasure=CorrectiveMeasure::create([
-                        'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
-                        'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
-                        'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
-                        'measure'=> $correctiveMeasureData['measure'][$count],
-                        'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
-                        'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
-                        'measure_status'=>$correctiveMeasureData['measure_status'][$count],
-                        'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                        'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$inc],
+                        'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$inc],
+                        'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$inc],
+                        'measure'=> $correctiveMeasureData['measure'][$inc],
+                        'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$inc],
+                        'measure_approval'=>$correctiveMeasureData['measure_approval'][$inc],
+                        'measure_status'=>$correctiveMeasureData['measure_status'][$inc],
+                        'measure_effective'=>$correctiveMeasureData['measure_effective'][$inc],
                         'team_id' => \Auth::user()->current_team_id,
                         'user_id' =>\Auth::user()->id,
                         'standard_id' => session('standard'),
                         'sector_id' => 1,
                         'name' => "KKM ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
+                        'internal_check_report_id'=>$report->id,
                         'measure_date' => Carbon::now(),
-                        'measure_approval_date' => $correctiveMeasureData['measure_approval'][$count] == '1' ? Carbon::now() : null
+                        'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
                     ]);
     
                     $correctiveMeasure->standard()->associate($standard);
                     $count++;
-                    $inconsistency->correctiveMeasure()->save($correctiveMeasure);
+                    
+                   // $inconsistency->correctiveMeasure()->save($correctiveMeasure);
 
-                }
+                } 
                 foreach( $recommendationData as $rec){
                     if($rec === "")continue;
                     $recommendation = new Recommendation();
@@ -134,7 +137,7 @@ class InternalCheckReportController extends Controller
             });
         }catch(Exception $e){
             $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
-            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '. \Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
         }
         return redirect('/internal-check');
     }
@@ -147,7 +150,7 @@ class InternalCheckReportController extends Controller
 
     public function edit($id)
     {
-        $internal_check_report = InternalCheckReport::where('id', $id)->with('internalCheck', 'recommendations', 'inconsistencies')->get();
+        $internal_check_report = InternalCheckReport::where('id', $id)->with('internalCheck', 'recommendations', 'correctiveMeasures')->get();
         $internal_check_report = $internal_check_report[0];
         $this->authorize('update', $internal_check_report);
         return view('system_processes.internal_check_report.edit', ['internalCheckReport' => $internal_check_report]);
@@ -181,10 +184,10 @@ class InternalCheckReportController extends Controller
         ]);
         
         $newInconsistenciesData = $request->validate([
-            'newInput1' => 'string|min:3',
-            'newInput2' => 'string|min:3',
-            'newInput3' => 'string|min:3',
-            'newInput4' => 'string|min:3',
+            'newInput1' => 'string',
+            'newInput2' => 'string',
+            'newInput3' => 'string',
+            'newInput4' => 'string',
         ]);
 
         $newRecommendationsData = $request->validate([
@@ -194,26 +197,29 @@ class InternalCheckReportController extends Controller
             'newInputRecommendation4' => 'string|min:3',   
         ]);
 
+        $internal_check_report = InternalCheckReport::findOrfail($id);
+
         try{
-            DB::transaction(function () use ($request, $id, $correctiveMeasureData, $validatedData, $inconsistenciesData, $recommendationsData, $newInconsistenciesData, $newRecommendationsData){ 
+            DB::transaction(function () use ($request, $id, $correctiveMeasureData, $validatedData, $inconsistenciesData, $recommendationsData, $newInconsistenciesData, $newRecommendationsData,$internal_check_report){ 
                 $count = 1;
                 $standard = Standard::where('name', $request->standard)->get()[0];
-                $internal_check_report = InternalCheckReport::findOrfail($id);
                 $internal_check_report->update($validatedData);
+               // dd($inconsistenciesData['inconsistencies']);
                 
                 if(isset($inconsistenciesData['inconsistencies'])){
-                    $incs = $internal_check_report->inconsistencies;
+                    $incs = $internal_check_report->correctiveMeasures;
                     foreach($incs as $i){
                         if(!in_array($i->id, array_keys($inconsistenciesData['inconsistencies']))){
                             $i->delete();
                         }
                     }
                     foreach($inconsistenciesData['inconsistencies'] as $k => $v){
-                        $inc = Inconsistency::findOrFail($k);
-                        $inc->description = $v;
-                        $internal_check_report->inconsistencies()->save($inc);
+                        $inc = CorrectiveMeasure::findOrFail($k);
+                        $inc->noncompliance_description = $v;
+                        $internal_check_report->correctiveMeasures()->save($inc);
                     }
                 }
+                
 
                 if(isset($recommendationsData['recommendations'])){
                     $recs = $internal_check_report->recommendations;
@@ -231,10 +237,10 @@ class InternalCheckReportController extends Controller
 
                 foreach($newInconsistenciesData as $v){
             
-                    $inc = new Inconsistency();
-                    $inc->description = $v;
-                    $internal_check_report->inconsistencies()->save($inc);
-                    $inc->refresh();
+                 //   $inc = new Inconsistency();
+                  //  $inc->description = $v;
+                 //   $internal_check_report->inconsistencies()->save($inc);
+                 //   $inc->refresh();
 
                     $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                         ->where([
@@ -244,27 +250,28 @@ class InternalCheckReportController extends Controller
                         ->count() + 1;
 
                     $correctiveMeasure=CorrectiveMeasure::create([
-                        'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$count],
-                        'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$count],
-                        'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$count],
-                        'measure'=> $correctiveMeasureData['measure'][$count],
-                        'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$count],
-                        'measure_approval'=>$correctiveMeasureData['measure_approval'][$count],
-                        'measure_status'=>$correctiveMeasureData['measure_status'][$count],
-                        'measure_effective'=>$correctiveMeasureData['measure_effective'][$count],
+                        'noncompliance_source'=> $correctiveMeasureData['noncompliance_source'][$v],
+                        'noncompliance_description'=> $correctiveMeasureData['noncompliance_description'][$v],
+                        'noncompliance_cause'=>$correctiveMeasureData['noncompliance_cause'][$v],
+                        'measure'=> $correctiveMeasureData['measure'][$v],
+                        'measure_approval_reason'=> $correctiveMeasureData['measure_approval_reason'][$v],
+                        'measure_approval'=>$correctiveMeasureData['measure_approval'][$v],
+                        'measure_status'=>$correctiveMeasureData['measure_status'][$v],
+                        'measure_effective'=>$correctiveMeasureData['measure_effective'][$v],
                         'team_id' => \Auth::user()->current_team_id,
                         'user_id' => \Auth::user()->id,
                         'sector_id' => 1,
                         'standard_id' => session('standard'),
                         'name' => "KKM ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
+                        'internal_check_report_id'=>$internal_check_report->id,
                         'measure_date' => Carbon::now(),
-                        'measure_approval_date' => $correctiveMeasureData['measure_approval'][$count] == '1' ? Carbon::now() : null
+                        'measure_approval_date' => $correctiveMeasureData['measure_approval'][$v] == '1' ? Carbon::now() : null
                     ]);
 
                     $correctiveMeasure->standard()->associate($standard);
                     $count++;
-                    $inc->correctiveMeasure()->save($correctiveMeasure);
+                   // $inc->correctiveMeasure()->save($correctiveMeasure);
                 }
 
                 foreach($newRecommendationsData as $v){
