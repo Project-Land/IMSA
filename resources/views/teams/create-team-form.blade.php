@@ -30,7 +30,7 @@
         <!-- Logo File Input -->
         <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
             <input type="file" class="hidden"
-                        wire:model="state.logo"
+                        wire:model.defer="state.logo"
                         x-ref="photo"
                         x-on:change="
                                 photoName = $refs.photo.files[0].name;
@@ -41,7 +41,7 @@
                                 reader.readAsDataURL($refs.photo.files[0]);
                         " />
 
-            <x-jet-label for="photo" value="{{ __('Logo') }}" />
+            <x-jet-label for="logo" value="{{ __('Logo') }}" />
 
             <!--Logo Preview -->
             <div class="mt-2" x-show="photoPreview">
@@ -50,13 +50,13 @@
                 </span>
             </div>
 
-            <div wire:loading wire:target="photo">Postavlja se...</div>
+            <div wire:loading wire:target="logo">Postavlja se...</div>
 
             <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                 {{ __('Izaberite Logo') }}
             </x-jet-secondary-button>
 
-            <x-jet-input-error for="photo" class="mt-2" />
+            <x-jet-input-error for="logo" class="mt-2" />
         </div>
     </x-slot>
 

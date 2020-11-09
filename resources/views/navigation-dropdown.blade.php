@@ -90,7 +90,7 @@
                 <!-- Notifications menu -->
                 @inject('Notifications', 'Notifications')
 
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class="sm:flex sm:items-center sm:ml-6">
                     <x-jet-dropdown width="48">
 
                         <x-slot name="trigger">
@@ -243,7 +243,9 @@
                     
                 </div>
 
-            </div>
+            </div>  
+
+            
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">

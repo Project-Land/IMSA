@@ -25,10 +25,20 @@ class CreateTeam implements CreatesTeams
     {
         Gate::forUser($user)->authorize('create', Jetstream::newTeamModel());
 
+        $messages = [
+            'name.required' => 'Unesite ime firme',
+            'name.unique' => 'Već postoji firma sa takvim nazivom',
+            'name.min' => 'Ime firme ne sme biti kraće od 3 karaktera',
+            'name.max' => 'Ime firme ne sme biti duže od 100 karaktera',
+            'logo.required' => 'Izaberite logo firme',
+            'logo.max' => 'Logo fajl ne sme biti veći od 1MB',
+            'logo.mimes' => 'Fajl mora biti u nekom od sledećih formata: jpg, jpeg, png, bmp, gif, svg'
+        ];
+
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'min:3', 'max:100', 'unique:teams'],
             'logo' => ['required', 'mimes:png,jpg,jpeg,bmp,svg,gif', 'max:1024']
-        ])->validateWithBag('createTeam');
+        ], $messages)->validateWithBag('createTeam');
 
         $this->logo = $input['logo'];
         $filename = Str::kebab($input['name']).'-logo.'.$this->logo->getClientOriginalExtension();
