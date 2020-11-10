@@ -32,7 +32,6 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_description' => 'required',
             'noncompliance_cause' => 'required',
             'measure' => 'required',
-           // 'measure_approval_reason'=> Rule::requiredIf(request()->has('measure_approval_reason')),
         ];
     }
 
@@ -45,7 +44,6 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
             'noncompliance_cause.required' => 'Unesite uzrok neusaglašenosti',
             'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti',
-           
         ];
     }
 
