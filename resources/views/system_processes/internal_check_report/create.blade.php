@@ -98,9 +98,17 @@
     
             if(this.dataset.counter=='counter'){}
             // counter--;
-            if(this.dataset.counter=='coun'){}
+            if(this.dataset.counter=='coun'){
+                
+            }
             //  coun--;
             this.closest("div").remove();
+            let inputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
+                if(!inputs.length){
+                    document.getElementById('recommendations').value='0';
+                    document.getElementById('AddRecommedationsButton').remove();
+                }
+
             }
 
 
@@ -301,7 +309,7 @@
                     oninput="this.setCustomValidity('')">
                         <option value="">Izaberi...</option>
                         <option value="Eksterna provera">Eksterna provera</option>
-                        <option value="Interna provera" >Interna provera</option>
+                        <option value="Interna provera" selected>Interna provera</option>
                         <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
                         <option value="Žalba" >Žalba</option>
                         <option value="Ostalo" >Ostalo</option>
@@ -400,6 +408,7 @@
         counter++;
             
             }else{
+               
                 let newInputs=document.querySelectorAll("[id^='newInputDiv']");
                 for(let input of newInputs){
                     input.remove();
@@ -426,19 +435,22 @@
     let coun=1;
 
         const addSecondRecommedation=function(){
-            if(document.getElementById("newInputRecommendation"+(coun-1)).value==="")
-            return;
-            document.getElementById("buttonRecommedations"+(coun-1)).style="display:none;";
+            if(document.getElementById("newInputRecommendation"+(coun-1)).value===""){
+             //   document.getElementById('AddRecommedationsButton').remove();
+                return;
+            }
+            
+          //  document.getElementById("buttonRecommedations"+(coun-1)).style="display:none;";
             const newInput=document.createElement('textarea');
                 const div=document.createElement('div');
                 const label=document.createElement('label');
-                const addNewRecommendations=document.createElement('button');
-                addNewRecommendations.classList="btn btn-primary";
-                addNewRecommendations.type="button";
-                addNewRecommendations.id="buttonRecommedations"+coun;
-                addNewRecommendations.addEventListener('click',addSecondRecommedation);
-                addNewRecommendations.textContent="Dodaj još jednu preporuku"
-                document.getElementById('buttonRecommedations'+(coun-1)).remove();
+             //   const addNewRecommendations=document.createElement('button');
+            //    addNewRecommendations.classList="btn btn-primary";
+            //    addNewRecommendations.type="button";
+            //    addNewRecommendations.id="buttonRecommedations"+coun;
+            //    addNewRecommendations.addEventListener('click',addSecondRecommedation);
+           //  addNewRecommendations.textContent="Dodaj još jednu preporuku"
+             //   document.getElementById('buttonRecommedations'+(coun-1)).remove();
 
                 const deletebutton=document.createElement('button');
                 deletebutton.classList="btn btn-danger";
@@ -455,12 +467,16 @@
                 newInput.name='newInputRecommendation'+coun;
                 newInput.type='text';
                 newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+                newInput.required=true;
+                newInput.oninvalid=function(){this.setCustomValidity("Unesite preporuku");}
+                newInput.oninput=function(){this.setCustomValidity('');}
                 div.append(newInput);
+                div.append(deletebutton);
                 div.classList="form-group mt-3";
                 div.id="newInputRecommendationDiv"+coun;
                 document.getElementById("newInputRecommendationDiv"+(coun-1)).after(div);
-                div.append(addNewRecommendations);
-                div.append(deletebutton);
+         
+              
                 
                 coun++;
                 newInput.focus();
@@ -478,7 +494,7 @@
             
                 addNewRecommendations.classList="btn btn-primary";
                 addNewRecommendations.type="button";
-                addNewRecommendations.id="buttonRecommedations"+coun;
+                addNewRecommendations.id="AddRecommedationsButton";
                 addNewRecommendations.addEventListener('click',addSecondRecommedation);
                 addNewRecommendations.textContent="Dodaj još jednu preporuku"
 
@@ -498,17 +514,27 @@
                 newInput.name='newInputRecommendation'+coun;
                 newInput.type='text';
                 newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+                newInput.required=true;
+                newInput.oninvalid=function(){this.setCustomValidity("Unesite preporuku");}
+                newInput.oninput=function(){this.setCustomValidity('');}
+               
                 div.append(newInput);
+                div.append(deletebutton);
+
+               
                 div.classList="form-group mt-3";
                 div.id="newInputRecommendationDiv"+coun;
                 recommendations.after(div);
-                div.append(addNewRecommendations);
-                div.append(deletebutton);
+               
+               
+                div.after(addNewRecommendations);
                 
                 coun++;
+               
                 newInput.focus();
             
             }else{
+                document.getElementById('AddRecommedationsButton').remove();
                 let newInputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
                 for(let input of newInputs){
                     input.remove();
