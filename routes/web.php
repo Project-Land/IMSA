@@ -18,7 +18,6 @@ use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\RulesOfProceduresController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsController;
-use App\Http\Controllers\InconsistenciesController;
 use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\UserController;
@@ -72,7 +71,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('internal-check-report', InternalCheckReportController::class);
     Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class, 'createReport'])->name('create.report');
     Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
-    Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);

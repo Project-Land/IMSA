@@ -66,11 +66,10 @@
                 </div>
             </div>
 
-        <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
 
 
         <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-            <!--<span id="addInconsistencies"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span> -->
+            <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
             <span id="addRecommendations"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
         </div>
         
@@ -296,10 +295,10 @@
             addNewRecommendations.id="buttonRecommedations"+coun;
             
             addNewRecommendations.innerHTML='<i class="fas fa-trash"></i>';
-           // label.for="newInputRecommendation"+coun;
-           // div.append(label);
-          //  label.textContent="Upiši preporuku";
-          //  label.classList="mt-3";
+            label.for="newInputRecommendation"+coun;
+            div.append(label);
+            label.textContent="Preporuka "+coun;
+            label.classList="mt-3 block text-gray-700 text-sm font-bold mb-2";
             newInput.id='newInputRecommendation'+coun;
             newInput.name='newInputRecommendation'+coun;
             newInput.type='text';
@@ -317,7 +316,7 @@
             coun++;
         }
 
-        inconsistencies.addEventListener('click', addInput);
+     //   inconsistencies.addEventListener('click', addInput);
         recommendations.addEventListener('click', addInputRecommedation);
         document.querySelectorAll('.deleteButton').forEach( button => {
             button.addEventListener('click', removeInput);
