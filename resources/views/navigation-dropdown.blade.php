@@ -5,7 +5,7 @@
             <div class="flex">
 
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
+                <div class="flex-shrink-0 flex items-center pb-2">
                     <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('/storage/logos/'.\Auth::user()->currentTeam->logo) }}" alt="{{ \Auth::user()->currentTeam->name }}" class="w-20 h-20 mt-2">
                     </a>
@@ -90,7 +90,7 @@
                 <!-- Notifications menu -->
                 @inject('Notifications', 'Notifications')
 
-                <div class="sm:flex sm:items-center sm:ml-6">
+                <div class="inline-flex items-center justify-end p-2">
                     <x-jet-dropdown width="48">
 
                         <x-slot name="trigger">
@@ -189,21 +189,21 @@
                             <!-- Team Management -->
                             @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Upravljanje timovima') }}
+                                    {{ __('Upravljanje firmama') }}
                                 </div>
 
                                 <!-- Team Settings -->
                                 <x-jet-dropdown-link href="{{ route('teams.index') }}">
-                                    {{ __('Lista svih timova') }}
+                                    {{ __('Lista svih firmi') }}
                                 </x-jet-dropdown-link>
 
                                 <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                    {{ __('Podešavanja tima') }}
+                                    {{ __('Podešavanja firme') }}
                                 </x-jet-dropdown-link>
 
                                 @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                     <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                        {{ __('Kreiraj novi tim') }}
+                                        {{ __('Kreiraj novu firmu') }}
                                     </x-jet-dropdown-link>
                                 @endcan
 
@@ -245,8 +245,6 @@
 
             </div>  
 
-            
-
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -269,69 +267,69 @@
             <div class="block px-4 py-2 text-xs text-gray-400">
                 {{ __('Meni') }}
             </div>
-           
-            <x-jet-dropdown>
-                <x-slot name="trigger">
-                    <button type="button" class="block w-full pl-3 text-left pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
-                </x-slot> 
 
-                <div class="dropdown-menu"> 
-                    <x-slot name="content">
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                    <span>Standardi</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                    <div class="bg-white shadow">
                         @foreach($standards as $standard)
-                            <a class="dropdown-item" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
+                            <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/standards/'.$standard->id) }}">{{ $standard->name }}</a>
                         @endforeach
-                    </x-slot>
+                    </div>
                 </div>
-            </x-jet-dropdown>
+            </div> 
 
-            <x-jet-dropdown>
-                <x-slot name="trigger">
-                    <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Dokumentacija</button>
-                </x-slot>
-
-                <div class="dropdown-menu">
-                    <x-slot name="content">
-                        <a class="dropdown-item" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
-                        <a class="dropdown-item" href="{{ asset('/policies') }}">Politike</a>
-                        <a class="dropdown-item" href="{{ asset('/procedures') }}">Procedure</a>
-                        <a class="dropdown-item" href="{{ asset('/manuals') }}">Uputstva</a>
-                        <a class="dropdown-item" href="{{ asset('/forms') }}">Obrasci</a>          
-                    </x-slot>
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                    <span>Dokumentacija</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                    <div class="bg-white shadow">
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/rules-of-procedures') }}">Poslovnik</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/policies') }}">Politike</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">Procedure</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">Uputstva</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">Obrasci</a>
+                    </div>
                 </div>
-            </x-jet-dropdown>
+            </div>
 
-            <x-jet-dropdown width="60">
-                <x-slot name="trigger">
-                    <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Sistemski procesi</button>
-                </x-slot> 
-
-                <div class="dropdown-menu">
-                    <x-slot name="content">
-                        <a class="dropdown-item" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
-                        <a class="dropdown-item" href="{{ asset('/internal-check') }}">Interne provere</a>
-                        <a class="dropdown-item" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
-                        <a class="dropdown-item" href="{{ asset('/trainings') }}">Obuke</a>
-                        <a class="dropdown-item" href="{{ asset('/goals') }}">Ciljevi</a>
-                        <a class="dropdown-item" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
-                        <a class="dropdown-item" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
-                        <a class="dropdown-item" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
-                        <a class="dropdown-item" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
-                    </x-slot>
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                    <span>Sistemski Procesi</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                    <div class="bg-white shadow">
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/risk-management') }}">Upravljanje Rizikom</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/internal-check') }}">Interne Provere</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i Korektivne Mere</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/trainings') }}">Obuke</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/goals') }}">Ciljevi</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/suppliers') }}">Odobreni Isporučioci</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/stakeholders') }}">Zainteresovane Strane</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/complaints') }}">Upravljanje Reklamacijama</a>
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/management-system-reviews') }}">Preispitivanje Sistema Menadžmenta</a>
+                    </div>
                 </div>
-            </x-jet-dropdown>
+            </div> 
 
-            <x-jet-dropdown>
-                <div class="dropdown-menu">
-                    <x-slot name="trigger">
-                        <button type="button" class="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">Sektori</button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                       <a class="dropdown-item" href="{{ asset('/sectors') }}">Lista sektora</a>
-                       @can('create', App\Models\Sector::class)  <a class="dropdown-item" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>  @endcan    
-                    </x-slot> 
+            <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                    <span>Sektori</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
+                    <div class="bg-white shadow">
+                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors') }}">Lista Sektora</a>
+                        @can('create', App\Models\Sector::class) <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors/create') }}">Dodaj Sektor</a> @endcan
+                    </div>
                 </div>
-            </x-jet-dropdown>
+            </div> 
 
         </div>
 
@@ -376,21 +374,21 @@
                     <div class="border-t border-gray-200"></div>
 
                     <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Upravljanje timovima') }}
+                        {{ __('Upravljanje firmama') }}
                     </div>
 
                     <!-- Team Settings -->
                     <x-jet-responsive-nav-link href="{{ route('teams.index') }}" :active="request()->routeIs('teams.index')">
-                        {{ __('Lista svih timova') }}
+                        {{ __('Lista svih firmi') }}
                     </x-jet-responsive-nav-link>
 
                     <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('Podešavanja tima') }}
+                        {{ __('Podešavanja firme') }}
                     </x-jet-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                         <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('Kreiraj novi tim') }}
+                            {{ __('Kreiraj novu firmu') }}
                         </x-jet-responsive-nav-link>
                     @endcan
 

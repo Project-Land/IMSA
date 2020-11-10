@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateTeamUserTable extends Migration
 {
@@ -22,6 +23,14 @@ class CreateTeamUserTable extends Migration
 
             $table->unique(['team_id', 'user_id']);
         });
+
+        DB::table('team_user')->insert(
+            array(
+                'team_id' => '1',
+                'user_id' => '1',
+                'role' => 'super-admin'
+            )
+        );
     }
 
     /**

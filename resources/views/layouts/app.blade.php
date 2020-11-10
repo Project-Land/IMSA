@@ -8,6 +8,10 @@
 
         <title>{{ config('app.name', 'IMSA') }}</title>
 
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -38,6 +42,10 @@
             .dropdown-menu {
                 position: static;
                 float: none;
+            }
+
+            .pagination {
+                font-size: 14px;
             }
 
             @media (max-width: 640px) {  

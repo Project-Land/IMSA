@@ -1,16 +1,17 @@
 <x-jet-form-section submit="updateTeamName">
     <x-slot name="title">
-        {{ __('Naziv Tima') }}
+        {{ __('Naziv Firme') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Naziv tima i informacije o vlasniku') }}
+        {{ __('Osnovne informacije o firmi') }}
     </x-slot>
 
     <x-slot name="form">
-        <!-- Team Owner Information -->
+        
+        <!--
         <div class="col-span-6">
-            <x-jet-label value="{{ __('Vlasnik Tima') }}" />
+            <x-jet-label value="{{ __('Super Admin') }}" />
 
             <div class="flex items-center mt-2">
                 <img class="w-12 h-12 rounded-full object-cover" src="{{ $team->owner->profile_photo_url }}" alt="{{ $team->owner->name }}">
@@ -20,11 +21,11 @@
                     <div class="text-gray-700 text-sm">{{ $team->owner->email }}</div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Team Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Naziv Tima') }}" />
+            <x-jet-label for="name" value="{{ __('Naziv Firme') }}" />
 
             <x-jet-input id="name"
                         type="text"
@@ -63,7 +64,7 @@
                 <img src="{{ asset('storage/logos/'.\Auth::user()->currentTeam->logo) }}" alt="" class="rounded-full h-20 w-20 object-cover">
             </div>
 
-            <div wire:loading wire:target="logo">Postavlja se...</div>
+            <div wire:loading wire:target="state.logo">Postavlja se...</div>
 
             <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                 {{ __('Izaberite Novi Logo') }}

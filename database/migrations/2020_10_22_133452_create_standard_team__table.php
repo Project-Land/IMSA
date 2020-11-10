@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateStandardTeamTable extends Migration
 {
@@ -19,6 +20,14 @@ class CreateStandardTeamTable extends Migration
             $table->timestamps();
             $table->primary(['standard_id', 'team_id']);
         });
+
+        DB::table('standards')->insert(
+            array(
+                ['name' => '9001'],
+                ['name' => '14001'],
+                ['name' => '45001']
+            )
+        );
     }
 
     /**

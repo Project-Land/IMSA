@@ -26,15 +26,15 @@ class UpdateTeamName implements UpdatesTeamNames
         $messages = [
             'name.required' => 'Unesite ime firme',
             'name.unique' => 'Već postoji firma sa takvim nazivom',
-            'name.min' => 'Ime firme ne sme kraće od 3 karaktera',
+            'name.min' => 'Ime firme ne sme biti kraće od 3 karaktera',
             'name.max' => 'Ime firme ne sme biti duže od 100 karaktera',
-            'logo.max' => 'Logo fajl ne sme biti veći od 1MB',
-            'logo.mimes' => 'Fajl mora biti u nekom od sledećih formata: jpg, jpeg, png, bmp, gif, svg'
+            'logo.max' => 'Logo ne sme biti veći od 1MB',
+            'logo.image' => 'Fajl mora biti u nekom od sledećih formata: jpeg, png, bmp, gif, svg ili webp'
         ];
 
         Validator::make($input, [
             'name' => ['required', 'string', 'min:3', 'max:100', Rule::unique('teams')->ignore($team->id)],
-            'logo' => ['mimes:png,jpg,jpeg,bmp,gif,svg', 'max:1024']
+            'logo' => ['image', 'max:1024']
         ], $messages)->validateWithBag('updateTeamName');  
 
         if(count($input) > 1){

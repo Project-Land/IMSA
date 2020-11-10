@@ -64,7 +64,7 @@
 
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="role" value="{{ __('Uloga') }}" class="block font-medium text-sm text-gray-700" />
-                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-3 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="role" id="role">
+                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="role" id="role">
                                 <option value="user" {{ old('role') == "user" ? "selected":"" }}>Korisnik</option>
                                 <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>Editor Internih Provera</option>
                                 <option value="admin" {{ old('role') == "admin" ? "selected":"" }}>Administrator</option>

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateTeamsTable extends Migration
 {
@@ -17,10 +18,19 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->index();
             $table->string('name');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->boolean('personal_team');
             $table->timestamps();
         });
+
+        DB::table('teams')->insert(
+            array(
+                'user_id' => '1',
+                'name' => 'Default Company',
+                'logo' => "",
+                'personal_team' => false
+            )
+        );
     }
 
     /**

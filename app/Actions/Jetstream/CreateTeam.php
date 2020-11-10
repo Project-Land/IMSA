@@ -32,12 +32,12 @@ class CreateTeam implements CreatesTeams
             'name.max' => 'Ime firme ne sme biti duže od 100 karaktera',
             'logo.required' => 'Izaberite logo firme',
             'logo.max' => 'Logo fajl ne sme biti veći od 1MB',
-            'logo.mimes' => 'Fajl mora biti u nekom od sledećih formata: jpg, jpeg, png, bmp, gif, svg'
+            'logo.image' => 'Fajl mora biti u nekom od sledećih formata: jpeg, png, bmp, gif, svg, webp'
         ];
 
         Validator::make($input, [
             'name' => ['required', 'string', 'min:3', 'max:100', 'unique:teams'],
-            'logo' => ['required', 'mimes:png,jpg,jpeg,bmp,svg,gif', 'max:1024']
+            'logo' => ['required', 'image', 'max:1024']
         ], $messages)->validateWithBag('createTeam');
 
         $this->logo = $input['logo'];

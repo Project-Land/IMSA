@@ -28,9 +28,9 @@ class ComplaintsRequest extends FormRequest
             'description' => 'required',
             'submission_date' => 'required|after:yesterday',
             'process' => 'required',
-            'responsible_person' => 'max:190',
-            'way_of_solving' => 'max:190',
-            'deadline_date' => 'after:submission_date'
+            'responsible_person' => 'nullable|max:190',
+            'way_of_solving' => 'nullable|max:190',
+            'deadline_date' => 'nullable|after:submission_date'
         ];
     }
 

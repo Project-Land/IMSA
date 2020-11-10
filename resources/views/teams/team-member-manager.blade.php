@@ -1,8 +1,9 @@
 <div>
-    @if (Gate::check('addTeamMember', $team))
+
+    <!-- @if (Gate::check('addTeamMember', $team))
         <x-jet-section-border />
 
-        <!-- Add Team Member -->
+        
         <div class="mt-10 sm:mt-0">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
@@ -20,14 +21,14 @@
                         </div>
                     </div>
 
-                    <!-- Member Email -->
+                    
                     <div class="col-span-6 sm:col-span-4">
                         <x-jet-label for="email" value="{{ __('Email') }}" />
                         <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" />
                         <x-jet-input-error for="email" class="mt-2" />
                     </div>
 
-                    <!-- Role -->
+                    
                     @if (count($this->roles) > 0)
                         <div class="col-span-6 lg:col-span-4">
                             <x-jet-label for="role" value="{{ __('Uloga') }}" />
@@ -39,7 +40,7 @@
                                         <div class="px-4 py-3 {{ $index > 0 ? 'border-t border-gray-200' : '' }}"
                                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
                                             <div class="{{ isset($addTeamMemberForm['role']) && $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
-                                                <!-- Role Name -->
+                                                
                                                 <div class="flex items-center">
                                                     <div class="text-sm text-gray-600 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
                                                         {{ $role->name }}
@@ -50,7 +51,7 @@
                                                     @endif
                                                 </div>
 
-                                                <!-- Role Description -->
+                                                
                                                 <div class="mt-2 text-xs text-gray-600">
                                                     {{ $role->description }}
                                                 </div>
@@ -74,7 +75,7 @@
                 </x-slot>
             </x-jet-form-section>
         </div>
-    @endif
+    @endif -->
 
     @if ($team->users->isNotEmpty())
         <x-jet-section-border />
@@ -83,11 +84,11 @@
         <div class="mt-10 sm:mt-0">
             <x-jet-action-section>
                 <x-slot name="title">
-                    {{ __('Članovi tima') }}
+                    {{ __('Članovi firme') }}
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Svi korisnici koji su članovi ovog tima.') }}
+                    {{ __('Svi korisnički nalozi u ovkiru firme.') }}
                 </x-slot>
 
                 <!-- Team Member List -->
@@ -182,11 +183,11 @@
     <!-- Leave Team Confirmation Modal -->
     <x-jet-confirmation-modal wire:model="confirmingLeavingTeam">
         <x-slot name="title">
-            {{ __('Napusti tim') }}
+            {{ __('Ukloni korisnički nalog iz firme') }}
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Da li ste sigurni da želite da napustite ovaj tim?') }}
+            {{ __('Da li ste sigurni da želite da uklonite korisnički nalog iz ove firme?') }}
         </x-slot>
 
         <x-slot name="footer">
@@ -203,11 +204,11 @@
     <!-- Remove Team Member Confirmation Modal -->
     <x-jet-confirmation-modal wire:model="confirmingTeamMemberRemoval">
         <x-slot name="title">
-            {{ __('Ukloni člana tima') }}
+            {{ __('Ukloni korisnički nalog iz firme') }}
         </x-slot>
 
         <x-slot name="content">
-            {{ __('Da li ste sigurni da želite da uklonite ovu osobu iz tima?') }}
+            {{ __('Da li ste sigurni da želite da uklonite ovaj korisnički nalog iz firme?') }}
         </x-slot>
 
         <x-slot name="footer">

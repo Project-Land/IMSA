@@ -62,11 +62,11 @@
 				</select>
 			</div>
 
-			<div class="{{ $complaint->accepted == 0 ? "" : "d-none" }}" id="complaint_accepted">
+			<div class="{{ $complaint->accepted == 1 ? "" : "d-none" }}" id="complaint_accepted">
 
 				<div class="mb-4">
 					<label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">Rok za realizaciju reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : date('d.m.Y') }}" autocomplete="off" placeholder="xx.xx.xxxx">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : '' }}" autocomplete="off" placeholder="xx.xx.xxxx">
 					@error('deadline_date')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror

@@ -67,6 +67,7 @@ class UserController extends Controller
             'username.required' => 'Unesite korisničko ime',
             'username.min' => 'Korisničko ime mora sadržati minimum 4 karaktera',
             'username.max' => 'Korisničko ime ne sme biti duže od 20 karaktera',
+            'username.alpha_dash' => 'Korisničko ime može sadržati samo slova, brojeve i specijale karaktere "-" i "_"',
             'username.unique' => 'Već postoji korisnik sa takvim korisničkim imenom',
             'email.unique' => 'Već postoji korisnik sa takvom email adresom',
             'password.required' => 'Unesite lozinku',
@@ -76,7 +77,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
-            'username' => ['required', 'string', 'min:4', 'max:20', 'unique:users'],
+            'username' => ['required', 'string', 'alpha_dash', 'min:4', 'max:20', 'unique:users'],
             'email' => ['nullable', 'max:255', 'unique:users'],
             'password' => $this->passwordRules()
         ], $messages);
@@ -101,7 +102,7 @@ class UserController extends Controller
             );
             TeamMemberAdded::dispatch($team, $newTeamMember);
 
-            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom : "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom: "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);

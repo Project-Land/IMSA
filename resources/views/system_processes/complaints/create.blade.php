@@ -62,7 +62,7 @@
 			<div class="{{ old('accepted') == 0 ? "d-none" : "" }}" id="complaint_accepted">
 
 				<div class="mb-4">
-					<label for="submission_date" class="block text-gray-700 text-sm font-bold mb-2">Datum podnošenja reklamacije:</label>
+					<label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">Rok za realizaciju reklamacije:</label>
 					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline" name="deadline_date" placeholder="xx.xx.xxxx">
 					@error('deadline_date')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
