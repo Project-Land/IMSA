@@ -186,7 +186,8 @@
                 </div>
                 <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
+                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
+                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
                 </div>
                 <div class="form-group">
                     <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
@@ -197,7 +198,8 @@
                 </div>
                 <div class="form-group" id="measure_effective_field${counter}" style="display: none">
                     <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
+                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
                         <option value="">Izaberi...</option>
                         <option value="1"  >DA</option>
                         <option value="0">NE</option>
@@ -332,7 +334,8 @@
                 </div>
                 <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
+                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
+                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
                 </div>
                 <div class="form-group">
                     <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
@@ -343,7 +346,8 @@
                 </div>
                 <div class="form-group" id="measure_effective_field${counter}" style="display: none">
                     <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight " name="measure_effective[${counter}]" id="measure_effective${counter}">
+                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight " name="measure_effective[${counter}]" id="measure_effective${counter}">
                         <option value="">Izaberi...</option>
                         <option value="1"  >DA</option>
                         <option value="0">NE</option>
