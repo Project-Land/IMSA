@@ -152,7 +152,7 @@
                     oninput="this.setCustomValidity('')">
                         <option value="">Izaberi...</option>
                         <option value="Eksterna provera">Eksterna provera</option>
-                        <option value="Interna provera" >Interna provera</option>
+                        <option value="Interna provera" selected>Interna provera</option>
                         <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
                         <option value="Žalba" >Žalba</option>
                         <option value="Ostalo" >Ostalo</option>

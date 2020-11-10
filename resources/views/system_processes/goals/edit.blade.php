@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="deadline">Rok za realizaciju</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}">
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}">
                     @error('deadline')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
