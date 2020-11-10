@@ -38,7 +38,7 @@
         <!-- Logo File Input -->
         <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
             <input type="file" class="hidden"
-                        wire:model="state.logo"
+                        wire:model.defer="state.logo"
                         x-ref="photo"
                         x-on:change="
                                 photoName = $refs.photo.files[0].name;
@@ -63,19 +63,13 @@
                 <img src="{{ asset('storage/logos/'.\Auth::user()->currentTeam->logo) }}" alt="" class="rounded-full h-20 w-20 object-cover">
             </div>
 
-            <div wire:loading wire:target="photo">Postavlja se...</div>
+            <div wire:loading wire:target="logo">Postavlja se...</div>
 
             <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                 {{ __('Izaberite Novi Logo') }}
             </x-jet-secondary-button>
 
-            <!-- @if (\Auth::user()->currentTeam->logo)
-                <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
-                    {{ __('Uklonite Logo') }}
-                </x-jet-secondary-button>
-            @endif -->
-
-            <x-jet-input-error for="photo" class="mt-2" />
+            <x-jet-input-error for="logo" class="mt-2" />
         </div>
     </x-slot>
 
