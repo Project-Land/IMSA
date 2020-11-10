@@ -28,37 +28,37 @@
 
             <div class="row">
                 <div class="form-group col" >
-                    <label for="checked_sector">Proveravano područje</label>
-                    <input type="text" class="form-control" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
+                    <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">Proveravano područje</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" placeholder="" name="checked_sector" value="{{$internalCheckReport->internalCheck->sector->name}}" readonly>
                 
                 </div>
 
                 <div class="form-group col">
-                    <label for="standard">Standard</label>
-                    <input type="text" class="form-control" id="standard" placeholder="" name="standard" value="{{$internalCheckReport->internalCheck->standard->name}}" readonly>
+                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Standard</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="standard" placeholder="" name="standard" value="{{$internalCheckReport->internalCheck->standard->name}}" readonly>
                 </div>
 
                 <div class="form-group col">
-                    <label for="team_for_internal_check">Tim za proveru</label>
-                    <input type="text" class="form-control" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$internalCheckReport->internalCheck->leaders}}" readonly>
+                    <label for="team_for_internal_check" class="block text-gray-700 text-sm font-bold mb-2">Tim za proveru</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{$internalCheckReport->internalCheck->leaders}}" readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col">
-                    <label for="check_start">Početak provere</label>
-                    <input type="text" class="form-control" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
+                    <label for="check_start" class="block text-gray-700 text-sm font-bold mb-2">Početak provere</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
                 </div>
 
                 <div class="form-group col">
-                    <label for="check_end">Završetak provere</label>
-                    <input type="text" class="form-control" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
+                    <label for="check_end" class="block text-gray-700 text-sm font-bold mb-2">Završetak provere</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col">
-                    <label for="specification">Specifikacija dokumenata</label>
-                    <textarea rows="3" class="form-control" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
+                    <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">Specifikacija dokumenata</label>
+                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" placeholder="" name="specification" value="{{$internalCheckReport->specification}}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
                         oninput="this.setCustomValidity('')">{{$internalCheckReport->specification}}</textarea>
                     @error('specification')
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -68,8 +68,8 @@
 
 
         <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-            <span id="addInconsistencies"  class="btn btn-primary mb-2">Dodaj neusaglašenost</span>
-            <span id="addRecommendations"  class="btn btn-primary mb-2">Dodaj preporuku</span>
+            <span id="addInconsistencies"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
+            <span id="addRecommendations"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
         </div>
         
         <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
@@ -179,11 +179,11 @@
             `<div style="background:#5c9c6a;padding:10px;">
             <h2>Popuni karton korektivne mere</h2>
 			<div class="form-group">
-            <label for="noncompliance_source[${counter}]">Izvor informacije o neusaglašenostima:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-3 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]"  required>
+            <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]"  required>
 					<option value="">Izaberi...</option>
 					<option value="Eksterna provera">Eksterna provera</option>
-					<option value="Interna provera" >Interna provera</option>
+					<option value="Interna provera" selected>Interna provera</option>
 					<option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
 					<option value="Žalba" >Žalba</option>
 					<option value="Ostalo" >Ostalo</option>
@@ -191,41 +191,41 @@
 			
 			</div>
 			<div class="form-group">
-				<label for="noncompliance_description">Opis neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" require></textarea>
+				<label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" require></textarea>
 				
 			</div>
 			<div class="form-group">
-				<label for="noncompliance_cause">Uzrok neusaglašenosti:</label>
-				<textarea class="form-control" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required></textarea>
+				<label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required></textarea>
 			
 			</div>
 			<div class="form-group">
-				<label for="measure">Mera za otklanjanje neusaglašenosti:</label>
-				<textarea class="form-control" id="measure${counter}" name="measure[${counter}]" required></textarea>
+				<label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required></textarea>
 				
 			</div>
 			<div class="form-group">
-				<label for="measure_approval">Odobravanje mere:</label>
-				<select class="form-control" name="measure_approval[${counter}]" id="measure_approval${counter}">
+				<label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
 					<option value="1" >DA</option>
 					<option value="0" >NE</option>
 				</select>
 			</div>
 			<div class="form-group" id="measure_reason_field${counter}" style="display: none">
-				<label for="measure_approval_reason">Razlog neodobravanja mere</label>
-				<input type="text" class="form-control" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}">
+				<label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}">
 			</div>
 			<div class="form-group">
-				<label for="measure_status">Status mere:</label>
-				<select class="form-control" name="measure_status[${counter}]" id="measure_status${counter}">
+				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status${counter}">
 					<option value="0" >NE</option>
 					<option value="1"  >DA</option>
 				</select>
 			</div>
 			<div class="form-group" id="measure_effective_field${counter}" style="display: none">
-				<label for="measure_effective">Mera efektivna:</label>
-				<select class="form-control" name="measure_effective[${counter}]" id="measure_effective${counter}">
+				<label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}">
 					<option value="">Izaberi...</option>
 					<option value="1"  >DA</option>
 					<option value="0">NE</option>

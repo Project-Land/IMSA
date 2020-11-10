@@ -57,7 +57,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Termin provere</th>
-                                    <th>Područije provere</th>
+                                    <th>Područje provere</th>
                                     <th>Vođe tima i proveravači</th>
                                     <th>Standard</th>
                                     <th>Br program ip</th>
@@ -82,7 +82,7 @@
                                         @else
                                         <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
                                         @can('update', $check)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmenite plan interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena plana interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                         @endcan
                                     @endif
                                    
@@ -122,7 +122,7 @@
 
                                     <td class="text-center">
                                     @can('update', $check)
-                                        <a data-toggle="tooltip" data-placement="top" title="Kreirajte internu proveru" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena interne provere" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf

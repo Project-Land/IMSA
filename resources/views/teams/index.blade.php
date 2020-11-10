@@ -40,7 +40,9 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Logovi
                                 </th>
-                                <th class="px-6 py-3 bg-gray-50"></th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    Akcije
+                                </th>
 							</tr>
 						</thead>
 						<tbody class="bg-white divide-y divide-gray-200">
@@ -101,8 +103,8 @@
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     <a href="{{ route('logs.show', $team->name) }}">Log</a>
 								</td>
-								<td class="py-4 px-6 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="/teams/{{ $team->id }}" class="text-indigo-600 hover:text-indigo-900">Izmeni</a>
+								<td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 font-medium">
+                                    <a href="/teams/{{ $team->id }}">Izmeni</a>
 								</td>
 							</tr>
 							@endforeach
