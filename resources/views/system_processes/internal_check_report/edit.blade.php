@@ -317,7 +317,7 @@
             coun++;
         }
 
-        inconsistencies.addEventListener('click', addInput);
+        //inconsistencies.addEventListener('click', addInput);
         recommendations.addEventListener('click', addInputRecommedation);
         document.querySelectorAll('.deleteButton').forEach( button => {
             button.addEventListener('click', removeInput);
@@ -389,7 +389,8 @@
                                 </div>
                                 <div class="mb-4" id="measure_reason_field" style="display: none">
                                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2" >Razlog neodobravanja mere</label>
-                                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="measure_approval_reason" id="measure_approval_reason" >
+                                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja mere')"
+                                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="measure_approval_reason" id="measure_approval_reason" >
                                     @error('measure_approval_reason')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
                                     @enderror
@@ -403,7 +404,8 @@
                                 </div>
                                 <div class="mb-4" id="measure_effective_field" style="display: none">
                                     <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
+                                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
                                         <option value="">Izaberi...</option>
                                         <option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >DA</option>
                                         <option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
@@ -427,19 +429,23 @@
         $('#measure_approval').change( () => {
             if($('#measure_approval').val() == 0){
                 $('#measure_reason_field').css('display', '');
+                $('#measure_approval_reason').attr('required', true);
             }
             else{
                 $('#measure_reason_field').css('display', 'none');
                 $('#measure_reason').val('');
+                $('#measure_approval_reason').attr('required', false);
             }
         })
 
         $('#measure_status').change( () => {
             if($('#measure_status').val() == 1){
                 $('#measure_effective_field').css('display', '');
+                $('#measure_effective').attr('required', true);
             }
             else{
                 $('#measure_effective_field').css('display', 'none');
+                $('#measure_effective').attr('required', false);
             }
         })
    
