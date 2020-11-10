@@ -31,7 +31,7 @@
 
                         <div class="col-sm-4">
                             @can('create', App\Models\InternalCheck::class)
-						        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novi godišnji plan</a>
+						        <a  class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novu internu proveru</a>
 					        @endcan
                         </div>
 
@@ -76,13 +76,13 @@
                                     @if(!isset($check->planIp->checked_date))
                                        {{''}}
                                         @can('update', $check)   
-                                        <a href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Kreirajte plan interne provere" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
                                         @endcan
 
                                         @else
-                                        <span class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
+                                        <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
                                         @can('update', $check)
-                                        <a href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmenite plan interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                         @endcan
                                     @endif
                                    
@@ -94,7 +94,7 @@
                                     @if(!isset($check->internalCheckReport->id))
                                     @if(isset($check->planIp->checked_date))
                                     @can('update', $check)
-                                    <a href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Kreirajte izveštaj za internu proveru" href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
                                     @endcan
                                     @else
                                     @can('update', $check)
@@ -104,9 +104,9 @@
                                    
                                    
                                     @else
-                                        <span class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
+                                        <span data-toggle="tooltip" data-placement="top" title="Pregled izveštaja sa interne provere" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
                                         @can('update', $check)
-                                        <a href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena izveštaja sa interne provere" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
                                         <!-- <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
@@ -122,11 +122,11 @@
 
                                     <td class="text-center">
                                     @can('update', $check)
-                                        <a href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Kreirajte internu proveru" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     @endcan
                                     </td>
@@ -247,8 +247,8 @@
 						<div class="modal-body">
 							<p><h5>Specifikacija </h5>${ data.specification }</p>`;
 							let num=1;
-							for( let inc of data.inconsistencies){
-								modal += `<p class="border-top"><h5>Neusaglašenost ${ num } </h5>${ inc.description }</p>`;
+							for( let inc of data.corrective_measures){
+								modal += `<p class="border-top"><h5>Neusaglašenost ${ num } </h5>${ inc.noncompliance_description }</p>`;
 								num++;
 							}
 
@@ -286,5 +286,9 @@
     for(report of document.querySelectorAll('.reportShow')){
     	report.addEventListener('click', reportShowAjax);
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
    
 </script>

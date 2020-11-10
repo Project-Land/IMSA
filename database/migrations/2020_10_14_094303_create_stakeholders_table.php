@@ -19,8 +19,8 @@ class CreateStakeholdersTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->text('expectation');
-            $table->text('response');
+            $table->string('expectation',500);
+            $table->string('response',500);
             $table->timestamps();
         });
     }

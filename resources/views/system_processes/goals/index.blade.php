@@ -71,13 +71,13 @@
                                     <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
                                     <td class="text-center">
-                                        <button class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="Pregled cilja" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $goal)
-                                        <a href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena cilja" href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje cilja" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -241,5 +241,10 @@ var myRe = /\bgoals\b/g;
             console.log(error);
         })
     });
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+
 
 </script>

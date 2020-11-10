@@ -19,12 +19,12 @@ class CreateGoalsTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->year('year');
-            $table->string('goal');
+            $table->string('goal',255);
             $table->string('kpi');
-            $table->text('activities');
+            $table->string('activities',500);
             $table->string('responsibility');
             $table->date('deadline');
-            $table->string('resources');
+            $table->string('resources',255);
             $table->text('analysis')->nullable();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ class CreateComplaintsTable extends Migration
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->date('submission_date');
-            $table->text('description');
+            $table->string('description',500);
             $table->string('process');
             $table->boolean('accepted');
             $table->date('deadline_date')->nullable();
