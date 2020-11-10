@@ -49,6 +49,18 @@ class CorrectiveMeasuresController extends Controller
         return redirect('/corrective-measures');
     }
 
+    public function storeApi(CorrectiveMeasuresRequest $request)
+    {
+        $this->authorize('create', CorrectiveMeasure::class);
+        try{
+            $correctiveMeasure = CorrectiveMeasure::create($request->all());
+            CustomLog::info('Neusaglašenost "'.$correctiveMeasure->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj kreiranja neusaglašenosti, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+        }
+        return back();
+    }
+
     public function show($id)
     {
         $corrective_measure = CorrectiveMeasure::with('standard')->with('sector')->findOrFail($id);

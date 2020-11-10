@@ -70,7 +70,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('plan-ip', PlanIpController::class);
     Route::resource('internal-check-report', InternalCheckReportController::class);
-    Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class,'createReport'])->name('create.report');
+    Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class, 'createReport'])->name('create.report');
+    Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
     Route::resource('inconsistencies', InconsistenciesController::class);
     Route::resource('recommendations', RecommendationsController::class);
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);

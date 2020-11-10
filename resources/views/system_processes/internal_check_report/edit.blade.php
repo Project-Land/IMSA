@@ -66,9 +66,11 @@
                 </div>
             </div>
 
+        <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
+
 
         <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-            <span id="addInconsistencies"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
+            <!--<span id="addInconsistencies"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span> -->
             <span id="addRecommendations"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
         </div>
         
@@ -76,8 +78,8 @@
             @foreach($internalCheckReport->correctiveMeasures as $inc)
             <div class="form-group col-6 mt-3">
         
-                <label for="inconsistencies">Neusaglašenost</label>
-            <textarea class="form-control" name="inconsistencies[{{$inc->id}}]" required>{{$inc->noncompliance_description}}</textarea>
+                <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>
+            <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="inconsistencies[{{$inc->id}}]" required>{{$inc->noncompliance_description}}</textarea>
             @error('inconsistencies.'.$inc->id)
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 			@enderror
@@ -92,7 +94,7 @@
                 @foreach($internalCheckReport->recommendations as $rec)
                     <div class="form-group col-6 mt-3" id="recommendations[{{$rec->id}}]">
                         <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">Preporuka</label>
-                        <textarea class="form-control" name="recommendations[{{$rec->id}}]" required>{{$rec->description}}</textarea>
+                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="recommendations[{{$rec->id}}]" required>{{$rec->description}}</textarea>
                         @error('recommendations.'.$rec->id)
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
@@ -316,7 +318,7 @@
         });
 
 
-        /*
+        
         let modal = 
             `<div class="modal" id="kkm-1" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded" role="document">
@@ -329,23 +331,19 @@
                         </div>
                         <div class="modal-body">
 
-                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off" action="{{ route('corrective-measures.store') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off" action="{{ route('corrective-measures.store-from-icr') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                                 @csrf
 
                                 <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
                                 <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
+                                <input type="hidden" name="internal_check_report_id" value="{{ $internalCheckReport->id }}">
 
                                 <div class="mb-4">
                                     <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source"
                                     required oninvalid="this.setCustomValidity('Izvor informacije o neusaglašenostima nije izabran')"
                                     oninput="this.setCustomValidity('')">
-                                        <option value="">Izaberi...</option>
-                                        <option value="Eksterna provera" {{ old('noncompliance_source') == "Eksterna provera" ? "selected" : "" }}>Eksterna provera</option>
-                                        <option value="Interna provera" {{ old('noncompliance_source') == "Interna provera" ? "selected" : "" }}>Interna provera</option>
-                                        <option value="Preispitivanje ISM-a" {{ old('noncompliance_source') == "Preispitivanje ISM-a" ? "selected" : "" }}>Preispitivanje ISM-a</option>
-                                        <option value="Žalba" {{ old('noncompliance_source') == "Žalba" ? "selected" : "" }}>Žalba</option>
-                                        <option value="Ostalo" {{ old('noncompliance_source') == "Ostalo" ? "selected" : "" }}>Ostalo</option>
+                                        <option value="Interna provera" selected>Interna provera</option>
                                     </select>
                                     @error('noncompliance_source')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -414,8 +412,11 @@
                 </div>
             </div>`;
 
-        $("body").append(modal);
-        $('#kkm-1').modal();
+        $('body').append(modal);
+
+        $('#addInc').click( () => {
+            $('#kkm-1').modal();
+        });
 
         $('#measure_approval').change( () => {
             if($('#measure_approval').val() == 0){
@@ -434,7 +435,7 @@
             else{
                 $('#measure_effective_field').css('display', 'none');
             }
-        }) */
+        })
    
     </script>
 
