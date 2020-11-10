@@ -110,7 +110,7 @@
 					<option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
 				</select>
 			</div>
-			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
+			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
 

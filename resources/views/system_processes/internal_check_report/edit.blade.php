@@ -66,25 +66,22 @@
                 </div>
             </div>
 
-
-
-        <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-            <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
-            <span id="addRecommendations"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
-        </div>
-        
-        <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
-            @foreach($internalCheckReport->correctiveMeasures as $inc)
-            <div class="form-group col-6 mt-3">
-        
-                <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>
-            <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="inconsistencies[{{$inc->id}}]" required>{{$inc->noncompliance_description}}</textarea>
-            @error('inconsistencies.'.$inc->id)
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-			@enderror
-            <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
-            <a href="{{route('corrective-measures.edit',$inc->id)}}" >Korektivna mera</a>
- 
+            <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
+                <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
+                <span id="addRecommendations"  class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
+            </div>
+            
+            <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
+                @foreach($internalCheckReport->correctiveMeasures as $inc)
+                    <div class="form-group col-6 mt-3">
+                        <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>
+                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="inconsistencies[{{$inc->id}}]" required>{{$inc->noncompliance_description}}</textarea>
+                        @error('inconsistencies.'.$inc->id)
+                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                        @enderror
+                        <span class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">Korektivna mera</span>
+                        <button class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
+                        <a class="btn btn-primary float-right ml-2 mt-2" href="{{route('corrective-measures.edit', $inc->id)}}" ><i class="fas fa-edit"></i></a>
                     </div>
                 @endforeach
             </div>
@@ -103,7 +100,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" id="submitForm" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline" >Izmeni</button>
+                <button type="submit" id="submitForm" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline" >Izmeni</button>
             </div>
         </form>
 
@@ -441,6 +438,59 @@
                 $('#measure_effective_field').css('display', 'none');
             }
         })
+
+
+        function showMeasure(id){
+            axios.get('/corrective-measures/'+id)
+            .then((response) => {
+                let modal = `<div class="modal" id="showData-${ id }" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h5 class="modal-title font-weight-bold">${ response.data.name }</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Datum kreiranja</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Sistem menadžment</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.standard.name }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Izvor neusaglašenosti</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_source }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Organizaciona celina</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.sector.name }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Opis neusaglašenosti</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_description }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Uzrok neusaglašenosti</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_cause }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera za otklanjanje neusaglašenosti</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera odobrena</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval == 1 ? "Odobrena" : "Neodobrena" }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Razlog neodobravanja mere</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_reason == null ? "/" : response.data.measure_approval_reason }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Datum odobravanja mere</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_date != null ? new Date(response.data.measure_approval_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera efektivna</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "Efektivna" : "Neefektivna" : "/" }</p></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $("body").append(modal);
+                $('#showData-'+id).modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
    
     </script>
 

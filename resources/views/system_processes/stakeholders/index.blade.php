@@ -44,8 +44,8 @@
                                 @foreach($stakeholders as $s)
                                 <tr>
                                     <td class="text-center">{{ $s->name }}</td>
-                                    <td class="text-center">{{ $s->expectation }}</td>
-                                    <td class="text-center">{{ $s->response }}</td>
+                                    <td class="text-center">{{ Str::length($s->expectation) < 100 ? $s->expectation : Str::limit($s->expectation, 100) }}</td>
+                                    <td class="text-center">{{ Str::length($s->response) < 100 ? $s->response : Str::limit($s->response, 100) }}</td>
                                     @canany(['update', 'delete'], $s)
                                     <td class="text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Izmena zainteresovane strane" href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>

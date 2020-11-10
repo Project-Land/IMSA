@@ -46,7 +46,7 @@
                             <tbody>
                                 @foreach($riskManagements as $risk)
                                 <tr>
-                                    <td class="text-center">{{ $risk->description }}</td>
+                                    <td class="text-center">{{ Str::length($risk->description) < 60 ? $risk->description : Str::limit($risk->description, 60) }}</td>
                                     <td class="text-center">{{ $risk->probability }}</td>
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>

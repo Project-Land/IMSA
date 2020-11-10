@@ -63,6 +63,9 @@ class CorrectiveMeasuresController extends Controller
 
     public function show($id)
     {
+        if(!request()->expectsJson()){
+            abort(404);
+        }
         $corrective_measure = CorrectiveMeasure::with('standard')->with('sector')->findOrFail($id);
         return response()->json($corrective_measure);
     }

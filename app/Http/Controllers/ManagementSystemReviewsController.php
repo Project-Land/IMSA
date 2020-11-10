@@ -73,6 +73,10 @@ class ManagementSystemReviewsController extends Controller
 
     public function show(int $id)
     {
+        if(!request()->expectsJson()){
+            abort(404);
+        }
+        
         $msr = ManagementSystemReview::findOrFail($id);
         return response()->json($msr);
     }
