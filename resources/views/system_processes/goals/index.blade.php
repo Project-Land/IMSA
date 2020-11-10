@@ -65,11 +65,11 @@
                                     <td class="text-center">{{ $goal->year }}</td>
                                     <td class="text-center">{{ $goal->goal }}</td>
                                     <td class="text-center">{{ $goal->kpi }}</td>
-                                    <td class="text-center">{{ $goal->activities }}</td>
+                                    <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
                                     <td class="text-center">{{ $goal->responsibility }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
                                     <td class="text-center">{{ $goal->resources }}</td>
-                                    <td class="text-center">{{ $goal->analysis ? : '/' }}</td>
+                                    <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="Pregled cilja" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $goal)

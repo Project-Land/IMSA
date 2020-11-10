@@ -15,7 +15,7 @@ class SectorObserver
      */
     public function created(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" dodat, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" dodat, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
     }
 
     /**
@@ -32,7 +32,7 @@ class SectorObserver
 
     public function updated(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
     }
 
     /**
@@ -43,7 +43,7 @@ class SectorObserver
      */
     public function deleted(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.\Auth::user()->name.', '.\Auth::user()->email.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
     }
 
     /**

@@ -57,7 +57,7 @@
                     <option value="0" {{ ($risk->status === 0)? "selected" : "" }} >Zatvorena</option>
                 </select>
 			</div>
-			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Primeni</button>
+			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Primeni</button>
 		</form>
     </div>
 

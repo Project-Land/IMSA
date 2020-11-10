@@ -18,7 +18,7 @@ class InternalCheckReportController extends Controller
 {
     public function index()
     {   
-       //
+       abort(404);
     }
 
     public function createReport($id)
@@ -144,8 +144,11 @@ class InternalCheckReportController extends Controller
 
     public function show($id)
     {
-       $report = InternalCheckReport::where('id', $id)->with('recommendations', 'correctiveMeasures')->get();
-       echo $report;
+        if(!request()->expectsJson()){
+            abort(404);
+        }
+        $report = InternalCheckReport::where('id', $id)->with('recommendations', 'correctiveMeasures')->get();
+        echo $report;
     }
 
     public function edit($id)

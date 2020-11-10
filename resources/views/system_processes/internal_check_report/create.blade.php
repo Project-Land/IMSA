@@ -86,7 +86,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="float-right bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
+                <button type="submit" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Sačuvaj</button>
             </div>
         </form>
     </div>

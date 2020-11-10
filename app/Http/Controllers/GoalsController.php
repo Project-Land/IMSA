@@ -79,6 +79,10 @@ class GoalsController extends Controller
 
     public function show($id)
     {
+        if(!request()->expectsJson()){
+            abort(404);
+        }
+        
         $goal = Goal::findOrFail($id);
         return response()->json($goal);
     }
