@@ -47,13 +47,13 @@
                                     <td class="text-center">{{ $document->version }}</td>
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                     <td class="text-center">
-                                        <a href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Pregled/Preuzimanje dokumenta" href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
                                         @canany(['update', 'delete'], $document)
-                                        <a href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena dokumenta" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -92,5 +92,9 @@
           "orderable": false,
         }],
     }); 
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 
 </script>
