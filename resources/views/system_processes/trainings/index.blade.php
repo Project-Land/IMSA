@@ -74,11 +74,11 @@
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $tp)
-                                        <a href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Kreiranje obuke" href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje obuke" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -181,6 +181,10 @@
         }, (error) => {
             console.log(error);
         })
+    });
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
     });
 
 </script>

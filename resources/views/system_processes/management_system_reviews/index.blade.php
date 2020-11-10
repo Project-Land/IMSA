@@ -57,13 +57,13 @@
                                 <tr>
                                     <td class="text-center">Zapisnik sa preispitivanja {{ $m->year }}</td>
                                     <td class="text-center">
-                                        <button class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="Pregled zapisnika" class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $m)
-                                        <a href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena zapisnika" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('management-system-reviews.destroy', $m->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje zapisnika" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -217,6 +217,10 @@
         }, (error) => {
             console.log(error);
         })
+    });
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
     });
 
 </script>

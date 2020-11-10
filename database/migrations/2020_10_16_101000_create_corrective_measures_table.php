@@ -22,13 +22,13 @@ class CreateCorrectiveMeasuresTable extends Migration
             $table->foreignId('internal_check_report_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('noncompliance_source');
-            $table->text('noncompliance_description');
-            $table->text('noncompliance_cause');
+            $table->string('noncompliance_description',500);
+            $table->string('noncompliance_cause',500);
             $table->date('noncompliance_cause_date');
-            $table->text('measure');
+            $table->string('measure',500);
             $table->date('measure_date');
             $table->boolean('measure_approval');
-            $table->text('measure_approval_reason')->nullable();
+            $table->string('measure_approval_reason',500)->nullable();
             $table->date('measure_approval_date')->nullable();
             $table->boolean('measure_status');
             $table->boolean('measure_effective')->nullable();

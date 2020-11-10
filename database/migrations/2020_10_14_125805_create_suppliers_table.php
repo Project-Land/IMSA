@@ -19,7 +19,7 @@ class CreateSuppliersTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->string('supplier_name');
-            $table->text('subject');
+            $table->string('subject',500);
             $table->integer('quality');
             $table->integer('price');
             $table->integer('shippment_deadline');

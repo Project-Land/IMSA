@@ -48,11 +48,11 @@
                                     <td class="text-center">{{ $s->response }}</td>
                                     @canany(['update', 'delete'], $s)
                                     <td class="text-center">
-                                        <a href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena zainteresovane strane" href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('stakeholders.destroy', $s->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje zainteresovane strane" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                     @endcanany
@@ -91,4 +91,8 @@
           "orderable": false,
         }],
     }); 
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 </script>

@@ -20,12 +20,12 @@ class CreateTrainingsTable extends Migration
             $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->year('year');
             $table->string('name');
-            $table->text('description');
+            $table->string('description',500);
             $table->enum('type', ['Interna', 'Eksterna']);
             $table->integer('num_of_employees');
             $table->timestamp('training_date');
             $table->string('place');
-            $table->text('resources');
+            $table->string('resources',500);
             $table->integer('final_num_of_employees')->nullable();
             $table->integer('rating')->nullable();
             $table->timestamps();

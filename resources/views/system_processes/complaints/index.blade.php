@@ -60,11 +60,11 @@
                                     <td class="text-center">{{ ($c->status == '1') ? 'Otvorena' : 'Zatvorena' }}</td>
                                     @canany(['update', 'delete'], $c)
                                     <td class="text-center">
-                                        <a href="{{ route('complaints.edit', $c->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena reklamacije" href="{{ route('complaints.edit', $c->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('complaints.destroy', $c->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button  data-toggle="tooltip" data-placement="top" title="Brisanje reklamacije" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                     @endcanany
@@ -104,4 +104,8 @@
         }],
         "order": [[ 2, "desc" ]]
     }); 
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 </script>

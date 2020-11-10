@@ -52,11 +52,11 @@
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
                                     @canany(['update', 'delete'], $s)
                                     <td class="text-center">
-                                        <a href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena isporučioca" href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje isporučioca" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                     @endcanany
@@ -110,4 +110,8 @@
         let e= document.getElementById('tr'+id);
         e.style="background:#bbfca9;";
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 </script>

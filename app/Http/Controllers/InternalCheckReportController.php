@@ -144,13 +144,16 @@ class InternalCheckReportController extends Controller
 
     public function show($id)
     {
-       $report = InternalCheckReport::where('id', $id)->with('recommendations', 'inconsistencies')->get();
+       $report = InternalCheckReport::where('id', $id)->with('recommendations', 'correctiveMeasures')->get();
        echo $report;
     }
 
     public function edit($id)
     {
         $internal_check_report = InternalCheckReport::where('id', $id)->with('internalCheck', 'recommendations', 'correctiveMeasures')->get();
+        if(!$internal_check_report->count()){
+            abort(404);
+        }
         $internal_check_report = $internal_check_report[0];
         $this->authorize('update', $internal_check_report);
         return view('system_processes.internal_check_report.edit', ['internalCheckReport' => $internal_check_report]);

@@ -18,7 +18,7 @@ class CreateRiskManagementsTable extends Migration
             $table->foreignId('standard_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
-            $table->text('description');
+            $table->string('description',500);
             $table->integer('probability');
             $table->integer('frequency');
             $table->integer('total');

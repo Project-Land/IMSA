@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{session('standard_name').' - Godišnji plan internih provera - Izmena'}}
+        {{session('standard_name').' - Interna provera - Izmena'}}
         </h2>
     </x-slot>
 
