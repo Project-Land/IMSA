@@ -221,6 +221,8 @@ class InternalCheckReportController extends Controller
                         $inc->noncompliance_description = $v;
                         $internal_check_report->correctiveMeasures()->save($inc);
                     }
+                }else{
+                    $internal_check_report->correctiveMeasures()->delete();
                 }
                 
 

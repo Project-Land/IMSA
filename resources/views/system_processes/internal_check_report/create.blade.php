@@ -114,14 +114,14 @@
                 const addNewInconsistencies=document.createElement('button');
 
                 let deletebutton=document.createElement('button');
-            deletebutton.classList="btn btn-danger";
+            deletebutton.classList="btn btn-danger mt-1";
             deletebutton.setAttribute("data-counter", "counter");
             deletebutton.id="button"+counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
             deletebutton.addEventListener('click',removeInput);
 
 
-                addNewInconsistencies.classList="btn btn-primary";
+                addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
                 addNewInconsistencies.type="button";
                 addNewInconsistencies.id="button"+counter;
                 addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
@@ -257,7 +257,7 @@
 
 
             let deletebutton=document.createElement('button');
-            deletebutton.classList="btn btn-danger";
+            deletebutton.classList="btn btn-danger mt-1";
             deletebutton.setAttribute("data-counter", "counter");
             deletebutton.id="button"+counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
@@ -271,7 +271,7 @@
             
                 const label=document.createElement('label');
                 const addNewInconsistencies=document.createElement('button');
-                addNewInconsistencies.classList="btn btn-primary";
+                addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
                 addNewInconsistencies.type="button";
                 addNewInconsistencies.id="button"+counter;
                 addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
