@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Standard;
+use App\Models\SystemProcess;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HomeController extends Controller
@@ -26,12 +27,16 @@ class HomeController extends Controller
             $standard = Standard::whereHas('teams', function($q) use ($teamId) {
                 $q->where('team_id', $teamId);
             })->findOrFail($id);
+
+            $system_processes = SystemProcess::whereHas('standards', function($q) use($id) {
+                $q->where('standard_id', $id);
+            })->orderBy('display_order')->get();
             
             session(['standard' => $id]);
             session(['standard_name' => $standard->name]);
-            return view('standard', compact('standard'));
+            return view('standard', compact('standard', 'system_processes'));
         }
-        catch(ModelNotFoundException $e){
+        catch (ModelNotFoundException $e){
             return redirect('/');
         }
     }

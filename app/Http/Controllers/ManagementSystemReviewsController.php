@@ -30,7 +30,7 @@ class ManagementSystemReviewsController extends Controller
     public function getData(Request $request) {
         $standardId = $this::getStandard();
         if($standardId == null){
-            return redirect('/');
+            return redirect('/')->with('status', 'Izaberite standard!');
         }
         
         $reviews = ManagementSystemReview::where([
@@ -65,7 +65,7 @@ class ManagementSystemReviewsController extends Controller
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Zapisnik je uspešno sačuvan!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja zapisnika sa preispitivanja, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja zapisnika sa preispitivanja '.$msr->year.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/management-system-reviews');
@@ -115,7 +115,7 @@ class ManagementSystemReviewsController extends Controller
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Zapisnik je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmebrisanjane zapisnika sa preispitivanja "'.$msr->year.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja zapisnika sa preispitivanja "'.$msr->year.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -130,7 +130,7 @@ class ManagementSystemReviewsController extends Controller
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return true;
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmebrisanjane zapisnika sa preispitivanja "'.$msr->year.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja zapisnika sa preispitivanja "'.$msr->year.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return false;
         }
     }

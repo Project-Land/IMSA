@@ -24,6 +24,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StandardsController;
 use App\Http\Controllers\LogsController;
+use App\Http\Controllers\SystemProcessesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
+
+    //Route::resource('system-processes', SystemProcessesController::class);
+    Route::get('system-processes/add-to-standard', [SystemProcessesController::class, 'addToStandard'])->name('system-processes.add-to-standard');
+    Route::post('system-processes/store-to-standard', [SystemProcessesController::class, 'storeToStandard'])->name('system-processes.store-to-standard');
+    Route::post('system-processes/get-by-standard', [SystemProcessesController::class, 'getByStandard']);
+
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('show-team-stats/{id}', [TeamController::class, 'showTeamUserStats']);

@@ -45,23 +45,21 @@
                         </div>
                     </x-jet-dropdown>
 
-
+                    @inject('system_processes', 'system_processes')
                     <x-jet-dropdown>
                         <x-slot name="trigger">
                             <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['risk-management*','internal-check*','corrective-measures*','trainings*','goals*','suppliers*','stakeholders*','complaints*','management-system-reviews*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Sistemski procesi</button>
-                        </x-slot> 
+                        </x-slot>
 
                         <div class="dropdown-menu">
                             <x-slot name="content">
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/internal-check') }}">Interne provere</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/trainings') }}">Obuke</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/goals') }}">Ciljevi</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/suppliers') }}">Odobreni isporučioci</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a>     
+                                @empty(Session::get('standard'))
+
+                                @else
+                                    @foreach($system_processes as $sp)
+                                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset($sp->route) }}">{{ $sp->name }}</a>
+                                    @endforeach   
+                                @endempty
                             </x-slot>
                         </div>
                     </x-jet-dropdown>
@@ -227,6 +225,19 @@
                                 <div class="border-t border-gray-100"></div>
                             @endif
 
+                            <!-- System processes -->
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('SystemProcessesManagement', $team))
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Sistemski procesi') }}
+                                </div>
+
+                                <x-jet-dropdown-link href="{{ route('system-processes.add-to-standard') }}">
+                                    {{ __('Dodavanje procesa za standard') }}
+                                </x-jet-dropdown-link>
+
+                                <div class="border-t border-gray-100"></div>
+                            @endif
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -305,15 +316,13 @@
                 </button>
                 <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
                     <div class="bg-white shadow">
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/risk-management') }}">Upravljanje Rizikom</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/internal-check') }}">Interne Provere</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i Korektivne Mere</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/trainings') }}">Obuke</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/goals') }}">Ciljevi</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/suppliers') }}">Odobreni Isporučioci</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/stakeholders') }}">Zainteresovane Strane</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/complaints') }}">Upravljanje Reklamacijama</a>
-                        <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/management-system-reviews') }}">Preispitivanje Sistema Menadžmenta</a>
+                        @empty(Session::get('standard'))
+
+                        @else
+                            @foreach($system_processes as $sp)
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset($sp->route) }}">{{ $sp->name }}</a>
+                            @endforeach   
+                        @endempty
                     </div>
                 </div>
             </div> 
@@ -406,6 +415,19 @@
         
                         <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
                             {{ __('Kreiraj novog korisnika') }}
+                        </x-jet-responsive-nav-link>
+        
+                        <div class="border-t border-gray-100"></div>
+                    @endif
+
+                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('SystemProcessesManagement', $team))
+                        <!-- System processes -->
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            {{ __('Sistemski procesi') }}
+                        </div>
+
+                        <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" :active="request()->routeIs('system-processes.add-to-standard')">
+                            {{ __('Dodavanje procesa za standard') }}
                         </x-jet-responsive-nav-link>
         
                         <div class="border-t border-gray-100"></div>

@@ -121,4 +121,9 @@ class TeamPolicy
     {
         return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
+
+    public function SystemProcessesManagement(User $user, Team $team)
+    {
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+    }
 }

@@ -53,7 +53,7 @@ class RulesOfProceduresController extends Controller
             CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Poslovnik, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/rules-of-procedures');
     }
@@ -94,7 +94,7 @@ class RulesOfProceduresController extends Controller
             $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene dokumenta Poslovnik'.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/rules-of-procedures');
     }
@@ -110,7 +110,7 @@ class RulesOfProceduresController extends Controller
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e) {
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Poslovnik'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }

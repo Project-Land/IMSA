@@ -65,7 +65,7 @@ class FormsController extends Controller
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/forms');
     }
@@ -109,7 +109,7 @@ class FormsController extends Controller
             CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/forms');
     }
@@ -125,7 +125,7 @@ class FormsController extends Controller
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Obrazac "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }

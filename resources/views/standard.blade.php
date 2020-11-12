@@ -27,15 +27,9 @@
                 <div class="max-w-sm overflow-hidden shadow-lg divide-y divide-gray-400">
                     <div class="px-6 py-4"><div class="font-bold text-xl text-center">SISTEMSKI PROCESI</div></div>
                     <div class="px-6 py-4">
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/risk-management') }}">Upravljanje rizikom</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/internal-check') }}">Interne provere</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/corrective-measures') }}">Neusaglašenosti i korektivne mere</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/trainings') }}">Obuke</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/goals') }}">Ciljevi</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/suppliers') }}">Odabrani isporučioci</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/stakeholders') }}">Zainteresovane strane</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/complaints') }}">Upravljanje reklamacijama</a></div>
-                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/management-system-reviews') }}">Preispitivanje sistema menadžmenta</a></div>
+                        @foreach($system_processes as $sp)
+                            <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset($sp->route) }}">{{ $sp->name }}</a></div>
+                        @endforeach
                     </div>
                 </div>
             </div>

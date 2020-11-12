@@ -34,5 +34,8 @@ class Standard extends Model
         return $this->belongsToMany('App\Models\Team');
     }
 
-   
+    public function systemProcess()
+    {
+        return $this->belongsToMany('App\Models\SystemProcess');
+    }
 }

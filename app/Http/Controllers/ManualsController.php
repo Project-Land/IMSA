@@ -20,6 +20,7 @@ class ManualsController extends Controller
         if($standardId == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
+        
         $sector = Sector::where('is_global', 1)->get()->first()->id;
         $documents = Document::where([
                 ['doc_category', 'manual'],
@@ -65,7 +66,7 @@ class ManualsController extends Controller
             CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Uputstvo, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/manuals');
     }
@@ -109,7 +110,7 @@ class ManualsController extends Controller
             CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene dokumenta Uputstvo "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/manuals');
     }
@@ -125,7 +126,7 @@ class ManualsController extends Controller
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Uputstvo "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }
