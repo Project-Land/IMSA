@@ -38,7 +38,8 @@ class InternalCheckController extends Controller
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
             ])->whereYear('date', '=', date('Y'))->get();
-
+          
+           
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
