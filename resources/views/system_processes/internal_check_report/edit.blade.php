@@ -21,6 +21,14 @@
                 </ul>
             </div>
         @endif
+        @if(Session::has('status'))
+                <div class="alert alert-info alert-dismissible fade show">
+                    {{ Session::get('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+        @endif
 
 		<form id="internal_check_report_edit_form" action="{{ route('internal-check-report.update',$internalCheckReport->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
@@ -79,9 +87,9 @@
                         @error('inconsistencies.'.$inc->id)
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
-                        <span class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">Korektivna mera</span>
-                        <button class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
-                        <a class="btn btn-primary float-right ml-2 mt-2" href="{{route('corrective-measures.edit', $inc->id)}}" ><i class="fas fa-edit"></i></a>
+                        <span data-toggle="tooltip" data-placement="top" title="Prikaz korektivne mere" class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">Korektivna mera</span>
+                        <button data-toggle="tooltip" data-placement="top" title="Brisanje korektivne mere" class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
+                        <a data-toggle="tooltip" data-placement="top" title="Izmena korektivne mere" class="btn btn-primary float-right ml-2 mt-2" href="{{route('corrective-measures.edit', $inc->id)}}" ><i class="fas fa-edit"></i></a>
                     </div>
                 @endforeach
             </div>
@@ -94,7 +102,7 @@
                         @error('recommendations.'.$rec->id)
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
-                        <button class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
+                        <button data-toggle="tooltip" data-placement="top" title="Brisanje preporuke" class="deleteButton btn btn-danger"><i class="fas fa-trash"></i></button>
                     </div>
                 @endforeach
             </div>
@@ -155,6 +163,8 @@
             addNewInconsistencies.setAttribute("data-counter", "counter");
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.innerHTML='<i class="fas fa-trash"></i>';
+           
+          
            // label.for="newInput"+counter;
           //  div.append(label);
            // label.textContent="Upiši neusaglašenost";
@@ -290,11 +300,14 @@
             addNewRecommendations.classList="btn btn-danger mt-1 float-right";
             addNewRecommendations.setAttribute("data-counter", "coun");
             addNewRecommendations.id="buttonRecommedations"+coun;
+            addNewRecommendations.setAttribute('data-toggle', 'tooltip');
+            addNewRecommendations.setAttribute('data-placement', 'top');
+            addNewRecommendations.title="Brisanje preporuke";
             
             addNewRecommendations.innerHTML='<i class="fas fa-trash"></i>';
             label.for="newInputRecommendation"+coun;
             div.append(label);
-            label.textContent="Preporuka "+coun;
+            label.textContent="Preporuka";
             label.classList="mt-3 block text-gray-700 text-sm font-bold mb-2";
             newInput.id='newInputRecommendation'+coun;
             newInput.name='newInputRecommendation'+coun;
@@ -311,6 +324,7 @@
             recommendationsDiv.append(div);
             newInput.focus();
             coun++;
+            $('[data-toggle="tooltip"]').tooltip(); 
         }
 
         //inconsistencies.addEventListener('click', addInput);
@@ -420,6 +434,7 @@
 
         $('#addInc').click( () => {
             $('#kkm-1').modal();
+            $('#noncompliance_description').focus();
         });
 
         $('#measure_approval').change( () => {
@@ -497,7 +512,11 @@
                 console.log(error)
             })
         }
-   
+
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+    
     </script>
 
 </x-app-layout>

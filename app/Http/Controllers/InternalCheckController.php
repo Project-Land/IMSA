@@ -42,13 +42,14 @@ class InternalCheckController extends Controller
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
-    public function getData(Request $request) {
+    public function getData(Request $request,$year) {
         $standardId = $this::getStandard();
         
         $internal_checks = InternalCheck::where([
             ['standard_id', $standardId],
             ['team_id', Auth::user()->current_team_id],
-        ])->whereYear('date', '=', $request->year)->get();
+        ])->whereYear('date', '=', $year)->get();
+        $request->session()->flash('year', $year);
 
         return view('system_processes.internal_check.index', compact('internal_checks'));
     }
@@ -178,7 +179,7 @@ class InternalCheckController extends Controller
             CustomLog::warning('Neuspeli pokušaj izmene interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
         }
-        return redirect('/internal-check');
+        return redirect('/internal-check/get-data/'.date('Y',strtotime($request->date)));
     }
     
     public function destroy($id)
@@ -188,12 +189,14 @@ class InternalCheckController extends Controller
 
         try{
             $internal_check->notification()->delete();
+           
             InternalCheck::destroy($id);
             PlanIp::destroy($internal_check->plan_ip_id);
             InternalCheckReport::destroy($internal_check->internal_check_report_id);
-            
+           
             CustomLog::info('Godišnji plan interne provere id-"'.$internal_check->id.'" je obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Godišnji plan je uspešno uklonjen');
+          
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
