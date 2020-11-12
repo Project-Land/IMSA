@@ -127,7 +127,11 @@
             deletebutton.id="button"+counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
             deletebutton.addEventListener('click',removeInput);
-
+           
+            deletebutton.setAttribute('data-toggle', 'tooltip');
+            deletebutton.setAttribute('data-placement', 'top');
+            deletebutton.title="Brisanje korektivne mere";
+            
 
                 addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
                 addNewInconsistencies.type="button";
@@ -253,6 +257,7 @@
             }
         })
         counter++;
+        $('[data-toggle="tooltip"]').tooltip(); 
         }
         const form=document.getElementById('internal_check_report_create_form');
         const inconsistencies=document.getElementById('inconsistencies');
@@ -269,8 +274,11 @@
             deletebutton.setAttribute("data-counter", "counter");
             deletebutton.id="button"+counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+            deletebutton.setAttribute('data-toggle', 'tooltip');
+            deletebutton.setAttribute('data-placement', 'top');
+            deletebutton.title="Brisanje korektivne mere";
             deletebutton.addEventListener('click',removeInput);
-
+            
 
             
             if(inconsistencies.value==1){
@@ -406,6 +414,7 @@
         })
 
         counter++;
+        $('[data-toggle="tooltip"]').tooltip(); 
             
             }else{
                
@@ -457,6 +466,9 @@
                 deletebutton.setAttribute("data-counter", "coun");
                 deletebutton.id="buttonRecommedations"+coun;
                 deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+                deletebutton.setAttribute('data-toggle', 'tooltip');
+                deletebutton.setAttribute('data-placement', 'top');
+                deletebutton.title="Brisanje preporuke";
                 deletebutton.addEventListener('click',removeInput);
 
 
@@ -479,6 +491,7 @@
               
                 
                 coun++;
+                $('[data-toggle="tooltip"]').tooltip(); 
                 newInput.focus();
         }
         
@@ -504,6 +517,9 @@
                 deletebutton.setAttribute("data-counter", "coun");
                 deletebutton.id="buttonRecommedations"+coun;
                 deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+                deletebutton.setAttribute('data-toggle', 'tooltip');
+                deletebutton.setAttribute('data-placement', 'top');
+                deletebutton.title="Brisanje preporuke";
                 deletebutton.addEventListener('click',removeInput);
 
 
@@ -530,7 +546,7 @@
                 div.after(addNewRecommendations);
                 
                 coun++;
-               
+                $('[data-toggle="tooltip"]').tooltip(); 
                 newInput.focus();
             
             }else{
@@ -544,9 +560,15 @@
 
         }
 
+       
+
     
         inconsistencies.addEventListener('change', addInput);
         recommendations.addEventListener('change', addInputRecommedation);
+
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
 
             
     </script>

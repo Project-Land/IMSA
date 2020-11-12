@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('sectors', SectorsController::class);
 
     Route::resource('internal-check', InternalCheckController::class);
-    Route::post('internal-check/get-data', [InternalCheckController::class, 'getData']);
+    Route::get('internal-check/get-data/{year}', [InternalCheckController::class, 'getData']);
     Route::resource('goals', GoalsController::class);
     Route::post('goals/filter-year', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
     Route::post('goals/get-data', [GoalsController::class, 'getData']);

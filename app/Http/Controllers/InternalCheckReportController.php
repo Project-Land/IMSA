@@ -36,16 +36,27 @@ class InternalCheckReportController extends Controller
 
         $validatedData = $request->validate([ 
             'specification' => 'required'    
-        ]);
-
+        ],['specification.required'=>'Specifikacija nije popunjena']);
+/*
         $recommendationData = $request->validate([
-            'newInputRecommendation1' => 'string',
-            'newInputRecommendation2' => 'string',
-            'newInputRecommendation3' => 'string',
-            'newInputRecommendation4' => 'string',
-            'newInputRecommendation5' => 'string'          
+            'newInputRecommendation1' => 'min',
+            'newInputRecommendation2' => 'min',
+            'newInputRecommendation3' => 'min',
+            'newInputRecommendation4' => 'min',
+            'newInputRecommendation5' => 'min'          
         ]);
+        */
 
+        $recInputs=[];
+        $recMsg=[];
+        for($i=1;$i<=10;$i++){
+            $recInputs['newInputRecommendation'.$i]='string|min:1';
+            $recMsg["newInputRecommendation{$i}.min"]='Preporuka nije popunjena (popunite ili obrišite polje)';
+        }
+
+        $recommendationData = $request->validate($recInputs,$recMsg);
+
+        /*
         $InconsistencyData = $request->validate([
             'newInput1' => 'string',
             'newInput2' => 'string',
@@ -53,6 +64,7 @@ class InternalCheckReportController extends Controller
             'newInput4' => 'string',  
             'newInput5' => 'string',    
         ]);
+        */
         
         
         $correctiveMeasureData=$request->validate([
@@ -74,15 +86,15 @@ class InternalCheckReportController extends Controller
            
            
         ]
-    );
+    );  
 
         try{
-            DB::transaction(function () use ($request, $validatedData, $recommendationData, $InconsistencyData, $correctiveMeasureData){ 
+            DB::transaction(function () use ($request, $validatedData, $recommendationData, $correctiveMeasureData){ 
                 $count = 1;
                 $standard = Standard::where('name', $request->standard)->get()[0];
                 $report = InternalCheckReport::create($validatedData);
 
-                foreach( $InconsistencyData as $inc){
+                foreach( $correctiveMeasureData['noncompliance_description'] as $inc=>$v){
                   //  if($inc === "")continue;
                   //  $inconsistency = new Inconsistency();
                   //  $inconsistency->description = $inc;
@@ -164,7 +176,7 @@ class InternalCheckReportController extends Controller
 
     public function update(Request $request, $id)
     {  
-
+        /*
         $correctiveMeasureData=$request->validate([
             'noncompliance_source.*' => 'string|required',
             'noncompliance_description.*' => 'string|required',
@@ -176,41 +188,47 @@ class InternalCheckReportController extends Controller
             'measure_effective.*' => 'string|nullable'
             
         ]);
+        */
       
         $validatedData = $request->validate([
-            'specification' => 'required|min:3',
-        ]);
+            'specification' => 'required',
+        ],['specification.required'=>'Specifikacija nije popunjena']);
 
         $inconsistenciesData = $request->validate([
-            'inconsistencies.*' => 'string|required|min:3',  
-        ]);
+            'inconsistencies.*' => 'required',  
+        ],['inconsistencies.*.required'=>'Neusaglašenost nije popunjena (popunite ili obrišite)']);
 
         $recommendationsData = $request->validate([  
-            'recommendations.*' => 'string|required|min:3',  
-        ]);
-        
-        $newInconsistenciesData = $request->validate([
-            'newInput1' => 'string',
-            'newInput2' => 'string',
-            'newInput3' => 'string',
-            'newInput4' => 'string',
-        ]);
+            'recommendations.*' => 'required',  
+        ],['recommendations.*.required'=>'Preporuka nije popunjena (popunite ili obrišite polje)']);
 
-        $newRecommendationsData = $request->validate([
-            'newInputRecommendation1' => 'string|min:3',
-            'newInputRecommendation2' => 'string|min:3',
-            'newInputRecommendation3' => 'string|min:3',
-            'newInputRecommendation4' => 'string|min:3',   
-        ]);
+        /*
+        $incInputs=[];
+        $incMsg=[];
+        for($i=1;$i<=10;$i++){
+            $incInputs['newInput'.$i]='string|min:10';
+            $incMsg["newInputRecommendation{$i}.min"]='Neusaglašenost nije popunjena (popunite ili obrišite polje)';
+        }
+        $newInconsistenciesData = $request->validate($incInputs,$incMsg);
+        */
+
+        $recInputs=[];
+        $recMsg=[];
+        for($i=1;$i<=10;$i++){
+            $recInputs['newInputRecommendation'.$i]='string|min:1';
+            $recMsg["newInputRecommendation{$i}.min"]='Preporuka nije popunjena (popunite ili obrišite polje)';
+        }
+
+        $newRecommendationsData = $request->validate($recInputs,$recMsg);
 
         $internal_check_report = InternalCheckReport::findOrfail($id);
 
         try{
-            DB::transaction(function () use ($request, $id, $correctiveMeasureData, $validatedData, $inconsistenciesData, $recommendationsData, $newInconsistenciesData, $newRecommendationsData,$internal_check_report){ 
-                $count = 1;
-                $standard = Standard::where('name', $request->standard)->get()[0];
+            DB::transaction(function () use ($request, $id, $validatedData, $inconsistenciesData, $recommendationsData,$newRecommendationsData,$internal_check_report){ 
+               // $count = 1;
+               // $standard = Standard::where('name', $request->standard)->get()[0];
                 $internal_check_report->update($validatedData);
-               // dd($inconsistenciesData['inconsistencies']);
+               
                 
                 if(isset($inconsistenciesData['inconsistencies'])){
                     $incs = $internal_check_report->correctiveMeasures;
@@ -243,6 +261,7 @@ class InternalCheckReportController extends Controller
                     }
                 }
 
+                /*
                 foreach($newInconsistenciesData as $v){
             
                  //   $inc = new Inconsistency();
@@ -281,6 +300,7 @@ class InternalCheckReportController extends Controller
                     $count++;
                    // $inc->correctiveMeasure()->save($correctiveMeasure);
                 }
+                */
 
                 foreach($newRecommendationsData as $v){
                     $rec = new Recommendation();
@@ -295,11 +315,11 @@ class InternalCheckReportController extends Controller
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere "'.$internal_check_report->specification.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Došlo je do greske, pokušajte ponovo');
-            return redirect('/internal-check');
+            return redirect('/internal-check-report/'. $internal_check_report->id.'/edit');
             exit();
         } 
         
-        return redirect('/internal-check');
+        return redirect('/internal-check-report/'. $internal_check_report->id.'/edit');
     }
     
     public function destroy($id)
