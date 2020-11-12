@@ -123,7 +123,7 @@ class InternalCheckController extends Controller
             });
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja interne provere, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         
         return redirect('/internal-check');
@@ -177,7 +177,7 @@ class InternalCheckController extends Controller
             $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/internal-check/get-data/'.date('Y',strtotime($request->date)));
     }
@@ -199,7 +199,7 @@ class InternalCheckController extends Controller
           
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
+            return back()->with('warning', 'Došlo je do greške, pokušajte ponovo');
         }
     }
 }

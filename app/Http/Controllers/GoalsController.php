@@ -72,7 +72,7 @@ class GoalsController extends Controller
             $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja cilja, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
     }
@@ -112,7 +112,7 @@ class GoalsController extends Controller
             $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene cilja "'.$goal->goal.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/goals');
     }
@@ -128,7 +128,7 @@ class GoalsController extends Controller
             return back()->with('status', 'Cilj je uspešno uklonjen');
         } catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 

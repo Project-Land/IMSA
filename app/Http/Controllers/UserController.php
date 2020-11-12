@@ -91,7 +91,7 @@ class UserController extends Controller
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/users');
     }
@@ -123,7 +123,7 @@ class UserController extends Controller
             return back()->with('status', 'Korisnički nalog je uspešno obrisan');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }

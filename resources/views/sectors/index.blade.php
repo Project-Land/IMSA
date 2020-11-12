@@ -16,6 +16,15 @@
                     </button>
                 </div>
             @endif
+            @if(Session::has('warning'))
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ Session::get('warning') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -26,7 +35,7 @@
             <div class="card">
                 @can('create', App\Models\Sector::class)
                 <div class="card-header">
-                    <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a>
+                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a>
                 </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -44,11 +53,11 @@
                                     <td class="text-center"><a href="{{'/procedures/'.$sector->id}}">{{ $sector->name }}</a></td>
                                     @canany(['update', 'delete'], $sector)
                                     <td class="text-center">
-                                        <a href="{{ route('sectors.edit', $sector->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('sectors.edit', $sector->id) }}" data-toggle="tooltip" data-placement="top" title="Izmena sektora"><i class="fas fa-edit"></i></a>
                                         <form class="inline" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje sektora" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
                                         </form>
                                     </td>
                                     @endcanany
@@ -86,5 +95,9 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+    });
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 </script>

@@ -94,5 +94,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/logs/{company}', [LogsController::class, 'show'])->name('logs.show');
     Route::get('procedures/bySector/{id}', [ProceduresController::class, 'bySector'])->name('procedures.bySector');
-
 });

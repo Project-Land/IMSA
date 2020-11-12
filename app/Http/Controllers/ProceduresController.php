@@ -30,7 +30,9 @@ class ProceduresController extends Controller
                 ['sector_id', $sector],
                 ['doc_category', 'procedure'],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->when($id, function ($query, $id) {
+                return $query->where('sector_id', $id);
+            })->get();
          
         $folder = \Str::snake($this::getCompanyName())."/procedure";
         $route_name = 'procedures';

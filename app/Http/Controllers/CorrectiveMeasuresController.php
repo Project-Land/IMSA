@@ -44,7 +44,7 @@ class CorrectiveMeasuresController extends Controller
             $request->session()->flash('status', 'Korektivna mera je uspešno sačuvana!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja neusaglašenosti, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/corrective-measures');
     }
@@ -92,7 +92,7 @@ class CorrectiveMeasuresController extends Controller
             $request->session()->flash('status', 'Korektivna mera je uspešno izmenjena!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene neusaglašenosti "'.$correctiveMeasure->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/corrective-measures');
     }
@@ -108,7 +108,7 @@ class CorrectiveMeasuresController extends Controller
             return back()->with('status', 'Neusaglašenost / korektivna mera je uspešno obrisana');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja neusaglašenosti "'.$correctiveMeasure->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }

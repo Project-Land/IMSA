@@ -23,10 +23,33 @@ class GoalsRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->isMethod('post')){
+            return $this->createRules();
+        }
+        elseif($this->isMethod('put')){
+            return $this->updateRules();
+        }
+        
+    }
+
+    public function createRules()
+    {
         return [
             'responsibility' => 'required|max:190',
             'goal' => 'required|max:190',
             'deadline' => 'required|after:yesterday',
+            'kpi' => 'required|max:190',
+            'resources' => 'required|max:190',
+            'activities' => 'required'
+        ];
+    }
+
+    public function updateRules()
+    {
+        return [
+            'responsibility' => 'required|max:190',
+            'goal' => 'required|max:190',
+            'deadline' => 'required',
             'kpi' => 'required|max:190',
             'resources' => 'required|max:190',
             'activities' => 'required'

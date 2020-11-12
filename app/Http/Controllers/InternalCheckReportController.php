@@ -148,7 +148,7 @@ class InternalCheckReportController extends Controller
                 $request->session()->flash('status', 'Izveštaj za godišnji plan je uspešno kreiran!');
             });
         }catch(Exception $e){
-            $request->session()->flash('status','Došlo je do greške, pokušajte ponovo');
+            $request->session()->flash('warning','Došlo je do greške, pokušajte ponovo');
             CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
         }
         return redirect('/internal-check');
@@ -314,7 +314,7 @@ class InternalCheckReportController extends Controller
 
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene Izveštaja interne provere "'.$internal_check_report->specification.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greske, pokušajte ponovo');
+            $request->session()->flash('warning', 'Došlo je do greske, pokušajte ponovo');
             return redirect('/internal-check-report/'. $internal_check_report->id.'/edit');
             exit();
         } 
@@ -333,7 +333,7 @@ class InternalCheckReportController extends Controller
             return back()->with('status', 'Izveštaj za godišnji plan interne provere je uspešno uklonjen');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja izveštaja za internu proveru "'.$internal_check_report->specification.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške, pokušajte ponovo');
+            return back()->with('warning', 'Došlo je do greške, pokušajte ponovo');
         }
     }
 }

@@ -23,10 +23,34 @@ class ComplaintsRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->isMethod('post')){
+            return $this->createRules();
+        }
+        elseif($this->isMethod('put')){
+            return $this->updateRules();
+        }
+        
+    }
+
+    public function createRules()
+    {
         return [
             'name' => 'required|max:190',
             'description' => 'required',
             'submission_date' => 'required|after:yesterday',
+            'process' => 'required',
+            'responsible_person' => 'nullable|max:190',
+            'way_of_solving' => 'nullable|max:190',
+            'deadline_date' => 'nullable|after:submission_date'
+        ];
+    }
+
+    public function updateRules()
+    {
+        return [
+            'name' => 'required|max:190',
+            'description' => 'required',
+            'submission_date' => 'required',
             'process' => 'required',
             'responsible_person' => 'nullable|max:190',
             'way_of_solving' => 'nullable|max:190',

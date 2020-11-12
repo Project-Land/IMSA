@@ -5,13 +5,14 @@
         </h2>
     </x-slot>
 
-    <div class="flex items-center justify-center">
-        <div class="container mt-4">
+    <div class="row">
+        <div class="col mt-4">
 
             <div class="row mt-1">
                 <div class="col mx-2">
                     @if(Session::has('status'))
                         <div class="alert alert-secondary alert-dismissible fade show">
+                            <i class="fas fa-info-circle ml-2"></i>
                             {{ Session::get('status') }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

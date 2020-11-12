@@ -39,7 +39,7 @@ class LogsController extends Controller
     
                     if($logs[$key]['status'] == "WARNING"){
                         $logs[$key] += [
-                            'error' => $result[$key][4].$result[$key][5]
+                            'error' => $result[$key][4]
                         ];
                     }
                 }

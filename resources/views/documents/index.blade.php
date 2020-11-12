@@ -35,7 +35,7 @@
             <div class="card">
                 @can('create', App\Models\Document::class)
                     <div class="card-header">
-                        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -62,7 +62,7 @@
                                         <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="delete"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>

@@ -17,6 +17,15 @@
                     </button>
                 </div>
             @endif
+            @if(Session::has('warning'))
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ Session::get('warning') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -31,7 +40,7 @@
 
                         <div class="col-sm-4">
                             @can('create', App\Models\InternalCheck::class)
-						        <a  class="inline-block bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novu internu proveru</a>
+						        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novu internu proveru</a>
 					        @endcan
                         </div>
 
