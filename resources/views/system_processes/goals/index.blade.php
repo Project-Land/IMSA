@@ -220,11 +220,11 @@ var myRe = /\bgoals\b/g;
                             <td class="text-center">${ item.year }</td>
                             <td class="text-center">${ item.goal }</td>
                             <td class="text-center">${ item.kpi }</td>
-                            <td class="text-center">${ item.activities }</td>
+                            <td class="text-center">${ item.activities.length < 35 ? item.activities : item.activities.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.responsibility }</td>
                             <td class="text-center">${ new Date(item.deadline).getUTCDate() + '.' + new Date(item.deadline).getUTCMonth() + '.' + new Date(item.deadline).getUTCFullYear() }</td>
                             <td class="text-center">${ item.resources }</td>
-                            <td class="text-center">${ item.analysis != null ? item.analysis : "/" }</td>
+                            <td class="text-center">${ item.analysis != null ? item.analysis.substr(0, 35) + "..." : "/" }</td>
                             <td class="text-center">
                                 <button class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">

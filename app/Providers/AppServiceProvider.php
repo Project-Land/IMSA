@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Standard;
+use App\Models\SystemProcess;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
@@ -35,6 +36,14 @@ class AppServiceProvider extends ServiceProvider
                 $q->where('team_id', $teamId);
              })->get();
              return $standards;
+        });
+
+        $this->app->bind('system_processes', function ($app) {
+            $standard_id = session('standard');
+            $system_processes = SystemProcess::whereHas('standards', function($q) use($standard_id) {
+                $q->where('standard_id', $standard_id);
+            })->orderBy('display_order')->get();
+            return $system_processes;
         });
     }
 

@@ -161,7 +161,7 @@
                                 <td class="text-center">${ item.year }</td>
                                 <td class="text-center">${ item.name }</td>
                                 <td class="text-center">${ item.type }</td>
-                                <td class="text-center">${ item.description }</td>
+                                <td class="text-center">${ item.description.length < 35 ? item.description : item.description.substr(0, 35) + "..." }</td>
                                 <td class="text-center">${ item.num_of_employees }</td>
                                 <td class="text-center">${ new Date(item.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ item.place }</td>
                                 <td class="text-center">${ item.resources }</td>

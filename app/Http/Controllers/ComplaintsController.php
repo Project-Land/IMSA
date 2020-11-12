@@ -42,7 +42,7 @@ class ComplaintsController extends Controller
             $request->session()->flash('status', 'Reklamacija je uspešno sačuvana!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja reklamacije, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/complaints');
     }
@@ -73,7 +73,7 @@ class ComplaintsController extends Controller
             $request->session()->flash('status', 'Reklamacija je uspešno izmenjena!');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene reklamacije "'.$complaint->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/complaints');
     }
@@ -89,7 +89,7 @@ class ComplaintsController extends Controller
             return back()->with('status', 'Reklamacija je uspešno obrisana');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja reklamacije "'.$complaint->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
-            return back()->with('status', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 }

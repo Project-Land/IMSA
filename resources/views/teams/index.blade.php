@@ -97,7 +97,7 @@
 									<a href="/change-current-team/{{ $team->id }}">Pregled</a>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    Trenutno: {{ $team->users->count() - 1 }}<br>
+                                    Trenutno: {{ $team->users->count() - 2 }}<br>
                                     <span class="cursor-pointer text-blue-500 hover:text-blue-700" id="teamStats" onclick="showStats({{ $team->id }})">Statistika</span>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
@@ -138,7 +138,7 @@
                                             modal +=`
                                             <div class="row mt-1 text-sm">
                                                 <div class="col-sm-5 border-bottom mt-2"><p><b>Datum:</b> <i>${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</i></p></div>
-                                                <div class="col-sm-7 border-bottom mt-2"><p><b>Broj korisnika</b>: ${item.total - 1}</p></div>
+                                                <div class="col-sm-7 border-bottom mt-2"><p><b>Broj korisnika</b>: ${item.total - 2}</p></div>
                                             </div>`
                                         })
 
