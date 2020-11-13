@@ -46,22 +46,7 @@ class HomeController extends Controller
         $role = \Auth::user()->allTeams()->first()->membership->role;
         if($role == "super-admin") {
             return file_get_contents(storage_path('log.html'));
-        } else exit();
-    }
-
-    public function document_download(Request $request)
-    {
-        $folder = $request->folder;
-        $file_name = $request->file_name;
-
-        $path = storage_path().'/'.'app'.'/'.$folder.'/'.$file_name;
-        
-        if (file_exists($path)) {
-            return \Response::download($path);
-        }
-        else {
-            return back()->with('warning', 'Fajl nije pronađen');
-        }
+        }else abort(404);
     }
 
 }
