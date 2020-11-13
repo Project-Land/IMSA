@@ -49,4 +49,19 @@ class HomeController extends Controller
         }else abort(404);
     }
 
+    public function document_download(Request $request)
+    {
+        $folder = $request->folder;
+        $file_name = $request->file_name;
+
+        $path = storage_path().'/'.'app'.'/'.$folder.'/'.$file_name;
+        
+        if (file_exists($path)) {
+            return \Response::download($path);
+        }
+        else {
+            return back()->with('warning', 'Fajl nije pronađen');
+        }
+    }
+
 }
