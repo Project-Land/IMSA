@@ -60,7 +60,7 @@
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button text-success" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
                                             
@@ -107,25 +107,6 @@
           "orderable": false,
         }],
     });
-
-    function download(){
-        let company = $('#download-link').data('folder').split('/')[0];
-        let folder = $('#download-link').data('folder').split('/')[1];
-        let file_name = $('#download-link').data('file-name');
-        
-        const data = {'company': company, 'folder': folder, 'file_name': file_name}
-        axios.post('/files', { data })
-        .then((response) => {
-            if(response.data.length == 0){
-                alert('file not found')
-            }
-            else{
-                
-            }
-        }, (error) => {
-            console.log(error);
-        })
-    }
 
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();   
