@@ -29,7 +29,7 @@ class FormsController extends Controller
                 ['sector_id', $sector],
                 ['doc_category', 'form'],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->with(['sector'])->get();
 
         $folder = \Str::snake($this::getCompanyName())."/form";
         $route_name = "forms";

@@ -22,7 +22,7 @@ class CorrectiveMeasuresController extends Controller
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
-        $measures = CorrectiveMeasure::where('team_id', Auth::user()->current_team_id)->get();
+        $measures = CorrectiveMeasure::where('team_id', Auth::user()->current_team_id)->with(['standard'])->get();
         return view('system_processes.corrective_measures.index', compact('measures'));
     }
 

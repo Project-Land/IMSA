@@ -141,6 +141,7 @@ class InternalCheckController extends Controller
 
     public function edit($id)
     {
+       // $internal_check = InternalCheck::findOrfail($id);
         $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
         $this->authorize('update', $internal_check);
 
@@ -163,8 +164,8 @@ class InternalCheckController extends Controller
 
     public function update(UpdateInternalCheckRequest $request, $id)
     {
-       // $internal_check = InternalCheck::findOrfail($id);
-        $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
+      
+        $internal_check = InternalCheck::findOrfail($id);
 
         $this->authorize('update', $internal_check);
 
@@ -189,7 +190,7 @@ class InternalCheckController extends Controller
     
     public function destroy($id)
     {
-        $internal_check = InternalCheck::with(['sector','standard','planIp','notification'])->findOrfail($id);
+        $internal_check = InternalCheck::findOrfail($id);
         $this->authorize('delete', $internal_check);
 
         try{
