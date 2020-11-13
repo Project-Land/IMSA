@@ -14,14 +14,14 @@ class ComplaintsController extends Controller
 
     public function index()
     {
-        $standardId = $this::getStandard();
+        $standardId = session('standard');
         if($standardId == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $complaints = Complaint::where([
                 ['standard_id', $standardId],
-                ['team_id',Auth::user()->current_team_id]
+                ['team_id', Auth::user()->current_team_id]
             ])->get();
         return view('system_processes.complaints.index', compact('complaints'));
     }
