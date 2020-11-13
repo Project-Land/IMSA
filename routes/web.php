@@ -79,7 +79,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
 
-    //Route::resource('system-processes', SystemProcessesController::class);
     Route::get('system-processes/add-to-standard', [SystemProcessesController::class, 'addToStandard'])->name('system-processes.add-to-standard');
     Route::post('system-processes/store-to-standard', [SystemProcessesController::class, 'storeToStandard'])->name('system-processes.store-to-standard');
     Route::post('system-processes/get-by-standard', [SystemProcessesController::class, 'getByStandard']);
@@ -100,4 +99,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('analytics', [HomeController::class, 'analytics'])->name('analytics');
 
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
+    Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
+
 });

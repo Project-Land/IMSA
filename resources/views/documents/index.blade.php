@@ -56,14 +56,21 @@
                                         <td class="text-center">{{ $document->version }}</td>
                                         @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                         <td class="text-center">
+                                            @if($route_name != 'forms')
+                                            <form class="inline" action="{{ route('document.preview') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="folder" value="{{ $folder }}">
+                                                <input type="hidden" name="file_name" value="{{ $document->file_name }}">
+                                                <button data-toggle="tooltip" data-placement="top" title="Pregled dokumenta" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
+                                            </form>
+                                            @endif
                                             <form class="inline" action="{{ route('document.download') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button text-success" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
-                                            
                                             <a data-toggle="tooltip" data-placement="top" title="Izmena dokumenta" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
                                             <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
                                                 @method('DELETE')

@@ -23,6 +23,7 @@
                 </div>
             </div>
 
+            @inject('system_processes', 'system_processes')
             <div class="my-1 px-3 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/2">
                 <div class="max-w-sm overflow-hidden shadow-lg divide-y divide-gray-400">
                     <div class="px-6 py-4"><div class="font-bold text-xl text-center">SISTEMSKI PROCESI</div></div>

@@ -27,14 +27,10 @@ class HomeController extends Controller
             $standard = Standard::whereHas('teams', function($q) use ($teamId) {
                 $q->where('team_id', $teamId);
             })->findOrFail($id);
-
-            $system_processes = SystemProcess::whereHas('standards', function($q) use($id) {
-                $q->where('standard_id', $id);
-            })->orderBy('display_order')->get();
             
             session(['standard' => $id]);
             session(['standard_name' => $standard->name]);
-            return view('standard', compact('standard', 'system_processes'));
+            return view('standard', compact('standard'));
         }
         catch (ModelNotFoundException $e){
             return redirect('/');
@@ -46,7 +42,7 @@ class HomeController extends Controller
         $role = \Auth::user()->allTeams()->first()->membership->role;
         if($role == "super-admin") {
             return file_get_contents(storage_path('log.html'));
-        }else abort(404);
+        } else abort(404);
     }
 
     public function document_download(Request $request)
@@ -58,6 +54,21 @@ class HomeController extends Controller
         
         if (file_exists($path)) {
             return \Response::download($path);
+        }
+        else {
+            return back()->with('warning', 'Fajl nije pronađen');
+        }
+    }
+
+    public function document_preview(Request $request)
+    {
+        $folder = $request->folder;
+        $file_name = $request->file_name;
+
+        $path = storage_path().'/'.'app'.'/'.$folder.'/'.$file_name;
+        
+        if (file_exists($path)) {
+            return \Response::file($path);
         }
         else {
             return back()->with('warning', 'Fajl nije pronađen');
