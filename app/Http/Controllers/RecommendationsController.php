@@ -10,12 +10,12 @@ class RecommendationsController extends Controller
 
     public function index()
     {
-        //
+        abort(404);
     }
 
     public function create()
     {
-        //
+        abort(404);
     }
 
     public function store(Request $request)
@@ -25,12 +25,12 @@ class RecommendationsController extends Controller
 
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     public function edit($id)
     {
-        //
+        abort(404);
     }
 
     public function update(Request $request, $id)
@@ -40,11 +40,6 @@ class RecommendationsController extends Controller
 
     public function destroy($id)
     {
-    /*  $rec=Recommendation::findOrFail($id);
-        $this->authorize('delete',$rec);
-        $report=$rec->report->id;
-        $rec->delete();
-        return view('system_processes.internal_check_report.edit',['internalCheckReport'=>$report]);
-    */
+        //
     }
 }

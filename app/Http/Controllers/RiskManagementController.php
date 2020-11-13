@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
 use App\Http\Requests\UpdateRiskManagementPlanRequest;
 use App\Http\Requests\RiskManagementRequest;
-use Exception;
 
 class RiskManagementController extends Controller
 {
@@ -22,6 +22,7 @@ class RiskManagementController extends Controller
                 ['standard_id', $this::getStandard()],
                 ['team_id',Auth::user()->current_team_id]
             ])->get();
+            
         return view('system_processes.risk_management.index', compact('riskManagements'));
     }
 

@@ -85,17 +85,17 @@ class InternalCheckController extends Controller
         $leaders = implode(",", $validatedLeaders['leaders']);
 
         //Calculate planIp name
-         $c=DB::table('plan_ips')
+        $c = DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
-        ->where('internal_checks.team_id','<>',Auth::user()->current_team_id)->get()->count();
+        ->where('internal_checks.team_id','<>', Auth::user()->current_team_id)->get()->count();
         $lastid = PlanIp::latest()->first();
         if(!$lastid){
-            $planId=1;
-        }else{
-            if($lastid->id==1){
-                $planId=2;
-            }else{
-                $planId=$lastid->id-$c+1;
+            $planId = 1;
+        } else{
+            if($lastid->id == 1){
+                $planId = 2;
+            } else{
+                $planId = $lastid->id - $c + 1;
             }
         }
 
@@ -106,7 +106,7 @@ class InternalCheckController extends Controller
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
 
         try{
-            DB::transaction(function () use ($request,$validatedData,$planId){
+            DB::transaction(function () use ($request, $validatedData, $planId){
                 $internalCheck=InternalCheck::create($validatedData);
                 $notification=Notification::create([
                 'message'=>'Interna provera za '.date('d.m.Y', strtotime($internalCheck->date)),
@@ -118,15 +118,15 @@ class InternalCheckController extends Controller
                 $planIp = new PlanIp();
                 $planIp->standard_id = $request->standard_id;
                 $planIp->save();
-                $planIp->name=$planId.'/'.date('Y');
+                $planIp->name = $planId.'/'.date('Y');
                 $planIp->save();
                 
                 $planIp->internalCheck()->save($internalCheck);
-                CustomLog::info('Interna provera id-"'.$internalCheck->id.'" je kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
-                $request->session()->flash('status', 'Godišnji plan je uspešno kreiran!');
+                CustomLog::info('Godišnji plan interne provere id: "'.$internalCheck->id.'" je kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+                $request->session()->flash('status', 'Godišnji plan interne provere je uspešno kreiran!');
             });
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja interne provere, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja godišnjeg plana interne provere, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         
@@ -173,15 +173,15 @@ class InternalCheckController extends Controller
 
         try{
             $internal_check->update($validatedData); 
-            $notification=$internal_check->notification;
-            $notification->message='Interna provera za '.date('d.m.Y', strtotime($request->date));
+            $notification = $internal_check->notification;
+            $notification->message = 'Interna provera za '.date('d.m.Y', strtotime($request->date));
             $notification->checkTime = $internal_check->date;
             $internal_check->notification()->save($notification);
 
-            CustomLog::info('Interna provera id-"'.$internal_check->id.'" je izmenjena, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene godišnjeg plana interne provere id: "'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/internal-check/get-data/'.date('Y',strtotime($request->date)));
@@ -199,11 +199,11 @@ class InternalCheckController extends Controller
             PlanIp::destroy($internal_check->plan_ip_id);
             InternalCheckReport::destroy($internal_check->internal_check_report_id);
            
-            CustomLog::info('Godišnji plan interne provere id-"'.$internal_check->id.'" je obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Godišnji plan je uspešno uklonjen');
           
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id-"'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id: "'.$internal_check->id.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške, pokušajte ponovo');
         }
     }

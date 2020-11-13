@@ -11,7 +11,7 @@
      	</div>
     </div>
   
-    <div class="mx-auto md:w-5/5 mt-1 md:p-10 sm:p-2 rounded">
+    <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
         @if($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -108,7 +108,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" id="submitForm" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline" >Izmeni</button>
+                <button type="submit" id="submitForm" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline" >Sačuvaj</button>
             </div>
         </form>
 

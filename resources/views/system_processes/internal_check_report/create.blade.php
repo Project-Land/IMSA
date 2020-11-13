@@ -96,19 +96,19 @@
         let counter = 1;
 
         function removeInput(){
-            if(this.dataset.counter=='counter'){}
+            if(this.dataset.counter == 'counter'){}
             // counter--;
-            if(this.dataset.counter=='coun'){}
+            if(this.dataset.counter == 'coun'){}
             //  coun--;
             this.closest("div").remove();
-            let inputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
+            let inputs = document.querySelectorAll("[id^='newInputRecommendationDiv']");
             if(!inputs.length){
-                document.getElementById('recommendations').value='0';
+                document.getElementById('recommendations').value = '0';
                 document.getElementById('AddRecommedationsButton').remove();
             }
         }
 
-        const addSecondInconsistencies = function(){
+        const addSecondInconsistencies = function() {
             // if(document.getElementById("newInput"+(counter-1)).value==="")
             // return;
             document.getElementById("button"+(counter-1)).style="display:none;";
@@ -118,7 +118,7 @@
             const addNewInconsistencies=document.createElement('button');
             let deletebutton=document.createElement('button');
 
-            deletebutton.classList="btn btn-danger mt-1";
+            deletebutton.classList="btn btn-danger my-2 mx-4 float-right";
             deletebutton.setAttribute("data-counter", "counter");
             deletebutton.id="button"+counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
@@ -128,33 +128,29 @@
             deletebutton.setAttribute('data-placement', 'top');
             deletebutton.title="Brisanje korektivne mere";
             
-            addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
+            addNewInconsistencies.classList="btn btn-primary my-2 mx-4";
             addNewInconsistencies.type="button";
             addNewInconsistencies.id="button"+counter;
             addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
             addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
-            // label.for="newInput"+counter;
-            // label.classList="block text-gray-700 text-sm font-bold mb-2";
-            // div.append(label);
-            // label.textContent="Upiši neusaglašenost";
             newInput.id='newInput'+counter;
             newInput.name='newInput'+counter;
             newInput.type='text';
             newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
             newInput.textContent=counter;
             div.append(newInput);
-            div.classList="form-group mt-3";
+            div.classList="form-group mt-3 bg-gray-300 shadow-md rounded mt-5";
             div.id="newInputDiv"+counter;
             document.getElementById("newInputDiv"+(counter-1)).after(div);
 
-                const div2=document.createElement('div');
-                div2.innerHTML+=
-                `<div style="background: #5c9c6a; padding: 10px;">
+            const div2=document.createElement('div');
+            div2.innerHTML+=
+                `<div class="py-2 px-4">
                 <h4>Popuni karton korektivne mere</h4>
                 <div class="form-group">
                     <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
-                    oninput="this.setCustomValidity('')">
+                    oninput="this.setCustomValidity('')" disabled>
                         <option value="Interna provera" selected>Interna provera</option>
                     </select>
                 </div>
@@ -204,350 +200,301 @@
                     </select>
                 </div>
                 </div>`; 
-                div.append(div2);
+            div.append(div2);
 
-
-                div.append(addNewInconsistencies);
-                div.append(deletebutton);
-                document.getElementById('noncompliance_description'+counter).focus();
+            div.append(addNewInconsistencies);
+            div.append(deletebutton);
+            document.getElementById('noncompliance_description' + counter).focus();
                 
+            let id=`#measure_approval${counter}`;
+            let id_ms=`#measure_status${counter}`;
+            let id_mef=`#measure_effective_field${counter}`;
+            let id_mrf=`#measure_reason_field${counter}`;
+            let id_mar=`#measure_approval_reason${counter}`;
+            let id_me=`#measure_effective${counter}`;
 
+            $(id).change( () => {
+                if($(id).val() == 0){
+                    $(id_mrf).css('display', '');
+                    $(id_mar).attr('required', true);
+                }
+                else{
+                    $(id_mrf).css('display', 'none');
+                    $(id_mar).val('');
+                    $(id_mar).attr('required', false);
+                }
+            })
 
-        let id=`#measure_approval${counter}`;
-        let id_ms=`#measure_status${counter}`;
-        let id_mef=`#measure_effective_field${counter}`;
-        let id_mrf=`#measure_reason_field${counter}`;
-        let id_mar=`#measure_approval_reason${counter}`;
-        let id_me=`#measure_effective${counter}`;
-                $(id).change( () => {
-            
-            if($(id).val() == 0){
-                $(id_mrf).css('display', '');
-                $(id_mar).attr('required', true);
-            }
-            else{
-                $(id_mrf).css('display', 'none');
-                $(id_mar).val('');
-                $(id_mar).attr('required', false);
-            }
-        })
+            $(id_ms).change( () => {
+                if($(id_ms).val() == 1){
+                    $(id_mef).css('display', '');
+                    $(id_me).attr('required', true);
+                }
+                else{
+                    $(id_mef).css('display', 'none');
+                    $(id_me).attr('required', false);
+                }
+            })
 
-        $(id_ms).change( () => {
-            if($(id_ms).val() == 1){
-                $(id_mef).css('display', '');
-                $(id_me).attr('required', true);
-            }
-            else{
-                $(id_mef).css('display', 'none');
-                $(id_me).attr('required', false);
-            }
-        })
-        counter++;
-        $('[data-toggle="tooltip"]').tooltip(); 
+            counter++;
+
+            $('[data-toggle="tooltip"]').tooltip(); 
         }
-        const form=document.getElementById('internal_check_report_create_form');
-        const inconsistencies=document.getElementById('inconsistencies');
-        const recommendations=document.getElementById('recommendations');
+
+        const form = document.getElementById('internal_check_report_create_form');
+        const inconsistencies = document.getElementById('inconsistencies');
+        const recommendations = document.getElementById('recommendations');
         
+        const addInput = function() {
+            let inconsistencies = document.getElementById('inconsistencies');
+            const form = document.getElementById('internal_check_report_create_form');
+            let deletebutton = document.createElement('button');
 
-        const addInput=function(){
-            let inconsistencies=document.getElementById('inconsistencies');
-            const form=document.getElementById('internal_check_report_create_form');
-
-
-            let deletebutton=document.createElement('button');
-            deletebutton.classList="btn btn-danger mt-1";
+            deletebutton.classList = "btn btn-danger my-2 mx-4 float-right";
             deletebutton.setAttribute("data-counter", "counter");
-            deletebutton.id="button"+counter;
+            deletebutton.id = "button" + counter;
             deletebutton.innerHTML='<i class="fas fa-trash"></i>';
             deletebutton.setAttribute('data-toggle', 'tooltip');
             deletebutton.setAttribute('data-placement', 'top');
             deletebutton.title="Brisanje korektivne mere";
-            deletebutton.addEventListener('click',removeInput);
+            deletebutton.addEventListener('click', removeInput);
             
-
-            
-            if(inconsistencies.value==1){
+            if(inconsistencies.value == 1){
                 const newInput=document.createElement('textarea');
                 const div=document.createElement('div');
             
                 const label=document.createElement('label');
                 const addNewInconsistencies=document.createElement('button');
-                addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
+                addNewInconsistencies.classList="btn btn-primary my-2 mx-4";
                 addNewInconsistencies.type="button";
                 addNewInconsistencies.id="button"+counter;
                 addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
                 addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
-              //  label.for="newInput"+counter;
-              //  label.className = "block text-gray-700 text-sm font-bold mb-2";
-              //  div.append(label);
-              //  label.textContent="Upiši neusaglašenost";
                 newInput.id='newInput'+counter;
                 newInput.name='newInput'+counter;
                 newInput.type='text';
                 newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
                 newInput.textContent=counter;
                 div.append(newInput);
-                div.classList="form-group mt-3";
+                div.classList="form-group mt-3 bg-gray-300 shadow-md rounded mt-5";
                 div.id="newInputDiv"+counter;
 
+                const div2 = document.createElement('div');
 
-
-                const div2=document.createElement('div');
                 div2.innerHTML+=
-                `<div style="background:#5c9c6a;padding:10px;">
-                <h2>Popuni karton korektivne mere</h2>
-                <div class="form-group">
-                    <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
-                    oninput="this.setCustomValidity('')">
-                        <option value="">Izaberi...</option>
-                        <option value="Eksterna provera">Eksterna provera</option>
-                        <option value="Interna provera" selected>Interna provera</option>
-                        <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
-                        <option value="Žalba" >Žalba</option>
-                        <option value="Ostalo" >Ostalo</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
-                    oninput="this.setCustomValidity('')"></textarea>
-                    
-                </div>
-                <div class="form-group">
-                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
-                    oninput="this.setCustomValidity('')"></textarea>
-                
-                </div>
-                <div class="form-group">
-                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
-                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
-                    oninput="this.setCustomValidity('')"></textarea>
-                    
-                </div>
-                <div class="form-group">
-                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
-                        <option value="1" >DA</option>
-                        <option value="0" >NE</option>
-                    </select>
-                </div>
-                <div class="form-group" id="measure_reason_field${counter}" style="display: none">
-                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
-                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
-                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
-                </div>
-                <div class="form-group">
-                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status${counter}">
-                        <option value="0" >NE</option>
-                        <option value="1"  >DA</option>
-                    </select>
-                </div>
-                <div class="form-group" id="measure_effective_field${counter}" style="display: none">
-                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
-                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
-                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight " name="measure_effective[${counter}]" id="measure_effective${counter}">
-                        <option value="">Izaberi...</option>
-                        <option value="1"  >DA</option>
-                        <option value="0">NE</option>
-                    </select>
-                </div>
+                    `<div class="py-2 px-4">
+                    <h4 class="text-center mb-1">Karton korektivne mere</h4>
+                    <div class="form-group">
+                        <label for="noncompliance_source[${ counter }]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
+                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
+                        oninput="this.setCustomValidity('')" disabled>
+                            <option value="Interna provera" selected>Interna provera</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
+                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                        oninput="this.setCustomValidity('')"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
+                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                        oninput="this.setCustomValidity('')"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
+                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                        oninput="this.setCustomValidity('')"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
+                            <option value="1" >DA</option>
+                            <option value="0" >NE</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="measure_reason_field${counter}" style="display: none">
+                        <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
+                        <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
+                        oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
+                    </div>
+                    <div class="form-group">
+                        <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status${counter}">
+                            <option value="0" >NE</option>
+                            <option value="1"  >DA</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="measure_effective_field${counter}" style="display: none">
+                        <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+                        <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                        oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight " name="measure_effective[${counter}]" id="measure_effective${counter}">
+                            <option value="">Izaberi...</option>
+                            <option value="1"  >DA</option>
+                            <option value="0">NE</option>
+                        </select>
+                    </div>
                 </div>`; 
+
                 div.append(div2);
-
-
-
-                
                 inconsistencies.after(div);
                 div.append(addNewInconsistencies);
                 div.append(deletebutton);
-                document.getElementById('noncompliance_description'+counter).focus();
+                document.getElementById('noncompliance_description' + counter).focus();
                 
+                let id=`#measure_approval${counter}`;
+                let id_ms=`#measure_status${counter}`;
+                let id_mef=`#measure_effective_field${counter}`;
+                let id_mrf=`#measure_reason_field${counter}`;
+                let id_mar=`#measure_approval_reason${counter}`;
+                let id_me=`#measure_effective${counter}`;
 
-    let id=`#measure_approval${counter}`;
-    let id_ms=`#measure_status${counter}`;
-    let id_mef=`#measure_effective_field${counter}`;
-    let id_mrf=`#measure_reason_field${counter}`;
-    let id_mar=`#measure_approval_reason${counter}`;
-    let id_me=`#measure_effective${counter}`;
+                $(id).change( () => {
+                    if($(id).val() == 0){
+                        $(id_mrf).css('display', '');
+                        $(id_mar).attr('required', true);
+                    }
+                    else{
+                        $(id_mrf).css('display', 'none');
+                        $(id_mar).val('');
+                        $(id_mar).attr('required', false);
+                    }
+                })
 
-    $(id).change( () => {
-            
-            if($(id).val() == 0){
-                $(id_mrf).css('display', '');
-                $(id_mar).attr('required', true);
+                $(id_ms).change( () => {
+                    if($(id_ms).val() == 1){
+                        $(id_mef).css('display', '');
+                        $(id_me).attr('required', true);
+                    }
+                    else{
+                        $(id_mef).css('display', 'none');
+                        $(id_me).attr('required', false);
+                    }
+                })
+
+                counter++;
+
+                $('[data-toggle="tooltip"]').tooltip(); 
             }
             else{
-                $(id_mrf).css('display', 'none');
-                $(id_mar).val('');
-                $(id_mar).attr('required', false);
-                
-            }
-        })
-
-        $(id_ms).change( () => {
-            if($(id_ms).val() == 1){
-                $(id_mef).css('display', '');
-                $(id_me).attr('required', true);
-            }
-            else{
-                $(id_mef).css('display', 'none');
-                $(id_me).attr('required', false);
-            }
-        })
-
-        counter++;
-        $('[data-toggle="tooltip"]').tooltip(); 
-            
-            }else{
-               
-                let newInputs=document.querySelectorAll("[id^='newInputDiv']");
+                let newInputs = document.querySelectorAll("[id^='newInputDiv']");
                 for(let input of newInputs){
                     input.remove();
-                    counter=1;
+                    counter = 1;
                 }
             }
-
-
-           
-
         }
 
+        let coun=1;
 
-
-
-
-
-
-
-
-
-
-
-    let coun=1;
-
-        const addSecondRecommedation=function(){
+        const addSecondRecommedation = function() {
             if(document.getElementById("newInputRecommendation"+(coun-1)).value===""){
-             //   document.getElementById('AddRecommedationsButton').remove();
+            //   document.getElementById('AddRecommedationsButton').remove();
                 return;
             }
             
-          //  document.getElementById("buttonRecommedations"+(coun-1)).style="display:none;";
+            //  document.getElementById("buttonRecommedations"+(coun-1)).style="display:none;";
             const newInput=document.createElement('textarea');
-                const div=document.createElement('div');
-                const label=document.createElement('label');
-             //   const addNewRecommendations=document.createElement('button');
+            const div=document.createElement('div');
+            const label=document.createElement('label');
+            //   const addNewRecommendations=document.createElement('button');
             //    addNewRecommendations.classList="btn btn-primary";
             //    addNewRecommendations.type="button";
             //    addNewRecommendations.id="buttonRecommedations"+coun;
             //    addNewRecommendations.addEventListener('click',addSecondRecommedation);
-           //  addNewRecommendations.textContent="Dodaj još jednu preporuku"
-             //   document.getElementById('buttonRecommedations'+(coun-1)).remove();
+            //  addNewRecommendations.textContent="Dodaj još jednu preporuku"
+            //   document.getElementById('buttonRecommedations'+(coun-1)).remove();
 
-                const deletebutton=document.createElement('button');
-                deletebutton.classList="btn btn-danger mt-3 float-right";
-                deletebutton.setAttribute("data-counter", "coun");
-                deletebutton.id="buttonRecommedations"+coun;
-                deletebutton.innerHTML='<i class="fas fa-trash"></i>';
-                deletebutton.setAttribute('data-toggle', 'tooltip');
-                deletebutton.setAttribute('data-placement', 'top');
-                deletebutton.title="Brisanje preporuke";
-                deletebutton.addEventListener('click',removeInput);
+            const deletebutton=document.createElement('button');
+            deletebutton.classList="btn btn-danger mt-3 float-right";
+            deletebutton.setAttribute("data-counter", "coun");
+            deletebutton.id="buttonRecommedations"+coun;
+            deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+            deletebutton.setAttribute('data-toggle', 'tooltip');
+            deletebutton.setAttribute('data-placement', 'top');
+            deletebutton.title="Brisanje preporuke";
+            deletebutton.addEventListener('click',removeInput);
 
+            label.for="newInputRecommendation"+coun;
+            div.append(label);
+            label.textContent="Upiši preporuku";
+            newInput.id='newInputRecommendation'+coun;
+            newInput.name='newInputRecommendation'+coun;
+            newInput.type='text';
+            newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+            newInput.required=true;
+            newInput.oninvalid=function(){this.setCustomValidity("Unesite preporuku");}
+            newInput.oninput=function(){this.setCustomValidity('');}
+            div.append(newInput);
+            div.append(deletebutton);
+            div.classList="form-group mt-3";
+            div.id="newInputRecommendationDiv"+coun;
+            document.getElementById("newInputRecommendationDiv"+(coun-1)).after(div);
 
-                label.for="newInputRecommendation"+coun;
-                div.append(label);
-                label.textContent="Upiši preporuku";
-                newInput.id='newInputRecommendation'+coun;
-                newInput.name='newInputRecommendation'+coun;
-                newInput.type='text';
-                newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-                newInput.required=true;
-                newInput.oninvalid=function(){this.setCustomValidity("Unesite preporuku");}
-                newInput.oninput=function(){this.setCustomValidity('');}
-                div.append(newInput);
-                div.append(deletebutton);
-                div.classList="form-group mt-3";
-                div.id="newInputRecommendationDiv"+coun;
-                document.getElementById("newInputRecommendationDiv"+(coun-1)).after(div);
-         
-              
-                
-                coun++;
-                $('[data-toggle="tooltip"]').tooltip(); 
-                newInput.focus();
+            coun++;
+            $('[data-toggle="tooltip"]').tooltip(); 
+            newInput.focus();
         }
         
 
-        const addInputRecommedation=function(){
+        const addInputRecommedation = function() {
         
-            if(recommendations.value==1){
+            if(recommendations.value == 1){
             
-                const newInput=document.createElement('textarea');
-                const div=document.createElement('div');
-                const label=document.createElement('label');
-                const addNewRecommendations=document.createElement('button');
+                const newInput = document.createElement('textarea');
+                const div = document.createElement('div');
+                const label = document.createElement('label');
+                const addNewRecommendations = document.createElement('button');
             
-                addNewRecommendations.classList="btn btn-primary";
-                addNewRecommendations.type="button";
-                addNewRecommendations.id="AddRecommedationsButton";
-                addNewRecommendations.addEventListener('click',addSecondRecommedation);
-                addNewRecommendations.textContent="Dodaj još jednu preporuku"
+                addNewRecommendations.classList = "btn btn-primary";
+                addNewRecommendations.type = "button";
+                addNewRecommendations.id = "AddRecommedationsButton";
+                addNewRecommendations.addEventListener('click', addSecondRecommedation);
+                addNewRecommendations.textContent = "Dodaj još jednu preporuku"
 
-
-                const deletebutton=document.createElement('button');
-                deletebutton.classList="btn btn-danger";
+                const deletebutton = document.createElement('button');
+                deletebutton.classList = "btn btn-danger my-2 float-right";
                 deletebutton.setAttribute("data-counter", "coun");
-                deletebutton.id="buttonRecommedations"+coun;
-                deletebutton.innerHTML='<i class="fas fa-trash"></i>';
+                deletebutton.id = "buttonRecommedations" + coun;
+                deletebutton.innerHTML = '<i class="fas fa-trash"></i>';
                 deletebutton.setAttribute('data-toggle', 'tooltip');
                 deletebutton.setAttribute('data-placement', 'top');
-                deletebutton.title="Brisanje preporuke";
-                deletebutton.addEventListener('click',removeInput);
+                deletebutton.title = "Brisanje preporuke";
+                deletebutton.addEventListener('click', removeInput);
 
-
-                label.for="newInputRecommendation"+coun;
+                label.for = "newInputRecommendation" + coun;
                 div.append(label);
-                label.textContent="Upiši preporuku";
-                newInput.id='newInputRecommendation'+coun;
-                newInput.name='newInputRecommendation'+coun;
-                newInput.type='text';
-                newInput.classList="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-                newInput.required=true;
-                newInput.oninvalid=function(){this.setCustomValidity("Unesite preporuku");}
-                newInput.oninput=function(){this.setCustomValidity('');}
+                label.textContent = "Upiši preporuku";
+                newInput.id = 'newInputRecommendation' + coun;
+                newInput.name = 'newInputRecommendation' + coun;
+                newInput.type = 'text';
+                newInput.classList = "appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+                newInput.required = true;
+                newInput.oninvalid = function(){ this.setCustomValidity("Unesite preporuku"); }
+                newInput.oninput = function(){ this.setCustomValidity(''); }
                
                 div.append(newInput);
                 div.append(deletebutton);
-
                
                 div.classList="form-group mt-3";
                 div.id="newInputRecommendationDiv"+coun;
                 recommendations.after(div);
-               
                
                 div.after(addNewRecommendations);
                 
                 coun++;
                 $('[data-toggle="tooltip"]').tooltip(); 
                 newInput.focus();
-            
-            }else{
+            }
+            else{
                 document.getElementById('AddRecommedationsButton').remove();
-                let newInputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
+                let newInputs = document.querySelectorAll("[id^='newInputRecommendationDiv']");
                 for(let input of newInputs){
                     input.remove();
-                    coun=1;
+                    coun = 1;
                 }
             }
-
         }
-
-       
-
     
         inconsistencies.addEventListener('change', addInput);
         recommendations.addEventListener('change', addInputRecommedation);
@@ -555,8 +502,7 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();   
         });
-
-            
+  
     </script>
 
 </x-app-layout>
