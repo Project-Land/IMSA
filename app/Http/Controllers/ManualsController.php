@@ -57,7 +57,7 @@ class ManualsController extends Controller
     {
         $this->authorize('create', Document::class);
         $document = new Document();
-        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/manuals";
+        $upload_path = \Str::snake($this::getCompanyName())."/manuals";
 
         try{
             $document = Document::create($request->except('file'));
@@ -102,7 +102,7 @@ class ManualsController extends Controller
 
         try{
             if($request->file){
-                $upload_path = "/public/".\Str::snake($this::getCompanyName())."/manuals";
+                $upload_path = \Str::snake($this::getCompanyName())."/manuals";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));

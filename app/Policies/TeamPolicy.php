@@ -126,4 +126,9 @@ class TeamPolicy
     {
         return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
+
+    public function serverInfo(User $user)
+    {
+        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+    }
 }

@@ -56,7 +56,7 @@ class FormsController extends Controller
     {
         $this->authorize('create', Document::class);
         $document = new Document();
-        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/form";
+        $upload_path = \Str::snake($this::getCompanyName())."/form";
 
         try{
             $document = Document::create($request->except('file'));
@@ -101,7 +101,7 @@ class FormsController extends Controller
 
         try{
             if($request->file){
-                $upload_path = "/public/".\Str::snake($this::getCompanyName())."/form";
+                $upload_path = \Str::snake($this::getCompanyName())."/form";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));

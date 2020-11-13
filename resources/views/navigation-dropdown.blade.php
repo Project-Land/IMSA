@@ -205,8 +205,6 @@
                                         {{ __('Kreiraj novu firmu') }}
                                     </x-jet-dropdown-link>
                                 @endcan
-
-                                <div class="border-t border-gray-100"></div>
                             @endif
 
                             <!-- User Management -->
@@ -234,6 +232,19 @@
 
                                 <x-jet-dropdown-link href="{{ route('system-processes.add-to-standard') }}">
                                     {{ __('Dodavanje procesa za standard') }}
+                                </x-jet-dropdown-link>
+
+                                <div class="border-t border-gray-100"></div>
+                            @endif
+
+                            <!-- Server management -->
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Server info') }}
+                                </div>
+
+                                <x-jet-dropdown-link href="{{ route('analytics') }}">
+                                    {{ __('Server log') }}
                                 </x-jet-dropdown-link>
 
                                 <div class="border-t border-gray-100"></div>
@@ -357,6 +368,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
+
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profil') }}
@@ -371,7 +383,6 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-
                     <x-jet-responsive-nav-link href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
@@ -387,7 +398,6 @@
                         {{ __('Upravljanje firmama') }}
                     </div>
 
-                    <!-- Team Settings -->
                     <x-jet-responsive-nav-link href="{{ route('teams.index') }}" :active="request()->routeIs('teams.index')">
                         {{ __('Lista svih firmi') }}
                     </x-jet-responsive-nav-link>
@@ -403,36 +413,49 @@
                     @endcan
 
                     <div class="border-t border-gray-200"></div>
+                @endif
 
-                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('userManagement', $team))
-                        <!-- User management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Upravljanje korisnicima') }}
-                        </div>
+                <!-- User management -->
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('userManagement', $team))
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                        {{ __('Upravljanje korisnicima') }}
+                    </div>
 
-                        <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
-                            {{ __('Lista korisnika') }}
-                        </x-jet-responsive-nav-link>
-        
-                        <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
-                            {{ __('Kreiraj novog korisnika') }}
-                        </x-jet-responsive-nav-link>
-        
-                        <div class="border-t border-gray-100"></div>
-                    @endif
+                    <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                        {{ __('Lista korisnika') }}
+                    </x-jet-responsive-nav-link>
+    
+                    <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
+                        {{ __('Kreiraj novog korisnika') }}
+                    </x-jet-responsive-nav-link>
+    
+                    <div class="border-t border-gray-100"></div>
+                @endif
 
-                    @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('SystemProcessesManagement', $team))
-                        <!-- System processes -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Sistemski procesi') }}
-                        </div>
+                <!-- System processes -->
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('SystemProcessesManagement', $team))
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                        {{ __('Sistemski procesi') }}
+                    </div>
 
-                        <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" :active="request()->routeIs('system-processes.add-to-standard')">
-                            {{ __('Dodavanje procesa za standard') }}
-                        </x-jet-responsive-nav-link>
-        
-                        <div class="border-t border-gray-100"></div>
-                    @endif
+                    <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" :active="request()->routeIs('system-processes.add-to-standard')">
+                        {{ __('Dodavanje procesa za standard') }}
+                    </x-jet-responsive-nav-link>
+    
+                    <div class="border-t border-gray-100"></div>
+                @endif
+
+                <!-- Server management -->
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('serverInfo', $team))
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                        {{ __('Server info') }}
+                    </div>
+
+                    <x-jet-responsive-nav-link href="{{ route('analytics') }}">
+                        {{ __('Server log') }}
+                    </x-jet-responsive-nav-link>
+
+                    <div class="border-t border-gray-100"></div>
                 @endif
 
             </div>

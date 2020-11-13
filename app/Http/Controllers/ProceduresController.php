@@ -58,7 +58,7 @@ class ProceduresController extends Controller
     public function store(ProcedureRequest $request)
     {
         $this->authorize('create', Document::class);
-        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/procedure";
+        $upload_path = \Str::snake($this::getCompanyName())."/procedure";
         try{
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
@@ -102,7 +102,7 @@ class ProceduresController extends Controller
         
         try{
             if($request->file){
-                $upload_path = "/public/".\Str::snake($this::getCompanyName())."/procedure";
+                $upload_path = \Str::snake($this::getCompanyName())."/procedure";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));

@@ -44,7 +44,7 @@ class RulesOfProceduresController extends Controller
     {
         $this->authorize('create', Document::class);
 
-        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/rules_of_procedure";
+        $upload_path = \Str::snake($this::getCompanyName())."/rules_of_procedure";
 
         try{
             $document = Document::create($request->except('file'));
@@ -86,7 +86,7 @@ class RulesOfProceduresController extends Controller
 
         try{
             if($request->file){
-                $upload_path = "/public/".\Str::snake($this::getCompanyName())."/rules_of_procedure";
+                $upload_path = \Str::snake($this::getCompanyName())."/rules_of_procedure";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));

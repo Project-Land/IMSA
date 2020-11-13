@@ -50,24 +50,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($documents as $document)
-                                <tr>
-                                    <td class="text-center">{{ $document->document_name }}</td>
-                                    <td class="text-center">{{ $document->version }}</td>
-                                    @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
-                                    <td class="text-center">
-                                        <a data-toggle="tooltip" data-placement="top" title="Pregled/Preuzimanje dokumenta" href='{{ asset("storage/$folder/$document->file_name") }}'><i class="fas fa-download"></i></a>
-                                        @canany(['update', 'delete'], $document)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena dokumenta" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="delete"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                        @endcanany
-                                    </td>
-                                </tr>   
-                            @endforeach
+                                @foreach($documents as $document)
+                                    <tr>
+                                        <td class="text-center">{{ $document->document_name }}</td>
+                                        <td class="text-center">{{ $document->version }}</td>
+                                        @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
+                                        <td class="text-center">
+                                            <form class="inline" action="{{ route('document.download') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="folder" value="{{ $folder }}">
+                                                <input type="hidden" name="file_name" value="{{ $document->file_name }}">
+                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
+                                            </form>
+                                            @canany(['update', 'delete'], $document)
+                                            
+                                            <a data-toggle="tooltip" data-placement="top" title="Izmena dokumenta" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
+                                            <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="delete"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                            @endcanany
+                                        </td>
+                                    </tr>   
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -100,7 +106,26 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+    });
+
+    function download(){
+        let company = $('#download-link').data('folder').split('/')[0];
+        let folder = $('#download-link').data('folder').split('/')[1];
+        let file_name = $('#download-link').data('file-name');
+        
+        const data = {'company': company, 'folder': folder, 'file_name': file_name}
+        axios.post('/files', { data })
+        .then((response) => {
+            if(response.data.length == 0){
+                alert('file not found')
+            }
+            else{
+                
+            }
+        }, (error) => {
+            console.log(error);
+        })
+    }
 
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();   

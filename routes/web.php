@@ -97,4 +97,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('analytics', [HomeController::class, 'analytics'])->name('analytics');
 
+    Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
 });

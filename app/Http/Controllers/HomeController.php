@@ -41,11 +41,12 @@ class HomeController extends Controller
         }
     }
 
-    public function analytics(){
-        
+    public function analytics()
+    {
         $role = \Auth::user()->allTeams()->first()->membership->role;
         if($role == "super-admin") {
             return file_get_contents(storage_path('log.html'));
         }else abort(404);
     }
+
 }

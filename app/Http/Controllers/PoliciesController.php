@@ -46,7 +46,7 @@ class PoliciesController extends Controller
     {
         $this->authorize('create', Document::class);
         $document = new Document();
-        $upload_path = "/public/".\Str::snake($this::getCompanyName())."/policy";
+        $upload_path = \Str::snake($this::getCompanyName())."/policy";
 
         try{
             $document = Document::create($request->except('file'));
@@ -89,7 +89,7 @@ class PoliciesController extends Controller
 
         try{
             if($request->file){
-                $upload_path = "/public/".\Str::snake($this::getCompanyName())."/policy";
+                $upload_path = \Str::snake($this::getCompanyName())."/policy";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
