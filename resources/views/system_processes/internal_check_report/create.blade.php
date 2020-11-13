@@ -1,27 +1,27 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{session('standard_name').' - Izveštaj sa interne provere - Kreiranje'}}
+            {{ session('standard_name').' - Izveštaj sa interne provere - Kreiranje' }}
         </h2>
     </x-slot>
 
     <div class="row">
     	<div class="col">
-        	<a class="btn btn-light" href="/internal-check"><i class="fas fa-arrow-left"></i> Nazad</a>
+        	<a class="btn btn-light" href="{{ route('internal-check.index') }}"><i class="fas fa-arrow-left"></i> Nazad</a>
      	</div>
     </div>
 
     <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li><span class="text-red-700 italic text-sm">{{ $error }}</span></li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li><span class="text-red-700 italic text-sm">{{ $error }}</span></li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
 		<form id="internal_check_report_create_form" action="{{ route('internal-check-report.store') }}" autocomplete="off" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
@@ -56,7 +56,8 @@
                     <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_end" name="check_end" value="{{ date('d.m.Y H:i', strtotime($internalCheck->planIp->check_end)) }}" readonly>
                 </div>
             </div>
-                <div class="row">
+
+            <div class="row">
                 <div class="form-group col">
                     <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">Specifikacija dokumenata</label>
                     <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" name="specification" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
@@ -92,36 +93,31 @@
     </div>
 
     <script>
-        let counter=1;
+        let counter = 1;
 
         function removeInput(){
-    
             if(this.dataset.counter=='counter'){}
             // counter--;
-            if(this.dataset.counter=='coun'){
-                
-            }
+            if(this.dataset.counter=='coun'){}
             //  coun--;
             this.closest("div").remove();
             let inputs=document.querySelectorAll("[id^='newInputRecommendationDiv']");
-                if(!inputs.length){
-                    document.getElementById('recommendations').value='0';
-                    document.getElementById('AddRecommedationsButton').remove();
-                }
-
+            if(!inputs.length){
+                document.getElementById('recommendations').value='0';
+                document.getElementById('AddRecommedationsButton').remove();
             }
+        }
 
-
-        const addSecondInconsistencies=function(){
-           // if(document.getElementById("newInput"+(counter-1)).value==="")
-           // return;
+        const addSecondInconsistencies = function(){
+            // if(document.getElementById("newInput"+(counter-1)).value==="")
+            // return;
             document.getElementById("button"+(counter-1)).style="display:none;";
             const newInput=document.createElement('textarea');
-                const div=document.createElement('div');
-                const label=document.createElement('label');
-                const addNewInconsistencies=document.createElement('button');
+            const div=document.createElement('div');
+            const label=document.createElement('label');
+            const addNewInconsistencies=document.createElement('button');
+            let deletebutton=document.createElement('button');
 
-                let deletebutton=document.createElement('button');
             deletebutton.classList="btn btn-danger mt-1";
             deletebutton.setAttribute("data-counter", "counter");
             deletebutton.id="button"+counter;
@@ -132,50 +128,40 @@
             deletebutton.setAttribute('data-placement', 'top');
             deletebutton.title="Brisanje korektivne mere";
             
-
-                addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
-                addNewInconsistencies.type="button";
-                addNewInconsistencies.id="button"+counter;
-                addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
-                addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
-           //    label.for="newInput"+counter;
-               // label.classList="block text-gray-700 text-sm font-bold mb-2";
-               // div.append(label);
-               // label.textContent="Upiši neusaglašenost";
-                newInput.id='newInput'+counter;
-                newInput.name='newInput'+counter;
-                newInput.type='text';
-                newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
-                newInput.textContent=counter;
-                div.append(newInput);
-                div.classList="form-group mt-3";
-                div.id="newInputDiv"+counter;
-                document.getElementById("newInputDiv"+(counter-1)).after(div);
-
-
+            addNewInconsistencies.classList="btn btn-primary mt-1 mr-2";
+            addNewInconsistencies.type="button";
+            addNewInconsistencies.id="button"+counter;
+            addNewInconsistencies.addEventListener('click',addSecondInconsistencies);
+            addNewInconsistencies.textContent="Dodaj još jednu neusaglašenost"
+            // label.for="newInput"+counter;
+            // label.classList="block text-gray-700 text-sm font-bold mb-2";
+            // div.append(label);
+            // label.textContent="Upiši neusaglašenost";
+            newInput.id='newInput'+counter;
+            newInput.name='newInput'+counter;
+            newInput.type='text';
+            newInput.classList="d-none block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+            newInput.textContent=counter;
+            div.append(newInput);
+            div.classList="form-group mt-3";
+            div.id="newInputDiv"+counter;
+            document.getElementById("newInputDiv"+(counter-1)).after(div);
 
                 const div2=document.createElement('div');
                 div2.innerHTML+=
-                `<div style="background:#5c9c6a;padding:10px;">
-                <h2>Popuni karton korektivne mere</h2>
+                `<div style="background: #5c9c6a; padding: 10px;">
+                <h4>Popuni karton korektivne mere</h4>
                 <div class="form-group">
                     <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
                     oninput="this.setCustomValidity('')">
-                        <option value="">Izaberi...</option>
-                        <option value="Eksterna provera">Eksterna provera</option>
                         <option value="Interna provera" selected>Interna provera</option>
-                        <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
-                        <option value="Žalba" >Žalba</option>
-                        <option value="Ostalo" >Ostalo</option>
                     </select>
-                
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_description${counter}" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
                     <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
                     oninput="this.setCustomValidity('')" ></textarea>
-                    
                 </div>
                 <div class="form-group">
                     <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
@@ -227,12 +213,12 @@
                 
 
 
-    let id=`#measure_approval${counter}`;
-    let id_ms=`#measure_status${counter}`;
-    let id_mef=`#measure_effective_field${counter}`;
-    let id_mrf=`#measure_reason_field${counter}`;
-    let id_mar=`#measure_approval_reason${counter}`;
-    let id_me=`#measure_effective${counter}`;
+        let id=`#measure_approval${counter}`;
+        let id_ms=`#measure_status${counter}`;
+        let id_mef=`#measure_effective_field${counter}`;
+        let id_mrf=`#measure_reason_field${counter}`;
+        let id_mar=`#measure_approval_reason${counter}`;
+        let id_me=`#measure_effective${counter}`;
                 $(id).change( () => {
             
             if($(id).val() == 0){
@@ -462,7 +448,7 @@
              //   document.getElementById('buttonRecommedations'+(coun-1)).remove();
 
                 const deletebutton=document.createElement('button');
-                deletebutton.classList="btn btn-danger";
+                deletebutton.classList="btn btn-danger mt-3 float-right";
                 deletebutton.setAttribute("data-counter", "coun");
                 deletebutton.id="buttonRecommedations"+coun;
                 deletebutton.innerHTML='<i class="fas fa-trash"></i>';

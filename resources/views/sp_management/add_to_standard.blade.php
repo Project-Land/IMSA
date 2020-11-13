@@ -74,7 +74,6 @@
 
         <x-jet-section-border />
 
-
     </div>
 
 </x-app-layout>

@@ -1,23 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{session('standard_name').' - Plan IP - Kreiranje/Izmena'}}
+            {{ session('standard_name').' - Plan IP - Kreiranje / Izmena' }}
         </h2>
     </x-slot>
 
     <div class="row">
     	<div class="col">
-        	<a class="btn btn-light" href="/plan-ip"><i class="fas fa-arrow-left"></i> Nazad</a>
+        	<a class="btn btn-light" href="{{ route('internal-check.index') }}"><i class="fas fa-arrow-left"></i> Nazad</a>
      	</div>
     </div>
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{route('plan-ip.update',$planIp->id)}}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('plan-ip.update', $planIp->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
 
-            <h2 class="mx-auto text-center">{{'Plan IP - '.$planIp->name}}</h2>
+            <h2 class="mx-auto text-center">{{ 'Plan IP - '.$planIp->name }}</h2>
             
             <div class="mb-4">
                 <label for="checked_date" class="block text-gray-700 text-sm font-bold mb-2">Termin provere</label>

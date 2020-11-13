@@ -16,6 +16,7 @@
 		<form action="{{ route('goals.update', $goal->id) }}" method="POST" autocomplete="off"  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
             @method('PUT')
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="year">Godina</label>
@@ -33,7 +34,6 @@
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
-                
             </div>
 
             <div class="form-row">
@@ -78,7 +78,6 @@
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
-
                 <div class="form-group col-md-6">
                     <label for="analysis">Analiza</label>
                     <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" {{ $goal->deadline <= date('Y-m-d') ? "required":"disabled" }} >{{ $goal->analysis }}</textarea>

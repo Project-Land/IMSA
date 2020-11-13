@@ -3,7 +3,6 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Godišnji plan internih provera') }}
-           
         </h2>
     </x-slot>
 
@@ -49,7 +48,7 @@
                                 <label for="year" class="mr-3 mt-sm-0 mt-2">Godina</label>
                                 <select id="year" class="form-control w-25">
                                     @foreach(range(date("Y")-1, date("Y")+10) as $year))
-                                        <option value="{{ $year }}" @if(session('year')){{ session('year') == $year ? "selected" : "" }}
+                                        <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
                                         @else 
                                         {{ date('Y') == $year ? "selected" : "" }}
                                         @endif
@@ -78,74 +77,61 @@
                                 </tr>
                             </thead>
                             <tbody id="table-body">
-                            @forelse($internal_checks as $check)
-                            <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
+                                @forelse($internal_checks as $check)
+                                <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
                                     <td class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
                                     <td class="text-center">{{ $check->sector->name }}</td>
                                     <td class="text-center">{{$check->leaders}}</td>
                                     <td class="text-center">{{ $check->standard->name }}</td>
                                     <td class="text-center">
-                                    @if(!isset($check->planIp->checked_date))
-                                       {{''}}
-                                        @can('update', $check)   
-                                        <a data-toggle="tooltip" data-placement="top" title="Kreirajte plan interne provere" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
-                                        @endcan
-
+                                        @if(!isset($check->planIp->checked_date))
+                                            {{''}}
+                                            @can('update', $check)   
+                                                <a data-toggle="tooltip" data-placement="top" title="Kreirajte plan interne provere" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
+                                            @endcan
                                         @else
-                                        <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
-                                        @can('update', $check)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena plana interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
-                                        @endcan
-                                    @endif
-                                   
-                            
+                                            <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
+                                            @can('update', $check)
+                                                <a data-toggle="tooltip" data-placement="top" title="Izmena plana interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
+                                            @endcan
+                                        @endif
                                     </td>
-                                  
                                     <td class="text-center">
-                                    
-                                    @if(!isset($check->internalCheckReport->id))
-                                    @if(isset($check->planIp->checked_date))
-                                    @can('update', $check)
-                                    <a data-toggle="tooltip" data-placement="top" title="Kreirajte izveštaj za internu proveru" href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
-                                    @endcan
-                                    @else
-                                    @can('update', $check)
-                                    {{'Još nije moguće napraviti izveštaj'}}
-                                    @endcan
-                                    @endif
-                                   
-                                   
-                                    @else
-                                        <span data-toggle="tooltip" data-placement="top" title="Pregled izveštaja sa interne provere" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
+                                        @if(!isset($check->internalCheckReport->id))
+                                            @if(isset($check->planIp->checked_date))
+                                                @can('update', $check)
+                                                    <a data-toggle="tooltip" data-placement="top" title="Kreirajte izveštaj za internu proveru" href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
+                                                @endcan
+                                            @else
+                                                @can('update', $check)
+                                                    {{'Još nije moguće napraviti izveštaj'}}
+                                                @endcan
+                                            @endif
+                                        @else
+                                            <span data-toggle="tooltip" data-placement="top" title="Pregled izveštaja sa interne provere" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
+                                            @can('update', $check)
+                                                <a data-toggle="tooltip" data-placement="top" title="Izmena izveštaja sa interne provere" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
+                                                <!-- <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                                </form> -->
+                                            @endcan
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
                                         @can('update', $check)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena izveštaja sa interne provere" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
-                                        <!-- <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
-                                        </form> -->
+                                            <a data-toggle="tooltip" data-placement="top" title="Izmena interne provere" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
+                                            <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            </form>
                                         @endcan
                                     </td>
-                                    @endif
-
-                                    
-                                  
-    
-
-                                    <td class="text-center">
-                                    @can('update', $check)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena interne provere" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    @endcan
-                                    </td>
-                                    
                                 </tr> 
                                 @empty  
-                            @endforelse
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

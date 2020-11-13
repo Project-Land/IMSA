@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Odabrani isporučioci') }}  - {{ __('Izmena') }}
+            {{ session('standard_name') }} - {{ __('Odabrani isporučioci - Izmena') }}
         </h2>
     </x-slot>
 

@@ -55,7 +55,9 @@ class CorrectiveMeasuresController extends Controller
         try{
             $correctiveMeasure = CorrectiveMeasure::create($request->all());
             CustomLog::info('Neusaglašenost "'.$correctiveMeasure->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Korektivna mera je uspešno kreirana!');
         } catch(Exception $e){
+            $request->session()->flash('status', 'Došlo je do greške, pokušajte ponovo!');
             CustomLog::warning('Neuspeli pokušaj kreiranja neusaglašenosti, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
         }
         return back();

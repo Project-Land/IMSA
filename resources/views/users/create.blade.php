@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dodavanje novog korisnika') }}
+            {{ __('Kreiranje novog korisnika') }}
         </h2>
     </x-slot>
 
@@ -104,8 +104,6 @@
 
         <x-jet-section-border />
 
-
     </div>
 
 </x-app-layout>
-

@@ -73,6 +73,7 @@
 			<div class="mb-4">
 				<label for="checks_results_desc" class="block text-gray-700 text-sm font-bold mb-2">Dodatni opis rezultata internih provera:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checks_results_desc" name="checks_results_desc">{{ old('checks_results_desc') }}</textarea>
+				<span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
 				@error('checks_results_desc')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -91,6 +92,7 @@
 			<div class="mb-4">
 				<label for="improvement_opportunities" class="block text-gray-700 text-sm font-bold mb-2">Prilike za poboljšanje:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="improvement_opportunities" name="improvement_opportunities">{{ old('improvement_opportunities ') }}</textarea>
+				<span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
 				@error('improvement_opportunities')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -99,6 +101,7 @@
 			<div class="mb-4">
 				<label for="needs_for_change" class="block text-gray-700 text-sm font-bold mb-2">Potrebe za izmenama u sistemu menadžmenta:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="needs_for_change" name="needs_for_change">{{ old('needs_for_change ') }}</textarea>
+				<span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
 				@error('needs_for_change')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -107,6 +110,7 @@
 			<div class="mb-4">
 				<label for="needs_for_resources" class="block text-gray-700 text-sm font-bold mb-2">Potrebe za resursima:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="needs_for_resources" name="needs_for_resources">{{ old('needs_for_resources ') }}</textarea>
+				<span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
 				@error('needs_for_resources')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror

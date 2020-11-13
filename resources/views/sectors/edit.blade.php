@@ -16,6 +16,7 @@
 		<form action="{{ route('sectors.update', $sector->id) }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
+
 			<div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">Naziv sektora:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ $sector->name }}"> 
@@ -23,6 +24,7 @@
 					<span class="text-red-700 italic text-sm mt-1">{{ $message }}</span>
 				@enderror
 			</div>
+			
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
 		</form>
     </div>
