@@ -54,6 +54,7 @@ class HomeController extends Controller
         
         if (file_exists($path)) {
             return \Response::download($path);
+           
         }
         else {
             return back()->with('warning', 'Fajl nije pronađen');

@@ -37,8 +37,9 @@ class InternalCheckController extends Controller
         $internal_checks = InternalCheck::where([
                 ['standard_id', $standardId],
                 ['team_id', Auth::user()->current_team_id]
-            ])->whereYear('date', '=', date('Y'))->get();
-        
+            ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp'])->get();
+          
+           
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
@@ -48,7 +49,7 @@ class InternalCheckController extends Controller
         $internal_checks = InternalCheck::where([
             ['standard_id', $standardId],
             ['team_id', Auth::user()->current_team_id],
-        ])->whereYear('date', '=', $year)->get();
+        ])->whereYear('date', '=', $year)->with(['sector','standard','planIp'])->get();
         $request->session()->flash('year', $year);
 
         return view('system_processes.internal_check.index', compact('internal_checks'));
@@ -76,6 +77,13 @@ class InternalCheckController extends Controller
 
     public function store(StoreInternalCheckRequest $request)
     {   
+
+        $this->authorize('create',InternalCheck::class);
+
+        $validatedData = $request->validated();
+        $validatedLeaders = $request->validate([ 'leaders' => 'required']);
+        $leaders = implode(",", $validatedLeaders['leaders']);
+
         //Calculate planIp name
         $c = DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
@@ -91,11 +99,7 @@ class InternalCheckController extends Controller
             }
         }
 
-        $this->authorize('create',InternalCheck::class);
-        $validatedData = $request->validated();
-        $validatedLeaders = $request->validate([ 'leaders' => 'required']);
-        $leaders = implode(",", $validatedLeaders['leaders']);
-
+    
         $validatedData['leaders'] = $leaders;
         $validatedData['team_id'] = Auth::user()->current_team_id;
         $validatedData['user_id'] = Auth::user()->id;
@@ -137,7 +141,7 @@ class InternalCheckController extends Controller
 
     public function edit($id)
     {
-        $internal_check = InternalCheck::findOrFail($id);
+        $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
         $this->authorize('update', $internal_check);
 
         $team = Team::findOrFail(Auth::user()->current_team_id);
@@ -159,7 +163,9 @@ class InternalCheckController extends Controller
 
     public function update(UpdateInternalCheckRequest $request, $id)
     {
-        $internal_check = InternalCheck::findOrfail($id);
+       // $internal_check = InternalCheck::findOrfail($id);
+        $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
+
         $this->authorize('update', $internal_check);
 
         $validatedData =  $request->validated();
@@ -172,7 +178,6 @@ class InternalCheckController extends Controller
             $notification->checkTime = $internal_check->date;
             $internal_check->notification()->save($notification);
 
-            $request->session()->flash('status', 'Godišnji plan interne provere je uspešno izmenjen!'); 
             CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Godišnji plan je uspešno izmenjen!');
         } catch(Exception $e){
@@ -184,7 +189,7 @@ class InternalCheckController extends Controller
     
     public function destroy($id)
     {
-        $internal_check = InternalCheck::findOrfail($id);
+        $internal_check = InternalCheck::with(['sector','standard','planIp','notification'])->findOrfail($id);
         $this->authorize('delete', $internal_check);
 
         try{
