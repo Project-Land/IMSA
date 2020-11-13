@@ -153,7 +153,7 @@
   	}
 
 	let href = window.location.href;
-	id=href.split('#')[1];
+	id = href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
 		e.style = "background:#bbfca9;";
@@ -193,7 +193,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Program broj: ${data.name}</h5>
+							<h5 class="modal-title">Program broj: ${ data.name }</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -219,7 +219,7 @@
 			m.tabIndex = "-1";
 			m.role = "dialog";
 			m.id = "modal";
-      		m.innerHTML=modal;
+      		m.innerHTML = modal;
       		let a = document.getElementById('alert');
       		a.append(m);
       		$("#modal").modal('show');

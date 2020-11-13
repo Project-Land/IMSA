@@ -15,7 +15,7 @@ class GoalsController extends Controller
 
     public function index()
     {
-        $standardId = $this::getStandard();
+        $standardId = session('standard');
         if($standardId == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
@@ -29,7 +29,7 @@ class GoalsController extends Controller
     }
 
     public function getData(Request $request) {
-        $standardId = $this::getStandard();
+        $standardId = session('standard');
 
         $goals = Goal::where([
                 ['standard_id', $standardId],

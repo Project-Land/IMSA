@@ -29,7 +29,7 @@ class InternalCheckController extends Controller
 
     public function index()
     {   
-        $standardId = $this::getStandard();
+        $standardId = session('standard');
         if($standardId == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
@@ -42,8 +42,8 @@ class InternalCheckController extends Controller
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
-    public function getData(Request $request,$year) {
-        $standardId = $this::getStandard();
+    public function getData(Request $request, $year) {
+        $standardId = session('standard');
         
         $internal_checks = InternalCheck::where([
             ['standard_id', $standardId],

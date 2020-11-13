@@ -146,11 +146,11 @@
             const div2=document.createElement('div');
             div2.innerHTML+=
                 `<div class="py-2 px-4">
-                <h4>Popuni karton korektivne mere</h4>
+                <h4 class="text-center my-2">Karton korektivne mere</h4>
                 <div class="form-group">
                     <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" value="" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
-                    oninput="this.setCustomValidity('')" disabled>
+                    oninput="this.setCustomValidity('')" readonly>
                         <option value="Interna provera" selected>Interna provera</option>
                     </select>
                 </div>
@@ -283,11 +283,11 @@
 
                 div2.innerHTML+=
                     `<div class="py-2 px-4">
-                    <h4 class="text-center mb-1">Karton korektivne mere</h4>
+                    <h4 class="text-center my-2">Karton korektivne mere</h4>
                     <div class="form-group">
                         <label for="noncompliance_source[${ counter }]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                         <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
-                        oninput="this.setCustomValidity('')" disabled>
+                        oninput="this.setCustomValidity('')" readonly>
                             <option value="Interna provera" selected>Interna provera</option>
                         </select>
                     </div>

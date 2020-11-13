@@ -15,7 +15,7 @@ class FormsController extends Controller
 
     public function index()
     {
-        $standardId = $this::getStandard();
+        $standardId = session('standard');
         if($standardId == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }

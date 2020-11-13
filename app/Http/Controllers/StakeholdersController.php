@@ -13,13 +13,13 @@ class StakeholdersController extends Controller
 
     public function index()
     {
-        if($this::getStandard() == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $stakeholders = Stakeholder::where([
-                ['standard_id', $this::getStandard()],
-                ['team_id',Auth::user()->current_team_id]
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id]
             ])->get();
 
         return view('system_processes.stakeholders.index', compact('stakeholders'));
