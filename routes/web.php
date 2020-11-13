@@ -44,7 +44,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('policies', PoliciesController::class);
     Route::get('/procedures/create', [ProceduresController::class, 'create'])->name('procedures.create');
     Route::get('/procedures/{id?}', [ProceduresController::class, 'index'])->name('procedures.index');
-    Route::resource('procedures', ProceduresController::class);
+    Route::resource('procedures', ProceduresController::class)->except([
+        'index'
+    ]);
     Route::resource('manuals', ManualsController::class);
     Route::resource('forms', FormsController::class);
     Route::resource('sectors', SectorsController::class);
