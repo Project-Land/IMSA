@@ -41,19 +41,34 @@ use App\Http\Controllers\SystemProcessesController;
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/standards/{id}', [HomeController::class, 'standard'])->name('standard');
+
     Route::resource('rules-of-procedures', RulesOfProceduresController::class);
+    Route::get('rules-of-procedures-deleted', [RulesOfProceduresController::class, 'showDeleted'])->name('rules-of-procedures.deleted');
+    Route::delete('rules-of-procedures-force-delete/{id}', [RulesOfProceduresController::class, 'forceDestroy'])->name('rules-of-procedures.force-destroy');
+    
     Route::resource('policies', PoliciesController::class);
+    Route::get('policies-deleted', [PoliciesController::class, 'showDeleted'])->name('policies.deleted');
+    Route::delete('policies-force-delete/{id}', [PoliciesController::class, 'forceDestroy'])->name('policies.force-destroy');
+
     Route::get('/procedures/create', [ProceduresController::class, 'create'])->name('procedures.create');
     Route::get('/procedures/{id?}', [ProceduresController::class, 'index'])->name('procedures.index');
-    Route::resource('procedures', ProceduresController::class)->except([
-        'index'
-    ]);
+    Route::resource('procedures', ProceduresController::class)->except(['index']);
+    Route::get('procedures-deleted', [ProceduresController::class, 'showDeleted'])->name('procedures.deleted');
+    Route::delete('procedures-force-delete/{id}', [ProceduresController::class, 'forceDestroy'])->name('procedures.force-destroy');
+
     Route::resource('manuals', ManualsController::class);
+    Route::get('manuals-deleted', [ManualsController::class, 'showDeleted'])->name('manuals.deleted');
+    Route::delete('manuals-force-delete/{id}', [ManualsController::class, 'forceDestroy'])->name('manuals.force-destroy');
+
     Route::resource('forms', FormsController::class);
+    Route::get('forms-deleted', [FormsController::class, 'showDeleted'])->name('forms.deleted');
+    Route::delete('forms-force-delete/{id}', [FormsController::class, 'forceDestroy'])->name('forms.force-destroy');
+    
     Route::resource('sectors', SectorsController::class);
 
     Route::resource('internal-check', InternalCheckController::class);
     Route::get('internal-check/get-data/{year}', [InternalCheckController::class, 'getData']);
+
     Route::resource('goals', GoalsController::class);
     Route::post('goals/filter-year', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
     Route::post('goals/get-data', [GoalsController::class, 'getData']);
@@ -64,18 +79,24 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
 
     Route::resource('corrective-measures', CorrectiveMeasuresController::class);
+    Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
+
     Route::resource('stakeholders', StakeholdersController::class);
     Route::resource('suppliers', SuppliersController::class);
+
     Route::resource('trainings', TrainingsController::class);
     Route::post('trainings/get-data', [TrainingsController::class, 'getData']);
     Route::delete('trainings/delete/{id}', [TrainingsController::class, 'deleteApi']);
+
     Route::resource('complaints', ComplaintsController::class);
 
     Route::resource('plan-ip', PlanIpController::class);
+
     Route::resource('internal-check-report', InternalCheckReportController::class);
     Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class, 'createReport'])->name('create.report');
-    Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
+    
     Route::resource('recommendations', RecommendationsController::class);
+
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
@@ -102,5 +123,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
-
+    
 });

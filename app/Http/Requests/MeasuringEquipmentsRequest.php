@@ -55,8 +55,8 @@ class MeasuringEquipmentsRequest extends FormRequest
             'label.max' => 'Polje može sadržati najviše 190 karaktera',
             'name.required' => 'Unesite naziv',
             'name.max' => 'Polje može sadržati najviše 190 karaktera',
-            'next_calibration_date.required' => 'Unesite rok za realizaciju',
-            'next_calibration_date.after' => 'Unesite datum narednog etaloniranja/bandažiranja'
+            'next_calibration_date.required' => 'Unesite datum narednog etaloniranja/bandažiranja',
+            'next_calibration_date.after' => 'Unesite budući datum'
         ];
     }
 

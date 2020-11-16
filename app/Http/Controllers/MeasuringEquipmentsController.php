@@ -46,13 +46,12 @@ class MeasuringEquipmentsController extends Controller
             ]);
             $me->notification()->save($notification);
             CustomLog::info('Merna oprema "'.$me->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Merna oprema je uspešno izmenjena!');
+            $request->session()->flash('status', 'Merna oprema je uspešno kreirana!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja merne opreme, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
-      
-
+        return redirect('/measuring-equipment');
     }
 
     public function show($id)

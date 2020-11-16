@@ -14,15 +14,15 @@ class ProceduresController extends Controller
 {
     public function index($id = null)
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
+
         $sector = Sector::where('is_global', 1)->get()->first()->id;
 
         $documents = Document::where([
                 ['doc_category', 'procedure'],
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->when($id, function ($query, $id) {
                 return $query->where('sector_id', $id);
@@ -34,10 +34,37 @@ class ProceduresController extends Controller
                 return $query->where('sector_id', $id);
             })->get();
          
-        $folder = \Str::snake($this::getCompanyName())."/procedure";
-        $route_name = 'procedures';
-        $doc_type="Procedure";
-        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
+        return view('documents.index', 
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName()).'/procedure',
+                'route_name' => 'procedures',
+                'doc_type' => 'Procedure'
+            ]
+        );
+    }
+
+    public function showDeleted()
+    {
+        if(session('standard') == null){
+            return redirect('/')->with('status', 'Izaberite standard!');
+        }
+
+        $documents = Document::onlyTrashed()->where([
+                ['doc_category', 'procedure'],
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id],
+            ])->get();
+
+        return view('documents.deleted', 
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName()).'/procedure',
+                'route_name' => 'procedures',
+                'doc_type' => 'Procedure',
+                'back' => route('procedures.index')
+            ]
+        );
     }
 
     public function create()
@@ -65,7 +92,7 @@ class ProceduresController extends Controller
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
             CustomLog::info('Dokument Procedure "'.$document->document_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Procedure, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Procedure, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/procedures');
@@ -109,7 +136,7 @@ class ProceduresController extends Controller
             CustomLog::info('Dokument Procedure "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Procedure '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Procedure '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/procedures');
@@ -124,10 +151,28 @@ class ProceduresController extends Controller
             CustomLog::info('Dokument Procedure "'.$doc_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Procedure '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Procedure '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
 
+    public function forceDestroy($id)
+    {
+        $document = Document::withTrashed()->where('id', $id)->get()->first();
+        $this->authorize('delete', $document);
+        $doc_name = $document->document_name;
+
+        $path = \Str::snake($this::getCompanyName())."/procedure/".$document->file_name;
+        
+        try{
+            Storage::delete($path);
+            $document->forceDelete();
+            CustomLog::info('Dokument Procedure "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Dokument je trajno uklonjen');
+        } catch(Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Procedure'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+        }
+    }
    
 }

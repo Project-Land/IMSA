@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ Session::get('standard_name') }} - {{ $doc_type }} 
+            {{ Session::get('standard_name') }} - {{ $doc_type }} - Izbrisani dokumenti
         </h2>
     </x-slot>
 
@@ -28,17 +28,18 @@
         </div>
     </div>
 
+    <div class="row">
+    	<div class="col">
+        	<a class="inline-flex items-center px-4 py-2 hover:no-underline bg-white border border-gray-300 rounded-sm font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" href="{{ $back }}"><i class="fas fa-arrow-left mr-1"></i> Nazad</a>
+     	</div>
+    </div>
+
     <div class="row mt-3">
 
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\Document::class)
-                    <div class="card-header">
-                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
-                        <a class="inline-block float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}"><i class="fas fa-list"></i> Izbrisani dokumenti </a>
-                    </div>
-                @endcan
+
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -72,11 +73,10 @@
                                                 <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
-                                            <a data-toggle="tooltip" data-placement="top" title="Izmena dokumenta" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
-                                            <form class="inline" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
+                                            <form class="inline" action="{{ route($route_name.'.force-destroy', $document->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button data-toggle="tooltip" data-placement="top" title="Brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="delete"><i class="fas fa-trash"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="Trajno brisanje dokumenta" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="delete"><i class="fas fa-trash"></i></button>
                                             </form>
                                             @endcanany
                                         </td>

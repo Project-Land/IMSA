@@ -16,15 +16,15 @@ class ManualsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
         
         $sector = Sector::where('is_global', 1)->get()->first()->id;
+
         $documents = Document::where([
                 ['doc_category', 'manual'],
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->orWhere([
                 ['sector_id', $sector],
@@ -32,10 +32,37 @@ class ManualsController extends Controller
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
 
-        $folder = \Str::snake($this::getCompanyName())."/manuals";
-        $route_name = "manuals";
-        $doc_type="Uputstva";
-        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
+        return view('documents.index', 
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName()).'/manuals',
+                'route_name' => 'manuals',
+                'doc_type' => 'Uputstva'
+            ]
+        );
+    }
+
+    public function showDeleted()
+    {
+        if(session('standard') == null){
+            return redirect('/')->with('status', 'Izaberite standard!');
+        }
+
+        $documents = Document::onlyTrashed()->where([
+                ['doc_category', 'manual'],
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id],
+            ])->get();
+
+        return view('documents.deleted', 
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName()).'/manuals',
+                'route_name' => 'manuals',
+                'doc_type' => 'Uputstva',
+                'back' => route('manuals.index')
+            ]
+        );
     }
 
     public function create()
@@ -126,6 +153,25 @@ class ManualsController extends Controller
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Uputstvo "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+        }
+    }
+
+    public function forceDestroy($id)
+    {
+        $document = Document::withTrashed()->where('id', $id)->get()->first();
+        $this->authorize('delete', $document);
+        $doc_name = $document->document_name;
+
+        $path = \Str::snake($this::getCompanyName())."/manuals/".$document->file_name;
+        
+        try{
+            Storage::delete($path);
+            $document->forceDelete();
+            CustomLog::info('Dokument Upustvo "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Dokument je trajno uklonjen');
+        } catch(Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Upustvo'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

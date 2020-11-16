@@ -13,21 +13,47 @@ class PoliciesController extends Controller
 {
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $documents = Document::where([
                 ['doc_category', 'policy'],
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
-            
-        $folder = \Str::snake($this::getCompanyName())."/policy";
-        $route_name = "policies";
-        $doc_type="Politike";
-        return view('documents.index', compact('documents', 'folder', 'route_name','doc_type'));
+        
+        return view('documents.index',
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName())."/policy",
+                'route_name' => 'policies',
+                'doc_type' => 'Politike'
+            ]
+        );
+    }
+
+    public function showDeleted()
+    {
+        if(session('standard') == null){
+            return redirect('/')->with('status', 'Izaberite standard!');
+        }
+
+        $documents = Document::onlyTrashed()->where([
+                ['doc_category', 'policy'],
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id],
+            ])->get();
+
+        return view('documents.deleted', 
+            [
+                'documents' => $documents,
+                'folder' => \Str::snake($this::getCompanyName())."/policy",
+                'route_name' => 'policies',
+                'doc_type' => 'Politike',
+                'back' => route('policies.index')
+            ]
+        );
     }
 
     public function create()
@@ -96,7 +122,7 @@ class PoliciesController extends Controller
             $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
             CustomLog::info('Dokument Politike "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Politike '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Politike '.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
         return redirect('/policies');
@@ -112,7 +138,26 @@ class PoliciesController extends Controller
             CustomLog::info('Dokument Politike "'.$document_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         }catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Politike '.$document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Politike '.$document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+        }
+    }
+
+    public function forceDestroy($id)
+    {
+        $document = Document::withTrashed()->where('id', $id)->get()->first();
+        $this->authorize('delete', $document);
+        $doc_name = $document->document_name;
+
+        $path = \Str::snake($this::getCompanyName())."/policy/".$document->file_name;
+        
+        try{
+            Storage::delete($path);
+            $document->forceDelete();
+            CustomLog::info('Dokument Politike "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Dokument je trajno uklonjen');
+        } catch(Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Politike'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
