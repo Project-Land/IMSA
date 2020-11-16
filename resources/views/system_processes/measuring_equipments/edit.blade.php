@@ -34,7 +34,7 @@
 
 			<div class="mb-4">
 				<label for="last_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum poslednjeg etaloniranja/bandažiranja</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="last_calibration_date" id="last_calibration_date" value="{{ date('d.m.Y', strtotime($measuring_equipment->last_calibration_date)) }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="last_calibration_date" id="last_calibration_date" value="@if($measuring_equipment->last_calibration_date){{ date('d.m.Y', strtotime($measuring_equipment->last_calibration_date)) }}@endif">
 				@error('last_calibration_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -42,7 +42,7 @@
 
 			<div class="mb-4">
 				<label for="next_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum sledećeg etaloniranja/bandažiranja</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="next_calibration_date" id="next_calibration_date" value="{{ date('d.m.Y', strtotime($measuring_equipment->next_calibration_date)) }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="next_calibration_date" id="next_calibration_date" value="@if($measuring_equipment->next_calibration_date){{ date('d.m.Y', strtotime($measuring_equipment->next_calibration_date)) }} @endif">
 				@error('next_calibration_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -60,7 +60,7 @@
     $('#last_calibration_date').datetimepicker({
 		timepicker: false,
 		format:'d.m.Y',
-        minDate: 0,
+        maxDate: 0,
 		dayOfWeekStart: 1,
         scrollInput: false
 	});

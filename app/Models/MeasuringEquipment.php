@@ -9,6 +9,8 @@ class MeasuringEquipment extends Model
 {
     use HasFactory;
 
+    protected $guarded=[];
+
     public function notification()
     {
         return $this->morphOne('App\Models\Notification', 'notifiable');

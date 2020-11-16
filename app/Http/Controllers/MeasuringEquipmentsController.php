@@ -37,6 +37,7 @@ class MeasuringEquipmentsController extends Controller
     public function store(MeasuringEquipmentsRequest $request)
     {
         $this->authorize('create', MeasuringEquipment::class);
+      
         try{
             $me = MeasuringEquipment::create($request->all());
             $notification = Notification::create([
@@ -50,6 +51,8 @@ class MeasuringEquipmentsController extends Controller
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+        }finally{
+            return redirect('/measuring-equipment');
         }
       
 
@@ -67,12 +70,18 @@ class MeasuringEquipmentsController extends Controller
         return view('system_processes.measuring_equipments.edit', ['measuring_equipment' => $me]);
     }
 
-    public function update(Request $request, $id)
+    public function update(MeasuringEquipmentsRequest $request, $id)
     {
         $me = MeasuringEquipment::findOrFail($id);
         $this->authorize('update', $me);
+       // dd($request->all());
 
         try{
+            $me->update($request->all());
+            $notification = $me->notification;
+            $notification->message = 'Datum narednog etaloniranja/bandažiranja '. date('d.m.Y', strtotime($me->next_calibration_date));
+            $notification->checkTime = $me->next_calibration_date;
+            $me->notification()->save($notification);
             CustomLog::info('Merna oprema "'.$me->name.'" izmenjena, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Merna oprema je uspešno izmenjena!');
         } catch(Exception $e){

@@ -59,7 +59,7 @@
     $('#last_calibration_date').datetimepicker({
 		timepicker: false,
 		format:'d.m.Y',
-        minDate: 0,
+        maxDate: 0,
 		dayOfWeekStart: 1,
         scrollInput: false
 	});
