@@ -34,9 +34,25 @@ class MeasuringEquipmentsController extends Controller
         return view('system_processes.measuring_equipments.create');
     }
 
-    public function store(Request $request)
+    public function store(MeasuringEquipmentsRequest $request)
     {
-        //
+        $this->authorize('create', MeasuringEquipment::class);
+        try{
+            $me = MeasuringEquipment::create($request->all());
+            $notification = Notification::create([
+                'message'=>'Datum narednog etaloniranja/bandažiranja '.date('d.m.Y', strtotime($me->next_calibration_date)),
+                'team_id'=>Auth::user()->current_team_id,
+                'checkTime' => $me->next_calibration_date
+            ]);
+            $me->notification()->save($notification);
+            CustomLog::info('Merna oprema "'.$me->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            $request->session()->flash('status', 'Merna oprema je uspešno izmenjena!');
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+        }
+      
+
     }
 
     public function show($id)

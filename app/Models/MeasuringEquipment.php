@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class MeasuringEquipment extends Model
 {
     use HasFactory;
+
+    public function notification()
+    {
+        return $this->morphOne('App\Models\Notification', 'notifiable');
+    }
+
 }
