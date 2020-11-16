@@ -36,7 +36,7 @@
                 @can('create', App\Models\Document::class)
                     <div class="card-header">
                         <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
-                        <a class="inline-block float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}"><i class="fas fa-list"></i> Izbrisani dokumenti </a>
+                        <a class="inline-block float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}"><i class="fas fa-trash"></i> Izbrisani dokumenti </a>
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">

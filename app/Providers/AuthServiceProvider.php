@@ -14,6 +14,7 @@ use App\Models\Training;
 use App\Models\Sector;
 use App\Models\Supplier;
 use App\Models\Stakeholder;
+use App\Models\MeasuringEquipment;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Standard;
@@ -31,6 +32,7 @@ use App\Policies\SupplierPolicy;
 use App\Policies\StakeholderPolicy;
 use App\Policies\SectorPolicy;
 use App\Policies\TrainingPolicy;
+use App\Models\MeasuringEquipmentPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\StandardPolicy;
 use App\Policies\NotificationPolicy;
@@ -60,6 +62,7 @@ class AuthServiceProvider extends ServiceProvider
         RiskManagement::class => RiskManagementPolicy::class,
         PlanIp::class => PlanIpPolicy::class,
         Training::class => TrainingPolicy::class,
+        MeasuringEquipment::class => MeasuringEquipmentPolicy::class,
         SystemProcess::class => SystemProcessPolicy::class,
         Notification::class => NotificationPolicy::class,
         Standard::class => StandardPolicy::class,

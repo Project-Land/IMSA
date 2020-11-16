@@ -127,14 +127,14 @@
             this.closest("div").remove();
         }
 
-        const form=document.getElementById('internal_check_report_edit_form');
-        const recommendations=document.getElementById('addRecommendations');
-        const recommendationsDiv=document.getElementById('recommendationsDiv');
+        const form = document.getElementById('internal_check_report_edit_form');
+        const recommendations = document.getElementById('addRecommendations');
+        const recommendationsDiv = document.getElementById('recommendationsDiv');
 
         const addInputRecommedation = function() {
 
-            if(document.getElementById("newInputRecommendation"+(coun-1))!=null){
-                if(document.getElementById("newInputRecommendation"+(coun-1)).value==="")
+            if(document.getElementById("newInputRecommendation" + (coun-1)) != null){
+                if(document.getElementById("newInputRecommendation" + (coun-1)).value === "")
                     return;
             }
 

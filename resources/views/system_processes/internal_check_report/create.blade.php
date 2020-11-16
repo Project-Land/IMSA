@@ -72,16 +72,16 @@
                 <div class="form-group col">
                     <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenosti</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="inconsistencies" name="inconsistencies" >
-                        <option value="0">ne</option>
-                        <option value="1">da</option>
+                        <option value="0">Ne</option>
+                        <option value="1">Da</option>
                     </select>
                 </div>
 
                 <div class="form-group col">
                     <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">Preporuke</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="recommendations" name="recommendations">
-                        <option value="0">ne</option>
-                        <option value="1">da</option>
+                        <option value="0">Ne</option>
+                        <option value="1">Da</option>
                     </select>
                 </div>
             </div>
@@ -292,11 +292,7 @@
                     <div class="form-group">
                         <label for="noncompliance_source[${ counter }]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
                         <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source[${counter}]" name="noncompliance_source[${counter}]" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
-<<<<<<< HEAD
-                        oninput="this.setCustomValidity('')" >
-=======
                         oninput="this.setCustomValidity('')" readonly>
->>>>>>> ba21829a8cc432ec157649f6af26015a38a55d21
                             <option value="Interna provera" selected>Interna provera</option>
                         </select>
                     </div>

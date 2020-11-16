@@ -100,8 +100,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('internal-check-report', InternalCheckReportController::class);
     Route::get('internal-check-report/{id}/report',[InternalCheckReportController::class, 'createReport'])->name('create.report');
-    
-    Route::resource('recommendations', RecommendationsController::class);
 
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);

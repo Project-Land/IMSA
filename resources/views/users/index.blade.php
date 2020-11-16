@@ -46,7 +46,7 @@
 							</thead>
 							<tbody class="bg-white divide-y divide-gray-200">
 								@foreach($users as $user)
-									@if($user->teamRole($user->currentTeam)->name === "Owner") @continue @endif
+									@if($user->hasTeamRole($user->currentTeam, 'super-admin')) @continue @endif
 									<tr>
 										<td class="px-6 py-2 whitespace-no-wrap">
 											<div class="flex items-center">
