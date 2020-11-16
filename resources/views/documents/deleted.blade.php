@@ -73,6 +73,10 @@
                                                 <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
+                                            <form class="inline" action="{{ route($route_name.'.restore', $document->id) }}" method="POST">
+                                                @csrf
+                                                <button data-toggle="tooltip" data-placement="top" title="Povraćaj dokumenta" class="button text-success" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');" id="restore"><i class="fas fa-trash-restore"></i></button>
+                                            </form>
                                             <form class="inline" action="{{ route($route_name.'.force-destroy', $document->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf

@@ -73,7 +73,6 @@ class MeasuringEquipmentsController extends Controller
     {
         $me = MeasuringEquipment::findOrFail($id);
         $this->authorize('update', $me);
-       // dd($request->all());
 
         try{
             $me->update($request->all());

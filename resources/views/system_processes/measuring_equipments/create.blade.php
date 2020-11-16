@@ -71,11 +71,4 @@
 		dayOfWeekStart: 1,
         scrollInput: false
 	});
-
-	$('#last_calibration_date').change( () => {
-		let start_date = $('#last_calibration_date').val().split(" ")[0].split(".").reverse().join("/").toString().trim();
-		$('#next_calibration_date').datetimepicker({
-			minDate: start_date
-		})
-	})
 </script>

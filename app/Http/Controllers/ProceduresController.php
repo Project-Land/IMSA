@@ -158,7 +158,7 @@ class ProceduresController extends Controller
 
     public function forceDestroy($id)
     {
-        $document = Document::withTrashed()->where('id', $id)->get()->first();
+        $document = Document::withTrashed()->findOrFail($id);
         $this->authorize('delete', $document);
         $doc_name = $document->document_name;
 
@@ -170,7 +170,22 @@ class ProceduresController extends Controller
             CustomLog::info('Dokument Procedure "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je trajno uklonjen');
         } catch(Exception $e) {
-            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Procedure'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Procedure "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+        }
+    }
+
+    public function restore($id)
+    {
+        $document = Document::withTrashed()->findOrFail($id);
+        $this->authorize('update', $document);
+
+        try{
+            $document->restore();
+            CustomLog::info('Dokument Procedure "'.$document->document_name.'" vraćen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            return back()->with('status', 'Dokument je uspešno vraćen');
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Procedure "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
