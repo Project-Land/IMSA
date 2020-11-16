@@ -52,11 +52,11 @@
                             </thead>
                             <tbody>
                                 @foreach($measuring_equipment as $me)
-                                <tr>
+                                <tr id='trmeasuringequipment{{$me->id}}'><a id='measuringequipment{{$me->id}}'></a>
                                     <td class="text-center">{{ $me->label }}</td>
                                     <td class="text-center">{{ $me->name }}</td>
-                                    <td class="text-center">{{ date('d.m.Y', strtotime($me->last_calibration_date)) }}</td>
-                                    <td class="text-center">{{ date('d.m.Y', strtotime($me->next_calibration_date)) }}</td>
+                                    <td class="text-center">@if($me->last_calibration_date){{ date('d.m.Y', strtotime($me->last_calibration_date)) }}@else {{"/"}}@endif</td>
+                                    <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
                                     @canany(['update', 'delete'], $me)
                                     <td class="text-center">
                                         <a data-toggle="tooltip" data-placement="top" title="Izmena merne opreme" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>
@@ -106,4 +106,18 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();   
     });
+
+    var myRe = /\bmeasuring-equipment\b/g;
+  	if(myRe.test(window.location.href)){
+    	window.addEventListener('popstate', function (event) {
+    		location.reload();
+    	});
+  	}
+
+	let href = window.location.href;
+	id = href.split('#')[1];
+	if(id){
+		let e = document.getElementById('tr' + id);
+		e.style = "background:#bbfca9;";
+	}
 </script>

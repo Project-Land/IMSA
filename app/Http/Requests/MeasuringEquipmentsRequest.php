@@ -35,7 +35,8 @@ class MeasuringEquipmentsRequest extends FormRequest
         return [
             'label' => 'required|max:190',
             'name' => 'required|max:190',
-            'next_calibration_date' => 'required|after:yesterday',
+            'next_calibration_date' => 'after:yesterday|nullable',
+            'last_calibration_date' => 'before:tomorrow|nullable',
         ];
     }
 
@@ -44,7 +45,8 @@ class MeasuringEquipmentsRequest extends FormRequest
         return [
             'label' => 'required|max:190',
             'name' => 'required|max:190',
-            'next_calibration_date' => 'required|after:yesterday',
+            'next_calibration_date' => 'after:yesterday|nullable',
+            'last_calibration_date' => 'before:tomorrow|nullable',
         ];
     }
 
@@ -55,8 +57,9 @@ class MeasuringEquipmentsRequest extends FormRequest
             'label.max' => 'Polje može sadržati najviše 190 karaktera',
             'name.required' => 'Unesite naziv',
             'name.max' => 'Polje može sadržati najviše 190 karaktera',
-            'next_calibration_date.required' => 'Unesite datum narednog etaloniranja/bandažiranja',
-            'next_calibration_date.after' => 'Unesite budući datum'
+            'next_calibration_date.required' => 'Unesite rok za realizaciju',
+            'next_calibration_date.after' => 'Unesite datum narednog etaloniranja/bandažiranja',
+            'last_calibration_date.before' => 'Nije moguće uneti budući datum'
         ];
     }
 
@@ -66,6 +69,8 @@ class MeasuringEquipmentsRequest extends FormRequest
             'standard_id' => session('standard'),
             'team_id' => \Auth::user()->current_team_id,
             'user_id' => \Auth::user()->id,
+            'next_calibration_date'=>$this->next_calibration_date != null ? date('Y-m-d', strtotime($this->next_calibration_date)):null,
+            'last_calibration_date' => $this->last_calibration_date != null ? date('Y-m-d', strtotime($this->last_calibration_date)):null,
         ]);
     }
 
