@@ -45,24 +45,29 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('rules-of-procedures', RulesOfProceduresController::class);
     Route::get('rules-of-procedures-deleted', [RulesOfProceduresController::class, 'showDeleted'])->name('rules-of-procedures.deleted');
     Route::delete('rules-of-procedures-force-delete/{id}', [RulesOfProceduresController::class, 'forceDestroy'])->name('rules-of-procedures.force-destroy');
+    Route::post('rules-of-procedures-restore/{id}', [RulesOfProceduresController::class, 'restore'])->name('rules-of-procedures.restore');
     
     Route::resource('policies', PoliciesController::class);
     Route::get('policies-deleted', [PoliciesController::class, 'showDeleted'])->name('policies.deleted');
     Route::delete('policies-force-delete/{id}', [PoliciesController::class, 'forceDestroy'])->name('policies.force-destroy');
+    Route::post('policies-restore/{id}', [PoliciesController::class, 'restore'])->name('policies.restore');
 
     Route::get('/procedures/create', [ProceduresController::class, 'create'])->name('procedures.create');
     Route::get('/procedures/{id?}', [ProceduresController::class, 'index'])->name('procedures.index');
     Route::resource('procedures', ProceduresController::class)->except(['index']);
     Route::get('procedures-deleted', [ProceduresController::class, 'showDeleted'])->name('procedures.deleted');
     Route::delete('procedures-force-delete/{id}', [ProceduresController::class, 'forceDestroy'])->name('procedures.force-destroy');
+    Route::post('procedures-restore/{id}', [ProceduresController::class, 'restore'])->name('procedures.restore');
 
     Route::resource('manuals', ManualsController::class);
     Route::get('manuals-deleted', [ManualsController::class, 'showDeleted'])->name('manuals.deleted');
     Route::delete('manuals-force-delete/{id}', [ManualsController::class, 'forceDestroy'])->name('manuals.force-destroy');
+    Route::post('manuals-restore/{id}', [ManualsController::class, 'restore'])->name('manuals.restore');
 
     Route::resource('forms', FormsController::class);
     Route::get('forms-deleted', [FormsController::class, 'showDeleted'])->name('forms.deleted');
     Route::delete('forms-force-delete/{id}', [FormsController::class, 'forceDestroy'])->name('forms.force-destroy');
+    Route::post('forms-restore/{id}', [FormsController::class, 'restore'])->name('forms.restore');
     
     Route::resource('sectors', SectorsController::class);
 
@@ -82,6 +87,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
 
     Route::resource('stakeholders', StakeholdersController::class);
+    
     Route::resource('suppliers', SuppliersController::class);
 
     Route::resource('trainings', TrainingsController::class);

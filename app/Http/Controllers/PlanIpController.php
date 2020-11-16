@@ -24,7 +24,7 @@ class PlanIpController extends Controller
 
     public function store(Request $request)
     {
-        //
+        abort(404);
     }
 
     public function show($id)

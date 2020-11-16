@@ -15,13 +15,12 @@ class MeasuringEquipmentsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $me = MeasuringEquipment::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
 
@@ -41,8 +40,8 @@ class MeasuringEquipmentsController extends Controller
         try{
             $me = MeasuringEquipment::create($request->all());
             $notification = Notification::create([
-                'message'=>'Datum narednog etaloniranja/bandažiranja '.date('d.m.Y', strtotime($me->next_calibration_date)),
-                'team_id'=>Auth::user()->current_team_id,
+                'message' => 'Datum narednog etaloniranja/bandažiranja '.date('d.m.Y', strtotime($me->next_calibration_date)),
+                'team_id' => Auth::user()->current_team_id,
                 'checkTime' => $me->next_calibration_date
             ]);
             $me->notification()->save($notification);
@@ -51,10 +50,9 @@ class MeasuringEquipmentsController extends Controller
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja merne opreme, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
-        }finally{
+        } finally{
             return redirect('/measuring-equipment');
         }
-        return redirect('/measuring-equipment');
     }
 
     public function show($id)
@@ -73,7 +71,6 @@ class MeasuringEquipmentsController extends Controller
     {
         $me = MeasuringEquipment::findOrFail($id);
         $this->authorize('update', $me);
-       // dd($request->all());
 
         try{
             $me->update($request->all());

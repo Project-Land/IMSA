@@ -15,24 +15,22 @@ class GoalsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $goals = Goal::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
 
         return view('system_processes.goals.index', ['goals' => $goals]);
     }
 
-    public function getData(Request $request) {
-        $standardId = session('standard');
-
+    public function getData(Request $request)
+    {
         $goals = Goal::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['year', $request->data['year']],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();

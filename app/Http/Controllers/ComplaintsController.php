@@ -14,13 +14,12 @@ class ComplaintsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $complaints = Complaint::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
         return view('system_processes.complaints.index', compact('complaints'));

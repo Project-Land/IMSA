@@ -29,13 +29,12 @@ class InternalCheckController extends Controller
 
     public function index()
     {   
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $internal_checks = InternalCheck::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp'])->get();
           
@@ -43,15 +42,14 @@ class InternalCheckController extends Controller
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
-    public function getData(Request $request, $year) {
-        $standardId = session('standard');
-        
+    public function getData(Request $request, $year)
+    {
         $internal_checks = InternalCheck::where([
-            ['standard_id', $standardId],
+            ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id],
         ])->whereYear('date', '=', $year)->with(['sector','standard','planIp'])->get();
-        $request->session()->flash('year', $year);
 
+        $request->session()->flash('year', $year);
         return view('system_processes.internal_check.index', compact('internal_checks'));
     }
 
@@ -99,7 +97,6 @@ class InternalCheckController extends Controller
             }
         }
 
-    
         $validatedData['leaders'] = $leaders;
         $validatedData['team_id'] = Auth::user()->current_team_id;
         $validatedData['user_id'] = Auth::user()->id;
@@ -141,7 +138,6 @@ class InternalCheckController extends Controller
 
     public function edit($id)
     {
-       // $internal_check = InternalCheck::findOrfail($id);
         $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
         $this->authorize('update', $internal_check);
 
@@ -164,7 +160,6 @@ class InternalCheckController extends Controller
 
     public function update(UpdateInternalCheckRequest $request, $id)
     {
-      
         $internal_check = InternalCheck::findOrfail($id);
 
         $this->authorize('update', $internal_check);
