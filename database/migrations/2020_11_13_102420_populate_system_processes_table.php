@@ -23,7 +23,8 @@ class PopulateSystemProcessesTable extends Migration
                 ['name' => 'Odobreni isporučioci ', 'route' => 'suppliers', 'display_order' => '6'],
                 ['name' => 'Zainteresovane strane ', 'route' => 'stakeholders', 'display_order' => '7'],
                 ['name' => 'Upravljanje reklamacijama ', 'route' => 'complaints', 'display_order' => '8'],
-                ['name' => 'Preispitivanje sistema menadžmenta ', 'route' => 'management-system-reviews', 'display_order' => '9'],
+                ['name' => 'Merna oprema ', 'route' => 'measuring-equipment', 'display_order' => '9'],
+                ['name' => 'Preispitivanje sistema menadžmenta ', 'route' => 'management-system-reviews', 'display_order' => '10'],
             )
         );
     }

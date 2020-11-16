@@ -20,6 +20,7 @@ use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
+use App\Http\Controllers\MeasuringEquipmentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StandardsController;
@@ -83,6 +84,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('system-processes/store-to-standard', [SystemProcessesController::class, 'storeToStandard'])->name('system-processes.store-to-standard');
     Route::post('system-processes/get-by-standard', [SystemProcessesController::class, 'getByStandard']);
 
+    Route::resource('measuring-equipment', MeasuringEquipmentsController::class);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('show-team-stats/{id}', [TeamController::class, 'showTeamUserStats']);
