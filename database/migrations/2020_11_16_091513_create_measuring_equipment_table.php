@@ -18,7 +18,6 @@ class CreateMeasuringEquipmentTable extends Migration
             $table->foreignId('standard_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
-            $table->foreignId('sector_id')->constrained();
             $table->string('label');
             $table->string('name');
             $table->date('last_calibration_date');

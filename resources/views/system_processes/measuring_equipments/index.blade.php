@@ -55,12 +55,12 @@
                                 <tr>
                                     <td class="text-center">{{ $me->label }}</td>
                                     <td class="text-center">{{ $me->name }}</td>
-                                    <td class="text-center">{{ $me->last_calibration_date }}</td>
-                                    <td class="text-center">{{ $me->next_calibration_date }}</td>
-                                    @canany(['update', 'delete'], $s)
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($me->last_calibration_date)) }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($me->next_calibration_date)) }}</td>
+                                    @canany(['update', 'delete'], $me)
                                     <td class="text-center">
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena merne opreme" href="{{ route('measuring-equipment.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('measuring-equipment.destroy', $s->id) }}" method="POST">
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena merne opreme" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" action="{{ route('measuring-equipment.destroy', $me->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button data-toggle="tooltip" data-placement="top" title="Brisanje merne opreme" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
