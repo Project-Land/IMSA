@@ -96,6 +96,7 @@ class MeasuringEquipmentsController extends Controller
         $this->authorize('delete', $me);
         
         try{
+            $me->notification()->delete();
             $me->delete();
             CustomLog::info('Merna oprema "'.$me->name.'" uklonjena, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Merna oprema je uspešno obrisana');

@@ -156,7 +156,7 @@
 	id = href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
-		e.style = "background:#bbfca9;";
+		e.style = "background:#d8ffcc;";
 	}
 
     $('.yajra-datatable').DataTable({
