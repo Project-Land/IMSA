@@ -69,15 +69,15 @@ class SectorsController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('delete', Sector::find($id));
-        $name = Sector::find($id)->name;
+        $sector = Sector::find($id);
+        $this->authorize('delete', $sector);
 
         try{
             Sector::destroy($id);
-            CustomLog::info('Sektor "'.$name.'" obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
             return back()->with('status', 'Sektor je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja sektora "'.$name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja sektora "'.$sector->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').' Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
             return back()->with('warning', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.');
         }
     }
