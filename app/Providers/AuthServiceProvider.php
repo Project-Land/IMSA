@@ -32,7 +32,7 @@ use App\Policies\SupplierPolicy;
 use App\Policies\StakeholderPolicy;
 use App\Policies\SectorPolicy;
 use App\Policies\TrainingPolicy;
-use App\Models\MeasuringEquipmentPolicy;
+use App\Policies\MeasuringEquipmentPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\StandardPolicy;
 use App\Policies\NotificationPolicy;
