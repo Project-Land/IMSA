@@ -14,27 +14,22 @@ class ManagementSystemReviewsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $msr = ManagementSystemReview::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id',Auth::user()->current_team_id]
             ])->get();
 
         return view('system_processes.management_system_reviews.index', compact('msr'));
     }
 
-    public function getData(Request $request) {
-        $standardId = session('standard');
-        if($standardId == null){
-            return redirect('/')->with('status', 'Izaberite standard!');
-        }
-        
+    public function getData(Request $request)
+    {
         $reviews = ManagementSystemReview::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['year', $request->data['year']]
             ])->get();
 

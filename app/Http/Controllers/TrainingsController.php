@@ -14,24 +14,21 @@ class TrainingsController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $trainingPlans = Training::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['year', date('Y')],
                 ['team_id',Auth::user()->current_team_id]
             ])->get();
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 
-    public function getData(Request $request) {
-        $standardId = session('standard');
-        
+    public function getData(Request $request) { 
         $trainingPlans = Training::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['year', $request->data['year']]
             ])->get();
 

@@ -11,7 +11,6 @@ class LogsController extends Controller
 {
     public function show(Request $request, $company)
     {
-        
         $filePath = storage_path("logs/".$company.".log");
         $data = []; $logs = []; $result = []; $allLogs = [];
 

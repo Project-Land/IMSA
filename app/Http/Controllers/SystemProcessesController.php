@@ -30,7 +30,7 @@ class SystemProcessesController extends Controller
 
     public function create()
     {
-        //
+        abort(404);
     }
 
     public function addToStandard()

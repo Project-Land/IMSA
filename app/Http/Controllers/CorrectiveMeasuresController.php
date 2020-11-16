@@ -17,13 +17,12 @@ class CorrectiveMeasuresController extends Controller
 
     public function index()
     {
-        $standardId = session('standard');
-        if($standardId == null){
+        if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
 
         $measures = CorrectiveMeasure::where([
-                ['standard_id', $standardId],
+                ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->with(['standard'])->get();
         return view('system_processes.corrective_measures.index', compact('measures'));
