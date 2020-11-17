@@ -56,7 +56,7 @@
                                     <td class="text-center">{{ $measure->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($measure->created_at)) }}</td>
                                     <td class="text-center">{{ $measure->standard->name }}</td>
-                                    <td class="text-center">{{ $measure->measure_approval == '0'? "Otvorena" : "Zatvorena" }}</td>
+                                    <td class="text-center">{{ $measure->measure_effective === 0 || $measure->measure_effective === null ? "Otvorena" : "Zatvorena" }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="Pregled korektivne mere" class="text-primary" onclick="showMeasure({{ $measure->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $measure)
