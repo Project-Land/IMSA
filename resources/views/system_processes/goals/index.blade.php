@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Ciljevi') }} 
+            {{ session('standard_name') }} - {{ __('Ciljevi') }}
         </h2>
     </x-slot>
 
@@ -90,13 +90,13 @@
                                         </form>
                                         @endcanany
                                     </td>
-                                </tr>   
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -157,10 +157,10 @@ var myRe = /\bgoals\b/g;
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
-                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Godina</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.year }</p></div>
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Godina</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
@@ -193,14 +193,14 @@ var myRe = /\bgoals\b/g;
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        
+
         let url = "/goals/delete/"+id;
-        
+
         if(confirm('Da li ste sigurni?')){
             $.ajax({
                 type: "delete",
                 url: url,
-                data: { 
+                data: {
                     id: id
                 },
                 success: function(result) {
@@ -252,7 +252,7 @@ var myRe = /\bgoals\b/g;
     });
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 

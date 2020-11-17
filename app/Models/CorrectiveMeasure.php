@@ -51,6 +51,6 @@ class CorrectiveMeasure extends Model
         else{
             $icm_percentage = ($icm_approved / $icm_total) * 100;
         }
-        return "Odobreno ".$icm_approved." mera od ukupno ".$icm_total." što čini ".round($icm_percentage)."%";
+        return "Zatvoreno je ".$icm_approved." mera od ukupno ".$icm_total." pokrenutih što čini ".round($icm_percentage)."%";
     }
 }

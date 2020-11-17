@@ -67,7 +67,7 @@ class ManagementSystemReviewRequest extends FormRequest
             'measures_status.required' => 'Unesite status mera',
             'internal_external_changes.required' => 'Unesite promene',
             'customer_satisfaction.required' => 'Unesite zadovoljstvo klijenata',
-            'monitoring_measurement_results.required' => 'Unesite rezultate praćenja merenja',
+            'monitoring_measurement_results.required' => 'Unesite rezultate praćenja i merenja',
             'resource_adequacy.required' => 'Unesite adekvatnost resursa',
             'checks_results_desc.required' => ' Unesite rezultate eksternih provera'
         ];
