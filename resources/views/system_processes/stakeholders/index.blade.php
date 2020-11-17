@@ -122,7 +122,6 @@
 
     function confirmDeleteModal($id){
         let id = $id;
-
         $('#confirm-delete-modal').modal();
         $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
             let form = $('#delete-form-'+id);

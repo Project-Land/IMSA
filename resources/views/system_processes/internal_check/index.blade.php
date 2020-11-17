@@ -122,10 +122,10 @@
                                     <td class="text-center">
                                         @can('update', $check)
                                             <a data-toggle="tooltip" data-placement="top" title="Izmena interne provere" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
-                                            <form class="inline" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
+                                            <form class="inline" id="delete-form-{{ $check->id }}" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" class="button" type="submit" style="cursor: pointer; color: red;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                                <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" onclick="confirmDeleteModal({{ $check->id }})"><i class="fas fa-trash"></i></button>
                                             </form>
                                         @endcan
                                     </td>
@@ -140,6 +140,21 @@
 
         </div>
 
+    </div>
+
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="px-6 py-4">
+                    <div class="text-lg">Brisanje interne provere</div>
+                    <div class="mt-4">Da li ste sigurni?</div>
+                </div>
+                <div class="px-6 py-4 bg-gray-100 text-right">
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </x-app-layout>
@@ -291,8 +306,17 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    document.getElementById('year').addEventListener('change',function(){
-        document.getElementById('formYear').action+='/'+this.value;
+    document.getElementById('year').addEventListener('change', function(){
+        document.getElementById('formYear').action += '/' + this.value;
     });
+
+    function confirmDeleteModal($id){
+        let id = $id;
+        $('#confirm-delete-modal').modal();
+        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+            let form = $('#delete-form-'+id);
+            form.submit();
+        });
+    }
 
 </script>

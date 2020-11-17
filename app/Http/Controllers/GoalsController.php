@@ -96,7 +96,7 @@ class GoalsController extends Controller
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
-        
+
 
         try{
             $goal->update($request->all());
@@ -124,6 +124,7 @@ class GoalsController extends Controller
         $this->authorize('delete', $goal);
 
         try{
+            $goal->notification()->delete();
             Goal::destroy($id);
             CustomLog::info('Cilj "'.$goal->goal.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Cilj je uspešno uklonjen');

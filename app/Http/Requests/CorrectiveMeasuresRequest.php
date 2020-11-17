@@ -64,7 +64,7 @@ class CorrectiveMeasuresRequest extends FormRequest
                 if($last->id == 1){
                     $counter = 2;
                 } else{
-                    $counter = $last->id - $c + 1;
+                    $counter = $last->id + 1;
                 }
             };
 
