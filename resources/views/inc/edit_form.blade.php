@@ -32,7 +32,7 @@
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			
+
 			@if(isset($category) && ($category == 'procedures' || $category == 'forms' || $category == 'manuals'))
 				<div class="mb-4">
 					<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">Izaberi sektor</label>
@@ -70,7 +70,7 @@
 		document.getElementById("name_file").addEventListener("change", function(e){
 			let file = document.getElementById('name_file').files[0];
 			if(file)
-				document.getElementById('old_document').textContent=file.name;
+				document.getElementById('old_document').textContent = file.name;
 		});
 	</script>
 

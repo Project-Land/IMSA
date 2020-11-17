@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GoalsRequest extends FormRequest
@@ -29,7 +30,7 @@ class GoalsRequest extends FormRequest
         elseif($this->isMethod('put')){
             return $this->updateRules();
         }
-        
+
     }
 
     public function createRules()
@@ -77,8 +78,8 @@ class GoalsRequest extends FormRequest
     {
         $this->merge([
             'standard_id' => session('standard'),
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
             'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
             'analysis' => $this->analysis != null ? $this->analysis : null
         ]);

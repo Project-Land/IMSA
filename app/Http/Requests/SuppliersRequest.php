@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SuppliersRequest extends FormRequest
 {
@@ -46,8 +47,8 @@ class SuppliersRequest extends FormRequest
         $deadlineDate = Carbon::parse(Carbon::now()->toDateTimeString())->addMonths(6);
         $this->merge([
             'standard_id' => session('standard'),
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
             'status' => $total >= 8.5 ? 1 : 0,
             'deadline_date' => $deadlineDate
         ]);

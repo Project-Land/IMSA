@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Sector;
 use App\Facades\CustomLog;
+use Illuminate\Support\Facades\Auth;
 
 class SectorObserver
 {
@@ -15,7 +16,7 @@ class SectorObserver
      */
     public function created(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" dodat, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
     }
 
     /**
@@ -26,13 +27,13 @@ class SectorObserver
      */
 
     public function creating(Sector $sector){
-        $sector->team_id = \Auth::user()->current_team_id;
-        $sector->user_id = \Auth::user()->id;
+        $sector->team_id = Auth::user()->current_team_id;
+        $sector->user_id = Auth::user()->id;
     }
 
     public function updated(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
     }
 
     /**
@@ -43,7 +44,7 @@ class SectorObserver
      */
     public function deleted(Sector $sector)
     {
-        CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+        CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
     }
 
     /**

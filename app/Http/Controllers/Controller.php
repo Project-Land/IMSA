@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Standard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -25,7 +26,7 @@ class Controller extends BaseController
 
     public static function getCompanyName()
     {
-        $company = \Auth::user()->currentTeam->name;
+        $company = Auth::user()->currentTeam->name;
         return $company;
     }
 }

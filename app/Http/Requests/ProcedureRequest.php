@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProcedureRequest extends FormRequest
@@ -73,8 +74,8 @@ class ProcedureRequest extends FormRequest
             $standardId = session('standard');
 
             $this->merge([
-                'user_id' => \Auth::user()->id,
-                'team_id' => \Auth::user()->current_team_id,
+                'user_id' => Auth::user()->id,
+                'team_id' => Auth::user()->current_team_id,
                 'standard_id' => (int)$standardId,
                 'doc_category' => 'procedure'
             ]);

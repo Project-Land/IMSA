@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\SystemProcess;
 use App\Models\Standard;
 use Illuminate\Database\Eloquent\Builder;
-use Exception;
 
 class SystemProcessesController extends Controller
 {
@@ -52,7 +52,7 @@ class SystemProcessesController extends Controller
         catch (Exception $e){
             return back()->with('status', 'Došlo je do greške, pokušajte ponovo.');
         }
-        
+
     }
 
     public function store(Request $request)

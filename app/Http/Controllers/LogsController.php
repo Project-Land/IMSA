@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -28,14 +29,14 @@ class LogsController extends Controller
             foreach($allLogs as $key => $log){
                 if(!empty($log)){
                     $result[$key] = explode(", ", substr(strstr($log, " "), 1));
-    
+
                     $logs[$key] = [
-                        'status' => \Str::after(strtok($result[$key][0], ":"), '.'),
+                        'status' => Str::after(strtok($result[$key][0], ":"), '.'),
                         'message' => substr(strstr($result[$key][0], ":"), 1),
                         'user' => $result[$key][1] . ', ' . $result[$key][2],
                         'time' => $result[$key][3]
                     ];
-    
+
                     if($logs[$key]['status'] == "WARNING"){
                         $logs[$key] += [
                             'error' => $result[$key][4]
@@ -43,7 +44,7 @@ class LogsController extends Controller
                     }
                 }
             }
-    
+
             return view('logs.index', compact('company', 'data', 'logs'));
         }
         else{

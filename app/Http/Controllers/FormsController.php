@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Document;
 use App\Models\Sector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use App\Http\Requests\FormsRequest;
 use App\Facades\CustomLog;
-use Exception;
 
 class FormsController extends Controller
 {
@@ -33,7 +34,7 @@ class FormsController extends Controller
         return view('documents.index',
             [
                 'documents' => $documents,
-                'folder' => \Str::snake($this::getCompanyName()).'/form',
+                'folder' => Str::snake($this::getCompanyName()).'/form',
                 'route_name' => 'forms',
                 'doc_type' => 'Obrasci'
             ]
@@ -56,7 +57,7 @@ class FormsController extends Controller
         return view('documents.deleted',
             [
                 'documents' => $documents,
-                'folder' => \Str::snake($this::getCompanyName()).'/form',
+                'folder' => Str::snake($this::getCompanyName()).'/form',
                 'route_name' => 'forms',
                 'doc_type' => 'Obrasci',
                 'back' => route('forms.index')
@@ -83,15 +84,15 @@ class FormsController extends Controller
     {
         $this->authorize('create', Document::class);
         $document = new Document();
-        $upload_path = \Str::snake($this::getCompanyName())."/form";
+        $upload_path = Str::snake($this::getCompanyName())."/form";
 
         try{
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/forms');
@@ -128,14 +129,14 @@ class FormsController extends Controller
 
         try{
             if($request->file){
-                $upload_path = \Str::snake($this::getCompanyName())."/form";
+                $upload_path = Str::snake($this::getCompanyName())."/form";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
             $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/forms');
@@ -148,10 +149,10 @@ class FormsController extends Controller
 
         try{
             Document::destroy($id);
-            CustomLog::info('Dokument Obrazac "'.$doc_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "'.$doc_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Obrazac "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Obrazac "'.$doc_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -160,17 +161,16 @@ class FormsController extends Controller
     {
         $document = Document::withTrashed()->findOrFail($id);
         $this->authorize('delete', $document);
-        $doc_name = $document->document_name;
 
-        $path = \Str::snake($this::getCompanyName())."/forms/".$document->file_name;
-        
+        $path = Str::snake($this::getCompanyName())."/forms/".$document->file_name;
+
         try{
             Storage::delete($path);
             $document->forceDelete();
-            CustomLog::info('Dokument Obrazac "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" trajno uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je trajno uklonjen');
         } catch(Exception $e) {
-            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Obrazac "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -182,10 +182,10 @@ class FormsController extends Controller
 
         try{
             $document->restore();
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" vraćen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" vraćen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno vraćen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Obrazac "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

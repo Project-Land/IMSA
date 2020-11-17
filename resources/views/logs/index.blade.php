@@ -102,7 +102,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    
+
                     </div>
 				</div>
 			</div>
@@ -133,7 +133,8 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+        "pageLength": 25
+    });
 
     function showError(id)
     {

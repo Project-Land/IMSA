@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TrainingRequest extends FormRequest
@@ -54,8 +55,8 @@ class TrainingRequest extends FormRequest
     {
         $this->merge([
             'standard_id' => session('standard'),
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
             'year' => date('Y', strtotime($this->training_date)),
             'training_date' => $this->training_date != null ? date('Y-m-d H:i:s', strtotime($this->training_date)) : null,
             'final_num_of_employees' => $this->final_num_of_employees != null ? $this->final_num_of_employees : null,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StakeholdersRequest extends FormRequest
@@ -44,8 +45,8 @@ class StakeholdersRequest extends FormRequest
     {
         $this->merge([
             'standard_id' => session('standard'),
-            'team_id' => \Auth::user()->current_team_id,
-            'user_id' => \Auth::user()->id
+            'team_id' => Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id
         ]);
     }
 }

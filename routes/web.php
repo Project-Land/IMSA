@@ -26,6 +26,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StandardsController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\SystemProcessesController;
+use Illuminate\Routing\ControllerMiddlewareOptions;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('rules-of-procedures-deleted', [RulesOfProceduresController::class, 'showDeleted'])->name('rules-of-procedures.deleted');
     Route::delete('rules-of-procedures-force-delete/{id}', [RulesOfProceduresController::class, 'forceDestroy'])->name('rules-of-procedures.force-destroy');
     Route::post('rules-of-procedures-restore/{id}', [RulesOfProceduresController::class, 'restore'])->name('rules-of-procedures.restore');
-    
+
     Route::resource('policies', PoliciesController::class);
     Route::get('policies-deleted', [PoliciesController::class, 'showDeleted'])->name('policies.deleted');
     Route::delete('policies-force-delete/{id}', [PoliciesController::class, 'forceDestroy'])->name('policies.force-destroy');
@@ -68,7 +69,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('forms-deleted', [FormsController::class, 'showDeleted'])->name('forms.deleted');
     Route::delete('forms-force-delete/{id}', [FormsController::class, 'forceDestroy'])->name('forms.force-destroy');
     Route::post('forms-restore/{id}', [FormsController::class, 'restore'])->name('forms.restore');
-    
+
     Route::resource('sectors', SectorsController::class);
 
     Route::resource('internal-check', InternalCheckController::class);
@@ -87,7 +88,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
 
     Route::resource('stakeholders', StakeholdersController::class);
-    
+
     Route::resource('suppliers', SuppliersController::class);
 
     Route::resource('trainings', TrainingsController::class);
@@ -127,5 +128,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
-    
+
 });

@@ -36,7 +36,7 @@ class MeasuringEquipmentsController extends Controller
     public function store(MeasuringEquipmentsRequest $request)
     {
         $this->authorize('create', MeasuringEquipment::class);
-      
+
         try{
             $me = MeasuringEquipment::create($request->all());
             $notification = Notification::create([
@@ -45,10 +45,10 @@ class MeasuringEquipmentsController extends Controller
                 'checkTime' => $me->next_calibration_date
             ]);
             $me->notification()->save($notification);
-            CustomLog::info('Merna oprema "'.$me->name.'" kreirana, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema "'.$me->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Merna oprema je uspešno kreirana!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja merne opreme, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja merne opreme, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         } finally{
             return redirect('/measuring-equipment');
@@ -78,10 +78,10 @@ class MeasuringEquipmentsController extends Controller
             $notification->message = 'Datum narednog etaloniranja/bandažiranja '. date('d.m.Y', strtotime($me->next_calibration_date));
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);
-            CustomLog::info('Merna oprema "'.$me->name.'" izmenjena, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema "'.$me->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Merna oprema je uspešno izmenjena!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/measuring-equipment');
@@ -91,14 +91,14 @@ class MeasuringEquipmentsController extends Controller
     {
         $me = MeasuringEquipment::findOrFail($id);
         $this->authorize('delete', $me);
-        
+
         try{
             $me->notification()->delete();
             $me->delete();
-            CustomLog::info('Merna oprema "'.$me->name.'" uklonjena, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema "'.$me->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Merna oprema je uspešno obrisana');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja merne opreme "'.$me->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja merne opreme "'.$me->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

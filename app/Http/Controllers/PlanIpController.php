@@ -54,13 +54,13 @@ class PlanIpController extends Controller
 
         try{
             $planIp->save();
-            CustomLog::info('Plan IP id: "'.$planIp->id.'" je sačuvan, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Plan IP id: "'.$planIp->id.'" je sačuvan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene plana IP id: '.$planIp->id.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene plana IP id: '.$planIp->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
-   
+
         return redirect('/internal-check')->with('status', 'Plan IP je izmenjen!');
     }
 
@@ -71,10 +71,10 @@ class PlanIpController extends Controller
 
         try{
             PlanIp::destroy($id);
-            CustomLog::info('Plan IP id-'.$plan_ip->id.' je uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Plan IP id-'.$plan_ip->id.' je uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Plan IP je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja plana IP id: '.$plan_ip->id.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja plana IP id: '.$plan_ip->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške, pokušajte ponovo');
         }
     }

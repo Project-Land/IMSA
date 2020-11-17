@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Document;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Facades\CustomLog;
 use App\Http\Requests\RulesOfProcedureRequest;
-use Exception;
 
 class RulesOfProceduresController extends Controller
 {
@@ -26,7 +27,7 @@ class RulesOfProceduresController extends Controller
         return view('documents.index',
             [
                 'documents' => $documents,
-                'folder' => \Str::snake($this::getCompanyName())."/rules_of_procedure",
+                'folder' => Str::snake($this::getCompanyName())."/rules_of_procedure",
                 'route_name' => 'rules-of-procedures',
                 'doc_type' => 'Poslovnik'
             ]
@@ -45,10 +46,10 @@ class RulesOfProceduresController extends Controller
                 ['team_id', Auth::user()->current_team_id],
             ])->get();
 
-        return view('documents.deleted', 
+        return view('documents.deleted',
             [
                 'documents' => $documents,
-                'folder' => \Str::snake($this::getCompanyName())."/rules_of_procedure",
+                'folder' => Str::snake($this::getCompanyName())."/rules_of_procedure",
                 'route_name' => 'rules-of-procedures',
                 'doc_type' => 'Poslovnik',
                 'back' => route('rules-of-procedures.index')
@@ -72,15 +73,15 @@ class RulesOfProceduresController extends Controller
     {
         $this->authorize('create', Document::class);
 
-        $upload_path = \Str::snake($this::getCompanyName())."/rules_of_procedure";
+        $upload_path = Str::snake($this::getCompanyName())."/rules_of_procedure";
 
         try{
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
             $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
-            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Poslovnik, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Poslovnik, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/rules-of-procedures');
@@ -114,14 +115,14 @@ class RulesOfProceduresController extends Controller
 
         try{
             if($request->file){
-                $upload_path = \Str::snake($this::getCompanyName())."/rules_of_procedure";
+                $upload_path = Str::snake($this::getCompanyName())."/rules_of_procedure";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
-            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Poslovnik'.$document->document_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Poslovnik'.$document->document_name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/rules-of-procedures');
@@ -131,13 +132,13 @@ class RulesOfProceduresController extends Controller
     {
         $this->authorize('delete', Document::find($id));
         $doc_name = Document::find($id)->document_name;
-        
+
         try{
             Document::destroy($id);
-            CustomLog::info('Dokument Poslovnik "'.$doc_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Poslovnik "'.$doc_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno uklonjen');
         } catch(Exception $e) {
-            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Poslovnik'.$doc_name.', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Poslovnik'.$doc_name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -146,17 +147,16 @@ class RulesOfProceduresController extends Controller
     {
         $document = Document::withTrashed()->findOrFail($id);
         $this->authorize('delete', $document);
-        $doc_name = $document->document_name;
 
-        $path = \Str::snake($this::getCompanyName())."/rules_of_procedure/".$document->file_name;
-        
+        $path = Str::snake($this::getCompanyName())."/rules_of_procedure/".$document->file_name;
+
         try{
             Storage::delete($path);
             $document->forceDelete();
-            CustomLog::info('Dokument Poslovnik "'.$doc_name.'" trajno uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" trajno uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je trajno uklonjen');
         } catch(Exception $e) {
-            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Poslovnik "'.$doc_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Poslovnik "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }
@@ -168,10 +168,10 @@ class RulesOfProceduresController extends Controller
 
         try{
             $document->restore();
-            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" vraćen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Poslovnik "'.$document->document_name.'" vraćen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Dokument je uspešno vraćen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Poslovnik "'.$document->document_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Poslovnik "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

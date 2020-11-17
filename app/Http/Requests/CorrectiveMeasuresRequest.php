@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Carbon\Carbon;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CorrectiveMeasuresRequest extends FormRequest
@@ -52,13 +52,13 @@ class CorrectiveMeasuresRequest extends FormRequest
         $counter = \App\Models\CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                     ->where([
                         ['standard_id', session('standard')],
-                        ['team_id', \Auth::user()->current_team_id]
+                        ['team_id', Auth::user()->current_team_id]
                     ])
                     ->count() + 1;
-        
+
         $this->merge([
-            'user_id' => \Auth::user()->id,
-            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
             'name' => "KKM ".Carbon::now()->year." / ".$counter,
             'noncompliance_cause_date' => Carbon::now(),
             'measure_date' => Carbon::now(),

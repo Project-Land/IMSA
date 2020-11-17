@@ -68,7 +68,8 @@
     <script>
       	document.getElementById("name_file").addEventListener("change", function(e){
         	let file = document.getElementById('name_file').files[0];
-        	if(file)document.getElementById('old_document').textContent=file.name;
+			if(file)
+				document.getElementById('old_document').textContent = file.name;
       	});
     </script>
 

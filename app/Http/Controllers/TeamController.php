@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\TeamStats;
 
@@ -12,7 +11,7 @@ class TeamController extends Controller
     {
         $this->authorize('viewAllTeams', Team::class);
         $teams = Team::with('standards')->get();
-        
+
         return view('teams.index', compact('teams'));
     }
 
@@ -21,5 +20,5 @@ class TeamController extends Controller
         $stats = TeamStats::where('team_id', $id)->with('team')->orderBy('check_date', 'desc')->get();
         return response()->json($stats);
     }
-    
+
 }

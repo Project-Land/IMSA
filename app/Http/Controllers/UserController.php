@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 use App\Models\User;
 use App\Models\Team;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Events\TeamMemberAdded;
-use Laravel\Jetstream\Jetstream;
 use App\Facades\CustomLog;
-use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,16 +20,16 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::where('current_team_id', \Auth::user()->current_team_id)->get();
+        $users = User::where('current_team_id', Auth::user()->current_team_id)->get();
         return view('users.index', compact('users'));
     }
 
     public function changeCurrentTeam($teamId)
     {
         $this->authorize('canChangeTeams', User::class);
-        $user = User::findOrFail(\Auth::user()->id);
+        $user = User::findOrFail(Auth::user()->id);
         $user->update(['current_team_id' => $teamId]);
-        
+
         session()->forget('standard');
         session()->forget('standard_name');
         return redirect('/');
@@ -67,8 +67,8 @@ class UserController extends Controller
             'password' => $this->passwordRules()
         ], $messages);
 
-        $teamID = \Auth::user()->current_team_id;
-        
+        $teamID = Auth::user()->current_team_id;
+
         try{
             $userID = User::create([
                 'name' => $request['name'],
@@ -87,10 +87,10 @@ class UserController extends Controller
             );
             TeamMemberAdded::dispatch($team, $newTeamMember);
 
-            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom: "'.$role.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom: "'.$role.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/users');
@@ -98,17 +98,17 @@ class UserController extends Controller
 
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     public function edit($id)
     {
-        //
+        abort(404);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        abort(404);
     }
 
     public function destroy($id)
@@ -119,10 +119,10 @@ class UserController extends Controller
         try{
             User::destroy($id);
             $user->teams()->detach();
-            CustomLog::info('Obrisan korisnički nalog "'.$user->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Obrisan korisnički nalog "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Korisnički nalog je uspešno obrisan');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

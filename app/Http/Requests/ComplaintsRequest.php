@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintsRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class ComplaintsRequest extends FormRequest
         elseif($this->isMethod('put')){
             return $this->updateRules();
         }
-        
+
     }
 
     public function createRules()
@@ -77,8 +78,8 @@ class ComplaintsRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => \Auth::user()->id,
-            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
             'standard_id' => session('standard'),
             'submission_date' => $this->submission_date != null ?  date('Y-m-d', strtotime($this->submission_date)) : null,
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,

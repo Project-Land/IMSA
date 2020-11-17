@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use \Carbon\Carbon;
+use Exception;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
-use App\Http\Requests\SuppliersRequest;
 use App\Models\Notification;
-use Exception;
+use App\Http\Requests\SuppliersRequest;
 
 class SuppliersController extends Controller
 {
@@ -48,11 +47,11 @@ class SuppliersController extends Controller
 
             $supplier->notification()->save($notification);
 
-            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" kreiran, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Odabrani isporučilac je uspešno sačuvan!');
         } catch(Exception $e){
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
-            CustomLog::warning('Neuspeli pokušaj kreiranja dobavljača, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja dobavljača, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
         }
 
         return redirect('/suppliers');
@@ -84,10 +83,10 @@ class SuppliersController extends Controller
             $notification->checkTime = $supplier->deadline_date;
             $supplier->notification()->save($notification);
 
-            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Odabrani isporučilac je uspešno izmenjen!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dobavljača "'.$supplier->supplier_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene dobavljača "'.$supplier->supplier_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo');
         }
         return redirect('/suppliers');
@@ -97,14 +96,14 @@ class SuppliersController extends Controller
     {
         $this->authorize('delete', Supplier::find($id));
         $supplier = Supplier::findOrFail($id);
-        
+
         try{
             $supplier->notification()->delete();
             Supplier::destroy($id);
-            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen, '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s'), \Auth::user()->currentTeam->name);
+            CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Odabrani isporučilac je uspešno uklonjen');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja dobavljača "'.$supplier->supplier_name.'", '.\Auth::user()->name.', '.\Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja dobavljača "'.$supplier->supplier_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

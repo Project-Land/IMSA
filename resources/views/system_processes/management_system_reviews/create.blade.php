@@ -53,7 +53,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="customer_satisfaction" class="block text-gray-700 text-sm font-bold mb-2">Zadovoljstvo korisnika:</label>
+				<label for="customer_satisfaction" class="block text-gray-700 text-sm font-bold mb-2">Zadovoljstvo korisnika i povratne informacije zainteresovanih strana:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customer_satisfaction" name="customer_satisfaction">{{ old('customer_satisfaction') }}</textarea>
 				@error('customer_satisfaction')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -71,9 +71,8 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="checks_results_desc" class="block text-gray-700 text-sm font-bold mb-2">Dodatni opis rezultata internih provera:</label>
+				<label for="checks_results_desc" class="block text-gray-700 text-sm font-bold mb-2">Rezultati eksternih provera:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checks_results_desc" name="checks_results_desc">{{ old('checks_results_desc') }}</textarea>
-				<span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
 				@error('checks_results_desc')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -115,7 +114,7 @@
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-            
+
 			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>

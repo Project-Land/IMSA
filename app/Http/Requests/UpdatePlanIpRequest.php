@@ -53,5 +53,4 @@ class UpdatePlanIpRequest extends FormRequest
         ];
     }
 
-    
 }

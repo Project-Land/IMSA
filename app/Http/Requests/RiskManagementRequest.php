@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RiskManagementRequest extends FormRequest
@@ -62,8 +63,8 @@ class RiskManagementRequest extends FormRequest
 
         $this->merge([
             'standard_id' => $standardId,
-            'user_id' => \Auth::user()->id,
-            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
             'total' => $total
         ]);
     }

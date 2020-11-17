@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class FormsRequest extends FormRequest
@@ -69,13 +70,13 @@ class FormsRequest extends FormRequest
         if($this->file){
             $this->merge([ 'file_name' => 'form_'.time().'.'.$this->file->getClientOriginalExtension() ]);
         }
-        
+
         if($this->isMethod('post')){
             $standardId = session('standard');
 
             $this->merge([
-                'user_id' => \Auth::user()->id,
-                'team_id' => \Auth::user()->current_team_id,
+                'user_id' => Auth::user()->id,
+                'team_id' => Auth::user()->current_team_id,
                 'standard_id' => (int)$standardId,
                 'doc_category' => 'form'
             ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ManagementSystemReviewRequest extends FormRequest
@@ -40,7 +41,8 @@ class ManagementSystemReviewRequest extends FormRequest
             'internal_external_changes' => 'required',
             'monitoring_measurement_results' => 'required',
             'customer_satisfaction' => 'required',
-            'resource_adequacy' => 'required'
+            'resource_adequacy' => 'required',
+            'checks_results_desc' => 'required'
         ];
     }
 
@@ -52,7 +54,8 @@ class ManagementSystemReviewRequest extends FormRequest
             'internal_external_changes' => 'required',
             'monitoring_measurement_results' => 'required',
             'customer_satisfaction' => 'required',
-            'resource_adequacy' => 'required'
+            'resource_adequacy' => 'required',
+            'checks_results_desc' => 'required'
         ];
     }
 
@@ -65,7 +68,8 @@ class ManagementSystemReviewRequest extends FormRequest
             'internal_external_changes.required' => 'Unesite promene',
             'customer_satisfaction.required' => 'Unesite zadovoljstvo klijenata',
             'monitoring_measurement_results.required' => 'Unesite rezultate praćenja merenja',
-            'resource_adequacy.required' => 'Unesite adekvatnost resursa'
+            'resource_adequacy.required' => 'Unesite adekvatnost resursa',
+            'checks_results_desc.required' => ' Unesite rezultate eksternih provera'
         ];
     }
 
@@ -74,8 +78,8 @@ class ManagementSystemReviewRequest extends FormRequest
         $standardId = session('standard');
 
         $this->merge([
-            'user_id' => \Auth::user()->id,
-            'team_id' => \Auth::user()->current_team_id,
+            'user_id' => Auth::user()->id,
+            'team_id' => Auth::user()->current_team_id,
             'standard_id' => (int)$standardId,
             'objectives_scope' => \App\Models\Goal::getStats($standardId, $this->year),
             'inconsistancies_corrective_measures' => \App\Models\CorrectiveMeasure::getStats($standardId, $this->year),
