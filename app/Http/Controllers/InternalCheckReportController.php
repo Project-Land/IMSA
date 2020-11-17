@@ -70,7 +70,7 @@ class InternalCheckReportController extends Controller
                 $count = 1;
                 $standard = Standard::where('name', $request->standard)->get()[0];
                 $report = InternalCheckReport::create($validatedData);
-
+                if(isset($correctiveMeasureData['noncompliance_description'])){
                 foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
                     $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                     ->where([
@@ -102,6 +102,7 @@ class InternalCheckReportController extends Controller
                     $correctiveMeasure->standard()->associate($standard);
                     $count++;
                 }
+            }
 
                 foreach( $recommendationData as $rec){
                     if($rec === "")continue;
