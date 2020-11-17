@@ -57,10 +57,13 @@ class SuppliersController extends Controller
         return redirect('/suppliers');
     }
 
-    public function show($id)
+    public function show(int $id)
     {
-        $supplier = Supplier::findOrFail($id);
-        abort(404);
+        if(!request()->expectsJson()){
+            abort(404);
+        }
+
+        return response()->json(Supplier::findOrFail($id));
     }
 
     public function edit($id)

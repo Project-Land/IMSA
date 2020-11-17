@@ -49,17 +49,33 @@ class CorrectiveMeasuresRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $counter = \App\Models\CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
-                    ->where([
-                        ['standard_id', session('standard')],
-                        ['team_id', Auth::user()->current_team_id]
-                    ])
-                    ->count() + 1;
+        if($this->isMethod('post')){
+            $c = \App\Models\CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
+            ->where([
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id]
+            ])->count();
+
+            $last = \App\Models\CorrectiveMeasure::latest()->first();
+
+            if(!$last){
+                $counter = 1;
+            } else{
+                if($last->id == 1){
+                    $counter = 2;
+                } else{
+                    $counter = $last->id - $c + 1;
+                }
+            };
+
+            $this->merge([
+                'name' => "QMS KKM ".Carbon::now()->year." / ".$counter,
+            ]);
+        }
 
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
-            'name' => "QMS KKM ".Carbon::now()->year." / ".$counter,
             'noncompliance_cause_date' => Carbon::now(),
             'measure_date' => Carbon::now(),
             'measure_approval_reason' => $this->measure_approval_reason != '' ? $this->measure_approval_reason : null,

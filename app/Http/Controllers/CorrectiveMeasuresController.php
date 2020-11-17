@@ -111,7 +111,7 @@ class CorrectiveMeasuresController extends Controller
             CustomLog::info('Neusaglašenost "'.$correctiveMeasure->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Neusaglašenost / korektivna mera je uspešno obrisana');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja neusaglašenosti "'.$correctiveMeasure->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), \Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja neusaglašenosti "'.$correctiveMeasure->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
         }
     }

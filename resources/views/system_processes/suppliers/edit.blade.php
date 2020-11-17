@@ -16,7 +16,7 @@
 		<form action="{{ route('suppliers.update', $supplier->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
-			
+
             <div class="mb-4">
 				<label for="supplier_name" class="block text-gray-700 text-sm font-bold mb-2">Naziv isporučioca:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="supplier_name" name="supplier_name" value="{{ $supplier->supplier_name }}" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
@@ -34,25 +34,28 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="personal_info" class="block text-gray-700 text-sm font-bold mb-2">Ime:</label>
+				<label for="personal_info" class="block text-gray-700 text-sm font-bold mb-2">Ime i prezime kontakt osobe kod isporučioca:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="personal_info" name="personal_info" value="{{ $supplier->personal_info }}" >
-				@error('personal_info')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('personal_info')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="mb-4">
-				<label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Broj telefona:</label>
+				<label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Broj telefona kontakt osobe kod isporučioca:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone_number" name="phone_number" value="{{ $supplier->phone_number }}">
-				@error('phone_number')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('phone_number')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="mb-4">
-				<label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+				<label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email kontakt osobe kod isporučioca:</label>
 				<input type="email" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" value="{{ $supplier->email }}">
-				@error('email')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('email')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>

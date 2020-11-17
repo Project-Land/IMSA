@@ -33,25 +33,28 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="personal_info" class="block text-gray-700 text-sm font-bold mb-2">Ime:</label>
+				<label for="personal_info" class="block text-gray-700 text-sm font-bold mb-2">Ime i prezime kontakt osobe kod isporučioca:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="personal_info" name="personal_info" value="{{ old('personal_info') }}">
-				@error('personal_info')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('personal_info')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="mb-4">
-				<label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Broj telefona:</label>
+				<label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Broj telefona kontakt osobe kod isporučioca:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone_number" name="phone_number" value="{{ old('phone_number') }}">
-				@error('phone_number')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('phone_number')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 
 			<div class="mb-4">
-				<label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+				<label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email kontakt osobe kod isporučioca:</label>
 				<input type="email" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" value="{{ old('email') }}">
-				@error('email')
+                <span class="text-xs text-gray-400 font-italic">Polje nije obavezno</span>
+                @error('email')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
@@ -82,7 +85,7 @@
 					@endfor
 				</select>
 			</div>
-            
+
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
