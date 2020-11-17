@@ -49,7 +49,7 @@
                                 <select id="year" class="form-control w-25">
                                     @foreach(range(date("Y")-1, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
-                                        @else 
+                                        @else
                                         {{ date('Y') == $year ? "selected" : "" }}
                                         @endif
                                         >{{ $year }}</option>
@@ -86,11 +86,11 @@
                                     <td class="text-center">
                                         @if(!isset($check->planIp->checked_date))
                                             {{''}}
-                                            @can('update', $check)   
+                                            @can('update', $check)
                                                 <a data-toggle="tooltip" data-placement="top" title="Kreirajte plan interne provere" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
                                             @endcan
                                         @else
-                                            <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span> 
+                                            <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span>
                                             @can('update', $check)
                                                 <a data-toggle="tooltip" data-placement="top" title="Izmena plana interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                             @endcan
@@ -129,14 +129,14 @@
                                             </form>
                                         @endcan
                                     </td>
-                                </tr> 
-                                @empty  
+                                </tr>
+                                @empty
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -179,11 +179,11 @@
         	"orderable": false,
         }],
 		"order": [[ 1, "desc" ]]
-    }); 
+    });
 
     const planIpShow = document.getElementById('planIp.show');
     const reportShow = document.getElementById('report.show');
-    
+
     const planIpShowAjax = function(){
         const urlIp = this.dataset.url;
         if (typeof modal !== 'undefined') modal.remove();
@@ -286,11 +286,11 @@
     }
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     document.getElementById('year').addEventListener('change',function(){
         document.getElementById('formYear').action+='/'+this.value;
     });
-   
+
 </script>

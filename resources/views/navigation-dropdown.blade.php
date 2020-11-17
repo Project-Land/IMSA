@@ -1,5 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    
+
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 mt-2">
@@ -19,9 +19,9 @@
                     <x-jet-dropdown>
                         <x-slot name="trigger">
                             <button type="button" class="hover:no-underline hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['/','standards*'])) {{'border-bottom:3px solid gray'}} @endif" >Standardi</a>
-                        </x-slot> 
+                        </x-slot>
 
-                        <div class="dropdown-menu"> 
+                        <div class="dropdown-menu">
                             <x-slot name="content">
                                 @foreach($standards as $standard)
                                     <a class="hover:no-underline block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/standards/'.$standard->id) }}">{{$standard->name}}</a>
@@ -29,11 +29,11 @@
                             </x-slot>
                         </div>
                     </x-jet-dropdown>
-               
+
                     <x-jet-dropdown>
                         <x-slot name="trigger">
                             <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">Dokumentacija</button>
-                        </x-slot> 
+                        </x-slot>
 
                         <div class="dropdown-menu">
                             <x-slot name="content">
@@ -41,7 +41,7 @@
                                 <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/policies') }}">Politike</a>
                                 <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">Procedure</a>
                                 <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">Uputstva</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">Obrasci</a>          
+                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">Obrasci</a>
                             </x-slot>
                         </div>
                     </x-jet-dropdown>
@@ -59,7 +59,7 @@
                                 @else
                                     @foreach($system_processes as $sp)
                                         <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset($sp->route) }}">{{ $sp->name }}</a>
-                                    @endforeach   
+                                    @endforeach
                                 @endempty
                             </x-slot>
                         </div>
@@ -75,8 +75,8 @@
                                 <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors') }}">Lista sektora</a>
                                 @can('create', App\Models\Sector::class)
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors/create') }}">Dodaj sektor</a>
-                                @endcan    
-                            </x-slot> 
+                                @endcan
+                            </x-slot>
                         </div>
                     </x-jet-dropdown>
 
@@ -171,7 +171,7 @@
                                 {{ __('Trenutna firma') }}
                             </div>
                             <p class="block px-4 text-sm text-gray-800">{{ Auth::user()->currentTeam->name }}</p>
-                            
+
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Upravljanje nalogom') }}
@@ -188,7 +188,7 @@
                             @endif
 
                             <div class="border-t border-gray-100"></div>
-                            
+
                             <!-- Team Management -->
                             @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
                                 <div class="block px-4 py-2 text-xs text-gray-400">
@@ -267,10 +267,10 @@
                         </x-slot>
 
                     </x-jet-dropdown>
-                    
+
                 </div>
 
-            </div>  
+            </div>
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -307,7 +307,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div @click.away="open = false" class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -337,11 +337,11 @@
                         @else
                             @foreach($system_processes as $sp)
                                 <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset($sp->route) }}">{{ $sp->name }}</a>
-                            @endforeach   
+                            @endforeach
                         @endempty
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div @click.away="open = false" class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex flex-row items-center w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -354,7 +354,7 @@
                         @can('create', App\Models\Sector::class) <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/sectors/create') }}">Dodaj Sektor</a> @endcan
                     </div>
                 </div>
-            </div> 
+            </div>
 
         </div>
 
@@ -428,11 +428,11 @@
                     <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                         {{ __('Lista korisnika') }}
                     </x-jet-responsive-nav-link>
-    
+
                     <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
                         {{ __('Kreiraj novog korisnika') }}
                     </x-jet-responsive-nav-link>
-    
+
                     <div class="border-t border-gray-100"></div>
                 @endif
 
@@ -445,7 +445,7 @@
                     <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" :active="request()->routeIs('system-processes.add-to-standard')">
                         {{ __('Dodavanje procesa za standard') }}
                     </x-jet-responsive-nav-link>
-    
+
                     <div class="border-t border-gray-100"></div>
                 @endif
 

@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{session('standard_name')}} - {{ __('Neusaglašenosti i korektivne mere') }} 
+            {{session('standard_name')}} - {{ __('Neusaglašenosti i korektivne mere') }}
         </h2>
     </x-slot>
 
@@ -68,13 +68,13 @@
                                         </form>
                                         @endcanany
                                     </td>
-                                </tr>   
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -103,7 +103,7 @@
             "orderable": false,
         }],
         "order": [[ 2, "desc" ]]
-    }); 
+    });
 
     function showMeasure(id){
         axios.get('/corrective-measures/'+id)
@@ -118,7 +118,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row">
+                                            <div class="row text-sm">
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Datum kreiranja</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Sistem menadžment</p></div>
@@ -144,7 +144,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>
@@ -158,6 +158,6 @@
     }
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

@@ -76,13 +76,13 @@
                                         </form>
                                         @endcanany
                                     </td>
-                                </tr>   
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -110,7 +110,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+    });
 
     function showMSR(id){
         axios.get('/management-system-reviews/'+id)
@@ -125,14 +125,14 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row">
+                                            <div class="row text-sm">
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Učestvovali u preispitivanju</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.participants }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Status mera iz prethodnog preispitivanja</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_status }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.internal_external_changes }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Zadovoljstvo korisnika</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Zadovoljstvo korisnika i povratne informacije zainteresovanih strana</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.customer_satisfaction }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Obim ispunjenosti ciljeva</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.objectives_scope }</p></div>
@@ -142,8 +142,8 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.monitoring_measurement_results }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati internih provera</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati internih provera - dodatne informacije</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc ? response.data.checks_results_desc : "/" }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati eksternih provera</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Performanske eksternih isporučilaca</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.external_suppliers_performance }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Adekvatnost resursa</p></div>
@@ -179,12 +179,12 @@
             }
         });
         let url = "/management-system-reviews/delete/"+id;
-        
+
         if(confirm('Da li ste sigurni?')){
             $.ajax({
                 type: "delete",
                 url: url,
-                data: { 
+                data: {
                     id: id
                 },
                 success: function(result) {
@@ -229,7 +229,7 @@
     });
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 </script>
