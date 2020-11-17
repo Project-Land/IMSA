@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Neusaglašenosti i korektivne mere') }} - {{ __('Kreiranje') }} 
+            {{ session('standard_name') }} - {{ __('Neusaglašenosti i korektivne mere') }} - {{ __('Kreiranje') }}
         </h2>
     </x-slot>
 
@@ -105,7 +105,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+				<label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Da li je mera sprovedena?</label>
 				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
 					<option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >NE</option>
 					<option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >DA</option>
@@ -120,7 +120,7 @@
 					<option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
 				</select>
 			</div>
-			
+
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
 		</form>
     </div>
@@ -128,7 +128,7 @@
 </x-app-layout>
 
 <script>
-	
+
 	$('#measure_approval').change( () => {
 		if($('#measure_approval').val() == 0){
 			$('#measure_reason_field').css('display', '');

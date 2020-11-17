@@ -59,7 +59,7 @@ class CorrectiveMeasuresRequest extends FormRequest
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
-            'name' => "KKM ".Carbon::now()->year." / ".$counter,
+            'name' => "QMS KKM ".Carbon::now()->year." / ".$counter,
             'noncompliance_cause_date' => Carbon::now(),
             'measure_date' => Carbon::now(),
             'measure_approval_reason' => $this->measure_approval_reason != '' ? $this->measure_approval_reason : null,

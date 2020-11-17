@@ -106,6 +106,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-    }); 
+        "pageLength": 25
+    });
 
 </script>
