@@ -82,6 +82,10 @@ class SuppliersController extends Controller
             $supplier->update($request->all());
 
             $notification = $supplier->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
             $notification->message = 'Preispitivanje isporučilaca za '.date('d.m.Y', strtotime($supplier->deadline_date));
             $notification->checkTime = $supplier->deadline_date;
             $supplier->notification()->save($notification);

@@ -96,11 +96,15 @@ class GoalsController extends Controller
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
+        
 
         try{
             $goal->update($request->all());
-
             $notification = $goal->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
             $notification->message = 'Analiza cilja za '.date('d.m.Y', strtotime($request->deadline));
             $notification->checkTime = $goal->deadline;
             $goal->notification()->save($notification);

@@ -75,6 +75,10 @@ class MeasuringEquipmentsController extends Controller
         try{
             $me->update($request->all());
             $notification = $me->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
             $notification->message = 'Datum narednog etaloniranja/bandažiranja '. date('d.m.Y', strtotime($me->next_calibration_date));
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);

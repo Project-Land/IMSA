@@ -54,7 +54,7 @@
                             <tbody>
                                 @foreach($suppliers as $s)
                                 <tr id="trsupplier{{$s->id}}"><a id="supplier{{$s->id}}"></a>
-                                    <td class="text-center">{{ $s->supplier_name }}</td>
+                                    <td id='tdsupplier{{$s->id}}' class="text-center">{{ $s->supplier_name }}</td>
                                     <td class="text-center">{{ $s->subject }}</td>
                                     <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>
@@ -132,7 +132,9 @@
     let href = window.location.href;
     id = href.split('#')[1];
     if(id){
-        let e = document.getElementById('tr'+id);
+        let e= document.getElementById('tr'+id);
+        let i = document.getElementById('td' + id);
+        i.innerHTML='<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
         e.style="background:#d8ffcc;";
     }
 

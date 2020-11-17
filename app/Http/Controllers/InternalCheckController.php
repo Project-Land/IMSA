@@ -170,6 +170,10 @@ class InternalCheckController extends Controller
         try{
             $internal_check->update($validatedData);
             $notification = $internal_check->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
             $notification->message = 'Interna provera za '.date('d.m.Y', strtotime($request->date));
             $notification->checkTime = $internal_check->date;
             $internal_check->notification()->save($notification);

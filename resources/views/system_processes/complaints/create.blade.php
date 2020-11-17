@@ -71,7 +71,7 @@
 
 				<div class="mb-4">
 					<label for="responsible_person" class="block text-gray-700 text-sm font-bold mb-2">Lice odgovorno za rešavanje reklamacije:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ old('responsible_person') }}">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ old('responsible_person') }}" oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					@error('responsible_person')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -79,7 +79,7 @@
 
 				<div class="mb-4">
 					<label for="way_of_solving" class="block text-gray-700 text-sm font-bold mb-2">Način rešavanja reklamacije</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ old('way_of_solving') }}">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ old('way_of_solving') }}" oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					@error('way_of_solving')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -133,12 +133,16 @@
 	$('#accepted').change( () => {
 		if($('#accepted').val() == 1){
 			$('#complaint_accepted').removeClass('d-none');
+			$('#responsible_person').attr('required', true);
+			$('#way_of_solving').attr('required', true);
 		}
 		else{
 			$('#complaint_accepted').addClass('d-none');
 			$('#deadline_date').val('');
 			$('#responsible_person').val('');
 			$('#way_of_solving').val('');
+			$('#responsible_person').attr('required', false);
+			$('#way_of_solving').attr('required', false);
 		}
 	})
 

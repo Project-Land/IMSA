@@ -53,7 +53,7 @@
                             <tbody>
                                 @foreach($measuring_equipment as $me)
                                 <tr id='trmeasuringequipment{{$me->id}}'><a id='measuringequipment{{$me->id}}'></a>
-                                    <td class="text-center">{{ $me->label }}</td>
+                                    <td id='tdmeasuringequipment{{$me->id}}' class="text-center">{{ $me->label }}</td>
                                     <td class="text-center">{{ $me->name }}</td>
                                     <td class="text-center">@if($me->last_calibration_date){{ date('d.m.Y', strtotime($me->last_calibration_date)) }}@else {{"/"}}@endif</td>
                                     <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
@@ -133,6 +133,8 @@
 	id = href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
+        let i = document.getElementById('td' + id);
+        i.innerHTML='<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
 		e.style = "background:#d8ffcc;";
     }
 

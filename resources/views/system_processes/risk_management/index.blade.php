@@ -45,7 +45,7 @@
                                 <tr class="text-center">
                                     <th>Opis rizika / prilike</th>
                                     <th>Verovatnoća</th>
-                                    <th>Učestalost</th>
+                                    <th>Posledice</th>
                                     <th>Ukupno</th>
                                     <th>Prihvatljivo</th>
                                     <th>Mera</th>
