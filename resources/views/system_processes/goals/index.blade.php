@@ -71,7 +71,7 @@
                             <tbody id="table-body">
                             @foreach($goals as $goal)
                                 <tr id='trgoal{{$goal->id}}'><a id='goal{{$goal->id}}'></a>
-                                    <td class="text-center">{{ $goal->year }}</td>
+                                    <td id='tdgoal{{$goal->id}}' class="text-center">{{ $goal->year }}</td>
                                     <td class="text-center">{{ $goal->goal }}</td>
                                     <td class="text-center">{{ $goal->kpi }}</td>
                                     <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
@@ -117,6 +117,8 @@ var myRe = /\bgoals\b/g;
 	id=href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
+        let i = document.getElementById('td' + id);
+        i.innerHTML='<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
 		e.style = "background:#d8ffcc;";
 	}
 

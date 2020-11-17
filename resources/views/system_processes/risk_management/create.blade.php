@@ -34,7 +34,7 @@
             </div>
             
             <div class="mb-4">
-				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">Učestalost:</label>
+				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">Posledice:</label>
                 <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>

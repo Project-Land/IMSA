@@ -79,7 +79,7 @@
                             <tbody id="table-body">
                                 @forelse($internal_checks as $check)
                                 <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
-                                    <td class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
+                                    <td id='tdinternalcheck{{$check->id}}' class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
                                     <td class="text-center">{{ $check->sector->name }}</td>
                                     <td class="text-center">{{$check->leaders}}</td>
                                     <td class="text-center">{{ $check->standard->name }}</td>
@@ -156,6 +156,8 @@
 	id = href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
+        let i = document.getElementById('td' + id);
+        i.innerHTML='<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
 		e.style = "background:#d8ffcc;";
 	}
 
