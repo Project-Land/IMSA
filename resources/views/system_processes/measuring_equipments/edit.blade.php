@@ -18,7 +18,7 @@
 
 			<div class="mb-4">
 				<label for="label" class="block text-gray-700 text-sm font-bold mb-2">Oznaka merne opreme:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="label" name="label" value="{{ $measuring_equipment->label }}" autofocus>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="label" name="label" value="{{ $measuring_equipment->label }}" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('label')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -26,7 +26,7 @@
 
 			<div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">Naziv merne opreme:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ $measuring_equipment->name }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ $measuring_equipment->name }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror

@@ -19,7 +19,7 @@
 
             <div class="mb-4">
                 <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Termin provere</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}">
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}" required oninvalid="this.setCustomValidity('Izaberite termin')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('date')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
@@ -27,7 +27,7 @@
 
             <div class="mb-4">
                 <label for="sector" class="block text-gray-700 text-sm font-bold mb-2">Područje promene</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector" name="sector_id">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector" name="sector_id" required oninvalid="this.setCustomValidity('Izaberite sektor')" oninput="this.setCustomValidity('')">
                     @foreach($sectors as $sector)
                         <option value="{{$sector->id}}">{{$sector->name}}</option>
                     @endforeach
@@ -39,7 +39,7 @@
 
             <div class="mb-4">
                 <label for="leaders" class="block text-gray-700 text-sm font-bold mb-2">Vođe tima</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders" required oninvalid="this.setCustomValidity('Izaberite proveravače')" oninput="this.setCustomValidity('')">
                     @foreach($teamLeaders as $teamLeader)
                         <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
                     @endforeach
@@ -51,7 +51,7 @@
 
             <div class="mb-4">
                 <label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">Standard</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="standard_id" name="standard_id">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="standard_id" name="standard_id" required oninvalid="this.setCustomValidity('Izaberite standard')" oninput="this.setCustomValidity('')">
                     <option value="{{ $internalCheck->standard_id }}" selected>{{ $internalCheck->standard->name }}</option>
                 </select>
                 @error('standard_id')

@@ -19,7 +19,7 @@
 
 			<div class="mb-4">
 				<label for="year" class="block text-gray-700 text-sm font-bold mb-2">Godina:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="year" id="year">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="year" id="year" required oninvalid="this.setCustomValidity('Izaberite godinu')" oninput="this.setCustomValidity('')">
 					@foreach(range(date('Y')-1, date('Y')+10) as $year)
 						<option value="{{ $year }}" {{ $year == $msr->year ? "selected" : "" }}>{{ $year }}</option>
 					@endforeach
@@ -28,7 +28,7 @@
 
 			<div class="mb-4">
 				<label for="participants" class="block text-gray-700 text-sm font-bold mb-2">Učestvovali u preispitivanju:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="participants" name="participants">{{ $msr->participants }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="participants" name="participants" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->participants }}</textarea>
 				@error('participants')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -36,7 +36,7 @@
 
 			<div class="mb-4">
 				<label for="measures_status" class="block text-gray-700 text-sm font-bold mb-2">Status mera iz prethodnog preispitivanja:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measures_status" name="measures_status">{{ $msr->measures_status }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measures_status" name="measures_status" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->measures_status }}</textarea>
 				@error('measures_status')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -44,7 +44,7 @@
 
 			<div class="mb-4">
 				<label for="internal_external_changes" class="block text-gray-700 text-sm font-bold mb-2">Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="internal_external_changes" name="internal_external_changes">{{ $msr->internal_external_changes }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="internal_external_changes" name="internal_external_changes" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->internal_external_changes }}</textarea>
 				@error('internal_external_changes')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -52,7 +52,7 @@
 
 			<div class="mb-4">
 				<label for="customer_satisfaction" class="block text-gray-700 text-sm font-bold mb-2">Zadovoljstvo korisnika i povratne informacije zainteresovanih strana:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customer_satisfaction" name="customer_satisfaction">{{ $msr->customer_satisfaction }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customer_satisfaction" name="customer_satisfaction" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->customer_satisfaction }}</textarea>
 				@error('customer_satisfaction')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -62,7 +62,7 @@
 
 			<div class="mb-4">
 				<label for="monitoring_measurement_results" class="block text-gray-700 text-sm font-bold mb-2">Rezultati praćenja i merenja:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="monitoring_measurement_results" name="monitoring_measurement_results">{{ $msr->monitoring_measurement_results }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="monitoring_measurement_results" name="monitoring_measurement_results" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->monitoring_measurement_results }}</textarea>
 				@error('monitoring_measurement_results')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -70,7 +70,7 @@
 
 			<div class="mb-4">
 				<label for="checks_results_desc" class="block text-gray-700 text-sm font-bold mb-2">Rezultati eksternih provera:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checks_results_desc" name="checks_results_desc">{{ $msr->checks_results_desc }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checks_results_desc" name="checks_results_desc" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->checks_results_desc }}</textarea>
 				@error('checks_results_desc')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -78,7 +78,7 @@
 
 			<div class="mb-4">
 				<label for="resource_adequacy" class="block text-gray-700 text-sm font-bold mb-2">Adekvatnost resursa:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resource_adequacy" name="resource_adequacy">{{ $msr->resource_adequacy }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resource_adequacy" name="resource_adequacy" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $msr->resource_adequacy }}</textarea>
 				@error('resource_adequacy')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror

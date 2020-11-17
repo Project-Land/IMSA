@@ -18,14 +18,14 @@
             @method('PUT')
 			<div class="form-group">
 				<label for="description">Opis:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus>{{ $risk->description }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ $risk->description }}</textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
 			<div class="form-group">
 				<label for="probability">Verovatnoća:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->probability) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
@@ -33,7 +33,7 @@
 			</div>
             <div class="form-group">
 				<label for="frequency">Učestalost:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->frequency) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor
@@ -45,7 +45,7 @@
 			</div>
             <div class="form-group">
 				<label for="acceptable">Prihvatljivo:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}" {{ ($i == $risk->acceptable) ? 'selected' : '' }} >{{ $i }}</option>
                     @endfor

@@ -18,7 +18,7 @@
 
 			<div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">Naziv / Ime:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -26,7 +26,7 @@
 
 			<div class="mb-4">
 				<label for="expectation" class="block text-gray-700 text-sm font-bold mb-2">Potrebe i očekivanja zainteresovane strane:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="expectation" name="expectation">{{ old('expectation') }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="expectation" name="expectation" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ old('expectation') }}</textarea>
 				@error('expectation')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -34,7 +34,7 @@
 
 			<div class="mb-4">
 				<label for="response" class="block text-gray-700 text-sm font-bold mb-2">Odgovor preduzeća na potrebe i očekivanja:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="response" name="response">{{ old('response') }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="response" name="response" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ old('response') }}</textarea>
 				@error('response')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror

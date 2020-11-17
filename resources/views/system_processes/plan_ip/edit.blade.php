@@ -36,7 +36,7 @@
         
             <div class="mb-4">
                 <label for="check_start" class="block text-gray-700 text-sm font-bold mb-2">Početak provere</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx xx:xx" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif" autocomplete="off">
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx xx:xx" id="check_start" name="check_start" value="@if($planIp->check_start){{ date('d.m.Y H:i', strtotime($planIp->check_start))  }} @endif" autocomplete="off" required oninvalid="this.setCustomValidity('Izaberite termin')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('check_start')
                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
@@ -44,7 +44,7 @@
 
             <div class="mb-4">
                 <label for="check_end" class="block text-gray-700 text-sm font-bold mb-2">Završetak provere</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx xx:xx" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif" autocomplete="off">
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx xx:xx" id="check_end" name="check_end" value="@if($planIp->check_end) {{ date('d.m.Y H:i', strtotime($planIp->check_end)) }} @endif" autocomplete="off" required oninvalid="this.setCustomValidity('Izaberite termin')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('check_end')
                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
@@ -52,7 +52,7 @@
 
             <div class="mb-4">
                 <label for="report_deadline" class="block text-gray-700 text-sm font-bold mb-2">Rok za dostavljanje izveštaja</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif" autocomplete="off">
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" id="report_deadline" name="report_deadline" value="@if($planIp->report_deadline) {{ date('d.m.Y', strtotime($planIp->report_deadline)) }} @endif" autocomplete="off" required oninvalid="this.setCustomValidity('Izaberite termin')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('report_deadline')
                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror

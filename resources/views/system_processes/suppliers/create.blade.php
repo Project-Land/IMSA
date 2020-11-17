@@ -18,7 +18,7 @@
 
 			<div class="mb-4">
 				<label for="supplier_name" class="block text-gray-700 text-sm font-bold mb-2">Naziv isporučioca:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" autofocus>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="supplier_name" name="supplier_name" value="{{ old('supplier_name') }}" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('supplier_name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -26,7 +26,7 @@
 
 			<div class="mb-4">
 				<label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Predmet nabavke:</label>
-                <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subject" name="subject">{{ old('subject') }}</textarea>
+                <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subject" name="subject" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ old('subject') }}</textarea>
 				@error('subject')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -58,7 +58,7 @@
 
 			<div class="mb-4">
 				<label for="quality" class="block text-gray-700 text-sm font-bold mb-2">Kvalitet:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="quality" id="quality">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="quality" id="quality" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
@@ -67,7 +67,7 @@
 
 			<div class="mb-4">
 				<label for="price" class="block text-gray-700 text-sm font-bold mb-2">Cena:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="price" id="price">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="price" id="price" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
@@ -76,7 +76,7 @@
 
 			<div class="mb-4">
 				<label for="shippment_deadline" class="block text-gray-700 text-sm font-bold mb-2">Rok isporuke:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="shippment_deadline" id="shippment_deadline">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="shippment_deadline" id="shippment_deadline" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor

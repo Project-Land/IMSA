@@ -18,7 +18,7 @@
 
 			<div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">Naziv obuke:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus>
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -26,7 +26,7 @@
 
 			<div class="mb-4">
 				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">Opis obuke:</label>
-                <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description">{{ old('description') }}</textarea>
+                <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ old('description') }}</textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -34,7 +34,7 @@
 
 			<div class="mb-4">
 				<label for="type" class="block text-gray-700 text-sm font-bold mb-2">Vrsta obuke:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="type" id="type">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="type" id="type" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 					<option value="Interna">Interna</option>
 					<option value="Eksterna">Eksterna</option>
 				</select>
@@ -42,7 +42,7 @@
 
 			<div class="mb-4">
 				<label for="num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">Broj zaposlenih:</label>
-				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="num_of_employees" name="num_of_employees" value="{{ old('num_of_employees') }}">
+				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="num_of_employees" name="num_of_employees" value="{{ old('num_of_employees') }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('num_of_employees')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -50,7 +50,7 @@
 
 			<div class="mb-4">
 				<label for="training_date" class="block text-gray-700 text-sm font-bold mb-2">Planirani termin:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="training_date" name="training_date" placeholder="xx.xx.xxxx xx:xx" value="{{ old('training_date') }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="training_date" name="training_date" placeholder="xx.xx.xxxx xx:xx" value="{{ old('training_date') }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" >
 				@error('training_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -58,7 +58,7 @@
 
 			<div class="mb-4">
 				<label for="place" class="block text-gray-700 text-sm font-bold mb-2">Mesto obuke:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="place" name="place" value="{{ old('place') }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="place" name="place" value="{{ old('place') }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('place')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -66,7 +66,7 @@
 
 			<div class="mb-4">
 				<label for="resources" class="block text-gray-700 text-sm font-bold mb-2">Resursi:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resources" name="resources">{{ old('resources') }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resources" name="resources" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">{{ old('resources') }}</textarea>
 				@error('resources')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -82,12 +82,12 @@
 
 			<div class="mb-4" id="final_num_field" style="display: none">
 				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">Broj zaposlenih realizovano:</label>
-				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="final_num_of_employees" name="final_num_of_employees" value="{{ old('final_num_of_employees') }}">
+				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="final_num_of_employees" name="final_num_of_employees" value="{{ old('final_num_of_employees') }}" oninvalid="this.setCustomValidity('Izaberite broj zaposlenih')" oninput="this.setCustomValidity('')">
 			</div>
 
 			<div class="mb-4" id="rating_field" style="display: none">
 				<label for="rating" class="block text-gray-700 text-sm font-bold mb-2">Ocena:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="rating" id="rating">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="rating" id="rating" oninvalid="this.setCustomValidity('Izaberite ocenu')" oninput="this.setCustomValidity('')">
 					<option value="">Izaberi...</option>
 					@for($i = 1; $i <= 5; $i++)
 						<option value="{{ $i }}">{{ $i }}</option>
@@ -127,12 +127,16 @@
 		if($('#status').val() == 1){
 			$('#final_num_field').css('display', '');
 			$('#rating_field').css('display', '');
+			$('#rating').attr('required', true);
+			$('#final_num_of_employees').attr('required', true);
 		}
 		else{
 			$('#final_num_field').css('display', 'none');
 			$('#rating_field').css('display', 'none');
 			$('#final_num_of_employees').val('');
 			$('#rating').val('');
+			$('#rating').attr('required', false);
+			$('#final_num_of_employees').attr('required', false);
 		}
 	})
 </script>

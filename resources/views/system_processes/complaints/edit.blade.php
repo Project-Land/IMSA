@@ -28,8 +28,7 @@
 
 			<div class="mb-4">
 				<label for="submission_date" class="block text-gray-700 text-sm font-bold mb-2">Datum podnošenja reklamacije:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="xx.xx.xxxx" required oninvalid="this.setCustomValidity('Datum podnošenja reklamacije nije popunjen')"
-                oninput="this.setCustomValidity('')">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="xx.xx.xxxx" required oninvalid="this.setCustomValidity('Izaberite datum')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
 				
 				@error('submission_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
