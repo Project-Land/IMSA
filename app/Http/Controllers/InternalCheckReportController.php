@@ -94,12 +94,13 @@ class InternalCheckReportController extends Controller
                         'sector_id' => 1,
                         'name' => "KKM ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
-                        'internal_check_report_id' => $report->id,
+                        //'internal_check_report_id' => $report->id,
                         'measure_date' => Carbon::now(),
                         'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
                     ]);
 
                     $correctiveMeasure->standard()->associate($standard);
+                    $report->correctiveMeasures()->save($correctiveMeasure);
                     $count++;
                 }
             }
@@ -225,6 +226,7 @@ class InternalCheckReportController extends Controller
         $this->authorize('delete', $internal_check_report);
 
         try{
+            $internal_check_report->correctiveMeasures()->delete();
             InternalCheckReport::destroy($id);
             CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->id.'" je obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Izveštaj interne provere je uspešno uklonjen');

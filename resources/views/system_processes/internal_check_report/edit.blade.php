@@ -196,7 +196,9 @@
 
                                 <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
                                 <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
-                                <input type="hidden" name="internal_check_report_id" value="{{ $internalCheckReport->id }}">
+                               
+                                <input type="hidden" name="correctiveMeasureable_id" value="{{ $internalCheckReport->id }}">
+                                <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
 
                                 <div class="mb-4">
                                     <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>

@@ -53,4 +53,9 @@ class CorrectiveMeasure extends Model
         }
         return "Zatvoreno je ".$icm_approved." mera od ukupno ".$icm_total." pokrenutih što čini ".round($icm_percentage)."%";
     }
+
+    public function correctiveMeasureable()
+    {
+        return $this->morphTo();
+    }
 }

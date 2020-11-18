@@ -35,8 +35,12 @@ class InternalCheckReport extends Model
         return $this->belongsTo('App\Models\Team');
     }
 
-    public function correctiveMeasures()
+    /*public function correctiveMeasures()
     {
         return $this->hasMany('App\Models\CorrectiveMeasure');
+    } */
+    public function correctiveMeasures()
+    {
+        return $this->morphMany('App\Models\CorrectiveMeasure', 'correctiveMeasureable');
     }
 }
