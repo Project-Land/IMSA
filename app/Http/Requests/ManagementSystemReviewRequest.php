@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ManagementSystemReviewRequest extends FormRequest
 {
@@ -35,7 +36,11 @@ class ManagementSystemReviewRequest extends FormRequest
     public function createRules()
     {
         return [
-            'year' => "unique:management_system_reviews",
+            'year' => [
+                Rule::unique('management_system_reviews')->where(function ($query) {
+                    return $query->where('year', $this->year)->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'));
+                }
+            )],
             'participants' => 'required',
             'measures_status' => 'required',
             'internal_external_changes' => 'required',
@@ -77,15 +82,27 @@ class ManagementSystemReviewRequest extends FormRequest
     {
         $standardId = session('standard');
 
+        if(session('standard_name') == 9001){
+            $this->merge([
+                'external_suppliers_performance' => \App\Models\Supplier::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+            ]);
+        }
+
+        if(session('standard_name') == 14001){
+            $this->merge([
+                'environmental_aspects' => \App\Models\EnvironmentalAspect::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+                'fulfillment_of_obligations' => ''
+            ]);
+        }
+
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
             'standard_id' => (int)$standardId,
-            'objectives_scope' => \App\Models\Goal::getStats($standardId, $this->year),
-            'inconsistancies_corrective_measures' => \App\Models\CorrectiveMeasure::getStats($standardId, $this->year),
-            'checks_results' => \App\Models\PlanIp::getStats($standardId, $this->year),
-            'external_suppliers_performance' => \App\Models\Supplier::getStats($standardId, $this->year),
-            'measures_effectiveness' => \App\Models\RiskManagement::getStats($standardId, $this->year),
+            'objectives_scope' => \App\Models\Goal::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+            'inconsistancies_corrective_measures' => \App\Models\CorrectiveMeasure::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+            'checks_results' => \App\Models\PlanIp::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+            'measures_effectiveness' => \App\Models\RiskManagement::getStats(Auth::user()->current_team_id, $standardId, $this->year),
         ]);
     }
 }

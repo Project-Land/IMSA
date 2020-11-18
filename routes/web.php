@@ -18,14 +18,15 @@ use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\RulesOfProceduresController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsController;
-use App\Http\Controllers\RecommendationsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\MeasuringEquipmentsController;
+use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StandardsController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\SystemProcessesController;
+use App\Models\EnvironmentalAspect;
 use Illuminate\Routing\ControllerMiddlewareOptions;
 
 /*
@@ -111,6 +112,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('system-processes/get-by-standard', [SystemProcessesController::class, 'getByStandard']);
 
     Route::resource('measuring-equipment', MeasuringEquipmentsController::class);
+
+    Route::resource('environmental-aspects', EnvironmentalAspectsController::class);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('show-team-stats/{id}', [TeamController::class, 'showTeamUserStats']);

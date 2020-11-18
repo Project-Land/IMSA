@@ -68,14 +68,14 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                    @can('update',$risk)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmenite rizik/priliku" href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
+                                        @canany(['update', 'delete'], $risk)
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena rizika/prilike" href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $risk->id }}" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje rizika/prilike" onclick="confirmDeleteModal({{ $risk->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
-                                    @endcan
+                                        @endcanany
                                     </td>
                                 </tr>
                                 @endforeach

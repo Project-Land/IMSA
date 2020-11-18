@@ -26,10 +26,10 @@ class Supplier extends Model
         return $this->morphOne('App\Models\Notification', 'notifiable');
     }
 
-    public static function getStats($standardId, $year)
+    public static function getStats($teamId, $standardId, $year)
     {
-        $sup_total = Supplier::where('standard_id', $standardId)->whereYear('created_at', $year)->count();
-        $sup_approved = Supplier::where('standard_id', $standardId)->whereYear('created_at', $year)->where('status', '1')->count();;
+        $sup_total = Supplier::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->count();
+        $sup_approved = Supplier::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->where('status', '1')->count();;
 
         if($sup_approved == 0){
             $sup_percentage = 0;

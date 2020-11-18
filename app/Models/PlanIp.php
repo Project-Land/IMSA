@@ -16,10 +16,17 @@ class PlanIp extends Model
         return $this->hasOne('App\Models\InternalCheck');
     }
 
-    public static function getStats($standardId, $year)
+    public static function getStats($teamId, $standardId, $year)
     {
-        $cr_total = PlanIp::where('standard_id', $standardId)->whereYear('check_start', $year)->count();
-        $cr_finished = PlanIp::where('standard_id', $standardId)->whereYear('check_end', $year)->count();
+        
+        $cr_total = PlanIp::whereHas('internalCheck', function ($q) use ($teamId){
+            $q->where('team_id', $teamId);
+        })->where('standard_id', $standardId)->whereYear('check_start', $year)->count();
+
+        $cr_finished = PlanIp::whereHas('internalCheck', function ($q) use ($teamId){
+            $q->where('team_id', $teamId);
+        })->where('standard_id', $standardId)->whereYear('check_end', $year)->count();
+
         if($cr_total == 0){
             $cr_percentage = 0;
         }

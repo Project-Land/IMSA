@@ -21,11 +21,6 @@ class InternalCheckReport extends Model
         return $this->hasMany('App\Models\Recommendation');
     }
 
-    public function inconsistencies()
-    {
-        return $this->hasMany('App\Models\Inconsistency');
-    }
-
     public function user()
     {
         return $this->belongsTo('App\Models\User');

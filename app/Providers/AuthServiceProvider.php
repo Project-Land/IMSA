@@ -16,6 +16,7 @@ use App\Models\Supplier;
 use App\Models\Stakeholder;
 use App\Models\Complaint;
 use App\Models\MeasuringEquipment;
+use App\Models\EnvironmentalAspect;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Standard;
@@ -35,6 +36,7 @@ use App\Policies\SectorPolicy;
 use App\Policies\TrainingPolicy;
 use App\Policies\ComplaintPolicy;
 use App\Policies\MeasuringEquipmentPolicy;
+use App\Policies\EnvironmentalAspectPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\StandardPolicy;
 use App\Policies\NotificationPolicy;
@@ -65,6 +67,7 @@ class AuthServiceProvider extends ServiceProvider
         PlanIp::class => PlanIpPolicy::class,
         Training::class => TrainingPolicy::class,
         MeasuringEquipment::class => MeasuringEquipmentPolicy::class,
+        EnvironmentalAspect::class => EnvironmentalAspectPolicy::class,
         SystemProcess::class => SystemProcessPolicy::class,
         Notification::class => NotificationPolicy::class,
         Standard::class => StandardPolicy::class,
