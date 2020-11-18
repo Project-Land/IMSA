@@ -26,10 +26,10 @@ class AlterCorrectiveMeasuresTable extends Migration
      * @return void
      */
     public function down()
-    { 
-        Schema::table('evaluation_of_legal_and_other_requirements', function (Blueprint $table) {
+    {
+        /*Schema::table('evaluation_of_legal_and_other_requirements', function (Blueprint $table) {
             $table->dropColumn('correctiveMeasureable_id');
             $table->dropColumn('correctiveMeasureable_type');
-        });
+        });*/
     }
 }

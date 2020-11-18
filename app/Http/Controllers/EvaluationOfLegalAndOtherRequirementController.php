@@ -16,7 +16,7 @@ use App\Policies\EvaluationOfLegalAndOtherRequirementPolicy;
 class EvaluationOfLegalAndOtherRequirementController extends Controller
 {
     public function index(){
-        
+
         if(session('standard') == null){
             return redirect('/')->with('status', 'Izaberite standard!');
         }
@@ -34,7 +34,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         $this->authorize('create', EvaluationOfLegalAndOtherRequirement::class);
         return view('system_processes.evaluation_of_requirement.create');
     }
-   
+
     public function store(EvaluationOfRequirementRequest $request)
     {
         $this->authorize('create', EvaluationOfLegalAndOtherRequirement::class);
@@ -58,7 +58,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         ]);
 
         try{
-           
+
             $requirement = EvaluationOfLegalAndOtherRequirement::create([
             'requirement_level'=>$request->requirement_level,
             'document_name'=>$request->document_name,
@@ -67,7 +67,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             'standard_id'=>$request->standard_id,
             'user_id'=>$request->user_id,
             'team_id'=>$request->team_id]);
-           
+
             if( isset($correctiveMeasureData['noncompliance_description'])){
             foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
                 $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
@@ -97,7 +97,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                 ]);
 
                 $requirement->correctiveMeasures()->save($correctiveMeasure);
-                
+
             }
         }
 
@@ -138,7 +138,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         $this->authorize('delete', $requirement);
 
         try{
-           
+
             EvaluationOfLegalAndOtherRequirement::destroy($id);
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id- "'.$requirement->id.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Vrednovanje zakonskih i drugih zahteva je uspešno uklonjeno');
