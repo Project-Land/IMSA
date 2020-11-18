@@ -107,7 +107,9 @@
 
 <script>
 
-
+$(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
 
     $('.yajra-datatable').DataTable({
@@ -129,7 +131,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 6, "desc" ]]
+        "order": [[ 3, "desc" ]]
     });
 
    
@@ -172,8 +174,6 @@
         });
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    
 
 </script>
