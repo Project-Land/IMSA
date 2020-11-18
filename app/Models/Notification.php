@@ -20,7 +20,6 @@ class Notification extends Model
 
     public function scopeActive($query)
     {
-       // return $query->where('checkTime', '<', Carbon::now()->addDays(7))->where('checkTime', '>',Carbon::now())->where('team_id',///Auth::user()->current_team_id);
        return $query->where([
            ['checkTime', '<', Carbon::now()->addDays(7)],
            ['checkTime', '>', Carbon::now()],
@@ -36,12 +35,18 @@ class Notification extends Model
         ])->whereHasMorph('notifiable',  ['App\Models\MeasuringEquipment'], function ($q){
             $q->where('standard_id', session('standard'));
         });
-
     }
 
     public function scopeActiveInternalChecks($query)
     {
-        return $query->where('checkTime', '<', Carbon::now()->addDays(7))->where('checkTime', '>',Carbon::now())->where('notifiable_type','App\Models\InternalCheck')->where('team_id',Auth::user()->current_team_id);
+        return $query->where([
+            ['checkTime', '<', Carbon::now()->addDays(7)],
+            ['checkTime', '>', Carbon::now()],
+            ['notifiable_type', 'App\Models\InternalCheck'],
+            ['team_id', Auth::user()->current_team_id]
+        ])->whereHasMorph('notifiable',  ['App\Models\InternalCheck'], function ($q){
+            $q->where('standard_id', session('standard'));
+        });
     }
 
     public function notifiable()

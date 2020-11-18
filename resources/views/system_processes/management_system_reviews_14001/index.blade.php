@@ -130,7 +130,7 @@
     function showMSR(id){
         axios.get('/management-system-reviews/'+id)
             .then((response) => {
-                let modal = `<div class="modal" id="showMSR-${ id }" tabindex="-1" role="dialog">
+                let modal = `<div class="modal fade" id="showMSR-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content rounded-0">
                                         <div class="modal-header">
@@ -185,8 +185,8 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.consequences ? response.data.consequences : "/" }</p></div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>

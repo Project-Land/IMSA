@@ -86,6 +86,14 @@ class InternalCheckController extends Controller
         $c = DB::table('plan_ips')
         ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
         ->where('internal_checks.team_id','<>', Auth::user()->current_team_id)->get()->count();
+
+        $ctest = DB::table('plan_ips')
+        ->join('internal_checks', 'plan_ips.id', '=', 'internal_checks.plan_ip_id')
+        ->where('internal_checks.team_id', Auth::user()->current_team_id)
+        ->where('internal_checks.standard_id', session('standard'))
+        ->whereYear('internal_checks.date', date('Y', strtotime($request->date)))
+        ->get()->count();
+
         $lastid = PlanIp::latest()->first();
         if(!$lastid){
             $planId = 1;

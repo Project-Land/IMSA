@@ -44,23 +44,23 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Naziv sektora</th>
-                                   <th class="no-sort">Akcije</th>
+                                    <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($sectors as $sector)
                                 <tr>
                                     <td class="text-center"><a href="{{'/procedures/'.$sector->id}}">{{ $sector->name }}</a></td>
-                                    @canany(['update', 'delete'], $sector)
                                     <td class="text-center">
+                                        @canany(['update', 'delete'], $sector)
                                         <a href="{{ route('sectors.edit', $sector->id) }}" data-toggle="tooltip" data-placement="top" title="Izmena sektora"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
+                                        <form class="inline" id="delete-form-{{ $sector->id }}" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="Brisanje sektora" class="button text-danger" type="submit" style="cursor: pointer;" onclick="return confirm('Da li ste sigurni?');"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje sektora" onclick="confirmDeleteModal({{ $sector->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
+                                        @endcanany
                                     </td>
-                                    @endcanany
                                 </tr>   
                             @endforeach
                             </tbody>
@@ -71,6 +71,21 @@
 
         </div>
 
+    </div>
+
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="px-6 py-4">
+                    <div class="text-lg">Brisanje sektora</div>
+                    <div class="mt-4">Da li ste sigurni?</div>
+                </div>
+                <div class="px-6 py-4 bg-gray-100 text-right">
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </x-app-layout>
@@ -96,6 +111,15 @@
           "orderable": false,
         }],
     });
+
+    function confirmDeleteModal($id){
+        let id = $id;
+        $('#confirm-delete-modal').modal();
+        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+            let form = $('#delete-form-'+id);
+            form.submit();
+        });
+    }
 
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();   
