@@ -205,6 +205,8 @@ class InternalCheckController extends Controller
 
             InternalCheck::destroy($id);
             PlanIp::destroy($internal_check->plan_ip_id);
+            $report=InternalCheckReport::findOrFail($internal_check->internal_check_report_id);
+            $report->correctiveMeasures()->delete();
             InternalCheckReport::destroy($internal_check->internal_check_report_id);
 
             CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);

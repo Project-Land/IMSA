@@ -2,32 +2,33 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LogsController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\GoalsController;
 use App\Http\Controllers\PlanIpController;
 use App\Http\Controllers\ManualsController;
+use App\Http\Controllers\SectorsController;
 use App\Http\Controllers\PoliciesController;
+use App\Http\Controllers\StandardsController;
 use App\Http\Controllers\SuppliersController;
+use App\Http\Controllers\TrainingsController;
+use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
-use App\Http\Controllers\InternalCheckReportController;
-use App\Http\Controllers\SectorsController;
-use App\Http\Controllers\CorrectiveMeasuresController;
-use App\Http\Controllers\RulesOfProceduresController;
-use App\Http\Controllers\TrainingsController;
-use App\Http\Controllers\ComplaintsController;
-use App\Http\Controllers\ManagementSystemReviewsController;
-use App\Http\Controllers\MeasuringEquipmentsController;
 use App\Http\Controllers\EnvironmentalAspectsController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\StandardsController;
-use App\Http\Controllers\LogsController;
 use App\Http\Controllers\SystemProcessesController;
 use App\Models\EnvironmentalAspect;
 use Illuminate\Routing\ControllerMiddlewareOptions;
+use App\Http\Controllers\RulesOfProceduresController;
+use App\Http\Controllers\CorrectiveMeasuresController;
+use App\Http\Controllers\InternalCheckReportController;
+use App\Http\Controllers\MeasuringEquipmentsController;
+use App\Http\Controllers\ManagementSystemReviewsController;
+use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,5 +132,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
+
+    Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
 });
