@@ -41,10 +41,10 @@ class CorrectiveMeasure extends Model
         return $this->belongsTo('App\Models\InternalCheckReport');
     }
 
-    public static function getStats($standardId, $year)
+    public static function getStats($teamId, $standardId, $year)
     {
-        $icm_total = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->count();
-        $icm_approved = CorrectiveMeasure::where('standard_id', $standardId)->whereYear('measure_date', $year)->where('measure_approval', '1')->count();
+        $icm_total = CorrectiveMeasure::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('measure_date', $year)->count();
+        $icm_approved = CorrectiveMeasure::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('measure_date', $year)->where('measure_approval', '1')->count();
         if($icm_total == 0){
             $icm_percentage = 0;
         }

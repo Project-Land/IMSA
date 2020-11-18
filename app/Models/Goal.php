@@ -26,10 +26,10 @@ class Goal extends Model
         return $this->belongsTo('App\Models\Team');
     }
 
-    public static function getStats($standardId, $year)
+    public static function getStats($teamId, $standardId, $year)
     {
-        $os_total = Goal::where('standard_id', $standardId)->where('year', $year)->count();
-        $os_fulfilled = Goal::where('standard_id', $standardId)->where('year', $year)->whereNotNull('analysis')->count();
+        $os_total = Goal::where('team_id', $teamId)->where('standard_id', $standardId)->where('year', $year)->count();
+        $os_fulfilled = Goal::where('team_id', $teamId)->where('standard_id', $standardId)->where('year', $year)->whereNotNull('analysis')->count();
         if($os_total == 0){
             $os_percentage = 0;
         }

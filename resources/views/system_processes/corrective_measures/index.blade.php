@@ -84,7 +84,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje zainteresovane strane</div>
+                    <div class="text-lg">Brisanje neusaglašenosti / korektivne mere</div>
                     <div class="mt-4">Da li ste sigurni?</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">

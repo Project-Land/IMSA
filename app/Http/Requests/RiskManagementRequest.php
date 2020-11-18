@@ -38,7 +38,6 @@ class RiskManagementRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $standardId = session('standard');
         $total = $this->probability * $this->frequency;
         $count = \App\Models\RiskManagement::whereNotNull('measure')->count() + 1;
 
@@ -62,7 +61,7 @@ class RiskManagementRequest extends FormRequest
         }
 
         $this->merge([
-            'standard_id' => $standardId,
+            'standard_id' => session('standard'),
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
             'total' => $total

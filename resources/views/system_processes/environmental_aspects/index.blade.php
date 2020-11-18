@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Sektori') }} 
+            {{ session('standard_name') }} - {{ __('Aspekti životne sredine') }}
         </h2>
     </x-slot>
 
@@ -33,41 +33,57 @@
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\Sector::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a>
-                </div>
-                @endcan
+                    @can('create', App\Models\EnvironmentalAspect::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('environmental-aspects.create') }}"><i class="fas fa-plus"></i> Kreiraj aspekt</a>
+                    @endcan
+                    </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Naziv sektora</th>
+                                    <th>Proces</th>
+                                    <th>Otpad / Fizičko-hemijska pojava</th>
+                                    <th>Aspekt</th>
+                                    <th>Uticaj</th>
+                                    <th>Karakter otpada</th>
+                                    <th>Verovatnoća pojavljivanja</th>
+                                    <th>Verovatnoća otkrivanja</th>
+                                    <th>Ozbiljnost posledica</th>
+                                    <th>Procenjeni uticaj</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($sectors as $sector)
+                                @foreach($environmental_aspects as $ea)
                                 <tr>
-                                    <td class="text-center"><a href="{{'/procedures/'.$sector->id}}">{{ $sector->name }}</a></td>
+                                    <td class="text-center">{{ $ea->process }}</td>
+                                    <td class="text-center">{{ $ea->waste }}</td>
+                                    <td class="text-center">{{ $ea->aspect }}</td>
+                                    <td class="text-center">{{ $ea->influence }}</td>
+                                    <td class="text-center">{{ $ea->waste_type === 1 ? "Opasan" : "Neopasan" }}</td>
+                                    <td class="text-center">{{ $ea->probability_of_appearance }}</td>
+                                    <td class="text-center">{{ $ea->probability_of_discovery }}</td>
+                                    <td class="text-center">{{ $ea->severity_of_consequences }}</td>
+                                    <td class="text-center">{{ $ea->estimated_impact }}</td>
                                     <td class="text-center">
-                                        @canany(['update', 'delete'], $sector)
-                                        <a href="{{ route('sectors.edit', $sector->id) }}" data-toggle="tooltip" data-placement="top" title="Izmena sektora"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" id="delete-form-{{ $sector->id }}" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
+                                        @canany(['update', 'delete'], $ea)
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena aspekta životne sredine" href="{{ route('environmental-aspects.edit', $ea->id) }}"><i class="fas fa-edit"></i></a>
+                                        <form class="inline" id="delete-form-{{ $ea->id }}" action="{{ route('environmental-aspects.destroy', $ea->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje sektora" onclick="confirmDeleteModal({{ $sector->id }})"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje aspekta životne sredine" onclick="confirmDeleteModal({{ $ea->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
-                                </tr>   
-                            @endforeach
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -77,7 +93,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje sektora</div>
+                    <div class="text-lg">Brisanje aspekta životne sredine</div>
                     <div class="mt-4">Da li ste sigurni?</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
@@ -122,6 +138,6 @@
     }
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

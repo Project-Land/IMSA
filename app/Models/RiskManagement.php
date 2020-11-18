@@ -13,10 +13,10 @@ class RiskManagement extends Model
 
     protected $guarded = [];
 
-    public static function getStats($standardId, $year)
+    public static function getStats($teamId, $standardId, $year)
     {
-        $rm_total = RiskManagement::where('standard_id', $standardId)->whereYear('created_at', $year)->count();;
-        $rm_closed =Supplier::where('standard_id', $standardId)->whereYear('created_at', $year)->where('status', 0)->count();;
+        $rm_total = RiskManagement::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->count();;
+        $rm_closed =Supplier::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->where('status', 0)->count();;
         if($rm_total == 0){
             $rm_percentage = 0;
         }
@@ -30,9 +30,14 @@ class RiskManagement extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-    
+
     public function team()
     {
         return $this->belongsTo('App\Models\Team');
+    }
+
+    public function standard()
+    {
+        return $this->belongsTo('App\Models\Standard');
     }
 }

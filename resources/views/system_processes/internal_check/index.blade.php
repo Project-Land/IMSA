@@ -195,7 +195,7 @@
         	"targets": 'no-sort',
         	"orderable": false,
         }],
-		"order": [[ 1, "desc" ]]
+		"order": [[ 0, "asc" ]]
     });
 
     const planIpShow = document.getElementById('planIp.show');
@@ -224,15 +224,15 @@
 							<p><b>Rok za dostavljanje izveštaja:</b> ${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } </p>
 							<small><b>Izmenjeno:</b> <i> ${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </i></small>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+						<div class="px-6 py-4 bg-gray-100 text-right">
+							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
 						</div>
 					</div>
 				</div>
 			`;
 
       		const m = document.createElement('div');
-			m.classList = "modal";
+			m.classList = "modal fade";
 			m.tabIndex = "-1";
 			m.role = "dialog";
 			m.id = "modal";
@@ -254,7 +254,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title text-info">Izveštaj sa interne provere</h4>
+							<h5 class="modal-title">Izveštaj sa interne provere</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -275,15 +275,15 @@
 							modal+=`
 							<small> <b>Kreirano:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+						<div class="px-6 py-4 bg-gray-100 text-right">
+							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
 						</div>
 					</div>
 				</div>
 			`;
 
 			const m = document.createElement('div');
-			m.classList = "modal";
+			m.classList = "modal fade";
 			m.tabIndex = "-1";
 			m.role = "dialog";
 			m.id = "modal";
