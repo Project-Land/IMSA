@@ -64,7 +64,68 @@
                 </div>
             </div>
 
-          
+          @if($cm=$requirement->correctiveMeasures[0])
+          <div class="py-2 px-4">
+                <h4 class="text-center my-3">Karton korektivne mere</h4>
+                <div class="form-group">
+                    <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="noncompliance_source" name="noncompliance_source" required oninvalid="this.setCustomValidity('Izaberite izvor informacije o neusaglašenosti')"
+                    oninput="this.setCustomValidity('')">
+                    <option value="">Izaberi...</option>
+					<option value="Eksterna provera" @if($cm->noncompliance_source=="Eksterna provera"){{'selected'}}@endif>Eksterna provera</option>
+					<option value="Interna provera" @if($cm->noncompliance_source=="Interna provera"){{'selected'}}@endif>Interna provera</option>
+					<option value="Preispitivanje ISM-a" @if($cm->noncompliance_source=="Preispitivanje ISM-a"){{'selected'}}@endif>Preispitivanje ISM-a</option>
+					<option value="Žalba" @if($cm->noncompliance_source=="Žalba"){{'selected'}}@endif>Žalba</option>
+					<option value="Ostalo" @if($cm->noncompliance_source=="Ostalo"){{'selected'}}@endif>Ostalo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                    oninput="this.setCustomValidity('')" >{{$cm->noncompliance_description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                    oninput="this.setCustomValidity('')">{{$cm->noncompliance_cause}}</textarea>
+                
+                </div>
+                <div class="form-group">
+                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                    oninput="this.setCustomValidity('')">{{$cm->measure}}</textarea>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
+                        <option value="1"  @if($cm->measure_approval==1){{'selected'}}@endif>DA</option>
+                        <option value="0"  @if($cm->measure_approval==0){{'selected'}}@endif>NE</option>
+                    </select>
+                </div>
+<div class="form-group" id="measure_reason_field" style="@if($cm->measure_approval){{'display: none'}}@endif">
+                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
+                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
+                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason" id="measure_approval_reason" value="{{$cm->measure_approval_reason}}">
+                </div>
+                <div class="form-group">
+                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
+                        <option value="0" @if($cm->measure_status==0){{'selected'}}@endif>NE</option>
+                        <option value="1" @if($cm->measure_status==1){{'selected'}}@endif >DA</option>
+                    </select>
+                </div>
+                <div class="form-group" id="measure_effective_field" style="@if(!$cm->measure_status){{'display: none'}}@endif">
+                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
+                        <option value="">Izaberi...</option>
+                        <option value="1" @if($cm->measure_effective==1){{'selected'}}@endif >DA</option>
+                        <option value="0" @if($cm->measure_effective==0){{'selected'}}@endif>NE</option>
+                    </select>
+                </div>
+                </div>
+          @endif
             
             <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
         </form>
@@ -74,4 +135,33 @@
 
 <script>
 
+  let id=`#measure_approval`;
+                let id_ms=`#measure_status`;
+                let id_mef=`#measure_effective_field`;
+                let id_mrf=`#measure_reason_field`;
+                let id_mar=`#measure_approval_reason`;
+                let id_me=`#measure_effective`;
+    
+                $(id).change( () => {
+                    if($(id).val() == 0){
+                        $(id_mrf).css('display', '');
+                        $(id_mar).attr('required', true);
+                    }
+                    else{
+                        $(id_mrf).css('display', 'none');
+                        $(id_mar).val('');
+                        $(id_mar).attr('required', false);
+                    }
+                })
+    
+                $(id_ms).change( () => {
+                    if($(id_ms).val() == 1){
+                        $(id_mef).css('display', '');
+                        $(id_me).attr('required', true);
+                    }
+                    else{
+                        $(id_mef).css('display', 'none');
+                        $(id_me).attr('required', false);
+                    }
+                })
 </script>
