@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Izmena cilja') }} 
+            {{ session('standard_name') }} - {{ __('Izmena cilja') }}
         </h2>
     </x-slot>
 
@@ -21,12 +21,12 @@
                 <div class="form-group col-md-6">
                     <label for="year">Godina</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="year" name="year" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
-                        @foreach(range(date("Y")-1, date("Y")+10) as $year)
+                        @foreach(range(2019, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == $goal->year ? "selected" : "" }}>{{ $year }}</option>
                         @endforeach
                     </select>
                 </div>
-                
+
                 <div class="form-group col-md-6">
                     <label for="responsibility">Odgovornost</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="responsibility" id="responsibility" value="{{ $goal->responsibility }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
@@ -69,7 +69,7 @@
 				    @enderror
                 </div>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="activities">Aktivnosti</label>
@@ -83,7 +83,7 @@
                     <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis"  oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')" {{ $goal->deadline <= date('Y-m-d') ? "required":"disabled" }} >{{ $goal->analysis }}</textarea>
                 </div>
             </div>
-            
+
             <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
         </form>
     </div>

@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ Session::get('standard_name') }} - {{ $doc_type }} 
+            {{ Session::get('standard_name') }} - {{ $doc_type }}
         </h2>
     </x-slot>
 
@@ -36,7 +36,7 @@
                 @can('create', App\Models\Document::class)
                     <div class="card-header">
                         <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> Kreiraj novi dokument</a>
-                        <a class="inline-block float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="Prikaz obrisanih dokumenata"><i class="fas fa-trash"></i> Izbrisani dokumenti </a>
+                        <a class="inline-block float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="Prikaz obrisanih dokumenata"><i class="fas fa-trash"></i> Obrisani dokumenti </a>
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -80,13 +80,13 @@
                                             </form>
                                             @endcanany
                                         </td>
-                                    </tr>   
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -117,7 +117,7 @@
     });
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 </script>

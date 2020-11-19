@@ -132,7 +132,7 @@
         axios.get('/risk-management/'+id)
             .then((response) => {
                 let modal = `<div class="modal fade" id="showMeasure-${ id }" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-dialog" style="max-width: 600px !important;" role="document">
                                     <div class="modal-content rounded-lg shadow-xl">
                                         <div class="modal-header">
                                             <h5 class="modal-title font-weight-bold">${ response.data.measure }</h5>
@@ -141,7 +141,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row">
+                                            <div class="row text-sm">
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Opis rizika / prilike</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Uzrok</p></div>

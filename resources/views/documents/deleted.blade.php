@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ Session::get('standard_name') }} - {{ $doc_type }} - Izbrisani dokumenti
+            {{ Session::get('standard_name') }} - {{ $doc_type }} - Obrisani dokumenti
         </h2>
     </x-slot>
 
@@ -84,13 +84,13 @@
                                             </form>
                                             @endcanany
                                         </td>
-                                    </tr>   
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>  
+            </div>
 
         </div>
 
@@ -121,7 +121,7 @@
     });
 
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
 </script>

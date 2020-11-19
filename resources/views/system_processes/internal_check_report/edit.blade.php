@@ -10,7 +10,7 @@
         	<a class="btn btn-light" href="{{ route('internal-check.index') }}"><i class="fas fa-arrow-left"></i> Nazad</a>
      	</div>
     </div>
-  
+
     <div class="mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded">
         @if($errors->any())
             <div class="alert alert-danger">
@@ -78,7 +78,7 @@
                 <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
                 <span id="addRecommendations" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
             </div>
-            
+
             <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
                 @foreach($internalCheckReport->correctiveMeasures as $inc)
                     <div class="form-group col-6 mt-3">
@@ -149,7 +149,7 @@
             addNewRecommendations.setAttribute('data-toggle', 'tooltip');
             addNewRecommendations.setAttribute('data-placement', 'top');
             addNewRecommendations.title = "Brisanje preporuke";
-            
+
             addNewRecommendations.innerHTML = '<i class="fas fa-trash"></i>';
             label.for = "newInputRecommendation"+coun;
             div.append(label);
@@ -170,7 +170,7 @@
             recommendationsDiv.append(div);
             newInput.focus();
             coun++;
-            $('[data-toggle="tooltip"]').tooltip(); 
+            $('[data-toggle="tooltip"]').tooltip();
         }
 
         recommendations.addEventListener('click', addInputRecommedation);
@@ -179,7 +179,7 @@
             button.addEventListener('click', removeInput);
         });
 
-        let modal = 
+        let modal =
             `<div class="modal" id="kkm-1" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded" role="document">
                     <div class="modal-content rounded-0">
@@ -196,7 +196,7 @@
 
                                 <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
                                 <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
-                               
+
                                 <input type="hidden" name="correctiveMeasureable_id" value="{{ $internalCheckReport->id }}">
                                 <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
 
@@ -276,7 +276,7 @@
 
                                 <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
                                 <button type="button" class="w-1/4 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline rounded-0" data-dismiss="modal">Odustani</button>
-                            
+
                             </form>
 
                         </div>
@@ -317,7 +317,7 @@
         function showMeasure(id){
             axios.get('/corrective-measures/'+id)
             .then((response) => {
-                let modal = `<div class="modal" id="showData-${ id }" tabindex="-1" role="dialog">
+                let modal = `<div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
@@ -326,7 +326,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body text-sm">
                                             <div class="row">
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Datum kreiranja</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
@@ -352,8 +352,8 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "Efektivna" : "Neefektivna" : "/" }</p></div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>
@@ -367,9 +367,9 @@
         }
 
         $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();   
+            $('[data-toggle="tooltip"]').tooltip();
         });
-    
+
     </script>
 
 </x-app-layout>

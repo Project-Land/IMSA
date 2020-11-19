@@ -44,7 +44,7 @@
                             <form class="form-inline">
                                 <label for="goals-year" class="mr-3">Godina</label>
                                 <select name="goals-year" id="goals-year" class="form-control w-25 mr-2">
-                                    @foreach(range(date("Y")-1, date("Y")+10) as $year))
+                                    @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
@@ -163,7 +163,7 @@ var myRe = /\bgoals\b/g;
     function showGoal(id){
         axios.get('/goals/'+id)
             .then((response) => {
-                let modal = `<div class="modal" id="showData-${ id }" tabindex="-1" role="dialog">
+                let modal = `<div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content rounded-0">
                                         <div class="modal-header text-center">
@@ -190,8 +190,8 @@ var myRe = /\bgoals\b/g;
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
                                         </div>
                                     </div>
                                 </div>

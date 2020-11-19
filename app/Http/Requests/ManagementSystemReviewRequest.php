@@ -91,7 +91,7 @@ class ManagementSystemReviewRequest extends FormRequest
         if(session('standard_name') == 14001){
             $this->merge([
                 'environmental_aspects' => \App\Models\EnvironmentalAspect::getStats(Auth::user()->current_team_id, $standardId, $this->year),
-                'fulfillment_of_obligations' => ''
+                'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year)
             ]);
         }
 

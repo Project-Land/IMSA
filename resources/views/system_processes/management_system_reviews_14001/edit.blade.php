@@ -20,7 +20,7 @@
 			<div class="mb-4">
 				<label for="year" class="block text-gray-700 text-sm font-bold mb-2">Godina:</label>
 				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="year" id="year" required oninvalid="this.setCustomValidity('Izaberite godinu')" oninput="this.setCustomValidity('')" readonly>
-					@foreach(range(date('Y')-1, date('Y')+10) as $year)
+					@foreach(range(2019, date('Y')+10) as $year)
 						<option value="{{ $year }}" {{ $year == $msr->year ? "selected" : "" }}>{{ $year }}</option>
 					@endforeach
 				</select>

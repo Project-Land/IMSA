@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Kreiranje cilja') }} 
+            {{ session('standard_name') }} - {{ __('Kreiranje cilja') }}
         </h2>
     </x-slot>
 
@@ -19,12 +19,12 @@
                 <div class="form-group col-md-6">
                     <label for="year" class="block text-gray-700 text-sm font-bold mb-2">Godina</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="year" name="year" required oninvalid="this.setCustomValidity('Unesite godinu')" oninput="this.setCustomValidity('')">
-                        @foreach(range(date("Y")-1, date("Y")+10) as $year)
+                        @foreach(range(2019, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == date('Y') ? "selected" : "" }}>{{ $year }}</option>
                         @endforeach
                     </select>
                 </div>
-                
+
                 <div class="form-group col-md-6">
                     <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">Odgovornost</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="responsibility" id="responsibility" value="{{ old('responsibility') }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
@@ -32,7 +32,7 @@
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
-                
+
             </div>
 
             <div class="form-row">
@@ -68,7 +68,7 @@
 				    @enderror
                 </div>
             </div>
-            
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="activities" class="block text-gray-700 text-sm font-bold mb-2">Aktivnosti</label>
@@ -83,7 +83,7 @@
                     <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
                 </div>
             </div>
-            
+
             <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
         </form>
     </div>

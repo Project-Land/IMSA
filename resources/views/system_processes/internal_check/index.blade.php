@@ -47,7 +47,7 @@
                             <form id="formYear" class="form-inline" method="get" action="/internal-check/get-data">
                                 <label for="year" class="mr-3 mt-sm-0 mt-2">Godina</label>
                                 <select id="year" class="form-control w-25">
-                                    @foreach(range(date("Y")-1, date("Y")+10) as $year))
+                                    @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
                                         @else
                                         {{ date('Y') == $year ? "selected" : "" }}
@@ -216,13 +216,26 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<p><b>Termin provere:</b> ${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p><b>Sektor:</b> ${ data.checked_sector}</p>
-							<p><b>Tim za proveru:</b> ${ data.team_for_internal_check}</p>
-							<p><b>Početak provere:</b> ${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p><b>Završetak provere:</b> ${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-							<p><b>Rok za dostavljanje izveštaja:</b> ${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } </p>
-							<small><b>Izmenjeno:</b> <i> ${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) } </i></small>
+                            <div class="flex">
+                                <div class="flex-1">
+                                    <p class="font-bold">Termin provere:</p>
+                                    <p class="font-bold">Sektor:</p>
+                                    <p class="font-bold">Tim za proveru:</p>
+                                    <p class="font-bold">Početak provere:</p>
+                                    <p class="font-bold">Završetak provere:</p>
+                                    <p class="font-bold">Rok za dostavljanje izveštaja:</p>
+                                    <p class="font-bold font-italic text-sm">Izmenjeno:</p>
+                                </div>
+                                <div class="flex-1">
+                                    <p>${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p>${ data.checked_sector}</p>
+                                    <p>${ data.team_for_internal_check}</p>
+                                    <p>${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p>${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p>${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p class="font-italic text-sm">${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                </div>
+                            </div>
 						</div>
 						<div class="px-6 py-4 bg-gray-100 text-right">
 							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
@@ -260,16 +273,16 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<p><h5>Specifikacija </h5>${ data.specification }</p>`;
+							<p><h5 class="text-lg">Specifikacija </h5>${ data.specification }</p>`;
 							let num=1;
 							for( let inc of data.corrective_measures){
-								modal += `<p class="border-top"><h5>Neusaglašenost ${ num } </h5>${ inc.noncompliance_description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-lg">Neusaglašenost ${ num } </h5>${ inc.noncompliance_description }</p>`;
 								num++;
 							}
 
 								num=1;
 							for( let rec of data.recommendations){
-								modal += `<p class="border-top"><h5>Preporuka ${ num } </h5>${ rec.description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-lg">Preporuka ${ num } </h5>${ rec.description }</p>`;
 								num++;
 							}
 							modal+=`
