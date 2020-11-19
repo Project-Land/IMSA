@@ -221,39 +221,6 @@ function addCorrectiveMeasure(){
 
             document.getElementById('noncompliance_description').focus();
 
-<<<<<<< HEAD
-<script>
-    let id=`#measure_approval`;
-    let id_ms=`#measure_status`;
-    let id_mef=`#measure_effective_field`;
-    let id_mrf=`#measure_reason_field`;
-    let id_mar=`#measure_approval_reason`;
-    let id_me=`#measure_effective`;
-
-    $(id).change( () => {
-        if($(id).val() == 0){
-            $(id_mrf).css('display', '');
-            $(id_mar).attr('required', true);
-        }
-        else{
-            $(id_mrf).css('display', 'none');
-            $(id_mar).val('');
-            $(id_mar).attr('required', false);
-        }
-    })
-
-    $(id_ms).change( () => {
-        if($(id_ms).val() == 1){
-            $(id_mef).css('display', '');
-            $(id_me).attr('required', true);
-        }
-        else{
-            $(id_mef).css('display', 'none');
-            $(id_me).attr('required', false);
-        }
-    })
-</script>
-=======
                 let id=`#measure_approval`;
                 let id_ms=`#measure_status`;
                 let id_mef=`#measure_effective_field`;
@@ -289,4 +256,3 @@ function addCorrectiveMeasure(){
 
 document.getElementById('compliance').addEventListener('change',addCorrectiveMeasure);
 </script>
->>>>>>> 7545ac24959f6fef836a462246dcb52c0e91ad28
