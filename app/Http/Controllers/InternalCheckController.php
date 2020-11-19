@@ -62,7 +62,7 @@ class InternalCheckController extends Controller
         $teamLeaders = $team->users;
 
         $leaders = $teamLeaders->filter(function ($value) {
-            return $value->allTeams()->first()->membership->role === 'editor';
+            return $value->allTeams()->first()->membership->role === 'editor'|| $value->allTeams()->first()->membership->role === 'admin';
         });
 
         return view('system_processes.internal_check.create',
@@ -154,15 +154,15 @@ class InternalCheckController extends Controller
         $teamLeaders = $team->users;
 
         $leaders = $teamLeaders->filter(function ($value) {
-            return $value->allTeams()->first()->membership->role === 'editor';
+            return $value->allTeams()->first()->membership->role === 'editor' || $value->allTeams()->first()->membership->role === 'admin';
         });
-
+        $leaders_names=explode(',',$internal_check->leaders);
         return view('system_processes.internal_check.edit',
             [
                 'internalCheck' => $internal_check,
                 'sectors'=> $sectors,
-                'teamLeaders' => $leaders
-            ]
+                'teamLeaders' => $leaders,
+                'leaders_names' => $leaders_names            ]
         );
     }
 
