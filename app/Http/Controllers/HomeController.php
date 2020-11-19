@@ -34,7 +34,7 @@ class HomeController extends Controller
             return view('standard', compact('standard'));
         }
         catch (ModelNotFoundException $e){
-            return redirect('/');
+            return redirect('/')->with('status', 'Izaberite standard');
         }
     }
 

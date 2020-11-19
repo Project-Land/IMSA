@@ -69,7 +69,7 @@
                                         {{ $log['message'] }}
                                         @if(!empty($log['error']) && \Auth::user()->hasTeamRole(\Auth::user()->currentTeam, 'super-admin'))
                                             <br> <p style="cursor: pointer; color: blue;" id="error-{{ $key }}" onclick="showError({{ $key }})">Greška</p>
-                                            <div class="modal" id="showError-{{ $key }}" tabindex="-1" role="dialog">
+                                            <div class="modal fade" id="showError-{{ $key }}" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content rounded-0">
                                                         <div class="modal-header">
@@ -83,8 +83,8 @@
                                                                 <div class="col overflow-auto text-wrap">{{ $log['error'] }}</div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Zatvori</button>
+                                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
                                                         </div>
                                                     </div>
                                                 </div>

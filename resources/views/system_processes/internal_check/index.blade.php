@@ -44,9 +44,9 @@
                         </div>
 
                         <div class="col-sm-8 mt-3 mt-md-0">
-                            <form id="formYear" class="form-inline" method="get" action="/internal-check/get-data">
-                                <label for="year" class="mr-3 mt-sm-0 mt-2">Godina</label>
-                                <select id="year" class="form-control w-25">
+                            <form id="formYear" class="form-inline" method="get" action="{{ asset('/internal-check/get-data') }}">
+                                <label for="year" class="mr-3 mt-sm-0 mt-2 text-xs sm:text-base">Godina</label>
+                                <select id="year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
                                         @else
@@ -55,7 +55,7 @@
                                         >{{ $year }}</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="btn btn-primary ml-2">Primeni</button>
+                                <button type="submit" class="sm:ml-3 inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white rounded py-2 px-3">Primeni</button>
                             </form>
                         </div>
 
@@ -215,7 +215,7 @@
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body text-sm">
                             <div class="flex">
                                 <div class="flex-1">
                                     <p class="font-bold">Termin provere:</p>
@@ -321,7 +321,7 @@
     });
 
     document.getElementById('year').addEventListener('change', function(){
-        document.getElementById('formYear').action += '/' + this.value;
+        document.getElementById('formYear').action = '/internal-check/get-data/' + this.value;
     });
 
     function confirmDeleteModal($id){

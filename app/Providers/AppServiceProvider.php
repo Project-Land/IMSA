@@ -23,9 +23,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('Notifications', function ($app) {
             $user = Auth::user();
             if($user->allTeams()->first()->membership->role === 'editor')
-              return Notification::activeInternalChecks()->get();
+              return Notification::activeInternalChecks()->orderBy('checkTime')->get();
             else if($user->allTeams()->first()->membership->role === 'super-admin' || $user->allTeams()->first()->membership->role === 'admin')
-            return Notification::active()->get();
+            return Notification::active()->orderBy('checkTime')->get();
             else
                 return [];
         });

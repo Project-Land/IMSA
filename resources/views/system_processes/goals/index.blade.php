@@ -42,8 +42,8 @@
                         </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
-                                <label for="goals-year" class="mr-3">Godina</label>
-                                <select name="goals-year" id="goals-year" class="form-control w-25 mr-2">
+                                <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">Godina</label>
+                                <select name="goals-year" id="goals-year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach

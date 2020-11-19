@@ -64,9 +64,7 @@
                                     <td class="text-center">{{ $requirement->compliance ? 'Usaglašen':'Neusaglašen' }}</td>
                                     <td class="text-center">{{ date('d.m.Y H:i', strtotime($requirement->updated_at)) }}</td>
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
-
                                     <td class="text-center">
-
                                         @canany(['update', 'delete'], $requirement)
                                         <a data-toggle="tooltip" data-placement="top" title="Izmena vrednovanja" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $requirement->id }}" action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}" method="POST">
