@@ -120,6 +120,8 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
     public function update(EvaluationOfRequirementRequest $request,$id){
         $requirement = EvaluationOfLegalAndOtherRequirement::findOrFail($id);
         $this->authorize('update', $requirement);
+        $correctiveMeasureData=[];
+        if($request->has('noncompliance_source')){
         $correctiveMeasureData=$request->validate([
             'noncompliance_source' => 'required',
             'noncompliance_description' => 'required',
@@ -137,6 +139,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             'measure_approval.required' => 'Razlog neodobravanja mere nije popunjen',
             'measure_status.required' => 'Polje mera efektivna nije popunjeno',
         ]);
+        }
 
         try{
             $requirement->update([
@@ -153,34 +156,52 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                         ['team_id', Auth::user()->current_team_id]
                     ])
                     ->count() + 1;
-                    $correctiveMeasure= $requirement->correctiveMeasures[0];
-                    $correctiveMeasure->update([
-                        'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
-                        'noncompliance_description' => $correctiveMeasureData['noncompliance_description'],
-                        'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'],
-                        'measure' => $correctiveMeasureData['measure'],
-                        'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'],
-                        'measure_approval' => $correctiveMeasureData['measure_approval'],
-                        'measure_status' => $correctiveMeasureData['measure_status'],
-                        'measure_effective' => $correctiveMeasureData['measure_effective'],
-                        'team_id' => Auth::user()->current_team_id,
-                        'user_id' => Auth::user()->id,
-                        'standard_id' => session('standard'),
-                        'sector_id' => 1,
-                        'name' => "KKM ".Carbon::now()->year." / ".$counter,
-                        'noncompliance_cause_date' => Carbon::now(),
-                        'measure_date' => Carbon::now(),
-                        'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
-                    ]);
+                    if($requirement->correctiveMeasures()->count()){
+                  
+                            $correctiveMeasure= $requirement->correctiveMeasures[0];
+                            $correctiveMeasure->update([
+                            'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
+                            'noncompliance_description' => $correctiveMeasureData['noncompliance_description'],
+                            'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'],
+                            'measure' => $correctiveMeasureData['measure'],
+                            'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'],
+                            'measure_approval' => $correctiveMeasureData['measure_approval'],
+                            'measure_status' => $correctiveMeasureData['measure_status'],
+                            'measure_effective' => $correctiveMeasureData['measure_effective'],
+                           // 'noncompliance_cause_date' => Carbon::now(),
+                           // 'measure_date' => Carbon::now(),
+                           // 'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
+                        ]);
+                    }else{
+                            $correctiveMeasure=CorrectiveMeasure::create([
+                            'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
+                            'noncompliance_description' => $correctiveMeasureData['noncompliance_description'],
+                            'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'],
+                            'measure' => $correctiveMeasureData['measure'],
+                            'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'],
+                            'measure_approval' => $correctiveMeasureData['measure_approval'],
+                            'measure_status' => $correctiveMeasureData['measure_status'],
+                            'measure_effective' => $correctiveMeasureData['measure_effective'],
+                            'team_id' => Auth::user()->current_team_id,
+                            'user_id' => Auth::user()->id,
+                            'standard_id' => session('standard'),
+                            'sector_id' => 1,
+                            'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                            'noncompliance_cause_date' => Carbon::now(),
+                            'measure_date' => Carbon::now(),
+                            'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
+                        ]);
+                    }
     
                     $requirement->correctiveMeasures()->save($correctiveMeasure);
-                    
-                
+                     
+            }else{
+                $requirement->correctiveMeasures()->delete();
             }
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id- "'.$requirement->id.'" izmenjeno, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Vrednovanje zakonskih i drugih zahteva je uspešno izmenjeno!');
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene Vrednovanja zakonskih i drugih zahteva id- "'.$requirement->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene Vrednovanja zakonskih i drugih zahteva id- "'.$requirement->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').',Linija:'.$e->getLine().' Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
         }
         return redirect('/evaluation-of-requirements');
@@ -192,7 +213,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         $this->authorize('delete', $requirement);
 
         try{
-
+            $requirement->correctiveMeasures()->delete();
             EvaluationOfLegalAndOtherRequirement::destroy($id);
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id- "'.$requirement->id.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', 'Vrednovanje zakonskih i drugih zahteva je uspešno uklonjeno');

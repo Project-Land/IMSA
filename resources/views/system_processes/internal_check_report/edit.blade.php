@@ -79,7 +79,7 @@
                 <span id="addRecommendations" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
             </div>
             
-            <div id="inconsistenciesDiv" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
+            <div id="inconsistenciesDiv" style="background-color:#ebffe6;" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
                 @foreach($internalCheckReport->correctiveMeasures as $inc)
                     <div class="form-group col-6 mt-3">
                         <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>

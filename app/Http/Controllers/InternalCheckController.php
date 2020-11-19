@@ -171,12 +171,17 @@ class InternalCheckController extends Controller
         $internal_check = InternalCheck::findOrfail($id);
 
         $this->authorize('update', $internal_check);
-
+        $validatedLeaders = $request->validate([ 'leaders' => 'required']);
+        $leaders = implode(",", $validatedLeaders['leaders']);
         $validatedData =  $request->validated();
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
+        $validatedData['leaders'] = $leaders;
 
         try{
             $internal_check->update($validatedData);
+            $pip=$internal_check->planIp;
+            $pip->team_for_internal_check= $validatedData['leaders'];
+            $pip->save();
             $notification = $internal_check->notification;
             if(!$notification){
                 $notification=new Notification();

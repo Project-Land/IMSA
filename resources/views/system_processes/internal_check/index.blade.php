@@ -273,7 +273,8 @@
 								num++;
 							}
 							modal+=`
-							<small> <b>Kreirano:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
+							<small> <b>Kreirano:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small><br>
+                            <small> <b>Poslednja izmena:</b> <i>${ new Date(data.updated_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
 						</div>
 						<div class="px-6 py-4 bg-gray-100 text-right">
 							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
