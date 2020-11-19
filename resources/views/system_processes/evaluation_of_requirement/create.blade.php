@@ -60,9 +60,12 @@
                 </div>
             </div>
 
-            <div id="divParent"></div>
+            <div id="divParent" style="background-color:#ebffe6;">
+            </div>
+            <div class="mb-4 mt-1">
+            <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline float-md-right">Kreiraj</button>
+            </div>
 
-            <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
         </form>
     </div>
 

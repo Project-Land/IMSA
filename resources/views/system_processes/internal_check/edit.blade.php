@@ -39,7 +39,7 @@
 
             <div class="mb-4">
                 <label for="leaders" class="block text-gray-700 text-sm font-bold mb-2">Vođe tima</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders" required oninvalid="this.setCustomValidity('Izaberite proveravače')" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders[]" multiple required oninvalid="this.setCustomValidity('Izaberite proveravače')" oninput="this.setCustomValidity('')">
                     @foreach($teamLeaders as $teamLeader)
                         <option value="{{$teamLeader->name}}">{{$teamLeader->name}}</option>
                     @endforeach

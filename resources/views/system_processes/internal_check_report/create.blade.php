@@ -145,7 +145,7 @@
 
             const div2=document.createElement('div');
             div2.innerHTML+=
-                `<div class="py-2 px-4">
+                `<div class="py-2 px-4" style="background-color:#ebffe6;">
                 <h4 class="text-center my-2">Karton korektivne mere</h4>
                 <div class="form-group">
                     <label for="noncompliance_source[${counter}]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
@@ -282,7 +282,7 @@
                 const div2 = document.createElement('div');
 
                 div2.innerHTML+=
-                    `<div class="py-2 px-4">
+                    `<div class="py-2 px-4" style="background-color:#ebffe6;">
                     <h4 class="text-center my-2">Karton korektivne mere</h4>
                     <div class="form-group">
                         <label for="noncompliance_source[${ counter }]" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
