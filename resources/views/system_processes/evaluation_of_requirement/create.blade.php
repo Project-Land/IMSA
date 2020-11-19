@@ -73,6 +73,7 @@
 
 <script>
     let counter=1;
+
     function addCorrectiveMeasure(){
         const compliance=document.getElementById('compliance');
         const divParent=document.getElementById('divParent');

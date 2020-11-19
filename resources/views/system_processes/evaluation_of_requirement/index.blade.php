@@ -40,7 +40,7 @@
                                 <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> Kreiraj vrednovanje zahteva</a>
                             @endcan
                         </div>
-                    
+
                     </div>
                 </div>
                 <div class="card-body bg-white mt-3">
@@ -64,9 +64,9 @@
                                     <td class="text-center">{{ $requirement->compliance ? 'Usaglašen':'Neusaglašen' }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($requirement->updated_at)) }}</td>
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
-                                    
+
                                     <td class="text-center">
-                                       
+
                                         @canany(['update', 'delete'], $requirement)
                                         <a data-toggle="tooltip" data-placement="top" title="Izmena vrednovanja" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $requirement->id }}" action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}" method="POST">
@@ -107,10 +107,7 @@
 
 <script>
 
-$(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
+    $('[data-toggle="tooltip"]').tooltip();
 
     $('.yajra-datatable').DataTable({
         "language": {
@@ -134,37 +131,6 @@ $(document).ready(function(){
         "order": [[ 3, "desc" ]]
     });
 
-   
-
-    function deleteGoal(id){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        let url = "/goals/delete/"+id;
-
-        if(confirm('Da li ste sigurni?')){
-            $.ajax({
-                type: "delete",
-                url: url,
-                data: {
-                    id: id
-                },
-                success: function(result) {
-                    alert('Cilj uspešno uklonjen');
-                    location.reload();
-                },
-                error: function(result) {
-                    alert('error', result);
-                }
-            });
-        }
-    }
-
-   
-
     function confirmDeleteModal($id){
         let id = $id;
         $('#confirm-delete-modal').modal();
@@ -173,7 +139,5 @@ $(document).ready(function(){
             form.submit();
         });
     }
-
-    
 
 </script>

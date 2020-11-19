@@ -108,6 +108,7 @@
         else{
             $('#estimated_impact').removeClass('text-red-700');
         }
+
     }
 
     $('#probability_of_appearance').change( () => {
