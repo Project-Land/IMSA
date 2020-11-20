@@ -22,7 +22,18 @@ class TrainingRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
+    {
+        if($this->isMethod('post')){
+            return $this->createRules();
+        }
+        elseif($this->isMethod('put')){
+            return $this->updateRules();
+        }
+    }
+
+    public function createRules()
     {
         return [
             'name' => 'required|max:190',
@@ -32,6 +43,19 @@ class TrainingRequest extends FormRequest
             'place' => 'required|max:190',
             'resources' => 'required',
             'training_date' => 'required|after:yesterday'
+        ];
+    }
+
+    public function updateRules()
+    {
+        return [
+            'name' => 'required|max:190',
+            'description' => 'required',
+            'num_of_employees' => 'required|numeric',
+            'description' => 'required',
+            'place' => 'required|max:190',
+            'resources' => 'required',
+            'training_date' => 'required'
         ];
     }
 

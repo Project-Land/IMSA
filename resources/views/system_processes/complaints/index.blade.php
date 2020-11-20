@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -52,7 +38,7 @@
                                     <th>Lice odgovorno za rešavanje</th>
                                     <th>Način rešavanja</th>
                                     <th>Status</th>
-                                    @canany(['update', 'delete'], $complaints->first())<th class="no-sort">Akcije</th>@endcanany
+                                    <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,12 +112,11 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 2, "desc" ]]
+        "order": [[ 1, "desc" ]]
     });
 
     function confirmDeleteModal($id){
         let id = $id;
-
         $('#confirm-delete-modal').modal();
         $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
             let form = $('#delete-form-'+id);
@@ -139,7 +124,6 @@
         });
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
+
 </script>

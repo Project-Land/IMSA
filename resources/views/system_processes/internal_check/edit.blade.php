@@ -58,11 +58,11 @@
                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
             </div>
-                
+
             <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Izmeni</button>
         </form>
     </div>
-    
+
     <script>
         jQuery.datetimepicker.setLocale('sr');
    	    $('#date').datetimepicker({
@@ -86,4 +86,5 @@
             }
         })
     </script>
+
 </x-app-layout>

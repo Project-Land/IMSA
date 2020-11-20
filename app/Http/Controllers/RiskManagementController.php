@@ -15,7 +15,7 @@ class RiskManagementController extends Controller
     public function index()
     {
         if(session('standard') == null){
-            return redirect('/')->with('status', 'Izaberite standard!');
+            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
         $riskManagements = RiskManagement::where([
@@ -38,10 +38,10 @@ class RiskManagementController extends Controller
         try{
             $risk = RiskManagement::create($request->all());
             CustomLog::info('Rizik "'.$risk->description.'" dodat, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Dokument je uspešno sačuvan!');
+            $request->session()->flash('status', array('info', 'Dokument je uspešno sačuvan!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja rizika, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/risk-management');
     }
@@ -67,10 +67,10 @@ class RiskManagementController extends Controller
         try{
             $risk->update($request->all());
             CustomLog::info('Rizik "'.$risk->description.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Dokument je uspešno izmenjen!');
+            $request->session()->flash('status', array('info', 'Dokument je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene rizika '.$risk->description.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/risk-management');
     }
@@ -83,11 +83,11 @@ class RiskManagementController extends Controller
         try{
             RiskManagement::destroy($id);
             CustomLog::info('Rizik "'.$risk->description.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Rizik / plan je uspešno uklonjen');
+            return back()->with('status', array('info', 'Rizik / plan je uspešno uklonjen'));
         }
         catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja rizika "'.$risk->description.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
         }
     }
 
@@ -105,10 +105,10 @@ class RiskManagementController extends Controller
         try{
             $risk->update($request->all());
             CustomLog::info('Plan za postupanje sa rizikom "'.$risk->description.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Plan je uspešno izmenjen!');
+            $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene plana za postupanje sa rizikom '.$risk->description.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/risk-management');
     }

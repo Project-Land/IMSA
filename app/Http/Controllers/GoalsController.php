@@ -16,7 +16,7 @@ class GoalsController extends Controller
     public function index()
     {
         if(session('standard') == null){
-            return redirect('/')->with('status', 'Izaberite standard!');
+            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
         $goals = Goal::where([
@@ -67,10 +67,10 @@ class GoalsController extends Controller
             $goal->notification()->save($notification);
 
             CustomLog::info('Cilj "'.$goal->goal.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Cilj je uspešno sačuvan!');
+            $request->session()->flash('status', array('info', 'Cilj je uspešno sačuvan!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja cilja, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/goals');
     }
@@ -110,10 +110,10 @@ class GoalsController extends Controller
             $goal->notification()->save($notification);
 
             CustomLog::info('Cilj "'.$goal->goal.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Cilj je uspešno izmenjen!');
+            $request->session()->flash('status', array('info', 'Cilj je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene cilja "'.$goal->goal.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/goals');
     }
@@ -127,10 +127,10 @@ class GoalsController extends Controller
             $goal->notification()->delete();
             Goal::destroy($id);
             CustomLog::info('Cilj "'.$goal->goal.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Cilj je uspešno uklonjen');
+            return back()->with('status', array('info', 'Cilj je uspešno uklonjen'));
         } catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja cilja "'.$goal->goal.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 

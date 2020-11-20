@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -181,23 +167,25 @@
             else{
                 let allData = "";
                 $.each(response.data, function (i, item){
-                    let row = `<tr>
-                                <td class="text-center">${ item.year }</td>
-                                <td class="text-center">${ item.name }</td>
-                                <td class="text-center">${ item.type }</td>
-                                <td class="text-center">${ item.description.length < 35 ? item.description : item.description.substr(0, 35) + "..." }</td>
-                                <td class="text-center">${ item.num_of_employees }</td>
-                                <td class="text-center">${ new Date(item.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ item.place }</td>
-                                <td class="text-center">${ item.resources }</td>
-                                <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
-                                <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
-                                <td class="text-center">
-                                    <span class="${ item.isAdmin === false ? 'd-none' : '' }">
-                                        <a href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                        <a style="cursor: pointer; color: red;" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
-                                    </span>
-                                </td>
-                            </tr>`;
+                    let row = `
+                        <tr>
+                            <td class="text-center">${ item.year }</td>
+                            <td class="text-center">${ item.name }</td>
+                            <td class="text-center">${ item.type }</td>
+                            <td class="text-center">${ item.description.length < 35 ? item.description : item.description.substr(0, 35) + "..." }</td>
+                            <td class="text-center">${ item.num_of_employees }</td>
+                            <td class="text-center">${ new Date(item.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ item.place }</td>
+                            <td class="text-center">${ item.resources }</td>
+                            <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
+                            <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
+                            <td class="text-center">
+                                <span class="${ item.isAdmin === false ? 'd-none' : '' }">
+                                    <a href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                    <a class="text-red-600 cursor-pointer hover:text-red-700" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                </span>
+                            </td>
+                        </tr>
+                    `;
                     allData += row;
                 });
                 $('#table-body').html(allData)

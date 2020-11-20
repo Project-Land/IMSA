@@ -9,21 +9,7 @@
     <div class="row mt-1" id="alert">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -224,7 +210,7 @@
                                     <p class="font-bold">Početak provere:</p>
                                     <p class="font-bold">Završetak provere:</p>
                                     <p class="font-bold">Rok za dostavljanje izveštaja:</p>
-                                    <p class="font-bold font-italic text-sm">Izmenjeno:</p>
+                                    <p class="font-bold text-xs">Poslednja izmena:</p>
                                 </div>
                                 <div class="flex-1">
                                     <p>${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
@@ -233,7 +219,7 @@
                                     <p>${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
                                     <p>${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
                                     <p>${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
-                                    <p class="font-italic text-sm">${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p class="font-italic text-xs">${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
                                 </div>
                             </div>
 						</div>
@@ -316,10 +302,6 @@
     	report.addEventListener('click', reportShowAjax);
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
     document.getElementById('year').addEventListener('change', function(){
         document.getElementById('formYear').action = '/internal-check/get-data/' + this.value;
     });
@@ -332,5 +314,7 @@
             form.submit();
         });
     }
+
+    $('[data-toggle="tooltip"]').tooltip();
 
 </script>

@@ -88,10 +88,10 @@ class UserController extends Controller
             TeamMemberAdded::dispatch($team, $newTeamMember);
 
             CustomLog::info('Kreiran novi nalog "'.$request->name.'" sa ulogom: "'.$role.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Novi korisnik je uspešno kreiran!');
+            $request->session()->flash('status', array('info', 'Novi korisnik je uspešno kreiran!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja korisnika '.$request['name'].', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/users');
     }
@@ -120,10 +120,10 @@ class UserController extends Controller
             User::destroy($id);
             $user->teams()->detach();
             CustomLog::info('Obrisan korisnički nalog "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Korisnički nalog je uspešno obrisan');
+            return back()->with('status', array('info', 'Korisnički nalog je uspešno obrisan'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
         }
     }
 }

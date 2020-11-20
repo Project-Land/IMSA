@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\SystemProcess;
 use App\Models\Standard;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class SystemProcessesController extends Controller
 {
@@ -19,9 +19,8 @@ class SystemProcessesController extends Controller
     public function getByStandard(Request $request)
     {
         $standard_id = $request->data['standard'];
-        $standard = Standard::findOrFail($standard_id);
 
-        $sp = SystemProcess::whereDoesntHave('standards', function (Builder $query) use ($standard_id){
+        $sp = SystemProcess::whereDoesntHave('standards', function ($query) use ($standard_id){
             $query->where('standard_id', $standard_id);
         })->get();
 
@@ -35,7 +34,10 @@ class SystemProcessesController extends Controller
 
     public function addToStandard()
     {
-        $standards = Standard::all();
+        $teamId = Auth::user()->current_team_id;
+        $standards = Standard::whereHas('teams', function($q) use ($teamId) {
+            $q->where('team_id', $teamId);
+         })->get();
 
         return view('sp_management.add_to_standard', compact('standards'));
     }
@@ -47,10 +49,10 @@ class SystemProcessesController extends Controller
 
         try{
             $standard->systemProcess()->attach($system_process_id);
-            return back()->with('status', 'Sistemski proces uspešno dodat standardu '. $standard->name);
+            return back()->with('status', array('info', 'Sistemski proces uspešno dodat standardu '. $standard->name));
         }
         catch (Exception $e){
-            return back()->with('status', 'Došlo je do greške, pokušajte ponovo.');
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo.'));
         }
 
     }
