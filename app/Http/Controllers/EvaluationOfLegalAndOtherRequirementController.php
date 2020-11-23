@@ -65,7 +65,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             'team_id' => $request->team_id]);
 
             if( isset($correctiveMeasureData['noncompliance_description'])){
-<<<<<<< HEAD
             foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
                 $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                 ->where([
@@ -92,15 +91,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                     'measure_date' => Carbon::now(),
                     'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
                 ]);
-=======
-                foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
-                    $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
-                    ->where([
-                        ['standard_id', session('standard')],
-                        ['team_id', Auth::user()->current_team_id]
-                    ])
-                    ->count() + 1;
->>>>>>> a997b61dd267495529133ed4c978353ba8640955
 
                     $correctiveMeasure=CorrectiveMeasure::create([
                         'noncompliance_source' => $correctiveMeasureData['noncompliance_source'][$inc],
@@ -175,7 +165,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             ]);
 
             if( isset($correctiveMeasureData['noncompliance_description'])){
-<<<<<<< HEAD
                
                     $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                     ->where([
@@ -222,53 +211,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
     
                     $requirement->correctiveMeasures()->save($correctiveMeasure);
                      
-=======
-                $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
-                ->where([
-                    ['standard_id', session('standard')],
-                    ['team_id', Auth::user()->current_team_id]
-                ])
-                ->count() + 1;
-
-                if($requirement->correctiveMeasures()->count()){
-                    $correctiveMeasure = $requirement->correctiveMeasures[0];
-                    $correctiveMeasure->update([
-                        'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
-                        'noncompliance_description' => $correctiveMeasureData['noncompliance_description'],
-                        'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'],
-                        'measure' => $correctiveMeasureData['measure'],
-                        'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'],
-                        'measure_approval' => $correctiveMeasureData['measure_approval'],
-                        'measure_status' => $correctiveMeasureData['measure_status'],
-                        'measure_effective' => $correctiveMeasureData['measure_effective'],
-                        // 'noncompliance_cause_date' => Carbon::now(),
-                        // 'measure_date' => Carbon::now(),
-                        // 'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
-                    ]);
-                }
-                else{
-                    $correctiveMeasure = CorrectiveMeasure::create([
-                        'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
-                        'noncompliance_description' => $correctiveMeasureData['noncompliance_description'],
-                        'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'],
-                        'measure' => $correctiveMeasureData['measure'],
-                        'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'],
-                        'measure_approval' => $correctiveMeasureData['measure_approval'],
-                        'measure_status' => $correctiveMeasureData['measure_status'],
-                        'measure_effective' => $correctiveMeasureData['measure_effective'],
-                        'team_id' => Auth::user()->current_team_id,
-                        'user_id' => Auth::user()->id,
-                        'standard_id' => session('standard'),
-                        'sector_id' => 1,
-                        'name' => "KKM ".Carbon::now()->year." / ".$counter,
-                        'noncompliance_cause_date' => Carbon::now(),
-                        'measure_date' => Carbon::now(),
-                        'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
-                    ]);
-                }
-
-                $requirement->correctiveMeasures()->save($correctiveMeasure);
->>>>>>> a997b61dd267495529133ed4c978353ba8640955
             }else{
                // $requirement->correctiveMeasures()->delete();
             }
