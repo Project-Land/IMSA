@@ -141,12 +141,9 @@
                 <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
                 <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
                 oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
-                    <option value="">Izaberi...</option>
-                    <option value="Eksterna provera">Eksterna provera</option>
-                    <option value="Interna provera">Interna provera</option>
-                    <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
-                    <option value="Žalba" >Žalba</option>
-                    <option value="Ostalo">Ostalo</option>
+                <option value="">Izaberi...</option>
+                        <option value="1">DA</option>
+                        <option value="0">NE</option>
                     </select>
                 </div>
 
