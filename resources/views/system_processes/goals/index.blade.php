@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -121,7 +107,8 @@
 
 <script>
 
-var myRe = /\bgoals\b/g;
+    var myRe = /\bgoals\b/g;
+
   	if(myRe.test(window.location.href)){
     	window.addEventListener('popstate', function (event) {
     		location.reload();
@@ -129,14 +116,13 @@ var myRe = /\bgoals\b/g;
   	}
 
 	let href = window.location.href;
-	id=href.split('#')[1];
+	id = href.split('#')[1];
 	if(id){
 		let e = document.getElementById('tr' + id);
         let i = document.getElementById('td' + id);
-        i.innerHTML='<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
+        i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
 		e.style = "background:#d8ffcc;";
 	}
-
 
     $('.yajra-datatable').DataTable({
         "language": {
@@ -157,45 +143,47 @@ var myRe = /\bgoals\b/g;
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 6, "desc" ]]
+        "order": [[ 5, "desc" ]]
     });
 
     function showGoal(id){
         axios.get('/goals/'+id)
             .then((response) => {
-                let modal = `<div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content rounded-0">
-                                        <div class="modal-header text-center">
-                                            <h5 class="modal-title font-weight-bold">${ response.data.goal }</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Godina</p></div>
-                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>KPI</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.kpi }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Aktivnosti</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.activities }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Analzia</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
-                                            </div>
-                                        </div>
-                                        <div class="px-6 py-4 bg-gray-100 text-right">
-                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
-                                        </div>
+                let modal = `
+                    <div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content rounded-0">
+                                <div class="modal-header text-center">
+                                    <h5 class="modal-title font-weight-bold">${ response.data.goal }</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Godina</p></div>
+                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>KPI</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.kpi }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Aktivnosti</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.activities }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Analzia</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
                                     </div>
                                 </div>
-                            </div>`;
+                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
                 $("body").append(modal);
                 $('#showData-'+id).modal();
             })
@@ -242,7 +230,8 @@ var myRe = /\bgoals\b/g;
             else{
                 let allData = "";
                 $.each(response.data, function (i, item){
-                    let row = `<tr>
+                    let row = `
+                        <tr>
                             <td class="text-center">${ item.year }</td>
                             <td class="text-center">${ item.goal }</td>
                             <td class="text-center">${ item.kpi }</td>
@@ -255,10 +244,11 @@ var myRe = /\bgoals\b/g;
                                 <button class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                    <a style="cursor: pointer; color: red;" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                    <a class="text-red-600 cursor-pointer hover:text-red-700" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
                                 </span>
                             </td>
-                            </tr>`;
+                        </tr>
+                    `;
                     allData += row;
                 });
                 $('#table-body').html(allData)
@@ -277,8 +267,6 @@ var myRe = /\bgoals\b/g;
         });
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 
 </script>

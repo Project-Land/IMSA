@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('standards', function ($app) {
-            $teamId = \Auth::user()->current_team_id;
+            $teamId = Auth::user()->current_team_id;
             $standards = Standard::whereHas('teams', function($q) use ($teamId) {
                 $q->where('team_id', $teamId);
              })->get();

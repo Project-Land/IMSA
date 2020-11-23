@@ -115,11 +115,11 @@ class InternalCheckReportController extends Controller
                 $report->refresh();
                 $internalCheck = InternalCheck::findOrFail($request->internal_check_id);
                 $report->internalCheck()->save($internalCheck);
-                CustomLog::info('Izveštaj za internu proveru id-"'.$report->id.'" je kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-                $request->session()->flash('status', 'Izveštaj interne provere je uspešno kreiran!');
+                CustomLog::info('Izveštaj za internu proveru id: "'.$report->id.'" je kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+                $request->session()->flash('status', array('info', 'Izveštaj interne provere je uspešno kreiran!'));
             });
         } catch(Exception $e){
-            $request->session()->flash('warning','Došlo je do greške, pokušajte ponovo');
+            $request->session()->flash('status', array('info', 'Došlo je do greške, pokušajte ponovo'));
             CustomLog::warning('Neuspeli pokušaj kreiranja izveštaja interne provere, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
         }
         return redirect('/internal-check');
@@ -162,7 +162,7 @@ class InternalCheckReportController extends Controller
             $recMsg["newInputRecommendation{$i}.min"] = 'Preporuka nije popunjena (popunite ili obrišite polje)';
         }
 
-        $newRecommendationsData = $request->validate($recInputs,$recMsg);
+        $newRecommendationsData = $request->validate($recInputs, $recMsg);
 
         $internal_check_report = InternalCheckReport::findOrfail($id);
 
@@ -207,12 +207,12 @@ class InternalCheckReportController extends Controller
                 }
 
                 CustomLog::info('Izveštaj za internu proveru id: "'.$internal_check_report->id.'" je izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-                $request->session()->flash('status', 'Izveštaj interne provere je uspešno izmenjen!');
+                $request->session()->flash('status', array('info', 'Izveštaj interne provere je uspešno izmenjen!'));
             });
 
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene izveštaja interne provere id: "'.$internal_check_report->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greske, pokušajte ponovo');
+            $request->session()->flash('status', array('danger', 'Došlo je do greske, pokušajte ponovo'));
             return redirect('/internal-check-report/'. $internal_check_report->id.'/edit');
             exit();
         }
@@ -229,10 +229,10 @@ class InternalCheckReportController extends Controller
             $internal_check_report->correctiveMeasures()->delete();
             InternalCheckReport::destroy($id);
             CustomLog::info('Izveštaj za internu proveru "'.$internal_check_report->id.'" je obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Izveštaj interne provere je uspešno uklonjen');
+            return back()->with('status', array('info', 'Izveštaj interne provere je uspešno uklonjen'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja izveštaja interne provere id: "'.$internal_check_report->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Došlo je do greške, pokušajte ponovo');
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
         }
     }
 }

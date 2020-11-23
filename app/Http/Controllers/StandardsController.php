@@ -38,10 +38,10 @@ class StandardsController extends Controller
         try{
             $team->standards()->attach($standard);
             CustomLog::info('Standard "'.$standard->name.'" dodat, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), $team->name);
-            $request->session()->flash('status', 'Standard '.$standard->name.' uspešno dodat firmi "'.$team->name.'"');
+            $request->session()->flash('status', array('info', 'Standard '.$standard->name.' uspešno dodat firmi "'.$team->name.'"'));
         } catch(\Exception $e){
             CustomLog::warning('Neuspeli pokušaj dodele standarda '.$standard->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), $team->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/teams');
     }
@@ -72,10 +72,10 @@ class StandardsController extends Controller
         try{
             Standard::find($id)->teams()->detach($team_id);
             CustomLog::info('Standard "'.$standard->name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), $team->name);
-            return redirect('/teams')->with('status', 'Standard '.$standard->name.' uspešno uklonjen iz firme "'.$team->name.'"');
+            return redirect('/teams')->with('status', array('info', 'Standard '.$standard->name.' uspešno uklonjen iz firme "'.$team->name.'"'));
         } catch(\Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja standarda '.$standard->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), $team->name);
-            return redirect('/teams')->with('warning', 'Došlo je do greške, pokušajte ponovo!');
+            return redirect('/teams')->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 }

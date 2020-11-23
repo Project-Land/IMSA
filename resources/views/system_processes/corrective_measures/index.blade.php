@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -181,7 +167,6 @@
         });
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
+
 </script>

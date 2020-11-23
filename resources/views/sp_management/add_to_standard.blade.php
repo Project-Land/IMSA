@@ -8,18 +8,13 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            
+
         <div class="md:grid md:grid-cols-3 md:gap-6">
 
             <div class="md:col-span-1">
@@ -32,7 +27,7 @@
             </div>
 
             <div class="mt-5 md:mt-0 md:col-span-2">
-               
+
                 <form method="POST" action="{{ route('system-processes.store-to-standard') }}" autocomplete="off">
                     @csrf
                     <div class="shadow overflow-hidden sm:rounded-md">
@@ -59,7 +54,7 @@
                                 <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                             @enderror
                         </div>
-                    
+
                         <div class="flex items-center justify-end mt-4">
                             <x-jet-button class="ml-4 mb-4 mr-4" id="add-button">
                                 {{ __('Dodaj') }}
@@ -85,7 +80,7 @@
         let standard = $('#standard').val();
         $('#add-button').prop('disabled', false);
         $('#system_process').prop('disabled', false);
-        
+
         const data = {'standard': standard}
 
         if(standard != 0){

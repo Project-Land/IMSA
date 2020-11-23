@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -130,55 +116,57 @@
     function showMSR(id){
         axios.get('/management-system-reviews/'+id)
             .then((response) => {
-                let modal = `<div class="modal fade" id="showMSR-${ id }" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content rounded-0">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title font-weight-bold">Zapisnik sa preispitivanja ${ response.data.year }</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row text-sm">
-                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Učestvovali u preispitivanju</p></div>
-                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.participants }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Status mera iz prethodnog preispitivanja</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_status }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.internal_external_changes }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Zadovoljstvo korisnika i povratne informacije zainteresovanih strana</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.customer_satisfaction }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Obim ispunjenosti ciljeva</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.objectives_scope }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Neusaglašenosti i korektivne mere</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.inconsistancies_corrective_measures }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati praćenja i merenja</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.monitoring_measurement_results }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati internih provera</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati eksternih provera</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Performanske eksternih isporučilaca</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.external_suppliers_performance }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Adekvatnost resursa</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resource_adequacy }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Efektivnost mera koje se odnose na rizike i prilike</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_effectiveness }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Prilike za poboljšanje</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Potrebe za izmenama u sistemu menadžmenta</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_change ? response.data.needs_for_change : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Potrebe za resursima</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_resources ? response.data.needs_for_resources : "/" }</p></div>
-                                            </div>
-                                        </div>
-                                        <div class="px-6 py-4 bg-gray-100 text-right">
-                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
-                                        </div>
+                let modal = `
+                    <div class="modal fade" id="showMSR-${ id }" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content rounded-0">
+                                <div class="modal-header">
+                                    <h5 class="modal-title font-weight-bold">Zapisnik sa preispitivanja ${ response.data.year }</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row text-sm">
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Učestvovali u preispitivanju</p></div>
+                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.participants }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Status mera iz prethodnog preispitivanja</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_status }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.internal_external_changes }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Zadovoljstvo korisnika i povratne informacije zainteresovanih strana</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.customer_satisfaction }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Obim ispunjenosti ciljeva</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.objectives_scope }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Neusaglašenosti i korektivne mere</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.inconsistancies_corrective_measures }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati praćenja i merenja</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.monitoring_measurement_results }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati internih provera</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rezultati eksternih provera</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Performanske eksternih isporučilaca</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.external_suppliers_performance }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Adekvatnost resursa</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resource_adequacy }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Efektivnost mera koje se odnose na rizike i prilike</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_effectiveness }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Prilike za poboljšanje</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Potrebe za izmenama u sistemu menadžmenta</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_change ? response.data.needs_for_change : "/" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Potrebe za resursima</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_resources ? response.data.needs_for_resources : "/" }</p></div>
                                     </div>
                                 </div>
-                            </div>`;
+                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
                 $("body").append(modal);
                 $('#showMSR-'+id).modal();
             })
@@ -224,7 +212,8 @@
             else{
                 let allData = "";
                 $.each(response.data, function (i, item){
-                    let row = `<tr>
+                    let row = `
+                        <tr>
                             <td class="text-center">Zapisnik sa preispitivanja ${ item.year }</td>
                             <td class="text-center">
                                 <button class="button text-primary" onclick="showMSR(${ item.id })"><i class="fas fa-eye"></i></button>
@@ -233,7 +222,8 @@
                                     <a style="cursor: pointer; color: red;" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
                                 </span>
                             </td>
-                            </tr>`;
+                        </tr>
+                    `;
                     allData += row;
                 });
                 $('#table-body').html(allData)
@@ -243,13 +233,10 @@
         })
     });
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 
     function confirmDeleteModal($id){
         let id = $id;
-
         $('#confirm-delete-modal').modal();
         $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
             let form = $('#delete-form-'+id);

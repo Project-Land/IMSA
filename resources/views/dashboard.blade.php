@@ -11,13 +11,7 @@
             <div class="row mt-1">
                 <div class="col mx-2">
                     @if(Session::has('status'))
-                        <div class="alert alert-secondary alert-dismissible fade show">
-                            <i class="fas fa-info-circle ml-2"></i>
-                            {{ Session::get('status') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
                     @endif
                 </div>
             </div>

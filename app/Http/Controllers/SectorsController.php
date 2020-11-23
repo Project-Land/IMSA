@@ -29,11 +29,10 @@ class SectorsController extends Controller
 
         try{
             Sector::create($request->all());
-            //CustomLog::info('Sektor "'.$sector->name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Sektor je uspešno kreiran!');
+            $request->session()->flash('status', array('info', 'Sektor je uspešno kreiran!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja sektora, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/sectors');
     }
@@ -60,10 +59,10 @@ class SectorsController extends Controller
         try{
             $sector->update($request->all());
             CustomLog::info('Sektor "'.$sector->name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Sektor je uspešno izmenjen!');
+            $request->session()->flash('status', array('info', 'Sektor je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene sektora '.$sector->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/sectors');
     }
@@ -75,11 +74,10 @@ class SectorsController extends Controller
 
         try{
             Sector::destroy($id);
-            //CustomLog::info('Sektor "'.$sector->name.'" obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Sektor je uspešno uklonjen');
+            return back()->with('status', array('info', 'Sektor je uspešno uklonjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja sektora "'.$sector->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.');
+            return back()->with('status', array('danger', 'Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima.'));
         }
     }
 

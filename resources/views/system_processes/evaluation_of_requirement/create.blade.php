@@ -32,7 +32,7 @@
 
                 <div class="form-group col-md-6">
                     <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">Naziv dokumenta/zakona, ili opis zahteva</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="document_name" id="document_name" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')" value="{{old('document_name')}}">
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="document_name" id="document_name" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')" value="{{ old('document_name') }}">
                     @error('document_name')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
@@ -53,17 +53,17 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="deadline" class="block text-gray-700 text-sm font-bold mb-2">Napomena</label>
-                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="note" id="note" value="{{old('note')}}">
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="note" id="note" value="{{ old('note') }}">
                     @error('note')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
 				    @enderror
                 </div>
             </div>
 
-            <div id="divParent" style="background-color:#ebffe6;">
-            </div>
+            <div id="divParent" style="background-color:#ebffe6;"></div>
+
             <div class="mb-4 mt-1">
-            <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline float-md-right">Kreiraj</button>
+                <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline float-md-right">Kreiraj</button>
             </div>
 
         </form>
@@ -142,10 +142,63 @@
                 <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
                 oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
                     <option value="">Izaberi...</option>
-                    <option value="1"  >DA</option>
-                    <option value="0">NE</option>
-                </select>
-            </div>
+                    <option value="Eksterna provera">Eksterna provera</option>
+                    <option value="Interna provera">Interna provera</option>
+                    <option value="Preispitivanje ISM-a" >Preispitivanje ISM-a</option>
+                    <option value="Žalba" >Žalba</option>
+                    <option value="Ostalo">Ostalo</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="noncompliance_description${counter}" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description${counter}" name="noncompliance_description[${counter}]" required oninvalid="this.setCustomValidity('Unesite opis neusaglašenosti')"
+                    oninput="this.setCustomValidity('')" ></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause${counter}" name="noncompliance_cause[${counter}]" required oninvalid="this.setCustomValidity('Unesite uzrok neusaglašenosti')"
+                    oninput="this.setCustomValidity('')"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
+                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('Unesite meru za otklanjanje neusaglašenosti')"
+                    oninput="this.setCustomValidity('')"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
+                        <option value="1" >DA</option>
+                        <option value="0" >NE</option>
+                    </select>
+                </div>
+
+                <div class="mb-4" id="measure_reason_field${counter}" style="display: none">
+                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">Razlog neodobravanja mere</label>
+                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
+                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason[${counter}]" id="measure_approval_reason${counter}" >
+                </div>
+
+                <div class="mb-4">
+                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status[${counter}]" id="measure_status${counter}">
+                        <option value="0">NE</option>
+                        <option value="1">DA</option>
+                    </select>
+                </div>
+
+                <div class="mb-4" id="measure_effective_field${counter}" style="display: none">
+                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
+                        <option value="">Izaberi...</option>
+                        <option value="1">DA</option>
+                        <option value="0">NE</option>
+                    </select>
+                </div>
             </div>
         `;
 
@@ -153,12 +206,12 @@
 
         document.getElementById('noncompliance_description' + counter).focus();
 
-        let id=`#measure_approval${counter}`;
-        let id_ms=`#measure_status${counter}`;
-        let id_mef=`#measure_effective_field${counter}`;
-        let id_mrf=`#measure_reason_field${counter}`;
-        let id_mar=`#measure_approval_reason${counter}`;
-        let id_me=`#measure_effective${counter}`;
+        let id = `#measure_approval${counter}`;
+        let id_ms = `#measure_status${counter}`;
+        let id_mef = `#measure_effective_field${counter}`;
+        let id_mrf = `#measure_reason_field${counter}`;
+        let id_mar = `#measure_approval_reason${counter}`;
+        let id_me = `#measure_effective${counter}`;
 
         $(id).change( () => {
             if($(id).val() == 0){

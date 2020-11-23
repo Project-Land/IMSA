@@ -9,21 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <div class="alert alert-info alert-dismissible fade show">
-                    {{ Session::get('status') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            @if(Session::has('warning'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    {{ Session::get('warning') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
             @endif
         </div>
     </div>
@@ -34,10 +20,10 @@
 
             <div class="card">
                 <div class="card-header">
-                    @can('create', App\Models\RiskManagement::class)
-                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> Kreiraj rizik / priliku</a>
-                    @endcan
-                    </div>
+                @can('create', App\Models\RiskManagement::class)
+                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> Kreiraj rizik / priliku</a>
+                @endcan
+                </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -179,7 +165,6 @@
         });
     }
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('[data-toggle="tooltip"]').tooltip();
+
 </script>

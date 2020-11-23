@@ -7,7 +7,6 @@ use App\Facades\CustomLog;
 use App\Models\EnvironmentalAspect;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EnvironmentalAspectsRequest;
-use Illuminate\Http\Request;
 
 class EnvironmentalAspectsController extends Controller
 {
@@ -15,7 +14,7 @@ class EnvironmentalAspectsController extends Controller
     public function index()
     {
         if(session('standard') == null || session('standard_name') != 14001){
-            return redirect('/')->with('status', 'Izaberite standard!');
+            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
         $environmental_aspects = EnvironmentalAspect::where([
@@ -38,10 +37,10 @@ class EnvironmentalAspectsController extends Controller
         try{
             $environmental_aspect = EnvironmentalAspect::create($request->all());
             CustomLog::info('Aspekt životne sredine za proces "'.$environmental_aspect->process.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Aspekt životne sredine je uspešno sačuvan!');
+            $request->session()->flash('status', array('info', 'Aspekt životne sredine je uspešno sačuvan!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja aspekta životne sredine, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/environmental-aspects');
     }
@@ -66,10 +65,10 @@ class EnvironmentalAspectsController extends Controller
         try{
             $environmental_aspect->update($request->all());
             CustomLog::info('Aspekt životne sredine za proces "'.$environmental_aspect->process.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', 'Aspekt životne sredine je uspešno izmenjen!');
+            $request->session()->flash('status', array('info', 'Aspekt životne sredine je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene aspekta životne sredine za proces "'.$environmental_aspect->process.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('warning', 'Došlo je do greške, pokušajte ponovo!');
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/environmental-aspects');
     }
@@ -82,10 +81,10 @@ class EnvironmentalAspectsController extends Controller
         try{
             EnvironmentalAspect::destroy($id);
             CustomLog::info('Aspekt životne sredine za proces "'.$environmental_aspect->process.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', 'Aspekt životne sredine je uspešno obrisan');
+            return back()->with('status', array('info', 'Aspekt životne sredine je uspešno obrisan'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja aspekta životne sredine za proces "'.$environmental_aspect->process.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('warning', 'Došlo je do greške! Pokušajte ponovo.');
+            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo'));
         }
     }
 }

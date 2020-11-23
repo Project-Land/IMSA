@@ -48,7 +48,7 @@ class LogsController extends Controller
             return view('logs.index', compact('company', 'data', 'logs'));
         }
         else{
-            return redirect('teams')->with('status', 'Izabrani log ne postoji!');
+            return redirect('teams')->with('status', array('danger', 'Izabrani log ne postoji!'));
         }
 
     }
