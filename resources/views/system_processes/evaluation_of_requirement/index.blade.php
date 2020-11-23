@@ -23,10 +23,9 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\EvaluationOfLegalAndOtherRequirement::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> Kreiraj vrednovanje zahteva</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> Dodaj zakon / zahtev</a>
                             @endcan
                         </div>
-
                     </div>
                 </div>
                 <div class="card-body bg-white mt-3">

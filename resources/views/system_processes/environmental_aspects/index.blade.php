@@ -21,9 +21,9 @@
             <div class="card">
                 <div class="card-header">
                     @can('create', App\Models\EnvironmentalAspect::class)
-                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('environmental-aspects.create') }}"><i class="fas fa-plus"></i> Kreiraj aspekt</a>
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('environmental-aspects.create') }}"><i class="fas fa-plus"></i> Dodaj aspekt</a>
                     @endcan
-                    </div>
+                </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -52,7 +52,7 @@
                                     <td class="text-center">{{ $ea->probability_of_appearance }}</td>
                                     <td class="text-center">{{ $ea->probability_of_discovery }}</td>
                                     <td class="text-center">{{ $ea->severity_of_consequences }}</td>
-                                    <td class="text-center">{{ $ea->estimated_impact }}</td>
+                                    <td class="text-center {{ $ea->estimated_impact >= 8 ? "text-red-600" : "" }}">{{ $ea->estimated_impact }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $ea)
                                         <a data-toggle="tooltip" data-placement="top" title="Izmena aspekta životne sredine" href="{{ route('environmental-aspects.edit', $ea->id) }}"><i class="fas fa-edit"></i></a>
