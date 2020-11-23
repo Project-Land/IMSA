@@ -90,7 +90,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                     'user_id' => Auth::user()->id,
                     'standard_id' => session('standard'),
                     'sector_id' => 1,
-                    'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                    'name' => "EMS KKM ".Carbon::now()->year." / ".$counter,
                     'noncompliance_cause_date' => Carbon::now(),
                     'measure_date' => Carbon::now(),
                     'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
@@ -186,7 +186,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                             'user_id' => Auth::user()->id,
                             'standard_id' => session('standard'),
                             'sector_id' => 1,
-                            'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                            'name' => "EMS KKM ".Carbon::now()->year." / ".$counter,
                             'noncompliance_cause_date' => Carbon::now(),
                             'measure_date' => Carbon::now(),
                             'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
@@ -196,7 +196,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                     $requirement->correctiveMeasures()->save($correctiveMeasure);
                      
             }else{
-                $requirement->correctiveMeasures()->delete();
+               // $requirement->correctiveMeasures()->delete();
             }
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id- "'.$requirement->id.'" izmenjeno, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', 'Vrednovanje zakonskih i drugih zahteva je uspešno izmenjeno!');

@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\EvaluationOfLegalAndOtherRequirement::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> Kreiraj vrednovanje zahteva</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> Dodaj zakon/zahtev</a>
                             @endcan
                         </div>
 
@@ -66,11 +66,11 @@
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $requirement)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena vrednovanja" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="Izmena zakona/zahteva" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $requirement->id }}" action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje vrednovanja" onclick="confirmDeleteModal({{ $requirement->id }})"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje zakona/zahteva" onclick="confirmDeleteModal({{ $requirement->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -90,7 +90,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje vrednovanja</div>
+                    <div class="text-lg">Brisanje zakona/zahteva</div>
                     <div class="mt-4">Da li ste sigurni?</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">

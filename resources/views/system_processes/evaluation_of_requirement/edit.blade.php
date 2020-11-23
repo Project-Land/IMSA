@@ -63,7 +63,7 @@
             <div id="divParent" style="background-color:#ebffe6;">
                 @if($cm=$requirement->correctiveMeasures[0]??null)
                 <div class="py-2 px-4">
-                        <h4 class="text-center my-3">Karton korektivne mere</h4>
+                        <h4 class="text-center my-3">Karton korektivne mere <a href="/corrective-measures/{{$cm->id}}/edit">{{$cm->name}}</a></h4>
 
                         <div class="form-group">
                             <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
@@ -110,7 +110,7 @@
                             oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason" id="measure_approval_reason" value="{{$cm->measure_approval_reason}}">
                         </div>
                         <div class="form-group">
-                            <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                            <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Da li je mera sprovedena?</label>
                             <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
                                 <option value="0" @if($cm->measure_status==0){{'selected'}}@endif>NE</option>
                                 <option value="1" @if($cm->measure_status==1){{'selected'}}@endif >DA</option>
@@ -142,6 +142,10 @@
 
 let counter=1;
 function addCorrectiveMeasure(){
+   
+    if(document.getElementById('noncompliance_description') && counter==1){
+        return;
+    } counter++;
     const compliance=document.getElementById('compliance');
     const divParent=document.getElementById('divParent');
     if(compliance.value==1){
@@ -198,7 +202,7 @@ function addCorrectiveMeasure(){
                     oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="measure_approval_reason" id="measure_approval_reason" >
                 </div>
                 <div class="form-group">
-                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Da li je mera sprovedena?</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
                         <option value="0" >NE</option>
                         <option value="1"  >DA</option>
@@ -249,10 +253,43 @@ function addCorrectiveMeasure(){
                         $(id_mef).css('display', 'none');
                         $(id_me).attr('required', false);
                     }
-                })
-                counter++;
+                }) 
+               // counter++;
 
 }
+
+
+
+let id=`#measure_approval`;
+let id_ms=`#measure_status`;
+let id_mef=`#measure_effective_field`;
+let id_mrf=`#measure_reason_field`;
+let id_mar=`#measure_approval_reason`;
+let id_me=`#measure_effective`;
+
+$(id).change( () => {
+    if($(id).val() == 0){
+        $(id_mrf).css('display', '');
+        $(id_mar).attr('required', true);
+    }
+    else{
+        $(id_mrf).css('display', 'none');
+        $(id_mar).val('');
+        $(id_mar).attr('required', false);
+    }
+})
+
+$(id_ms).change( () => {
+    if($(id_ms).val() == 1){
+        $(id_mef).css('display', '');
+        $(id_me).attr('required', true);
+    }
+    else{
+        $(id_mef).css('display', 'none');
+        $(id_me).attr('required', false);
+    }
+})
+
 
     document.getElementById('compliance').addEventListener('change', addCorrectiveMeasure);
 </script>

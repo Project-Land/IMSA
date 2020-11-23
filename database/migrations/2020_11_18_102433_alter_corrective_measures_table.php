@@ -14,7 +14,7 @@ class AlterCorrectiveMeasuresTable extends Migration
     public function up()
     {
         Schema::table('corrective_measures', function (Blueprint $table) {
-            $table->dropColumn('internal_check_report_id');
+         
             $table->unsignedBigInteger('correctiveMeasureable_id')->nullable();
             $table->string('correctiveMeasureable_type')->nullable();
         });
