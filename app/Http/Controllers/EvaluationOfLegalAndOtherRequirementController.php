@@ -92,7 +92,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                     'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
                 ]);
 
-                    $correctiveMeasure=CorrectiveMeasure::create([
+                    /*$correctiveMeasure=CorrectiveMeasure::create([
                         'noncompliance_source' => $correctiveMeasureData['noncompliance_source'][$inc],
                         'noncompliance_description' => $correctiveMeasureData['noncompliance_description'][$inc],
                         'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'][$inc],
@@ -109,7 +109,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                         'noncompliance_cause_date' => Carbon::now(),
                         'measure_date' => Carbon::now(),
                         'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
-                    ]);
+                    ]);*/
 
                     $requirement->correctiveMeasures()->save($correctiveMeasure);
                 }

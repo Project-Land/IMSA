@@ -51,7 +51,7 @@ class UserController extends Controller
             'name.max' => 'Ime ne sme biti duže od 50 karaktera',
             'username.required' => 'Unesite korisničko ime',
             'username.min' => 'Korisničko ime mora sadržati minimum 4 karaktera',
-            'username.max' => 'Korisničko ime ne sme biti duže od 20 karaktera',
+            'username.max' => 'Korisničko ime ne sme biti duže od 35 karaktera',
             'username.alpha_dash' => 'Korisničko ime može sadržati samo slova, brojeve i specijale karaktere "-" i "_"',
             'username.unique' => 'Već postoji korisnik sa takvim korisničkim imenom',
             'email.unique' => 'Već postoji korisnik sa takvom email adresom',
@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:255'],
-            'username' => ['required', 'string', 'alpha_dash', 'min:4', 'max:20', 'unique:users'],
+            'username' => ['required', 'string', 'alpha_dash', 'min:4', 'max:35', 'unique:users'],
             'email' => ['nullable', 'max:255', 'unique:users'],
             'password' => $this->passwordRules()
         ], $messages);

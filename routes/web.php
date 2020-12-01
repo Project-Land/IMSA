@@ -147,3 +147,4 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('manual', [HomeController::class, 'manual'])->name('manual');

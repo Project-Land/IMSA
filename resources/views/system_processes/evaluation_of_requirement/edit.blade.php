@@ -63,7 +63,7 @@
             <div id="divParent" style="background-color:#ebffe6;">
                 @if($cm=$requirement->correctiveMeasures[0]??null)
                 <div class="py-2 px-4">
-                        <h4 class="text-center my-3">Karton korektivne mere <a href="/corrective-measures/{{$cm->id}}/edit">{{$cm->name}}</a></h4>
+                        <h4 class="text-center my-3">Karton korektivne mere <a href="{{ route('corrective-measures.edit', $cm->id) }}">{{$cm->name}}</a></h4>
 
                         <div class="form-group">
                             <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
