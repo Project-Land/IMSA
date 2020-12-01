@@ -76,4 +76,46 @@ class HomeController extends Controller
         }
     }
 
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function about(){
+        return view('guest.about');
+    }
+
+    public function contact(){
+        return view('guest.contact');    
+    }
+
 }
