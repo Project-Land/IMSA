@@ -134,3 +134,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
 });
+
+Route::get('manual', [HomeController::class, 'manual'])->name('manual');
