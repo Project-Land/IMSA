@@ -20,8 +20,8 @@
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Login</a>
                     <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Uputstvo za korišćenje</a>
-                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">O aplikaciji</a>
-                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Kontakt</a>
+                    <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">O aplikaciji</a>
+                    <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Kontakt</a>
                 </div>
 
             </div>
@@ -50,11 +50,11 @@
             {{ __('Uputstvo za korišćenje') }}
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="">
+        <x-jet-responsive-nav-link href="{{ route('about') }}" :active="request()->routeIs('about')">
             {{ __('O aplikaciji') }}
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="">
+        <x-jet-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
             {{ __('Kontakt') }}
         </x-jet-responsive-nav-link>
 
