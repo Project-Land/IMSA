@@ -36,11 +36,11 @@ class GoalsRequest extends FormRequest
     public function createRules()
     {
         return [
-            'responsibility' => 'required|max:190',
-            'goal' => 'required|max:190',
+            'responsibility' => 'required',
+            'goal' => 'required',
             'deadline' => 'required|after:yesterday',
-            'kpi' => 'required|max:190',
-            'resources' => 'required|max:190',
+            'kpi' => 'required',
+            'resources' => 'required',
             'activities' => 'required'
         ];
     }
@@ -48,11 +48,11 @@ class GoalsRequest extends FormRequest
     public function updateRules()
     {
         return [
-            'responsibility' => 'required|max:190',
-            'goal' => 'required|max:190',
+            'responsibility' => 'required',
+            'goal' => 'required',
             'deadline' => 'required',
-            'kpi' => 'required|max:190',
-            'resources' => 'required|max:190',
+            'kpi' => 'required',
+            'resources' => 'required',
             'activities' => 'required'
         ];
     }
@@ -61,15 +61,11 @@ class GoalsRequest extends FormRequest
     {
         return [
             'responsibility.required' => 'Unesite odgovornost',
-            'responsibility.max' => 'Polje može sadržati najviše 190 karaktera',
             'goal.required' => 'Unesite cilj',
-            'goal.max' => 'Polje može sadržati najviše 190 karaktera',
             'deadline.required' => 'Unesite rok za realizaciju',
             'deadline.after' => 'Unesite budući datum',
             'kpi.required' => 'Unesite KPI',
-            'kpi.max' => 'Polje može sadržati najviše 190 karaktera',
             'resources.required' => 'Unesite resurse',
-            'resources.max' => 'Polje može sadržati najviše 190 karaktera',
             'activities.required' => 'Unesite aktivnosti'
         ];
     }

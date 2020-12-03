@@ -58,8 +58,8 @@
                             @foreach($goals as $goal)
                                 <tr id='trgoal{{$goal->id}}'><a id='goal{{$goal->id}}'></a>
                                     <td id='tdgoal{{$goal->id}}' class="text-center">{{ $goal->year }}</td>
-                                    <td class="text-center">{{ $goal->goal }}</td>
-                                    <td class="text-center">{{ $goal->kpi }}</td>
+                                    <td class="text-center">{{ Str::length($goal->goal) < 35 ? $goal->goal : Str::limit($goal->goal, 35) }}</td>
+                                    <td class="text-center">{{ Str::length($goal->kpi) < 35 ? $goal->kpi : Str::limit($goal->kpi, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
                                     <td class="text-center">{{ $goal->responsibility }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
@@ -165,7 +165,7 @@
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost za praćenje i realizaciju cilja</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>

@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="responsibility">Odgovornost</label>
+                    <label for="responsibility">Odgovornost za praćenje i realizaciju cilja</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="responsibility" id="responsibility" value="{{ $goal->responsibility }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
                     @error('responsibility')
 					    <span class="text-red-700 italic text-sm">{{ $message }}</span>
