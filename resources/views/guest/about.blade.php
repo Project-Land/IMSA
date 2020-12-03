@@ -23,9 +23,8 @@ Osim opštih, specifični benefiti primene aplikacije su:
 	<li><i class="fas fa-check"></i> Smanjuje rizik od gubljenja/suspenzije sertifikata</li>
 </ul>
 
-<div id="i" class="w-75 mt-10 mx-auto" style="min-width:70%;height:30vw;" >
+<div id="i" class="mt-10 mx-auto" style="" >
     <input class="sliderInput" checked type="radio" name="s" style="background-image: url({{asset('images/aplikacija5.png')}});" >
-    <input class="sliderInput"  type="radio" name="s" style="background-image:url({{asset('images/aplikacija.png')}})" >
     <input class="sliderInput"  type="radio" name="s" style="background-image: url({{asset('images/aplikacija4.png')}});" >
 	<input class="sliderInput" type="radio" name="s" style="background-image: url({{asset('images/aplikacija2.png')}});" >
 	<input class="sliderInput" type="radio" name="s" style="background-image: url({{asset('images/aplikacija3.png')}});" >

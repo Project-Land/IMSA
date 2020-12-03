@@ -8,7 +8,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center pb-2">
                     <a href="{{ route('login') }}">
-                        <img src="{{ asset('/images/logo.jpg') }}" alt="imsa-logo" class="w-15 h-15 mt-2">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="imsa-logo" class="w-15 h-15 mt-2">
                     </a>
                 </div>
 

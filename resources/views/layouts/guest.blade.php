@@ -24,8 +24,9 @@
 #i {
 	position: relative;
 	display: block;
-	width: 500px;
-	height: 300px;
+	width:65vw;
+	min-width:55vw;
+	height:35vw;
 	overflow: hidden;
 	border-radius: 5px;
 }
@@ -117,6 +118,13 @@
 
 .sliderInput:checked + input ~ input:before {
 	display: none;
+}
+
+@media screen and (max-width: 600px) {
+  #i {width:100%;
+  height:50vw;
+  
+  }
 }
 
         </style>
