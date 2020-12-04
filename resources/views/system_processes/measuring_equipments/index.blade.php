@@ -31,8 +31,8 @@
                                 <tr class="text-center">
                                     <th>Oznaka merne opreme</th>
                                     <th>Naziv merne opreme</th>
-                                    <th>Datum poslednjeg etaloniranja/bandažiranja</th>
-                                    <th>Datum narednog etaloniranja/bandažiranja</th>
+                                    <th>Datum poslednjeg etaloniranja/baždarenja</th>
+                                    <th>Datum narednog etaloniranja/baždarenja</th>
                                     <th class="no-sort">Akcije</th>
                                 </tr>
                             </thead>

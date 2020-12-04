@@ -132,7 +132,7 @@
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Uzrok</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause != null ? response.data.cause : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera za smanjenje rizika</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Mera za smanjenje rizika/ korišćenje prilike</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility != null ? response.data.responsibility : "/" }</p></div>
