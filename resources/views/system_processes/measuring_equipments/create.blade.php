@@ -32,7 +32,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="last_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum poslednjeg etaloniranja/bandažiranja</label>
+				<label for="last_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum poslednjeg etaloniranja/baždarenja</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="last_calibration_date" id="last_calibration_date" value="{{ old('last_calibration_date') }}">
 				@error('last_calibration_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -40,7 +40,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="next_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum sledećeg etaloniranja/bandažiranja</label>
+				<label for="next_calibration_date" class="block text-gray-700 text-sm font-bold mb-2">Datum sledećeg etaloniranja/baždarenja</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="next_calibration_date" id="next_calibration_date" value="{{ old('next_calibration_date') }}">
 				@error('next_calibration_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>

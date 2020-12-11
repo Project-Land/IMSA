@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Plan za postupanje sa rizikom - Kreiranje / Izmena plana') }}
+            {{ session('standard_name') }} - {{ __('Plan za postupanje sa rizikom/prilikom - Kreiranje / Izmena plana') }}
         </h2>
     </x-slot>
 
@@ -32,7 +32,7 @@
 			</div>
 
             <div class="mb-4">
-				<label for="risk_lowering_measure">Mera za smanjenje rizika:</label>
+				<label for="risk_lowering_measure">Mera za smanjenje rizika/ korišćenje prilike:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="risk_lowering_measure" name="risk_lowering_measure" value="{{ $risk->risk_lowering_measure }}" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
 				@error('risk_lowering_measure')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
