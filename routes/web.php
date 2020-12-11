@@ -119,6 +119,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('users', UserController::class);
     Route::get('change-current-team/{id}', [UserController::class, 'changeCurrentTeam']);
+    Route::get('user/notification-settings', [UserController::class, 'notification_settings_show'])->name('users.notification-settings');
+    Route::post('user/notification-settings-save', [UserController::class, 'notification_settings'])->name('users.notification-settings-save');
 
     Route::get('standards/create/{id}', [StandardsController::class, 'create'])->name('standards.create-new');
     Route::resource('standards', StandardsController::class);
@@ -138,7 +140,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 
-  
+
 
 
 });

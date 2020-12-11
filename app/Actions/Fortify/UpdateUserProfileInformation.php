@@ -18,6 +18,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min:4', 'max:20', Rule::unique('users')->ignore($user->id)],
@@ -25,7 +26,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'photo' => ['nullable', 'image', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
-        if (isset($input['photo'])) {
+        if (isset($input['photo']))
+        {
             $user->updateProfilePhoto($input['photo']);
         }
 

@@ -180,6 +180,10 @@
                                 {{ __('Profil') }}
                             </x-jet-dropdown-link>
 
+                            <x-jet-dropdown-link href="{{ route('users.notification-settings') }}">
+                                {{ __('Podešavanje notifikacija') }}
+                            </x-jet-dropdown-link>
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokeni') }}
@@ -390,6 +394,10 @@
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profil') }}
+                </x-jet-responsive-nav-link>
+
+                <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" :active="request()->routeIs('users.notification-settings')">
+                    {{ __('Podešavanje notifikacija') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())

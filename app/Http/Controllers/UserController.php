@@ -6,12 +6,11 @@ use Exception;
 use App\Models\User;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Events\TeamMemberAdded;
 use App\Facades\CustomLog;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserNotificationTypes;
 
 class UserController extends Controller
 {
@@ -124,6 +123,42 @@ class UserController extends Controller
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+        }
+    }
+
+    public function notification_settings_show()
+    {
+        $selected = UserNotificationTypes::where('user_id', Auth::user()->id)->get();
+        return view('users.notifications_settings', compact('selected'));
+    }
+
+    public function notification_settings(Request $request)
+    {
+        $notification_types = $request->notification_types;
+
+        $selected = UserNotificationTypes::where('user_id', Auth::user()->id)->get();
+
+        if(!empty($notification_types)){
+            //Removes types if deselected
+            foreach($selected as $s){
+                if(!in_array($s->notifiable_type, $notification_types)){
+                    UserNotificationTypes::where('notifiable_type', $s->notifiable_type)->where('user_id', Auth::user()->id)->delete();
+                }
+            }
+
+            //Adds new selected types
+            foreach($notification_types as $n){
+                if(!$selected->contains('notifiable_type', $n)){
+                    $data['user_id'] = Auth::user()->id;
+                    $data['notifiable_type'] = $n;
+                    UserNotificationTypes::create($data);
+                }
+            }
+            return back()->with('status', array('info', 'Sačuvano'));
+        }
+        else{
+            UserNotificationTypes::where('user_id', Auth::user()->id)->delete();
+            return back()->with('status', array('info', 'Sačuvano'));
         }
     }
 }
