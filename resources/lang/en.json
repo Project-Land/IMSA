@@ -50,7 +50,7 @@
     "Uklanjanje naloga" : "Delete account",
     "Trajno uklonite vaš nalog" : "Permanently delete your account",
     "Uklonite nalog" : "Delete account",
-    "Nakon što uklonite nalog, svi podaci vezani za njega biće trajno uklonjeni. Pre brisanja naloga, molimo vas da preuzmete sve potrebne podatke vezane za vaš nalog" : "After deleting, all of your account informations wil be permanently removed. Please download all relevant informations before you delete your account",
+    "Nakon što uklonite nalog, svi podaci vezani za njega biće trajno uklonjeni. Pre brisanja naloga, molimo vas da preuzmete sve potrebne podatke vezane za vaš nalog" : "After deleting your account, all of your account informations wil be permanently removed. Please download all relevant informations before you delete your account",
     "Ukloni nalog" : "Delete account",
     "Da li ste sigurni da želite da uklonite vaš nalog? Nakon uklanjanja, svi podaci vezani za nalog će biti obrisani. Unesite vašu lozinku kako bi ste potvrdili da želite da uklonite nalog." : "Are you sure? After deleting, all of your account informations will be permanently removed. Please enter your password for confirmation",
     "Podešavanje email notifikacija" : "Email notifications settings",
@@ -133,6 +133,13 @@
     "Nazad" : "Back",
     "Obaveštenja" : "Notifications",
     "Sektori" : "Sectors",
+    "Kreiranje" : "Create",
     "Lista sektora" : "List of all sectors",
-    "Dodaj sektor" : "Add new sector"
+    "Dodaj sektor" : "Add new sector",
+    "Naziv sektora" : "Sector name",
+    "Sistem Menadžmenta" : "System management",
+    "Brisanje sektora" : "Delete sector",
+    "Izmena sektora" : "Edit sector",
+    "Naziv nije popunjen" : "Name is required",
+    "Izmena" : "Edit"
 }

@@ -22,7 +22,7 @@
                 @can('create', App\Models\Sector::class)
                 <div class="card-header">
                     <!-- <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a> -->
-                    <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-blue-600 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route('sectors.create') }}"><i class="fas fa-plus mr-1"></i> Dodaj sektor</a>
+                    <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-blue-600 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route('sectors.create') }}"><i class="fas fa-plus mr-1"></i> {{ __('Dodaj sektor') }}</a>
                 </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -30,8 +30,8 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Naziv sektora</th>
-                                    <th class="no-sort">Akcije</th>
+                                    <th>{{ __('Naziv sektora') }}</th>
+                                    <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,11 +40,11 @@
                                     <td class="text-center"><a href="{{'/procedures/'.$sector->id}}">{{ $sector->name }}</a></td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $sector)
-                                        <a href="{{ route('sectors.edit', $sector->id) }}" data-toggle="tooltip" data-placement="top" title="Izmena sektora"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('sectors.edit', $sector->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Izmena sektora') }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $sector->id }}" action="{{ route('sectors.destroy', $sector->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje sektora" onclick="confirmDeleteModal({{ $sector->id }})"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje sektora') }}" onclick="confirmDeleteModal({{ $sector->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -64,12 +64,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje sektora</div>
-                    <div class="mt-4">Da li ste sigurni?</div>
+                    <div class="text-lg">{{ __('Brisanje sektora') }}</div>
+                    <div class="mt-4">{{ __('Da li ste sigurni?') }}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši') }}</a>
                 </div>
             </div>
         </div>
@@ -78,20 +78,18 @@
 </x-app-layout>
 
 <script>
+    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    var current_lang = "Serbian"
+    if(lang == "en"){
+        current_lang = "English";
+    }
+    else {
+        current_lang = "Serbian"
+    }
+    console.log(lang);
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
-            "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
-            }
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/"+current_lang+".json",
         },
         "columnDefs": [{
           "targets": 'no-sort',
