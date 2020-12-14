@@ -45,17 +45,25 @@ class SendEmailToAdmin extends Command
     public function handle()
     {
         set_time_limit(200);
-        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(2))->with('notifiable.standard')->get();
-        $u=User::find(1);
-        Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
+        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(2))
+        ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier'])
+        ->orWhere(function($query) {
+            $query->whereDate('checkTime',Carbon::now()->addDay(2))
+                  ->where('notifiable_type', 'App\\Models\\MeasuringEquipment');
+        })->with('notifiable.standard')->get();
+        if(!$nots->count()){
+            return;
+        }
+        //$u=User::find(1);
+       // Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             $users=$team->allUsers();
             foreach($users as $u){
                 $not_type= UserNotificationTypes::where('user_id',$u->id)->where('notifiable_type',$n->notifiable_type)->count();
                 if($u->hasTeamRole($team, 'admin') && $not_type){
-                    echo "1 ";
-                    // Mail::to($u)->send(new SendMailToAdmin($n));
+                    
+                     Mail::to($u)->send(new SendMailToAdmin($n));
                 }
             }
         }
