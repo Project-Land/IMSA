@@ -141,5 +141,33 @@
     "Brisanje sektora" : "Delete sector",
     "Izmena sektora" : "Edit sector",
     "Naziv nije popunjen" : "Name is required",
-    "Izmena" : "Edit"
+    "Izmena" : "Edit",
+    "Poslovnici":"Rules of procedures",
+    "Naziv dokumenta":"Document title",
+    "Verzija":"Version",
+    "Izaberi sektor":"Select sector",
+    "Izaberi fajl":"Select file",
+    "Fajl nije izabran":"File not selected",
+    "Obrisani dokumenti":"Deleted documents",
+    "Sektor":"Sector",
+    "Poslovnik":"Rules of procedure",
+    "Pretraga":"Search",
+    "Nema podataka":"No data",
+    "Prikaži":"Show",
+    "redova po stranici":"rows per page",
+    "Sledeća":"Next",
+    "Prethodna":"Previous",
+    "Prva":"First",
+    "Poslednja":"Last",
+    "Prikaz strane":"Page",
+    "od":"of",
+    "ukupno rezultata":"total results",
+    "Pregled dokumenta":"Document overview",
+    "Preuzimanje dokumenta":"Download",
+    "Povraćaj dokumenta":"Restore document",
+    "Trajno brisanje dokumenta":"Delete permanently",
+    "Da li ste sigurni? Nakon brisanja, dokument će biti trajno uklonjen.":"Are you sure? After deletion, the document will be permanently removed."
+    
+    
+
 }

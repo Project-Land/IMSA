@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ Session::get('standard_name') }} - {{ $doc_type }} - Obrisani dokumenti
+            {{ Session::get('standard_name') }} - {{ __($doc_type) }} - {{__('Obrisani dokumenti')}}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
 
     <div class="row">
     	<div class="col">
-        	<a class="inline-flex items-center px-4 py-2 hover:no-underline bg-white border border-gray-300 rounded-sm font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" href="{{ $back }}"><i class="fas fa-arrow-left mr-1"></i> Nazad</a>
+        	<a class="inline-flex items-center px-4 py-2 hover:no-underline bg-white border border-gray-300 rounded-sm font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" href="{{ $back }}"><i class="fas fa-arrow-left mr-1"></i> {{__('Nazad')}}</a>
      	</div>
     </div>
 
@@ -31,10 +31,10 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Naziv dokumenta</th>
-                                    <th>Verzija</th>
-                                    @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>Sektor</th>@endif
-                                    <th class="no-sort">Akcije</th>
+                                    <th>{{__('Naziv dokumenta')}}</th>
+                                    <th>{{__('Verzija')}}</th>
+                                    @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>{{__('Sektor')}}</th>@endif
+                                    <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,24 +49,24 @@
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="Pregled dokumenta" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
                                             </form>
                                             @endif
                                             <form class="inline" action="{{ route('document.download') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="Preuzimanje dokumenta" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Preuzimanje dokumenta')}}" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
                                             <form class="inline" id="restore-form-{{ $document->id }}" action="{{ route($route_name.'.restore', $document->id) }}" method="POST">
                                                 @csrf
-                                                <button data-toggle="tooltip" data-placement="top" title="Povraćaj dokumenta" class="button text-success" type="button" style="text-green-600 cursor-pointer hover:text-green-800" id="restore" onclick="confirmRestoreModal({{ $document->id }})"><i class="fas fa-trash-restore"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Povraćaj dokumenta')}}" class="button text-success" type="button" style="text-green-600 cursor-pointer hover:text-green-800" id="restore" onclick="confirmRestoreModal({{ $document->id }})"><i class="fas fa-trash-restore"></i></button>
                                             </form>
                                             <form class="inline" id="delete-form-{{ $document->id }}" action="{{ route($route_name.'.force-destroy', $document->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button data-toggle="tooltip" data-placement="top" title="Trajno brisanje dokumenta" class="text-red-600 cursor-pointer hover:text-red-800" type="button" id="delete" onclick="confirmDeleteModal({{ $document->id }})"><i class="fas fa-trash"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Trajno brisanje dokumenta')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" id="delete" onclick="confirmDeleteModal({{ $document->id }})"><i class="fas fa-trash"></i></button>
                                             </form>
                                             @endcanany
                                         </td>
@@ -86,12 +86,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Trajno brisanje dokumenta</div>
-                    <div class="mt-4">Da li ste sigurni? Nakon brisanja, dokument će biti trajno uklonjen.</div>
+                    <div class="text-lg">{{__('Trajno brisanje dokumenta')}}</div>
+                    <div class="mt-4">{{__('Da li ste sigurni? Nakon brisanja, dokument će biti trajno uklonjen.')}}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{__('Odustani')}}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{__('Obriši')}}</a>
                 </div>
             </div>
         </div>
@@ -117,17 +117,17 @@
 <script>
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "columnDefs": [{
