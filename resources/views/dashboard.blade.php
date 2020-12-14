@@ -19,7 +19,7 @@
             <div class="bg-white rounded-lg shadow-lg p-5 md:p-20 mx-2">
                 <div class="text-center">
                     <img class="inline-block items-center" src="{{ 'storage/logos/'.\Auth::user()->currentTeam->logo }}" alt="{{ \Auth::user()->currentTeam->name }} Logo">
-                    <h3 class='text-xl md:text-3xl mt-1'>Sistem Menadžment</h3>
+                    <h3 class='text-xl md:text-3xl mt-1'>{{ __('Sistem Menadžment') }}</h3>
                 </div>
             </div>
 

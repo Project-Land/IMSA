@@ -8,7 +8,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -21,7 +21,7 @@
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-medium text-gray-900"> {{ __('Podešavanje email notifikacija') }}</h3>
                     <p class="mt-1 text-sm text-gray-600">
-                        {{ __('Izaberite tipove notifikacija koje će stizati na vaš email') }}
+                        {{ __('Izaberite tipove notifikacija koje će stizati na vašu email adresu') }}.
                     </p>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <x-jet-form-section submit="updateTeamName">
     <x-slot name="title">
-        {{ __('Naziv Firme') }}
+        {{ __('Naziv firme') }}
     </x-slot>
 
     <x-slot name="description">
@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="form">
-        
+
         <!--
         <div class="col-span-6">
             <x-jet-label value="{{ __('Super Admin') }}" />
@@ -25,7 +25,7 @@
 
         <!-- Team Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Naziv Firme') }}" />
+            <x-jet-label for="name" value="{{ __('Naziv firme') }}" />
 
             <x-jet-input id="name"
                         type="text"
@@ -64,10 +64,10 @@
                 <img src="{{ asset('storage/logos/'.\Auth::user()->currentTeam->logo) }}" alt="" class="rounded-full h-20 w-20 object-cover">
             </div>
 
-            <div wire:loading wire:target="state.logo">Postavlja se...</div>
+            <div wire:loading wire:target="state.logo">{{ __('Postavlja se') }}...</div>
 
             <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                {{ __('Izaberite Novi Logo') }}
+                {{ __('Izaberite novi logo') }}
             </x-jet-secondary-button>
 
             <x-jet-input-error for="logo" class="mt-2" />
@@ -77,7 +77,7 @@
     @if (Gate::check('update', $team))
         <x-slot name="actions">
             <x-jet-action-message class="mr-3" on="saved">
-                {{ __('Sačuvano.') }}
+                {{ __('Sačuvano') }}.
             </x-jet-action-message>
 
             <x-jet-button>

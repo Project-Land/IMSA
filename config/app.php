@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'sr',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'sr',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
        // Barryvdh\Debugbar\ServiceProvider::class,
-        
+
 
         /*
          * Package Service Providers...
@@ -233,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'CustomLog' => App\Facades\CustomLog::class,
        // 'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        
+
     ],
 
 ];

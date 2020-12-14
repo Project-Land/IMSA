@@ -8,7 +8,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -19,9 +19,9 @@
 
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Kreiraj novog korisnika</h3>
+                    <h3 class="text-lg font-medium text-gray-900">{{ __('Kreiraj novog korisnika') }}</h3>
                     <p class="mt-1 text-sm text-gray-600">
-                        Kreirajte novi nalog za korisnike vaše aplikacije
+                        {{ __('Kreirajte novi nalog za korisnike vaše aplikacije') }}
                     </p>
                 </div>
             </div>
@@ -54,15 +54,15 @@
                             @error('email')
                                 <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                             @enderror
-                            <span class="text-xs text-gray-500">Polje nije obavezno</span>
+                            <span class="text-xs text-gray-500">{{ __('Polje nije obavezno') }}</span>
                         </div>
 
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="role" value="{{ __('Uloga') }}" class="block font-medium text-sm text-gray-700" />
                             <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="role" id="role">
-                                <option value="user" {{ old('role') == "user" ? "selected":"" }}>Korisnik</option>
-                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>Editor Internih Provera</option>
-                                <option value="admin" {{ old('role') == "admin" ? "selected":"" }}>Administrator</option>
+                                <option value="user" {{ old('role') == "user" ? "selected":"" }}>{{ __('Korisnik') }}</option>
+                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>{{ __('Editor internih provera') }}</option>
+                                <option value="admin" {{ old('role') == "admin" ? "selected":"" }}>{{ __('Administrator') }}</option>
                             </select>
                             @error('role')
                                 <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
