@@ -104,8 +104,6 @@ class HomeController extends Controller
     public function lang($lang)
     {
         session(['lang' => $lang]);
-        
-       
         return back();
     }
 

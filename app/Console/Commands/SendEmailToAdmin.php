@@ -45,7 +45,7 @@ class SendEmailToAdmin extends Command
     public function handle()
     {
         set_time_limit(200);
-        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(3))->with('notifiable.standard')->get();
+        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(2))->with('notifiable.standard')->get();
         $u=User::find(1);
         Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
         foreach($nots as $n){

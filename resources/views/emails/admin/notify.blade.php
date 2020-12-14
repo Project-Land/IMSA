@@ -1,5 +1,5 @@
-@component('mail::message',['msg'=>$msg,'url'=>$url,'standard'=>$standard])
-# Obaveštenje za {{'Standard - '.$standard}}
+@component('mail::message',['msg'=>$msg,'url'=>$url,'standard_name'=>$standard_name])
+# Obaveštenje za {{'Standard - '.$standard_name}}
 
 
 {{$msg}}
