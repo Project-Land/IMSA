@@ -95,4 +95,9 @@ class UserPolicy
     {
         //
     }
+
+    public function view_notification_settings(User $user)
+    {
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
+    }
 }

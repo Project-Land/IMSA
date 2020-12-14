@@ -47,7 +47,7 @@ class MeasuringEquipmentsController extends Controller
             ]);
             $me->notification()->save($notification);
 
-            CustomLog::info('Merna oprema "'.$me->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema id: "'.$me->id.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Merna oprema je uspešno kreirana!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja merne opreme, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
@@ -86,10 +86,10 @@ class MeasuringEquipmentsController extends Controller
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);
 
-            CustomLog::info('Merna oprema "'.$me->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema id: "'.$me->id.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Merna oprema je uspešno izmenjena!'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene merne opreme "'.$me->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene merne opreme id: "'.$me->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/measuring-equipment');
@@ -103,10 +103,10 @@ class MeasuringEquipmentsController extends Controller
         try{
             $me->notification()->delete();
             $me->delete();
-            CustomLog::info('Merna oprema "'.$me->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Merna oprema id: "'.$me->id.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Merna oprema je uspešno obrisana'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja merne opreme "'.$me->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj brisanja merne opreme id: "'.$me->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
         }
     }

@@ -167,7 +167,7 @@
 
                         <x-slot name="content">
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Trenutna firma') }}
+                                {{ __('Firma') }}
                             </div>
                             <p class="block px-4 text-sm text-gray-800">{{ Auth::user()->currentTeam->name }}</p>
 
@@ -180,9 +180,11 @@
                                 {{ __('Profil') }}
                             </x-jet-dropdown-link>
 
-                            <x-jet-dropdown-link href="{{ route('users.notification-settings') }}">
-                                {{ __('Podešavanje notifikacija') }}
-                            </x-jet-dropdown-link>
+                            @if(Gate::check('userManagement', $team))
+                                <x-jet-dropdown-link href="{{ route('users.notification-settings') }}">
+                                    {{ __('Podešavanje notifikacija') }}
+                                </x-jet-dropdown-link>
+                            @endif
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
@@ -396,9 +398,11 @@
                     {{ __('Profil') }}
                 </x-jet-responsive-nav-link>
 
-                <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" :active="request()->routeIs('users.notification-settings')">
-                    {{ __('Podešavanje notifikacija') }}
-                </x-jet-responsive-nav-link>
+                @if(Gate::check('userManagement', $team))
+                    <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" :active="request()->routeIs('users.notification-settings')">
+                        {{ __('Podešavanje notifikacija') }}
+                    </x-jet-responsive-nav-link>
+                @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">

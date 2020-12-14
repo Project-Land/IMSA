@@ -128,12 +128,15 @@ class UserController extends Controller
 
     public function notification_settings_show()
     {
+        $this->authorize('view_notification_settings', User::class);
         $selected = UserNotificationTypes::where('user_id', Auth::user()->id)->get();
         return view('users.notifications_settings', compact('selected'));
     }
 
     public function notification_settings(Request $request)
     {
+        $this->authorize('view_notification_settings', User::class);
+
         $notification_types = $request->notification_types;
 
         $selected = UserNotificationTypes::where('user_id', Auth::user()->id)->get();
