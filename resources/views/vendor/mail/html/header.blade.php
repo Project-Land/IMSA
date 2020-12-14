@@ -4,6 +4,7 @@
 
 <img src="{{'http://quality4.me/images/logo.jpg'}}" class="logo" alt="IMSA Logo">
 
+
 </a>
 </td>
 </tr>
