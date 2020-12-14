@@ -11,6 +11,11 @@ class Supplier extends Model
 
     protected $guarded = [];
 
+    public function standard()
+    {
+        return $this->belongsTo('App\Models\Standard');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

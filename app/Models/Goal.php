@@ -13,7 +13,7 @@ class Goal extends Model
 
     public function standard()
     {
-        return $this->hasOne('App\Models\Standard');
+        return $this->belongsTo('App\Models\Standard');
     }
 
     public function user()

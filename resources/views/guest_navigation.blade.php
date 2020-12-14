@@ -22,6 +22,8 @@
                     <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Uputstvo za korišćenje</a>
                     <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">O aplikaciji</a>
                     <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Kontakt</a>
+                    <a href="{{ route('lang',['lang'=>'rs']) }}"><img src="{{asset('images/serbia.png')}}" class="mx-2"/></a>
+                    <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/united-kingdom.png')}}"/></a>
                 </div>
 
             </div>
@@ -41,6 +43,10 @@
 
     <!-- Responsive menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <x-jet-responsive-nav-link>
+    <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/united-kingdom.png')}}" class="mr-2 inline-block float-right"/></a>
+    <a href="{{ route('lang',['lang'=>'rs']) }}"><img src="{{asset('images/serbia.png')}}" class="mr-2 inline-block float-right"/></a>
+    </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}

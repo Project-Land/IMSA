@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Standard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HomeController extends Controller
 {
+
+    public function __construct()
+    {
+        
+    }
     public function index()
     {
         session()->forget('standard');
@@ -86,12 +92,21 @@ class HomeController extends Controller
     }
 
     public function contact(){
+        
         return view('guest.contact');    
     }
     
     public function manual()
     {
         return view('manual');
+    }
+
+    public function lang($lang)
+    {
+        session(['lang' => $lang]);
+        
+       
+        return back();
     }
 
 }
