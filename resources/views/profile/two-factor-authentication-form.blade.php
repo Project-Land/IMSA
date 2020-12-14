@@ -4,21 +4,21 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Učinite vaš nalog bezbednijim koristeći dvofaktorsku autentifikaciju.') }}
+        {{ __('Učinite vaš nalog bezbednijim koristeći dvofaktorsku autentifikaciju') }}.
     </x-slot>
 
     <x-slot name="content">
         <h3 class="text-lg font-medium text-gray-900">
             @if ($this->enabled)
-                {{ __('Omogućili ste dvofaktorsku autentifikaciju.') }}
+                {{ __('Omogućili ste dvofaktorsku autentifikaciju') }}.
             @else
-                {{ __('Niste omogućili dvofaktorsku autentifikaciju.') }}
+                {{ __('Niste omogućili dvofaktorsku autentifikaciju') }}.
             @endif
         </h3>
 
         <div class="mt-3 max-w-xl text-sm text-gray-600">
             <p>
-                {{ __('Nakon što omogućite dvofaktorsku autentifikaciju, biće vam zatraženo da unesete nasumično generisani kod tokom autentifikacije. Kodu možete pristupiti koristeći aplikaciju Google Authenticator.') }}
+                {{ __('Nakon što omogućite dvofaktorsku autentifikaciju, biće vam zatraženo da unesete nasumično generisani kod tokom autentifikacije. Kodu možete pristupiti koristeći aplikaciju Google Authenticator') }}.
             </p>
         </div>
 
@@ -26,7 +26,7 @@
             @if ($showingQrCode)
                 <div class="mt-4 max-w-xl text-sm text-gray-600">
                     <p class="font-semibold">
-                        {{ __('Dvofaktorska autentifikacija je omogućena. Skenirajte QR kod koristeći aplikaciju za autentifikaciju na vašem telefonu.') }}
+                        {{ __('Dvofaktorska autentifikacija je omogućena. Skenirajte QR kod koristeći aplikaciju za autentifikaciju na vašem telefonu') }}.
                     </p>
                 </div>
 
@@ -38,7 +38,7 @@
             @if ($showingRecoveryCodes)
                 <div class="mt-4 max-w-xl text-sm text-gray-600">
                     <p class="font-semibold">
-                        {{ __('Sačuvajte ove kodove na bezbednom mestu. Uz pomoć njih možete vratiti pristup nalogu ukoliko dođe do gubitka uređaja koji koristite za autentifikaciju.') }}
+                        {{ __('Sačuvajte ove kodove na bezbednom mestu. Uz pomoć njih možete vratiti pristup nalogu ukoliko dođe do gubitka uređaja koji koristite za autentifikaciju') }}.
                     </p>
                 </div>
 

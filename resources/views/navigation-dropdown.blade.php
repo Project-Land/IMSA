@@ -86,10 +86,47 @@
 
             <div class="flex justify-end">
 
+                <div class="inline-flex items-center justify-end ml-10">
+                    <x-jet-dropdown width="48">
+
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div><img style="max-width: 80%;" src="{{ asset('images/'.session('lang').'.png') }}" alt="lang"></div>
+                                <div class="md:ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            @if(session('lang') != "sr")
+                                <x-jet-dropdown-link href="/lang/sr">
+                                    <div class="inline-flex items-center justify-end">
+                                        <div><img src="{{ asset('images/sr.png') }}" alt="sr"></div>
+                                        <div class="ml-3">{{ __('Srpski') }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
+
+                            @if(session('lang') != "en")
+                                <x-jet-dropdown-link href="/lang/en">
+                                    <div class="inline-flex items-center justify-end">
+                                        <div><img src="{{ asset('images/en.png') }}" alt="en"></div>
+                                        <div class="ml-3">{{ __('English') }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
+                        </x-slot>
+
+                    </x-jet-dropdown>
+                </div>
+
                 <!-- Notifications menu -->
                 @inject('Notifications', 'Notifications')
 
-                <div class="inline-flex items-center justify-end ml-40">
+                <div class="inline-flex items-center justify-end ml-4">
                     <x-jet-dropdown width="48">
 
                         <x-slot name="trigger">
