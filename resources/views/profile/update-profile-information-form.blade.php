@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Izmenite informacije o profilu') }}
+        {{ __('Izmenite informacije o profilu') }}.
     </x-slot>
 
     <x-slot name="form">

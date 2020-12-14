@@ -18,12 +18,47 @@
 
                 <!-- Menu -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Login</a>
-                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Uputstvo za korišćenje</a>
-                    <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">O aplikaciji</a>
-                    <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">Kontakt</a>
-                    <a href="{{ route('lang',['lang'=>'rs']) }}"><img src="{{asset('images/serbia.png')}}" class="mx-2"/></a>
-                    <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/united-kingdom.png')}}"/></a>
+                    <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Login') }}</a>
+                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
+                    <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('O aplikaciji') }}</a>
+                    <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Kontakt') }}</a>
+                </div>
+
+                <div class="inline-flex items-center justify-end ml-40 md:ml-2">
+                    <x-jet-dropdown width="48">
+
+                        <x-slot name="trigger">
+                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div><img style="max-width: 80%;" src="{{ asset('images/'.session('locale').'.png') }}" alt="lang"></div>
+                                <div class="md:ml-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            @if(session('locale') != "sr")
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'sr']) }}">
+                                    <div class="inline-flex items-center justify-end">
+                                        <div><img src="{{ asset('images/sr.png') }}" alt="sr"></div>
+                                        <div class="ml-3">{{ __('Srpski') }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
+
+                            @if(session('locale') != "en")
+                                <x-jet-dropdown-link href="{{ route('lang',['lang'=>'en']) }}">
+                                    <div class="inline-flex items-center justify-end">
+                                        <div><img src="{{ asset('images/en.png') }}" alt="en"></div>
+                                        <div class="ml-3">{{ __('English') }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
+                        </x-slot>
+
+                    </x-jet-dropdown>
                 </div>
 
             </div>
@@ -43,10 +78,11 @@
 
     <!-- Responsive menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-    <x-jet-responsive-nav-link>
-    <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/united-kingdom.png')}}" class="mr-2 inline-block float-right"/></a>
-    <a href="{{ route('lang',['lang'=>'rs']) }}"><img src="{{asset('images/serbia.png')}}" class="mr-2 inline-block float-right"/></a>
-    </x-jet-responsive-nav-link>
+
+        <!-- <x-jet-responsive-nav-link>
+        <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/united-kingdom.png')}}" class="mr-2 inline-block float-right"/></a>
+        <a href="{{ route('lang',['lang'=>'rs']) }}"><img src="{{asset('images/serbia.png')}}" class="mr-2 inline-block float-right"/></a>
+        </x-jet-responsive-nav-link> -->
 
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}

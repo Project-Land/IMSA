@@ -10,7 +10,7 @@
     <x-slot name="form">
         <!--
         <div class="col-span-6">
-            <x-jet-label value="{{ __('Vlasnik Firme') }}" />
+            <x-jet-label value="{{ __('Vlasnik firme') }}" />
 
             <div class="flex items-center mt-2">
                 <img class="w-12 h-12 rounded-full object-cover" src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}">
@@ -23,7 +23,7 @@
         </div> -->
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="name" value="{{ __('Naziv Firme') }}" />
+            <x-jet-label for="name" value="{{ __('Naziv firme') }}" />
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autofocus />
             <x-jet-input-error for="name" class="mt-2" />
         </div>
@@ -51,10 +51,10 @@
                 </span>
             </div>
 
-            <div wire:loading wire:target="logo">Postavlja se...</div>
+            <div wire:loading wire:target="logo">{{ __('Postavlja se') }}...</div>
 
             <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                {{ __('Izaberite Logo') }}
+                {{ __('Izaberite logo') }}
             </x-jet-secondary-button>
 
             <x-jet-input-error for="logo" class="mt-2" />

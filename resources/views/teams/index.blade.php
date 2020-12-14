@@ -8,7 +8,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -21,22 +21,22 @@
 						<thead>
 							<tr>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Firma
+                                    {{ __('Firma') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Standardi
+                                    {{ __('Standardi') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Sadržaj
+                                    {{ __('Sadržaj') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Br. korisnika
+                                    {{ __('Br. korisnika') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Logovi
+                                    {{ __('Logovi') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    Akcije
+                                    {{ __('Akcije') }}
                                 </th>
 							</tr>
 						</thead>
@@ -55,7 +55,7 @@
                                                     <div>
                                                         <span class="shadow-sm">
                                                             <button type="button" class="inline-flex justify-center w-full px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150">
-                                                                Standardi
+                                                                {{ __('Standardi') }}
                                                                 <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                                                 </svg>
@@ -89,17 +89,17 @@
                                     </div>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-									<a href="/change-current-team/{{ $team->id }}">Pregled</a>
+									<a href="/change-current-team/{{ $team->id }}">{{ __('Pregled') }}</a>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    Trenutno: {{ $team->users->count() - 2 }}<br>
-                                    <span class="cursor-pointer text-blue-500 hover:text-blue-700" id="teamStats" onclick="showStats({{ $team->id }})">Statistika</span>
+                                    {{ __('Trenutno') }}: {{ $team->users->count() - 2 }}<br>
+                                    <span class="cursor-pointer text-blue-500 hover:text-blue-700" id="teamStats" onclick="showStats({{ $team->id }})">{{ __('Statistika') }}</span>
                                 </td>
                                 <td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     <a href="{{ route('logs.show', $team->name) }}">Log</a>
 								</td>
 								<td class="py-4 px-6 whitespace-no-wrap text-sm leading-5 font-medium">
-                                    <a href="/teams/{{ $team->id }}">Izmeni</a>
+                                    <a href="/teams/{{ $team->id }}">{{ __('Izmeni') }}</a>
 								</td>
 							</tr>
 							@endforeach
@@ -114,12 +114,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje standarda</div>
-                    <div class="mt-4">Da li ste sigurni?</div>
+                    <div class="text-lg">{{ __('Brisanje standarda') }}</div>
+                    <div class="mt-4">{{ __('Da li ste sigurni?') }}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši') }}</a>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                                 <div class="modal-dialog bg-white modal-lg rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="document">
                                     <div class="modal-content">
                                         <div class="flex justify-between mb-2">
-                                            <h5 class="px-3 py-4 font-bold text-center">Broj korisnika po datumima: ${response.data[0].team.name}</h5>
+                                            <h5 class="px-3 py-4 font-bold text-center">{{ __('Broj korisnika po datumima') }}: ${response.data[0].team.name}</h5>
                                             <button type="button" class="close px-4 py-1" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -147,14 +147,14 @@
                                         $.each(response.data, function (i, item){
                                             modal +=`
                                             <div class="row mt-1 text-sm">
-                                                <div class="col-sm-5 border-bottom mt-2"><p><b>Datum:</b> <i>${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</i></p></div>
-                                                <div class="col-sm-7 border-bottom mt-2"><p><b>Broj korisnika</b>: ${item.total - 2}</p></div>
+                                                <div class="col-sm-5 border-bottom mt-2"><p><b>{{ __('Datum') }}:</b> <i>${new Date(item.check_date).toLocaleString('sr-SR', { timeZone: 'CET' })}</i></p></div>
+                                                <div class="col-sm-7 border-bottom mt-2"><p><b>{{ __('Broj korisnika') }}</b>: ${item.total - 2}</p></div>
                                             </div>`
                                         })
 
                                         modal +=`</div>
                                         <div class="px-6 py-4 bg-gray-100 text-right">
-                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
                                         </div>
                                     </div>
                                 </div>

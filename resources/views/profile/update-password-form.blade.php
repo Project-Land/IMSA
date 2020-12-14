@@ -4,7 +4,7 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Koristite dugi i nasumični niz karaktera kako bi vaša šifra bila bezbednija') }}
+        {{ __('Koristite dugi i nasumični niz karaktera kako bi vaša šifra bila bezbednija') }}.
     </x-slot>
 
     <x-slot name="form">

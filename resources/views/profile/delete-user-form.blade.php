@@ -4,12 +4,12 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Trajno uklonite vaš nalog.') }}
+        {{ __('Trajno uklonite vaš nalog') }}.
     </x-slot>
 
     <x-slot name="content">
         <div class="max-w-xl text-sm text-gray-600">
-            {{ __('Nakon što uklonite nalog, svi podaci vezani za njega biće trajno uklonjeni. Pre brisanja naloga, molimo vas da preuzmete sve potrebne podatke vezane za vaš nalog.') }}
+            {{ __('Nakon što uklonite nalog, svi podaci vezani za njega biće trajno uklonjeni. Pre brisanja naloga, molimo vas da preuzmete sve potrebne podatke vezane za vaš nalog') }}.
         </div>
 
         <div class="mt-5">
@@ -25,7 +25,7 @@
             </x-slot>
 
             <x-slot name="content">
-                {{ __('Da li ste sigurni da želite da uklonite vaš nalog? Nakon uklanjanja, svi podaci vezani za nalog će biti obrisani. Unesite vašu lozinku kako bi ste potvrdili da želite da uklonite nalog.') }}
+                {{ __('Da li ste sigurni da želite da uklonite vaš nalog? Nakon uklanjanja, svi podaci vezani za nalog će biti obrisani. Unesite vašu lozinku kako bi ste potvrdili da želite da uklonite nalog') }}.
 
                 <div class="mt-4" x-data="{}" x-on:confirming-delete-user.window="setTimeout(() => $refs.password.focus(), 250)">
                     <x-jet-input type="password" class="mt-1 block w-3/4" placeholder="{{ __('Lozinka') }}"

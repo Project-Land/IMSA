@@ -3,7 +3,7 @@
     <!-- @if (Gate::check('addTeamMember', $team))
         <x-jet-section-border />
 
-        
+
         <div class="mt-10 sm:mt-0">
             <x-jet-form-section submit="addTeamMember">
                 <x-slot name="title">
@@ -21,14 +21,14 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="col-span-6 sm:col-span-4">
                         <x-jet-label for="email" value="{{ __('Email') }}" />
                         <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="addTeamMemberForm.email" />
                         <x-jet-input-error for="email" class="mt-2" />
                     </div>
 
-                    
+
                     @if (count($this->roles) > 0)
                         <div class="col-span-6 lg:col-span-4">
                             <x-jet-label for="role" value="{{ __('Uloga') }}" />
@@ -40,7 +40,7 @@
                                         <div class="px-4 py-3 {{ $index > 0 ? 'border-t border-gray-200' : '' }}"
                                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
                                             <div class="{{ isset($addTeamMemberForm['role']) && $addTeamMemberForm['role'] !== $role->key ? 'opacity-50' : '' }}">
-                                                
+
                                                 <div class="flex items-center">
                                                     <div class="text-sm text-gray-600 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
                                                         {{ $role->name }}
@@ -51,7 +51,7 @@
                                                     @endif
                                                 </div>
 
-                                                
+
                                                 <div class="mt-2 text-xs text-gray-600">
                                                     {{ $role->description }}
                                                 </div>
@@ -88,7 +88,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Svi korisnički nalozi u ovkiru firme.') }}
+                    {{ __('Svi korisnički nalozi u ovkiru firme') }}.
                 </x-slot>
 
                 <!-- Team Member List -->
@@ -105,7 +105,7 @@
                                     <!-- Manage Team Member Role -->
                                     @if (Gate::check('addTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
                                         <button class="ml-2 text-sm text-gray-400 underline" @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin") wire:click="manageRole('{{ $user->id }}')" @endif>
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                            {{ __(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name) }}
                                         </button>
                                     @elseif (Laravel\Jetstream\Jetstream::hasRoles())
                                         <div class="ml-2 text-sm text-gray-400">

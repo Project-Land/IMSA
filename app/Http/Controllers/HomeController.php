@@ -14,10 +14,13 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        
+
     }
     public function index()
     {
+        if(!session()->has('locale')){
+            session(['locale' => 'sr']);
+        }
         session()->forget('standard');
         session()->forget('standard_name');
         $teamId = Auth::user()->current_team_id;
@@ -92,10 +95,10 @@ class HomeController extends Controller
     }
 
     public function contact(){
-        
-        return view('guest.contact');    
+
+        return view('guest.contact');
     }
-    
+
     public function manual()
     {
         return view('manual');
@@ -103,7 +106,7 @@ class HomeController extends Controller
 
     public function lang($lang)
     {
-        session(['lang' => $lang]);
+        session(['locale' => $lang]);
         return back();
     }
 

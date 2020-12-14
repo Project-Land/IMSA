@@ -4,12 +4,12 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Upravljajte aktivnim sesijama vašeg naloga.') }}
+        {{ __('Upravljajte aktivnim sesijama vašeg naloga') }}.
     </x-slot>
 
     <x-slot name="content">
         <div class="max-w-xl text-sm text-gray-600">
-            {{ __('Ukoliko je potrebno, možete odjaviti sve sesije browser-a na svim uređajima sa kojih ste trenutno prijavljeni na svoj nalog.') }}
+            {{ __('Ukoliko je potrebno, možete odjaviti sve sesije browser-a na svim uređajima sa kojih ste trenutno prijavljeni na svoj nalog') }}.
         </div>
 
         @if (count($this->sessions) > 0)
@@ -57,7 +57,7 @@
             </x-jet-button>
 
             <x-jet-action-message class="ml-3" on="loggedOut">
-                {{ __('Gotovo.') }}
+                {{ __('Gotovo') }}.
             </x-jet-action-message>
         </div>
 
@@ -68,7 +68,7 @@
             </x-slot>
 
             <x-slot name="content">
-                {{ __('Unesite vašu lozinku kako biste potvrdili da želite da se odjavite sa ostalih uređaja.') }}
+                {{ __('Unesite vašu lozinku kako biste potvrdili da želite da se odjavite sa ostalih uređaja') }}.
 
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
                     <x-jet-input type="password" class="mt-1 block w-3/4" placeholder="{{ __('Lozinka') }}"

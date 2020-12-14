@@ -46,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
             })->orderBy('display_order')->get();
             return $system_processes;
         });
+
+        session(['locale' => 'sr']);
     }
 
     /**
@@ -58,6 +60,6 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultstringLength(191);
         \App\Models\Sector::observe(SectorObserver::class);
 
-        
+
     }
 }
