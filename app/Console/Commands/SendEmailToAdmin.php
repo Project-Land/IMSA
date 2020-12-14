@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Carbon\Carbon;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Models\Notification;
 use App\Mail\SendMailToAdmin;
 use Illuminate\Console\Command;
@@ -54,18 +55,19 @@ class SendEmailToAdmin extends Command
         if(!$nots->count()){
             return;
         }
-        //$u=User::find(1);
+        $c=0;
+       // $u=User::find(1);
        // Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             $users=$team->allUsers();
             foreach($users as $u){
                 $not_type= UserNotificationTypes::where('user_id',$u->id)->where('notifiable_type',$n->notifiable_type)->count();
-                if($u->hasTeamRole($team, 'admin') && $not_type){
-                    
-                     Mail::to($u)->send(new SendMailToAdmin($n));
+                if(($u->hasTeamRole($team, 'admin') && $not_type) || ($u->hasTeamRole($team, 'editor') && (!$u->hasTeamRole($team, 'super-admin')) && $n->notifiable_type=='App\\Models\\InternalCheck' && Str::contains($n->notifiable->leaders, $u->name))){
+                    $c++;
+                     //Mail::to($u)->send(new SendMailToAdmin($n));
                 }
             }
-        }
+        }echo $c;
     }
 }

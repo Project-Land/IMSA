@@ -20,8 +20,9 @@ class SendMailToAdmin extends Mailable
      public $standard_id;
      public $url;
      public $msg;
+     
      public function __construct($not)
-    {
+    { 
         $this->msg=$not->message;
         $this->standard_name=$not->notifiable->standard->name;
         $this->standard_id=$not->notifiable->standard->id;
