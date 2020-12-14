@@ -3,13 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Standard;
-use App\Models\SystemProcess;
 use App\Models\Notification;
+use App\Models\SystemProcess;
+use App\Observers\SectorObserver;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-
-use App\Observers\SectorObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,5 +57,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultstringLength(191);
         \App\Models\Sector::observe(SectorObserver::class);
+
+        
     }
 }

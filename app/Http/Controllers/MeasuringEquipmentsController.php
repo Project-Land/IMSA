@@ -41,7 +41,7 @@ class MeasuringEquipmentsController extends Controller
             $me = MeasuringEquipment::create($request->all());
 
             $notification = Notification::create([
-                'message' => 'Datum narednog etaloniranja/bandažiranja '.date('d.m.Y', strtotime($me->next_calibration_date)),
+                'message' => 'Datum narednog etaloniranja/baždarenja '.date('d.m.Y', strtotime($me->next_calibration_date)),
                 'team_id' => Auth::user()->current_team_id,
                 'checkTime' => $me->next_calibration_date
             ]);
@@ -82,7 +82,7 @@ class MeasuringEquipmentsController extends Controller
                 $notification = new Notification();
                 $notification->team_id = Auth::user()->current_team_id;
             }
-            $notification->message = 'Datum narednog etaloniranja/bandažiranja '. date('d.m.Y', strtotime($me->next_calibration_date));
+            $notification->message = 'Datum narednog etaloniranja/baždarenja '. date('d.m.Y', strtotime($me->next_calibration_date));
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);
 
