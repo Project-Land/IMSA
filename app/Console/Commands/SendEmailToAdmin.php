@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Models\Notification;
 use App\Mail\SendMailToAdmin;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use App\Models\UserNotificationTypes;
 
@@ -46,7 +47,7 @@ class SendEmailToAdmin extends Command
     public function handle()
     {
         set_time_limit(200);
-        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(2))
+        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(1))
         ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier'])
         ->orWhere(function($query) {
             $query->whereDate('checkTime',Carbon::now()->addDay(2))
@@ -56,10 +57,13 @@ class SendEmailToAdmin extends Command
             return;
         }
         $c=0;
-       // $u=User::find(1);
-       // Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
+       
+        
         foreach($nots as $n){
             $team=Team::find($n->team_id);
+            App::setlocale($team->lang);
+        $u=User::find(4);
+        Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
             $users=$team->allUsers();
             foreach($users as $u){
                 $not_type= UserNotificationTypes::where('user_id',$u->id)->where('notifiable_type',$n->notifiable_type)->count();

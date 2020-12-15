@@ -101,12 +101,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Vraćanje dokumenta</div>
-                    <div class="mt-4">Da li ste sigurni? Nakon vraćanja, dokument će ponovo biti vidljiv svima.</div>
+                    <div class="text-lg">{{__('Vraćanje dokumenta')}}</div>
+                    <div class="mt-4">{{__('Da li ste sigurni? Nakon vraćanja, dokument će ponovo biti vidljiv svima.')}}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-600 transition ease-in-out duration-150 ml-2">Vrati</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{__('Odustani')}}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray active:bg-gray-600 transition ease-in-out duration-150 ml-2">{{__('Vrati')}}</a>
                 </div>
             </div>
         </div>
