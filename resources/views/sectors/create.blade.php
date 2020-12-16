@@ -19,7 +19,7 @@
             <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus required oninvalid="this.setCustomValidity('{{ __('Naziv nije popunjen') }}')"
             oninput="this.setCustomValidity('')">
             @error('name')
-                <span class="text-red-700 italic text-sm mt-1">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm mt-1">{{ __($message) }}</span>
             @enderror
         </div>
 

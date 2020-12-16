@@ -21,7 +21,7 @@
 				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis') }}:</label>
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">{{ $risk->description }}</textarea>
 				@error('description')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
             </div>
 

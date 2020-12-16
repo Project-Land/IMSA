@@ -62,10 +62,10 @@
             <div class="row">
                 <div class="form-group col">
                     <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Specifikacija dokumenata') }}</label>
-                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" name="specification" value="{{ $internalCheckReport->specification }}" required oninvalid="this.setCustomValidity({{ __('Specifikacija nije popunjena') }})"
+                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" name="specification" value="{{ $internalCheckReport->specification }}" required oninvalid="this.setCustomValidity('{{ __("Specifikacija nije popunjena") }}')"
                         oninput="this.setCustomValidity('')">{{ $internalCheckReport->specification }}</textarea>
                     @error('specification')
-                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                     @enderror
                 </div>
             </div>
@@ -81,11 +81,11 @@
                         <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Neusaglašenost') }}</label>
                         <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="inconsistencies[{{ $inc->id }}]" required>{{ $inc->noncompliance_description }}</textarea>
                         @error('inconsistencies.'.$inc->id)
-                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                         @enderror
-                    <span data-toggle="tooltip" data-placement="top" title="Prikaz korektivne mere" class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">{{ $inc->name }}</span>
-                        <button data-toggle="tooltip" data-placement="top" title="Brisanje korektivne mere" class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
-                        <a data-toggle="tooltip" data-placement="top" title="Izmena korektivne mere" class="btn btn-primary float-right ml-2 mt-2" href="{{ route('corrective-measures.edit', $inc->id) }}" ><i class="fas fa-edit"></i></a>
+                    <span data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz korektivne mere') }}" class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">{{ $inc->name }}</span>
+                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje korektivne mere') }}" class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
+                        <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena korektivne mere') }}" class="btn btn-primary float-right ml-2 mt-2" href="{{ route('corrective-measures.edit', $inc->id) }}" ><i class="fas fa-edit"></i></a>
                     </div>
                 @endforeach
             </div>
@@ -96,7 +96,7 @@
                         <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Preporuka') }}</label>
                         <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="recommendations[{{ $rec->id }}]" required>{{ $rec->description }}</textarea>
                         @error('recommendations.'.$rec->id)
-                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                         @enderror
                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje preporuke') }}" class="deleteButton btn btn-danger mt-1 float-right"><i class="fas fa-trash"></i></button>
                     </div>
@@ -198,12 +198,12 @@
                                 <div class="mb-4">
                                     <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Izvor informacije o neusaglašenostima') }}:</label>
                                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source"
-                                    required oninvalid="this.setCustomValidity('Izvor informacije o neusaglašenostima nije izabran')"
+                                    required oninvalid="this.setCustomValidity('__("Izvor informacije o neusaglašenostima nije izabran")')"
                                     oninput="this.setCustomValidity('')">
                                         <option value="Interna provera" selected>{{ __('Interna provera') }}</option>
                                     </select>
                                     @error('noncompliance_source')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                                     @enderror
                                 </div>
 
@@ -212,7 +212,7 @@
                                     <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('{{ __("Opis neusaglašenosti nije popunjen") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('noncompliance_description') }}</textarea>
                                     @error('noncompliance_description')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                                     @enderror
                                 </div>
 
@@ -221,7 +221,7 @@
                                     <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('{{ __("Uzrok neusaglašenosti nije popunjen") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('noncompliance_cause') }}</textarea>
                                     @error('noncompliance_cause')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                                     @enderror
                                 </div>
 
@@ -230,7 +230,7 @@
                                     <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('{{ __("Mera za otklanjanje neusaglašenosti nije popunjena") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('measure') }}</textarea>
                                     @error('measure')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                                     @enderror
                                 </div>
 
@@ -247,7 +247,7 @@
                                     <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja mere')"
                                     oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="measure_approval_reason" id="measure_approval_reason" >
                                     @error('measure_approval_reason')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                                     @enderror
                                 </div>
 

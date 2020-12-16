@@ -21,7 +21,7 @@
                 <label for="date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Termin provere') }}</label>
                 <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" id="date" name="date" value="{{ date('d.m.Y', strtotime( $internalCheck->date)) }}" required oninvalid="this.setCustomValidity('{{ __("Izaberite termin") }}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('date')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
 
@@ -33,7 +33,7 @@
                     @endforeach
                 </select>
                 @error('sector_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
 
@@ -45,7 +45,7 @@
                     @endforeach
                 </select>
                 @error('leaders')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ $__($message) }}</span>
                 @enderror
             </div>
 
@@ -55,7 +55,7 @@
                     <option value="{{ $internalCheck->standard_id }}" selected>{{ $internalCheck->standard->name }}</option>
                 </select>
                 @error('standard_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ $__($message) }}</span>
                 @enderror
             </div>
 

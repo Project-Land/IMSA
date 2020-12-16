@@ -27,7 +27,7 @@
 				<label for="cause">{{ __('Uzrok') }}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cause" name="cause" value="{{ $risk->cause }}" autofocus required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
 				@error('cause')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
 			</div>
 
@@ -35,7 +35,7 @@
 				<label for="risk_lowering_measure">{{ __('Mera za smanjenje rizika/ korišćenje prilike') }}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="risk_lowering_measure" name="risk_lowering_measure" value="{{ $risk->risk_lowering_measure }}" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
 				@error('risk_lowering_measure')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
 			</div>
 
@@ -43,7 +43,7 @@
 				<label for="responsibility">{{ __('Odgovornost') }}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsibility" name="responsibility" value="{{ $risk->responsibility }}" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
 				@error('responsibility')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
 			</div>
 
@@ -51,7 +51,7 @@
 				<label for="deadline">{{ __('Rok za realizaciju') }}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline" name="deadline" value="{{ $risk->deadline != null ? date('d.m.Y', strtotime($risk->deadline)) : date('d.m.Y') }}" required oninvalid="this.setCustomValidity({{ __('Izaberite datum') }})" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
 				@error('deadline')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
 			</div>
 

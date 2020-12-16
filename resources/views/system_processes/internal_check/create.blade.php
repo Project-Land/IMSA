@@ -20,7 +20,7 @@
                 <label for="date" class="block text-gray-700 text-sm font-bold mb-2">{{ __("Termin provere") }}</label>
                 <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" placeholder="xx.xx.xxxx" name="date" required oninvalid="this.setCustomValidity('{{ __("Izaberite termin") }}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
                 @error('date')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
 
@@ -32,7 +32,7 @@
                     @endforeach
                 </select>
                 @error('sector_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
 
@@ -44,7 +44,7 @@
                     @endforeach
                 </select>
                 @error('leaders')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span><br>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span><br>
                 @enderror
                 <small class="text-gray-500">{{ __('Držite CTRL i birajte levim klikom miša') }}</small>
             </div>
@@ -55,7 +55,7 @@
                     <option value="{{ session('standard') }}">{{ session('standard_name') }}</option>
                 </select>
                 @error('standard_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
 

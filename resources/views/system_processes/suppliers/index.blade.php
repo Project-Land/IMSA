@@ -9,7 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -21,7 +21,7 @@
             <div class="card">
                 @can('create', App\Models\Supplier::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> Kreiraj isporučioca</a>
+                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj isporučioca') }}</a>
                 </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -29,12 +29,12 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Naziv isporučioca</th>
-                                    <th>Predmet nabavke</th>
-                                    <th>Status</th>
-                                    <th>Datum kreiranja</th>
-                                    <th>Datum sledećeg preispitivanja</th>
-                                    <th class="no-sort">Akcije</th>
+                                    <th>{{ __('Naziv isporučioca') }}</th>
+                                    <th>{{ __('Predmet nabavke') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Datum kreiranja') }}</th>
+                                    <th>{{ __('Datum sledećeg preispitivanja') }}</th>
+                                    <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,17 +42,17 @@
                                 <tr id="trsupplier{{$s->id}}"><a id="supplier{{$s->id}}"></a>
                                     <td id='tdsupplier{{$s->id}}' class="text-center">{{ $s->supplier_name }}</td>
                                     <td class="text-center">{{ $s->subject }}</td>
-                                    <td class="text-center">{{ ($s->status == '1') ? 'Odobren' : 'Neodobren' }}</td>
+                                    <td class="text-center">{{ ($s->status == '1') ? __('Odobren') : __('Neodobren') }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->created_at)) }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="Pregled isporučioca" class="button text-primary" onclick="showSupplier({{ $s->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled isporučioca') }}" class="button text-primary" onclick="showSupplier({{ $s->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $s)
-                                            <a data-toggle="tooltip" data-placement="top" title="Izmena isporučioca" href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena isporučioca') }}" href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                             <form class="inline" id="delete-form-{{ $s->id }}" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button onclick="confirmDeleteModal({{ $s->id }})" class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje isporučioca"><i class="fas fa-trash"></i></button>
+                                                <button onclick="confirmDeleteModal({{ $s->id }})" class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje isporučioca') }}"><i class="fas fa-trash"></i></button>
                                             </form>
                                         @endcanany
                                     </td>
@@ -72,12 +72,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje isporučioca</div>
-                    <div class="mt-4">Da li ste sigurni?</div>
+                    <div class="text-lg">{{ __('Brisanje isporučioca') }}</div>
+                    <div class="mt-4">{{ __('Da li ste sigurni?') }}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši') }}</a>
                 </div>
             </div>
         </div>
@@ -88,17 +88,17 @@
 <script>
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "columnDefs": [{
@@ -142,32 +142,32 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row text-sm">
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Datum kreiranja</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{ __('Datum kreiranja') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Naziv isporučioca</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{ __('Naziv isporučioca') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.supplier_name }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Predmet nabavke</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Predmet nabavke') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.subject }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Ime i prezime kontakt osobe kod isporučioca</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Ime i prezime kontakt osobe kod isporučioca') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.personal_info != null ? response.data.personal_info : '/' }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Broj telefona kontakt osobe kod isporučioca</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Broj telefona kontakt osobe kod isporučioca') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.phone_number != null ? response.data.phone_number : '/' }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Email kontakt osobe kod isporučioca</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Email kontakt osobe kod isporučioca') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.email != null ? response.data.email : '/' }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Kvalitet</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Kvalitet') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.quality }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Cena</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Cena') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.price }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Rok isporuke</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Rok isporuke') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.shippment_deadline }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>Status</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status === 1 ? 'Odobren' : 'Neodobren' }</p></div>
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>Datum sledećeg preispitivanja</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status === 1 ? '{{ __("Odobren") }}' : '{{ __("Neodobren") }}' }</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{ __('Datum sledećeg preispitivanja') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
                                 </div>
                             </div>
                         </div>

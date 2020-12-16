@@ -63,7 +63,7 @@
                     <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" name="specification" required oninvalid="this.setCustomValidity('{{ __("Specifikacija nije popunjena") }}')"
                 oninput="this.setCustomValidity('')">{{old('specification')}}</textarea>
                     @error('specification')
-                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                     @enderror
                 </div>
             </div>
