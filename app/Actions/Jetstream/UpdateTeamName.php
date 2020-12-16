@@ -29,25 +29,29 @@ class UpdateTeamName implements UpdatesTeamNames
             'name.min' => 'Ime firme ne sme biti kraće od 3 karaktera',
             'name.max' => 'Ime firme ne sme biti duže od 100 karaktera',
             'logo.max' => 'Logo ne sme biti veći od 1MB',
-            'logo.image' => 'Fajl mora biti u nekom od sledećih formata: jpeg, png, bmp, gif, svg ili webp'
+            'logo.image' => 'Fajl mora biti u nekom od sledećih formata: jpeg, png, bmp, gif, svg ili webp',
+            'lang.required' => 'Izaberite primarni jezik firme'
         ];
 
         Validator::make($input, [
             'name' => ['required', 'string', 'min:3', 'max:100', Rule::unique('teams')->ignore($team->id)],
-            'logo' => ['image', 'max:1024']
-        ], $messages)->validateWithBag('updateTeamName');  
+            'logo' => ['image', 'max:1024'],
+            'lang' => ['required']
+        ], $messages)->validateWithBag('updateTeamName');
 
-        if(count($input) > 1){
+        if(count($input) > 2){
             $filename = Str::kebab($input['name']).'-logo.'.$input['logo']->getClientOriginalExtension();
             $input['logo']->storeAs('public/logos', $filename);
             $team->forceFill([
                 'name' => $input['name'],
-                'logo' => $filename
+                'logo' => $filename,
+                'lang' => $input['lang']
             ])->save();
         }
         else{
             $team->forceFill([
                 'name' => $input['name'],
+                'lang' => $input['lang']
             ])->save();
         }
 

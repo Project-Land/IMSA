@@ -9,7 +9,7 @@
     <div class="row mt-1" id="alert">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -25,13 +25,13 @@
 
                         <div class="col-sm-4">
                             @can('create', App\Models\InternalCheck::class)
-						        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> Kreiraj novu internu proveru</a>
+						        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novu internu proveru') }}</a>
 					        @endcan
                         </div>
 
                         <div class="col-sm-8 mt-3 mt-md-0">
                             <form id="formYear" class="form-inline" method="get" action="{{ asset('/internal-check/get-data') }}">
-                                <label for="year" class="mr-3 mt-sm-0 mt-2 text-xs sm:text-base">Godina</label>
+                                <label for="year" class="mr-3 mt-sm-0 mt-2 text-xs sm:text-base">{{ __('Godina') }}</label>
                                 <select id="year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
@@ -41,7 +41,7 @@
                                         >{{ $year }}</option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="sm:ml-3 inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white rounded py-2 px-3">Primeni</button>
+                                <button type="submit" class="sm:ml-3 inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white rounded py-2 px-3">{{ __('Primeni') }}</button>
                             </form>
                         </div>
 
@@ -53,13 +53,13 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Termin provere</th>
-                                    <th>Područje provere</th>
-                                    <th>Vođe tima i proveravači</th>
-                                    <th>Standard</th>
-                                    <th>Br program ip</th>
-                                    <th>Izveštaji sa internih provera</th>
-                                    <th class="no-sort">Akcije</th>
+                                    <th>{{ __('Termin provere') }}</th>
+                                    <th>{{ __('Područje provere') }}</th>
+                                    <th>{{ __('Vođe tima i proveravači') }}</th>
+                                    <th>{{ __('Standard') }}</th>
+                                    <th>{{ __('Br programa IP') }}</th>
+                                    <th>{{ __('Izveštaji sa internih provera') }}</th>
+                                    <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -73,12 +73,12 @@
                                         @if(!isset($check->planIp->checked_date))
                                             {{''}}
                                             @can('update', $check)
-                                                <a data-toggle="tooltip" data-placement="top" title="Kreirajte plan interne provere" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="{{ __('Kreirajte plan interne provere') }}" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
                                             @endcan
                                         @else
-                                            <span data-toggle="tooltip" data-placement="top" title="Pregled plana interne provere" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span>
+                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled plana interne provere') }}" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span>
                                             @can('update', $check)
-                                                <a data-toggle="tooltip" data-placement="top" title="Izmena plana interne provere" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena plana interne provere') }}" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                             @endcan
                                         @endif
                                     </td>
@@ -86,17 +86,17 @@
                                         @if(!isset($check->internalCheckReport->id))
                                             @if(isset($check->planIp->checked_date))
                                                 @can('update', $check)
-                                                    <a data-toggle="tooltip" data-placement="top" title="Kreirajte izveštaj za internu proveru" href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
+                                                    <a data-toggle="tooltip" data-placement="top" title="{{ __('Kreirajte izveštaj za internu proveru') }}" href="{{ route('create.report', $check->id) }}"><i class="fas fa-plus"></i></a>
                                                 @endcan
                                             @else
                                                 @can('update', $check)
-                                                    {{'Još nije moguće napraviti izveštaj'}}
+                                                    {{ __('Još nije moguće napraviti izveštaj') }}
                                                 @endcan
                                             @endif
                                         @else
-                                            <span data-toggle="tooltip" data-placement="top" title="Pregled izveštaja sa interne provere" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
+                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled izveštaja sa interne provere') }}" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
                                             @can('update', $check)
-                                                <a data-toggle="tooltip" data-placement="top" title="Izmena izveštaja sa interne provere" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
+                                                <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena izveštaja sa interne provere') }}" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
                                                 <!-- <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
@@ -107,11 +107,11 @@
                                     </td>
                                     <td class="text-center">
                                         @can('update', $check)
-                                            <a data-toggle="tooltip" data-placement="top" title="Izmena interne provere" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena interne provere') }}" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>
                                             <form class="inline" id="delete-form-{{ $check->id }}" action="{{ route('internal-check.destroy', $check->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje interne provere" onclick="confirmDeleteModal({{ $check->id }})"><i class="fas fa-trash"></i></button>
+                                                <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje interne provere') }}" onclick="confirmDeleteModal({{ $check->id }})"><i class="fas fa-trash"></i></button>
                                             </form>
                                         @endcan
                                     </td>
@@ -132,12 +132,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje interne provere</div>
-                    <div class="mt-4">Da li ste sigurni?</div>
+                    <div class="text-lg">{{ __('Brisanje interne provere') }}</div>
+                    <div class="mt-4">{{ __('Da li ste sigurni?') }}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši') }}</a>
                 </div>
             </div>
         </div>
@@ -164,17 +164,17 @@
 
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "columnDefs": [{
@@ -196,7 +196,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Program broj: ${ data.name }</h5>
+							<h5 class="modal-title">{{ __('Program broj') }}: ${ data.name }</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -204,13 +204,13 @@
 						<div class="modal-body text-sm">
                             <div class="flex">
                                 <div class="flex-1">
-                                    <p class="font-bold">Termin provere:</p>
-                                    <p class="font-bold">Sektor:</p>
-                                    <p class="font-bold">Tim za proveru:</p>
-                                    <p class="font-bold">Početak provere:</p>
-                                    <p class="font-bold">Završetak provere:</p>
-                                    <p class="font-bold">Rok za dostavljanje izveštaja:</p>
-                                    <p class="font-bold text-xs">Poslednja izmena:</p>
+                                    <p class="font-bold">{{ __('Termin provere') }}:</p>
+                                    <p class="font-bold">{{ __('Sektor') }}:</p>
+                                    <p class="font-bold">{{ __('Tim za proveru') }}:</p>
+                                    <p class="font-bold">{{ __('Početak provere') }}:</p>
+                                    <p class="font-bold">{{ __('Završetak provere') }}:</p>
+                                    <p class="font-bold">{{ __('Rok za dostavljanje izveštaja') }}:</p>
+                                    <p class="font-bold text-xs">{{ __('Poslednja izmena') }}:</p>
                                 </div>
                                 <div class="flex-1">
                                     <p>${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
@@ -224,7 +224,7 @@
                             </div>
 						</div>
 						<div class="px-6 py-4 bg-gray-100 text-right">
-							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
 						</div>
 					</div>
 				</div>
@@ -253,30 +253,30 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Izveštaj sa interne provere</h5>
+							<h5 class="modal-title">{{ __('Izveštaj sa interne provere') }}</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">
-							<p><h5 class="text-lg">Specifikacija </h5>${ data.specification }</p>`;
+							<p><h5 class="text-lg">{{ __('Specifikacija') }} </h5>${ data.specification }</p>`;
 							let num=1;
 							for( let inc of data.corrective_measures){
-								modal += `<p class="border-top"><h5 class="text-lg">Neusaglašenost ${ num } </h5>${ inc.noncompliance_description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-lg">{{ __('Neusaglašenost') }} ${ num } </h5>${ inc.noncompliance_description }</p>`;
 								num++;
 							}
 
 								num=1;
 							for( let rec of data.recommendations){
-								modal += `<p class="border-top"><h5 class="text-lg">Preporuka ${ num } </h5>${ rec.description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-lg">{{ __('Preporuka') }} ${ num } </h5>${ rec.description }</p>`;
 								num++;
 							}
 							modal+=`
-							<small> <b>Kreirano:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small><br>
-                            <small> <b>Poslednja izmena:</b> <i>${ new Date(data.updated_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
+							<small> <b>{{ __('Kreirano') }}:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small><br>
+                            <small> <b>{{ __('Poslednja izmena') }}:</b> <i>${ new Date(data.updated_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
 						</div>
 						<div class="px-6 py-4 bg-gray-100 text-right">
-							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
 						</div>
 					</div>
 				</div>

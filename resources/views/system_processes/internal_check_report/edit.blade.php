@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name').' - Izveštaj sa interne provere - Izmena' }}
+            {{ session('standard_name') }} - {{ __('Izveštaj sa interne provere') }} - {{ __('Izmena') }}
         </h2>
     </x-slot>
 
     <div class="row">
     	<div class="col">
-        	<a class="btn btn-light" href="{{ route('internal-check.index') }}"><i class="fas fa-arrow-left"></i> Nazad</a>
+        	<a class="btn btn-light" href="{{ route('internal-check.index') }}"><i class="fas fa-arrow-left"></i> {{ __('Nazad') }}</a>
      	</div>
     </div>
 
@@ -23,7 +23,7 @@
         @endif
 
         @if(Session::has('status'))
-            <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+            <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
         @endif
 
 		<form id="internal_check_report_edit_form" action="{{ route('internal-check-report.update', $internalCheckReport->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -32,37 +32,37 @@
 
             <div class="row">
                 <div class="form-group col" >
-                    <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">Proveravano područje</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" placeholder="" name="checked_sector" value="{{ $internalCheckReport->internalCheck->sector->name }}" readonly>
+                    <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Proveravano područje') }}</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="{{ $internalCheckReport->internalCheck->sector->name }}" readonly>
                 </div>
 
                 <div class="form-group col">
-                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">Standard</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="standard" placeholder="" name="standard" value="{{ $internalCheckReport->internalCheck->standard->name }}" readonly>
+                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Standard') }}</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="standard" name="standard" value="{{ $internalCheckReport->internalCheck->standard->name }}" readonly>
                 </div>
 
                 <div class="form-group col">
-                    <label for="team_for_internal_check" class="block text-gray-700 text-sm font-bold mb-2">Tim za proveru</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" placeholder="" name="team_for_internal_check" value="{{ $internalCheckReport->internalCheck->leaders }}" readonly>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col">
-                    <label for="check_start" class="block text-gray-700 text-sm font-bold mb-2">Početak provere</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_start" placeholder="" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
-                </div>
-
-                <div class="form-group col">
-                    <label for="check_end" class="block text-gray-700 text-sm font-bold mb-2">Završetak provere</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_end" placeholder="" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
+                    <label for="team_for_internal_check" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Tim za proveru') }}</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" name="team_for_internal_check" value="{{ $internalCheckReport->internalCheck->leaders }}" readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col">
-                    <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">Specifikacija dokumenata</label>
-                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" placeholder="" name="specification" value="{{ $internalCheckReport->specification }}" required oninvalid="this.setCustomValidity('Specifikacija nije popunjena')"
+                    <label for="check_start" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Početak provere') }}</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_start" name="check_start" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_start)) }}" readonly>
+                </div>
+
+                <div class="form-group col">
+                    <label for="check_end" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Završetak provere') }}</label>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="check_end" name="check_end" value="{{ date('d.m.Y', strtotime($internalCheckReport->internalCheck->planIp->check_end)) }}" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col">
+                    <label for="specification" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Specifikacija dokumenata') }}</label>
+                    <textarea rows="3" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="specification" name="specification" value="{{ $internalCheckReport->specification }}" required oninvalid="this.setCustomValidity({{ __('Specifikacija nije popunjena') }})"
                         oninput="this.setCustomValidity('')">{{ $internalCheckReport->specification }}</textarea>
                     @error('specification')
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -71,14 +71,14 @@
             </div>
 
             <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
-                <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> Dodaj neusaglašenost</span>
-                <span id="addRecommendations" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> Dodaj preporuku</span>
+                <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> {{ __('Dodaj neusaglašenost') }}</span>
+                <span id="addRecommendations" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> {{ __('Dodaj preporuku') }}</span>
             </div>
 
             <div id="inconsistenciesDiv" style="background-color:#ebffe6;" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
                 @foreach($internalCheckReport->correctiveMeasures as $inc)
                     <div class="form-group col-6 mt-3">
-                        <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">Neusaglašenost</label>
+                        <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Neusaglašenost') }}</label>
                         <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="inconsistencies[{{ $inc->id }}]" required>{{ $inc->noncompliance_description }}</textarea>
                         @error('inconsistencies.'.$inc->id)
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -93,18 +93,18 @@
             <div id="recommendationsDiv"  class="row border-top mt-2">
                 @foreach($internalCheckReport->recommendations as $rec)
                     <div class="form-group col-6 mt-3" id="recommendations[{{ $rec->id }}]">
-                        <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">Preporuka</label>
+                        <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Preporuka') }}</label>
                         <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="recommendations[{{ $rec->id }}]" required>{{ $rec->description }}</textarea>
                         @error('recommendations.'.$rec->id)
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
-                        <button data-toggle="tooltip" data-placement="top" title="Brisanje preporuke" class="deleteButton btn btn-danger mt-1 float-right"><i class="fas fa-trash"></i></button>
+                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje preporuke') }}" class="deleteButton btn btn-danger mt-1 float-right"><i class="fas fa-trash"></i></button>
                     </div>
                 @endforeach
             </div>
 
             <div class="form-group">
-                <button type="submit" id="submitForm" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline" >Sačuvaj</button>
+                <button type="submit" id="submitForm" class="float-right w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Sačuvaj') }}</button>
             </div>
         </form>
 
@@ -144,12 +144,12 @@
             addNewRecommendations.id = "buttonRecommedations" + coun;
             addNewRecommendations.setAttribute('data-toggle', 'tooltip');
             addNewRecommendations.setAttribute('data-placement', 'top');
-            addNewRecommendations.title = "Brisanje preporuke";
+            addNewRecommendations.title = "{{ __('Brisanje preporuke') }}";
 
             addNewRecommendations.innerHTML = '<i class="fas fa-trash"></i>';
             label.for = "newInputRecommendation"+coun;
             div.append(label);
-            label.textContent = "Preporuka";
+            label.textContent = "{{ __('Preporuka') }}";
             label.classList = "mt-3 block text-gray-700 text-sm font-bold mb-2";
             newInput.id = 'newInputRecommendation' + coun;
             newInput.name = 'newInputRecommendation' + coun;
@@ -180,7 +180,7 @@
                 <div class="modal-dialog modal-lg mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded" role="document">
                     <div class="modal-content rounded-0">
                         <div class="modal-header">
-                            <h5 class="modal-title font-weight-bold">Karton Korektivne Mere</h5>
+                            <h5 class="modal-title font-weight-bold">{{ __('Karton Korektivne Mere') }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -196,11 +196,11 @@
                                 <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
 
                                 <div class="mb-4">
-                                    <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">Izvor informacije o neusaglašenostima:</label>
+                                    <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Izvor informacije o neusaglašenostima') }}:</label>
                                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source"
                                     required oninvalid="this.setCustomValidity('Izvor informacije o neusaglašenostima nije izabran')"
                                     oninput="this.setCustomValidity('')">
-                                        <option value="Interna provera" selected>Interna provera</option>
+                                        <option value="Interna provera" selected>{{ __('Interna provera') }}</option>
                                     </select>
                                     @error('noncompliance_source')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -208,8 +208,8 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">Opis neusaglašenosti:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('Opis neusaglašenosti nije popunjen')"
+                                    <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis neusaglašenosti') }}:</label>
+                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('{{ __("Opis neusaglašenosti nije popunjen") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('noncompliance_description') }}</textarea>
                                     @error('noncompliance_description')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -217,8 +217,8 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">Uzrok neusaglašenosti:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('Uzrok neusaglašenosti nije popunjen')"
+                                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Uzrok neusaglašenosti') }}:</label>
+                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('{{ __("Uzrok neusaglašenosti nije popunjen") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('noncompliance_cause') }}</textarea>
                                     @error('noncompliance_cause')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -226,8 +226,8 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">Mera za otklanjanje neusaglašenosti:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('Mera za otklanjanje neusaglašenosti nije popunjena')"
+                                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera za otklanjanje neusaglašenosti') }}:</label>
+                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('{{ __("Mera za otklanjanje neusaglašenosti nije popunjena") }}')"
                                     oninput="this.setCustomValidity('')">{{ old('measure') }}</textarea>
                                     @error('measure')
                                         <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -235,15 +235,15 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">Odobravanje mere:</label>
+                                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje mere') }}:</label>
                                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
-                                        <option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >DA</option>
-                                        <option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >NE</option>
+                                        <option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
+                                        <option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-4" id="measure_reason_field" style="display: none">
-                                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2" >Razlog neodobravanja mere</label>
+                                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2" >{{ __('Razlog neodobravanja mere') }}</label>
                                     <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja mere')"
                                     oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="measure_approval_reason" id="measure_approval_reason" >
                                     @error('measure_approval_reason')
@@ -252,25 +252,25 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">Status mere:</label>
+                                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Status mere') }}:</label>
                                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
-                                        <option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >NE</option>
-                                        <option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >DA</option>
+                                        <option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
+                                        <option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-4" id="measure_effective_field" style="display: none">
-                                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">Mera efektivna:</label>
+                                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera efektivna') }}:</label>
                                     <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
                                     oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
-                                        <option value="">Izaberi...</option>
-                                        <option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >DA</option>
-                                        <option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >NE</option>
+                                        <option value="">{{ __('Izaberi') }}...</option>
+                                        <option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
+                                        <option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
                                     </select>
                                 </div>
 
-                                <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
-                                <button type="button" class="w-1/4 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline rounded-0" data-dismiss="modal">Odustani</button>
+                                <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
+                                <button type="button" class="w-1/4 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline rounded-0" data-dismiss="modal">{{ __('Odustani') }}</button>
                             </form>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
                                 </div>
                             </div>
                         </div>

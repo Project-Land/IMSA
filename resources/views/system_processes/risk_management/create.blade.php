@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Upravljanje rizicima - Kreiranje') }}
+            {{ session('standard_name') }} - {{ __('Upravljanje rizicima') }} - {{ __('Kreiranje') }}
         </h2>
     </x-slot>
 
     <div class="row">
     	<div class="col">
-        	<a class="btn btn-light" href="{{ route('risk-management.index') }}"><i class="fas fa-arrow-left"></i> Nazad</a>
+        	<a class="btn btn-light" href="{{ route('risk-management.index') }}"><i class="fas fa-arrow-left"></i> {{ __('Nazad') }}</a>
      	</div>
     </div>
 
@@ -15,48 +15,48 @@
 
 		<form action="{{ route('risk-management.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
-            
+
 			<div class="mb-4">
-				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">Opis:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')"></textarea>
+				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis') }}:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')"></textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
             </div>
-            
+
 			<div class="mb-4">
-				<label for="probability" class="block text-gray-700 text-sm font-bold mb-2">Verovatnoća:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
+				<label for="probability" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Verovatnoća') }}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
             </div>
-            
+
             <div class="mb-4">
-				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">Posledice:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
+				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Posledice') }}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
             </div>
-            
+
             <div class="mb-4">
-				<label for="total" class="block text-gray-700 text-sm font-bold mb-2">Ukupno:</label>
+				<label for="total" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Ukupno') }}:</label>
 				<input class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="total" id="total" disabled value="1">
             </div>
-            
+
             <div class="mb-4">
-				<label for="acceptable" class="block text-gray-700 text-sm font-bold mb-2">Prihvatljivo:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable" required oninvalid="this.setCustomValidity('Popunite polje')" oninput="this.setCustomValidity('')">
+				<label for="acceptable" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prihvatljivo') }}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
             </div>
-            
-			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">Kreiraj</button>
+
+			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
 		</form>
     </div>
 
