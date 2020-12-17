@@ -166,8 +166,11 @@
     "Preuzimanje dokumenta":"Download",
     "Povraćaj dokumenta":"Restore document",
     "Trajno brisanje dokumenta":"Delete permanently",
-    "Da li ste sigurni? Nakon brisanja, dokument će biti trajno uklonjen.":"Are you sure? After deletion, the document will be permanently removed."
-    
+    "Da li ste sigurni? Nakon brisanja, dokument će biti trajno uklonjen.":"Are you sure? After deletion, the document will be permanently removed.",
+
+
+
+
 
 
 }

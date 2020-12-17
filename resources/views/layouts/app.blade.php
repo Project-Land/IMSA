@@ -39,6 +39,10 @@
         <script src="{{ asset('js/custom.js') }}"></script>
 
         <style>
+            #footer{ 
+                background: rgb(52,95,99);
+                background: linear-gradient(180deg, rgba(52,95,99,1) 0%, rgba(199,208,202,1) 100%);
+            }
             .dropdown-menu {
                 position: static;
                 float: none;
