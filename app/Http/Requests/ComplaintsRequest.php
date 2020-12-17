@@ -62,16 +62,16 @@ class ComplaintsRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Unesite oznaku reklamacije',
-            'name.max' => 'Oznaka može sadržati najviše 190 karaktera',
-            'desription.required' => 'Unesite opis reklamacije',
-            'submission_date.required' => 'Unesite datum podnošenja reklamacije',
-            'submission_date.after' => 'Unesite budući datum',
-            'process.required' => 'Unesite proces na koji se reklamacija odnosi',
-            'process.max' => 'Polje može sadržati najviše 190 karaktera',
-            'responsible_person.max' => 'Polje može sadržati najviše 190 karaktera',
-            'way_of_solving.max' => 'Polje može sadržati najviše 190 karaktera',
-            'deadline_date.after' => 'Unesite datum noviji od datuma podnošenja reklamacije'
+            'name.required' => __('Polje je obavezno'),
+            'name.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'desription.required' => __('Polje je obavezno'),
+            'submission_date.required' => __('Polje je obavezno'),
+            'submission_date.after' => __('Unesite budući datum'),
+            'process.required' => __('Polje je obavezno'),
+            'process.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'responsible_person.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'way_of_solving.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'deadline_date.after' => __('Unesite datum noviji od datuma podnošenja reklamacije')
         ];
     }
 

@@ -67,14 +67,14 @@ class ManagementSystemReviewRequest extends FormRequest
     public function messages()
     {
         return [
-            'year.unique' => 'Izveštaj za izabranu godinu već postoji',
-            'participants.required' => 'Unesite učesnike',
-            'measures_status.required' => 'Unesite status mera',
-            'internal_external_changes.required' => 'Unesite promene',
-            'customer_satisfaction.required' => 'Unesite zadovoljstvo klijenata',
-            'monitoring_measurement_results.required' => 'Unesite rezultate praćenja i merenja',
-            'resource_adequacy.required' => 'Unesite adekvatnost resursa',
-            'checks_results_desc.required' => ' Unesite rezultate eksternih provera'
+            'year.unique' => __('Izveštaj za izabranu godinu već postoji'),
+            'participants.required' => __('Polje je obavezno'),
+            'measures_status.required' => __('Polje je obavezno'),
+            'internal_external_changes.required' => __('Polje je obavezno'),
+            'customer_satisfaction.required' => __('Polje je obavezno'),
+            'monitoring_measurement_results.required' => __('Polje je obavezno'),
+            'resource_adequacy.required' => __('Polje je obavezno'),
+            'checks_results_desc.required' => __('Polje je obavezno')
         ];
     }
 

@@ -535,7 +535,24 @@
     "Interna provera za ":"Internal check for ",
     "Preispitivanje isporučilaca za ":"Reviewing suppliers for ",
     "Analiza cilja za ":"Goal analysis for ",
-    "Datum narednog etaloniranja/baždarenja ":"Date of next calibration "
+    "Datum narednog etaloniranja/baždarenja ":"Date of next calibration ",
+    "Polje može sadržati najviše 190 karaktera":"Field can contain a maximum of 190 characters",
+    "Unesite datum noviji od datuma podnošenja reklamacije":"Please enter a date newer than the complaint date",
+    "Polje je obavezno":"Field is required",
+    "Izaberite karakter otpada":"Choose a waste character",
+    "Izaberite fajl":"Select a file",
+    "Unesite naziv dokumenta":"Enter the document title",
+    "Naziv dokumenta ne sme biti duži od 255 karaktera":"The title of the document must not be longer than 255 characters",
+    "Unesite verziju dokumenta":"Enter the document version",
+    "Izaberite pripadajući sektor":"Select a sector",
+    "Fajl ne sme biti veći od 10mb":"The maximum file size is 10mb",
+    "Fajl mora biti u nekom od dozvoljenih formata: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif":"Allowed formats: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif",
+    "Izveštaj za izabranu godinu već postoji":"The report for the selected year already exists",
+    "Fajl mora biti u PDF formatu":"File must be in PDF format",
+    "Unesite datum narednog etaloniranja/baždarenja":"Enter the date of the next calibration",
+    "Nije moguće uneti budući datum":"Unable to enter future date"
+    
+
  
 
 

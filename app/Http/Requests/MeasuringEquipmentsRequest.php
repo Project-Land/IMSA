@@ -54,13 +54,13 @@ class MeasuringEquipmentsRequest extends FormRequest
     public function messages()
     {
         return [
-            'label.required' => 'Unesite oznaku',
-            'label.max' => 'Polje može sadržati najviše 190 karaktera',
-            'name.required' => 'Unesite naziv',
-            'name.max' => 'Polje može sadržati najviše 190 karaktera',
-            'next_calibration_date.required' => 'Unesite datum narednog etaloniranja/bandažiranja',
-            'next_calibration_date.after' => 'Unesite budući datum',
-            'last_calibration_date.before' => 'Nije moguće uneti budući datum'
+            'label.required' => __('Polje je obavezno'),
+            'label.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'name.required' => __('Polje je obavezno'),
+            'name.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'next_calibration_date.required' => __('Unesite datum narednog etaloniranja/baždarenja'),
+            'next_calibration_date.after' => __('Unesite budući datum'),
+            'last_calibration_date.before' => __('Nije moguće uneti budući datum')
         ];
     }
 

@@ -36,11 +36,11 @@ class EnvironmentalAspectsRequest extends FormRequest
     public function messages()
     {
         return [
-            'process.required' => 'Polje je obavezno',
-            'waste.required' => 'Polje je obavezno',
-            'aspect.required' => 'Polje je obavezno',
-            'influence.required' => 'Polje je obavezno',
-            'waste_type' => 'Izaberite karakter otpada'
+            'process.required' => __('Polje je obavezno'),
+            'waste.required' => __('Polje je obavezno'),
+            'aspect.required' => __('Polje je obavezno'),
+            'influence.required' => __('Polje je obavezno'),
+            'waste_type' => __('Izaberite karakter otpada')
         ];
     }
 

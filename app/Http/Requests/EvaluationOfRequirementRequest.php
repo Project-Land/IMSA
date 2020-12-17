@@ -51,11 +51,11 @@ class EvaluationOfRequirementRequest extends FormRequest
     public function messages()
     {
         return [
-            'document_name.required' => 'Polje je obavezno',
-            'document_name.max' => 'Polje može sadržati najviše 190 karaktera',
-            'requirement_level.required' => 'Polje je obavezno',
-            'compliance.required' => 'Polje je obavezno',
-            'note.max' => 'Polje može sadržati najviše 190 karaktera',
+            'document_name.required' => __('Polje je obavezno'),
+            'document_name.max' => __('Polje može sadržati najviše 190 karaktera'),
+            'requirement_level.required' => __('Polje je obavezno'),
+            'compliance.required' => __('Polje je obavezno'),
+            'note.max' => __('Polje može sadržati najviše 190 karaktera'),
            
         ];
     }
