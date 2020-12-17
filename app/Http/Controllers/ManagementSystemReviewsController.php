@@ -15,7 +15,7 @@ class ManagementSystemReviewsController extends Controller
     public function index()
     {
         if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
+            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
         $msr = ManagementSystemReview::where([
@@ -59,10 +59,10 @@ class ManagementSystemReviewsController extends Controller
         try{
             $msr = ManagementSystemReview::Create($request->all());
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Zapisnik je uspešno sačuvan!'));
+            $request->session()->flash('status', array('info', __('Zapisnik je uspešno sačuvan!')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja zapisnika sa preispitivanja, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
+            $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/management-system-reviews');
     }
@@ -93,10 +93,10 @@ class ManagementSystemReviewsController extends Controller
         try{
             $msr->update($request->all());
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Zapisnik je uspešno izmenjen!'));
+            $request->session()->flash('status', array('info', __('Zapisnik je uspešno izmenjen!')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene zapisnika sa preispitivanja "'.$msr->year.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
+            $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/management-system-reviews');
     }
@@ -109,10 +109,10 @@ class ManagementSystemReviewsController extends Controller
         try{
             ManagementSystemReview::destroy($id);
             CustomLog::info('Zapisnik sa preispitivanja "'.$msr->year.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Zapisnik je uspešno uklonjen'));
+            return back()->with('status', array('info', __('Zapisnik je uspešno uklonjen')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja zapisnika sa preispitivanja "'.$msr->year.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
     }
 

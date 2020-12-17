@@ -15,7 +15,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
     public function index(){
 
         if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
+            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
         $EvaluationOfLegalAndOtherRequirement = EvaluationOfLegalAndOtherRequirement::where([
@@ -46,12 +46,12 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             'measure_status.*' => 'required',
             'measure_effective.*' => 'nullable'
         ], [
-            'noncompliance_source.*.required' => 'Izvor informacije o neusaglašenostima nije izabran',
-            'noncompliance_description.*.required' => 'Opis neusaglašenosti nije popunjen',
-            'noncompliance_cause.*.required' => 'Uzrok neusaglašenosti nije popunjen',
-            'measure.*.required' => 'Mera za otklanjanje neusaglašenosti nije popunjena',
-            'measure_approval.*.required' => 'Razlog neodobravanja mere nije popunjen',
-            'measure_status.*.required' => 'Polje mera efektivna nije popunjeno',
+            'noncompliance_source.*.required' => __('Izvor informacije o neusaglašenostima nije izabran'),
+            'noncompliance_description.*.required' => __('Opis neusaglašenosti nije popunjen'),
+            'noncompliance_cause.*.required' => __('Uzrok neusaglašenosti nije popunjen'),
+            'measure.*.required' => __('Mera za otklanjanje neusaglašenosti nije popunjena'),
+            'measure_approval.*.required' => __('Razlog neodobravanja mere nije popunjen'),
+            'measure_status.*.required' => __('Polje mera efektivna nije popunjeno'),
         ]);
 
         try{
@@ -116,10 +116,10 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             }
 
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id- "'.$requirement->id.'" je kreirano, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Vrednovanje zakonskih i drugih zahteva je uspešno sačuvano!'));
+            $request->session()->flash('status', array('info', __('Vrednovanje zakonskih i drugih zahteva je uspešno sačuvano!')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja Vrednovanja zakonskih i drugih zahteva, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').',Linija '.$e->getLine().' Greška '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
+            $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/evaluation-of-requirements');
     }
@@ -147,12 +147,12 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                 'measure_status' => 'required',
                 'measure_effective' => 'nullable'
             ], [
-                'noncompliance_source.required' => 'Izvor informacije o neusaglašenostima nije izabran',
-                'noncompliance_description.required' => 'Opis neusaglašenosti nije popunjen',
-                'noncompliance_cause.required' => 'Uzrok neusaglašenosti nije popunjen',
-                'measure.required' => 'Mera za otklanjanje neusaglašenosti nije popunjena',
-                'measure_approval.required' => 'Razlog neodobravanja mere nije popunjen',
-                'measure_status.required' => 'Polje mera efektivna nije popunjeno',
+                'noncompliance_source.required' => __('Izvor informacije o neusaglašenostima nije izabran'),
+                'noncompliance_description.required' => __('Opis neusaglašenosti nije popunjen'),
+                'noncompliance_cause.required' => __('Uzrok neusaglašenosti nije popunjen'),
+                'measure.required' => __('Mera za otklanjanje neusaglašenosti nije popunjena'),
+                'measure_approval.required' => __('Razlog neodobravanja mere nije popunjen'),
+                'measure_status.required' => __('Polje mera efektivna nije popunjeno'),
             ]);
         }
 
@@ -215,10 +215,10 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                // $requirement->correctiveMeasures()->delete();
             }
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id: "'.$requirement->id.'" izmenjeno, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Vrednovanje zakonskih i drugih zahteva je uspešno izmenjeno!'));
+            $request->session()->flash('status', array('info', __('Vrednovanje zakonskih i drugih zahteva je uspešno izmenjeno!')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene Vrednovanja zakonskih i drugih zahteva id: "'.$requirement->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').',Linija:'.$e->getLine().' Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
+            $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/evaluation-of-requirements');
     }
@@ -232,10 +232,10 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             $requirement->correctiveMeasures()->delete();
             EvaluationOfLegalAndOtherRequirement::destroy($id);
             CustomLog::info('Vrednovanje zakonskih i drugih zahteva id: "'.$requirement->id.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Vrednovanje zakonskih i drugih zahteva je uspešno uklonjeno'));
+            return back()->with('status', array('info', __('Vrednovanje zakonskih i drugih zahteva je uspešno uklonjeno')));
         } catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja Vrednovanja zakonskih i drugih zahteva id: "'.$requirement->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
     }
 

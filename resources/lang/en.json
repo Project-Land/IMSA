@@ -512,5 +512,27 @@
     "Značajno ubrzava i pojednostavljuje proces preispitivanja od strane rukovodstva":"Significantly speeds up and simplifies the review process by management",
     "Omogućava centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije":"It enables centralized and systematic monitoring of goals, as well as the degree of their realization",
     "Olakšava proces upravljanja reklamacijama":"Facilitates the complaint management process",
-    "Smanjuje rizik od gubljenja/suspenzije sertifikata":"Reduces the risk of losing / suspending the certificate"
+    "Smanjuje rizik od gubljenja/suspenzije sertifikata":"Reduces the risk of losing / suspending the certificate",
+    "Upravljanje mernom opremom":"Measuring equipment management",
+    "Reklamacija je uspešno sačuvana!":"Complaint saved successfully!",
+    "Reklamacija je uspešno izmenjena!":"Complaint successfully modified!",
+    "Reklamacija je uspešno obrisana":"Complaint deleted successfully",
+    "Aspekt životne sredine je uspešno sačuvan!":"Ecological aspect successfully created!",
+    "Aspekt životne sredine je uspešno izmenjen!":"Environmental aspect successfully changed!",
+    "Aspekt životne sredine je uspešno obrisan":"Environmental aspect successfully deleted",
+    "Vrednovanje zakonskih i drugih zahteva je uspešno sačuvano!":"Evaluation of legal and other requirements successfully saved!",
+    "Vrednovanje zakonskih i drugih zahteva je uspešno izmenjeno!":"Evaluation of legal and other requirements successfully changed!",
+    "Vrednovanje zakonskih i drugih zahteva je uspešno uklonjeno":"Evaluation of legal and other requirements successfully deleted!",
+    "Fajl nije pronađen":"File not found",
+    "Zapisnik je uspešno sačuvan!":"Log saved successfully!",
+    "Zapisnik je uspešno izmenjen!":"Log changed successfully!",
+    "Merna oprema je uspešno kreirana!":"Measuring equipment successfully created!",
+    "Merna oprema je uspešno izmenjena!":"Measuring equipment successfully changed!",
+    "Merna oprema je uspešno obrisana":"Measuring equipment successfully deleted!",
+    "Zainteresovana strana je uspešno sačuvana!":"Stakeholder successfully created!",
+    "Zainteresovana strana je uspešno izmenjena!":"Stakeholder successfully modified!",
+    "Zainteresovana strana je uspešno uklonjena":"Stakeholder successfully deleted!"
+ 
+
+
 }

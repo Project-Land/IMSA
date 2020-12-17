@@ -44,7 +44,7 @@ class HomeController extends Controller
             return view('standard', compact('standard'));
         }
         catch (ModelNotFoundException $e){
-            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
+            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
     }
 
@@ -67,7 +67,7 @@ class HomeController extends Controller
             return Response::download($path);
         }
         else {
-            return back()->with('status', array('danger', 'Fajl nije pronađen'));
+            return back()->with('status', array('danger', __('Fajl nije pronađen')));
         }
     }
 
@@ -82,7 +82,7 @@ class HomeController extends Controller
             return Response::file($path);
         }
         else {
-            return back()->with('status', array('danger', 'Fajl nije pronađen'));
+            return back()->with('status', array('danger', __('Fajl nije pronađen')));
         }
     }
 
