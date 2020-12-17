@@ -27,6 +27,7 @@ class Team extends JetstreamTeam
         'name',
         'logo',
         'personal_team',
+        'lang'
     ];
 
     /**

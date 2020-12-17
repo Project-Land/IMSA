@@ -58,7 +58,7 @@ class PlanIpController extends Controller
             $request->session()->flash('status', array('info', 'Plan IP je uspešno izmenjen'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene plana IP id: '.$planIp->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
 
         return redirect('/internal-check');
@@ -75,7 +75,7 @@ class PlanIpController extends Controller
             return back()->with('status', array('info', 'Plan IP je uspešno uklonjen'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja plana IP id: '.$plan_ip->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 }

@@ -88,7 +88,7 @@ class TrainingsController extends Controller
             $request->session()->flash('status', array('info', 'Obuka je uspešno izmenjena!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene obuke "'.$trainingPlan->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/trainings');
     }
@@ -100,10 +100,10 @@ class TrainingsController extends Controller
         try{
             Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Obuka je uspešno uklonjena'));
+            return back()->with('status', array('info', 'Obuka je uspešno uklonjena!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja obuke "'.$trainingPlan->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 

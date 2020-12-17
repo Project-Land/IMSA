@@ -99,7 +99,7 @@ class SuppliersController extends Controller
             $request->session()->flash('status', array('info', 'Odabrani isporučilac je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene isporučioca "'.$supplier->supplier_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/suppliers');
     }
@@ -113,10 +113,10 @@ class SuppliersController extends Controller
             $supplier->notification()->delete();
             Supplier::destroy($id);
             CustomLog::info('Isporučilac "'.$supplier->supplier_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Odabrani isporučilac je uspešno uklonjen'));
+            return back()->with('status', array('info', 'Odabrani isporučilac je uspešno uklonjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja isporučioca "'.$supplier->supplier_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 }

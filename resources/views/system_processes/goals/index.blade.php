@@ -9,7 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -23,12 +23,12 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\Goal::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> Kreiraj novi cilj</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novi cilj') }}</a>
                             @endcan
                         </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
-                                <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">Godina</label>
+                                <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">{{ __('Godina') }}</label>
                                 <select name="goals-year" id="goals-year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
@@ -43,15 +43,15 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Godina</th>
-                                    <th>Cilj</th>
-                                    <th>KPI</th>
-                                    <th>Potrebne aktivnosti za realizaciju cilja</th>
-                                    <th>Odgovornost za praćenje i realizaciju cilja</th>
-                                    <th>Rok za realizaciju</th>
-                                    <th>Potrebni resursi</th>
-                                    <th>Analiza ispunjenosti cilja</th>
-                                    <th class="no-sort">Akcije</th>
+                                    <th>{{ __('Godina') }}</th>
+                                    <th>{{ __('Cilj') }}</th>
+                                    <th>{{ __('KPI') }}</th>
+                                    <th>{{ __('Potrebne aktivnosti za realizaciju cilja') }}</th>
+                                    <th>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</th>
+                                    <th>{{ __('Rok za realizaciju') }}</th>
+                                    <th>{{ __('Potrebni resursi') }}</th>
+                                    <th>{{ __('Analiza ispunjenosti cilja') }}</th>
+                                    <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -66,13 +66,13 @@
                                     <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="Pregled cilja" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $goal)
-                                        <a data-toggle="tooltip" data-placement="top" title="Izmena cilja" href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena cilja') }}" href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $goal->id }}" action="{{ route('goals.destroy', $goal->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="Brisanje cilja" onclick="confirmDeleteModal({{ $goal->id }})"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje cilja') }}" onclick="confirmDeleteModal({{ $goal->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -92,12 +92,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
-                    <div class="text-lg">Brisanje cilja</div>
-                    <div class="mt-4">Da li ste sigurni?</div>
+                    <div class="text-lg">{{ __('Brisanje cilja') }}</div>
+                    <div class="mt-4">{{ __('Da li ste sigurni?') }}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Odustani</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">Obriši</a>
+                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši') }}</a>
                 </div>
             </div>
         </div>
@@ -126,17 +126,17 @@
 
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "columnDefs": [{
@@ -161,24 +161,24 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>Godina</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Godina') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Rok za realizaciju</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Odgovornost za praćenje i realizaciju cilja</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Resursi</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Resursi') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>KPI</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('KPI') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.kpi }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Aktivnosti</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Aktivnosti') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.activities }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>Analzia</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Analiza') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
         axios.post('/goals/get-data', { data })
         .then((response) => {
             if(response.data.length == 0){
-                $('#table-body').html('<td colspan="10" class="dataTables_empty" valign="top">Nema podataka</td>');
+                $('#table-body').html('<td colspan="10" class="dataTables_empty" valign="top">{{ __("Nema podataka") }}</td>');
             }
             else{
                 let allData = "";
@@ -233,24 +233,25 @@
                     let row = `
                         <tr>
                             <td class="text-center">${ item.year }</td>
-                            <td class="text-center">${ item.goal }</td>
-                            <td class="text-center">${ item.kpi }</td>
+                            <td class="text-center">${ item.goal.length < 35 ? item.goal : item.goal.substr(0, 35) + "..."}</td>
+                            <td class="text-center">${ item.kpi.length < 35 ? item.kpi : item.kpi.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.activities.length < 35 ? item.activities : item.activities.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.responsibility }</td>
                             <td class="text-center">${ new Date(item.deadline).getUTCDate() + '.' + new Date(item.deadline).getUTCMonth() + '.' + new Date(item.deadline).getUTCFullYear() }</td>
                             <td class="text-center">${ item.resources }</td>
                             <td class="text-center">${ item.analysis != null ? item.analysis.substr(0, 35) + "..." : "/" }</td>
                             <td class="text-center">
-                                <button class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
-                                    <a href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                    <a class="text-red-600 cursor-pointer hover:text-red-700" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena cilja') }}" href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje cilja') }}" class="text-red-600 cursor-pointer hover:text-red-700" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
                                 </span>
                             </td>
                         </tr>
                     `;
                     allData += row;
                 });
+                $('[data-toggle="tooltip"]').tooltip();
                 $('#table-body').html(allData)
             }
         }, (error) => {

@@ -33,7 +33,7 @@ class InternalCheckController extends Controller
             session(['standard' => request()->get('standard')]);
             session(['standard_name' => request()->get('standard_name')]);
         }
-        
+
         if(session('standard') == null){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
@@ -196,7 +196,7 @@ class InternalCheckController extends Controller
             $internal_check->notification()->save($notification);
 
             CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Godišnji plan je uspešno izmenjen!'));
+            $request->session()->flash('status', array('info', 'Godišnji plan interne provere je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene godišnjeg plana interne provere id: "'.$internal_check->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
@@ -219,11 +219,11 @@ class InternalCheckController extends Controller
             InternalCheckReport::destroy($internal_check->internal_check_report_id);
 
             CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Godišnji plan je uspešno uklonjen'));
+            return back()->with('status', array('info', 'Godišnji plan interne provere je uspešno uklonjen'));
 
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id: "'.$internal_check->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 }

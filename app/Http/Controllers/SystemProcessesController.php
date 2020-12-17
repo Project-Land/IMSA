@@ -52,7 +52,7 @@ class SystemProcessesController extends Controller
             return back()->with('status', array('info', 'Sistemski proces uspešno dodat standardu '. $standard->name));
         }
         catch (Exception $e){
-            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
 
     }

@@ -78,18 +78,21 @@
 </x-app-layout>
 
 <script>
-    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
-    var current_lang = "Serbian"
-    if(lang == "en"){
-        current_lang = "English";
-    }
-    else {
-        current_lang = "Serbian"
-    }
-    console.log(lang);
+
     $('.yajra-datatable').DataTable({
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/"+current_lang+".json",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
+            "paginate": {
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
+            }
         },
         "columnDefs": [{
           "targets": 'no-sort',

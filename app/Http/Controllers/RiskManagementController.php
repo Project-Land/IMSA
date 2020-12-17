@@ -38,7 +38,7 @@ class RiskManagementController extends Controller
         try{
             $risk = RiskManagement::create($request->all());
             CustomLog::info('Rizik "'.$risk->description.'" dodat, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Dokument je uspešno sačuvan!'));
+            $request->session()->flash('status', array('info', 'Plan je uspešno sačuvan!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja rizika, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
@@ -67,7 +67,7 @@ class RiskManagementController extends Controller
         try{
             $risk->update($request->all());
             CustomLog::info('Rizik "'.$risk->description.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Dokument je uspešno izmenjen!'));
+            $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene rizika '.$risk->description.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
@@ -83,11 +83,11 @@ class RiskManagementController extends Controller
         try{
             RiskManagement::destroy($id);
             CustomLog::info('Rizik "'.$risk->description.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Rizik / plan je uspešno uklonjen'));
+            return back()->with('status', array('info', 'Plan je uspešno uklonjen'));
         }
         catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja rizika "'.$risk->description.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 

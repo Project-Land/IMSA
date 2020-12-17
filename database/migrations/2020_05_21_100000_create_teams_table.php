@@ -20,6 +20,7 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('logo')->nullable();
             $table->boolean('personal_team');
+            $table->string('lang', 3)->nullable();
             $table->timestamps();
         });
 
@@ -28,7 +29,8 @@ class CreateTeamsTable extends Migration
                 'user_id' => '1',
                 'name' => 'Default Company',
                 'logo' => "",
-                'personal_team' => false
+                'personal_team' => false,
+                'lang' => 'sr'
             )
         );
     }
