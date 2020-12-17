@@ -119,7 +119,7 @@ class InternalCheckController extends Controller
             DB::transaction(function () use ($request, $validatedData, $planId){
                 $internalCheck=InternalCheck::create($validatedData);
                 $notification=Notification::create([
-                'message'=>'Interna provera za '.date('d.m.Y', strtotime($internalCheck->date)),
+                'message'=>__('Interna provera za ').date('d.m.Y', strtotime($internalCheck->date)),
                 'team_id'=>Auth::user()->current_team_id,
                 'checkTime' => $internalCheck->date
                 ]);
@@ -191,7 +191,7 @@ class InternalCheckController extends Controller
                 $notification=new Notification();
                 $notification->team_id=Auth::user()->current_team_id;
             }
-            $notification->message = 'Interna provera za '.date('d.m.Y', strtotime($request->date));
+            $notification->message = __('Interna provera za ').date('d.m.Y', strtotime($request->date));
             $notification->checkTime = $internal_check->date;
             $internal_check->notification()->save($notification);
 

@@ -531,7 +531,11 @@
     "Merna oprema je uspešno obrisana":"Measuring equipment successfully deleted!",
     "Zainteresovana strana je uspešno sačuvana!":"Stakeholder successfully created!",
     "Zainteresovana strana je uspešno izmenjena!":"Stakeholder successfully modified!",
-    "Zainteresovana strana je uspešno uklonjena":"Stakeholder successfully deleted!"
+    "Zainteresovana strana je uspešno uklonjena":"Stakeholder successfully deleted!",
+    "Interna provera za ":"Internal check for ",
+    "Preispitivanje isporučilaca za ":"Reviewing suppliers for ",
+    "Analiza cilja za ":"Goal analysis for ",
+    "Datum narednog etaloniranja/baždarenja ":"Date of next calibration "
  
 
 

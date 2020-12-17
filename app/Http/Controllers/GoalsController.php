@@ -65,7 +65,7 @@ class GoalsController extends Controller
             $goal = Goal::create($request->all());
 
             $notification = Notification::create([
-                    'message'=>'Analiza cilja za '.date('d.m.Y', strtotime($goal->deadline)),
+                    'message'=>__('Analiza cilja za ').date('d.m.Y', strtotime($goal->deadline)),
                     'team_id'=>Auth::user()->current_team_id,
                     'checkTime' => $goal->deadline
                 ]);
@@ -110,7 +110,7 @@ class GoalsController extends Controller
                 $notification=new Notification();
                 $notification->team_id=Auth::user()->current_team_id;
             }
-            $notification->message = 'Analiza cilja za '.date('d.m.Y', strtotime($request->deadline));
+            $notification->message = __('Analiza cilja za ').date('d.m.Y', strtotime($request->deadline));
             $notification->checkTime = $goal->deadline;
             $goal->notification()->save($notification);
 
