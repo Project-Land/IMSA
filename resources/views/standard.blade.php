@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-        </div>{{$system_processes}}
+        </div>
 
     </div>
 
