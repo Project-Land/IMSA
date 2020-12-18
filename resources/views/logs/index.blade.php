@@ -34,8 +34,8 @@
 			<div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 
                 <div class="w-3/6 md:w-full pl-4 pt-3 pb-1 bg-white shadow rounded" >
-                    <p class="text-xs md:text-base"><b>Poslednja promena:</b> <i>{{ date('d.m.Y H:i:s', strtotime($data['lastModified'])) }}</i></p>
-                    <p class="text-xs md:text-base"><b>Veličina fajla:</b> {{ round($data['size'] / 1024) }} KB</p>
+                    <p class="text-xs md:text-base"><b>{{ __('Poslednja promena') }}:</b> <i>{{ date('d.m.Y H:i:s', strtotime($data['lastModified'])) }}</i></p>
+                    <p class="text-xs md:text-base"><b>{{ __('Veličina fajla') }}:</b> {{ round($data['size'] / 1024) }} KB</p>
                 </div>
 
 				<div class="shadow border-b border-gray-200 sm:rounded-lg pt-4">
@@ -46,16 +46,16 @@
                             <thead>
                                 <tr>
                                     <th class="text-center px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Tip
+                                        {{ __('Tip') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Poruka
+                                        {{ __('Poruka') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Korisnik
+                                        {{ __('Korisnik') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Datum
+                                        {{ __('Datum') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -68,12 +68,12 @@
                                     <td class="py-2 px-6 whitespace-no-wrap text-sm leading-5">
                                         {{ $log['message'] }}
                                         @if(!empty($log['error']) && \Auth::user()->hasTeamRole(\Auth::user()->currentTeam, 'super-admin'))
-                                            <br> <p style="cursor: pointer; color: blue;" id="error-{{ $key }}" onclick="showError({{ $key }})">Greška</p>
+                                            <br> <p style="cursor: pointer; color: blue;" id="error-{{ $key }}" onclick="showError({{ $key }})">{{ __('Greška') }}</p>
                                             <div class="modal fade" id="showError-{{ $key }}" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content rounded-0">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title font-weight-bold">Greška</h5>
+                                                            <h5 class="modal-title font-weight-bold">{{ __('Greška') }}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -84,7 +84,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="px-6 py-4 bg-gray-100 text-right">
-                                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">Zatvori</button>
+                                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,17 +115,17 @@
 
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "order": [[ 3, "desc" ]],

@@ -589,7 +589,12 @@
     "Unesite aktivnosti" : "Enter activities",
     "Unesite naziv isporučioca" : "Enter the name of the supplier",
     "Unesite predmet nabavke" : "Enter the subject of the procurement",
-    "Naziv može sadržati maksimalno 190 karaktera" : "Name cannot be longer than 190 characters"
+    "Naziv može sadržati maksimalno 190 karaktera" : "Name cannot be longer than 190 characters",
+    "Tip" : "Type",
+    "Greška" : "Error",
+    "Poruka" : "Message",
+    "Veličina fajla" : "File size",
+    "Poslednja promena" : "Last change"
 
 
 }
