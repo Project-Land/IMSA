@@ -46,32 +46,38 @@ class SendEmailToAdmin extends Command
      */
     public function handle()
     {
+        Mail::send([], ['obavestenje'], function($message) {
+            $message->to('aleksandarmarkovic127@gmail.com', 'Imsa')->subject
+               ('Laravel Basic Testing Mail');
+            $message->from('imsa@gmail.com','ACA');
+         });return;
+
         set_time_limit(200);
-        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(1))
+        $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(7))
         ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier'])
         ->orWhere(function($query) {
-            $query->whereDate('checkTime',Carbon::now()->addDay(2))
+            $query->whereDate('checkTime',Carbon::now()->addDay(15))
                   ->where('notifiable_type', 'App\\Models\\MeasuringEquipment');
         })->with('notifiable.standard')->get();
         if(!$nots->count()){
             return;
         }
-        $c=0;
-       
+        
         
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             App::setlocale($team->lang);
-        $u=User::find(4);
-        Mail::to($u)->send(new SendMailToAdmin($nots[0]));return;
+      
             $users=$team->allUsers();
             foreach($users as $u){
                 $not_type= UserNotificationTypes::where('user_id',$u->id)->where('notifiable_type',$n->notifiable_type)->count();
                 if(($u->hasTeamRole($team, 'admin') && $not_type) || ($u->hasTeamRole($team, 'editor') && (!$u->hasTeamRole($team, 'super-admin')) && $n->notifiable_type=='App\\Models\\InternalCheck' && Str::contains($n->notifiable->leaders, $u->name))){
-                    $c++;
-                     //Mail::to($u)->send(new SendMailToAdmin($n));
+                    if($u->email){
+                        Mail::to($u)->send(new SendMailToAdmin($n));
+                    }
+
                 }
             }
-        }echo $c;
+        }
     }
 }

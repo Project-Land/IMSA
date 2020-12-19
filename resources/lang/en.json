@@ -594,7 +594,9 @@
     "Greška" : "Error",
     "Poruka" : "Message",
     "Veličina fajla" : "File size",
-    "Poslednja promena" : "Last change"
+    "Poslednja promena" : "Last change",
+    "Unesite naziv / ime zainteresovane strane":"Enter the name of the stakeholder"
+    
 
 
 }

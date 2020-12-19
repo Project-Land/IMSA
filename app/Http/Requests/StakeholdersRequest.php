@@ -34,10 +34,10 @@ class StakeholdersRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Unesite naziv / ime zainteresovane strane',
-            'name.max' => 'Naziv može sadržati maksimalno 190 karaktera',
-            'expectation.required' => 'Unesite očekivanja',
-            'response.required' => 'Unesite odgovor'
+            'name.required' => __('Unesite naziv / ime zainteresovane strane'),
+            'name.max' => __('Naziv može sadržati maksimalno 190 karaktera'),
+            'expectation.required' => __('Polje je obavezno'),
+            'response.required' => __('Polje je obavezno')
         ];
     }
 

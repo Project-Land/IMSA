@@ -55,12 +55,12 @@ class ProcedureRequest extends FormRequest
     public function messages()
     {
         return [
-            'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
-            'document_name.required' => 'Unesite naziv dokumenta',
-            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'version.required' => 'Unesite verziju dokumenta',
-            'sector_id.required' => 'Izaberite pripadajući sektor'
+            'file.required' => __('Izaberite fajl'),
+            'file.mimes' => __('Fajl mora biti u PDF formatu'),
+            'document_name.required' => __('Unesite naziv dokumenta'),
+            'document_name.max' => __('Naziv dokumenta ne sme biti duži od 255 karaktera'),
+            'version.required' => __('Unesite verziju dokumenta'),
+            'sector_id.required' => __('Izaberite pripadajući sektor')
         ];
     }
 
