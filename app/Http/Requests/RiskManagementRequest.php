@@ -47,14 +47,14 @@ class RiskManagementRequest extends FormRequest
                 $risk = \App\Models\RiskManagement::find($id);
                 if($risk->measure == null){
                     $this->merge([
-                        'measure' => 'Plan za postupanje sa rizikom/prilikom '.$count,
+                        'measure' => __('Plan za postupanje sa rizikom/prilikom ').$count,
                         'measure_created_at' => \Carbon\Carbon::now()->toDateTimeString()
                     ]);
                 }
             }
             else{
                 $this->merge([
-                    'measure' => 'Plan za postupanje sa rizikom/prilikom '.$count,
+                    'measure' => __('Plan za postupanje sa rizikom/prilikom ').$count,
                     'measure_created_at' => \Carbon\Carbon::now()->toDateTimeString()
                 ]);
             }
