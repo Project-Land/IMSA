@@ -78,10 +78,6 @@
 
     <!-- Responsive menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-    <x-jet-responsive-nav-link>
-    <a href="{{ route('lang',['lang'=>'en']) }}"><img src="{{asset('images/en.png')}}" class="mr-2 inline-block float-right"/></a>
-    <a href="{{ route('lang',['lang'=>'sr']) }}"><img src="{{asset('images/sr.png')}}" class="mr-2 inline-block float-right"/></a>
-    </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}
