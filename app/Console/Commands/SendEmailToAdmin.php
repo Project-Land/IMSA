@@ -46,12 +46,7 @@ class SendEmailToAdmin extends Command
      */
     public function handle()
     {
-        Mail::send([], ['obavestenje'], function($message) {
-            $message->to('aleksandarmarkovic127@gmail.com', 'Imsa')->subject
-               ('Laravel Basic Testing Mail');
-            $message->from('imsa@gmail.com','ACA');
-         });return;
-
+       
         set_time_limit(200);
         $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(7))
         ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier'])
@@ -59,10 +54,10 @@ class SendEmailToAdmin extends Command
             $query->whereDate('checkTime',Carbon::now()->addDay(15))
                   ->where('notifiable_type', 'App\\Models\\MeasuringEquipment');
         })->with('notifiable.standard')->get();
+        
         if(!$nots->count()){
             return;
         }
-        
         
         foreach($nots as $n){
             $team=Team::find($n->team_id);
