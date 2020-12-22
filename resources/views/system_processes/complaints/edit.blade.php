@@ -16,7 +16,7 @@
 		<form action="{{ route('complaints.update', $complaint->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
-			
+
             <div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Oznaka')}}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="name" name="name" value="{{ $complaint->name }}" autofocus required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')"
@@ -29,7 +29,7 @@
 			<div class="mb-4">
 				<label for="submission_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Datum podnošenja reklamacije')}}:</label>
 				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="xx.xx.xxxx" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
-				
+
 				@error('submission_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -109,6 +109,9 @@
 </x-app-layout>
 
 <script>
+    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
+
 	$('#submission_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',

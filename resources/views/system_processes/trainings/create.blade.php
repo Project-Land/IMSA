@@ -115,7 +115,9 @@
 </style>
 
 <script>
-	$.datetimepicker.setLocale('sr');
+	var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
+
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
 		minDate: 0,

@@ -69,7 +69,7 @@ class CorrectiveMeasuresRequest extends FormRequest
             };
 
             $this->merge([
-                'name' => "QMS KKM ".Carbon::now()->year." / ".$counter,
+                'name' => "QMS ".__("KKM")." ".Carbon::now()->year." / ".$counter,
             ]);
         }
 

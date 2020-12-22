@@ -9,7 +9,7 @@
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+                <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
     </div>
@@ -22,7 +22,7 @@
                 @can('create', App\Models\Document::class)
                     <div class="card-header">
                         <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj novi dokument')}}</a>
-                        <a class="inline-block sm:float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="Prikaz obrisanih dokumenata"><i class="fas fa-trash"></i> {{__('Obrisani dokumenti')}} </a>
+                        <a class="inline-block sm:float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obrisanih dokumenata') }}"><i class="fas fa-trash"></i> {{__('Obrisani dokumenti')}} </a>
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">

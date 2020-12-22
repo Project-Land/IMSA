@@ -276,7 +276,7 @@
     "Prikaz korektivne mere" : "Preview corrective action",
     "Izmena korektivne mere" : "Edit corrective action",
     "Izvor informacije o neusaglašenostima nije izabran" : "Please select source of nonconformity",
-    "Kreiraj novu neusaglašenost / meru" : "Create new nonconformity/CAR",
+    "Kreiraj novu neusaglašenost / meru" : "Create new nonconformity / CAR",
     "Br. kartona" : "Corrective action report number",
     "Datum pokretanja" : "Start date",
     "Sistem menadžment" : "System management",
@@ -309,7 +309,7 @@
     "Godišnji planovi obuka" : "Annual training plans",
     "Dodaj obuku" : "Add new training",
     "Vrsta" : "Type",
-    "Br. zaposlenih" : "Num of employees",
+    "Br. zaposlenih" : "Number of trainees",
     "Termin" : "Date",
     "Mesto" : "Place",
     "Resursi" : "Resources",
@@ -416,7 +416,7 @@
     "Prilike za poboljšanje i integrisanje sa drugim procesima i sistemima menadžmenta":"Opportunities to improve and integrate with other processes and management systems",
     "Eventualne posledice po strateško usmerenje organizacije":"Possible consequences for the strategic direction of the organization",
     "Prilike za stalna poboljšanja":"Opportunities for continuous improvement",
-    "Polje nije obavezno":"The field is not required",
+    "Polje nije obavezno":"Field not required",
     "Performanse životne sredine":"Environmental performance",
     "Izlazne tačke preispitivanja":"Review outputs",
     "Popunite polje":"Field is required",
@@ -598,8 +598,15 @@
     "Unesite naziv / ime zainteresovane strane":"Enter the name of the stakeholder",
     "Plan za postupanje sa rizikom/prilikom ":"Risk / Opportunity management plan ",
     "Broj korisnika po datumima" : "Number of users by the date",
-    "Nema dostupnih sistemskih procesa" : "There is no available system processes"
-
+    "Nema dostupnih sistemskih procesa" : "There is no available system processes",
+    "Verzija nije popunjena" : "Version is required",
+    "Sektor je uspešno kreiran" : "Sector saved",
+    "Sektor je uspešno izmenjen" : "Sector edited",
+    "Sektor je uspešno uklonjen" : "Sector deleted",
+    "Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima." : "Sector cannot be deleted because it is linked with particular system process",
+    "KKM" : "CAR",
+    "PIP" : "IAP",
+    "u" : "at"
 
 
 }

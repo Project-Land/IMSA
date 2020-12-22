@@ -64,7 +64,8 @@
     </div>
 
     <script>
-        jQuery.datetimepicker.setLocale('sr');
+        var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+        jQuery.datetimepicker.setLocale(lang);
         $('#date').datetimepicker({
             timepicker: false,
             format: 'd.m.Y',

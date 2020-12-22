@@ -97,9 +97,9 @@
 					<label for="closing_date" class="block text-gray-700 text-sm font-bold mb-2">{{__('Datum zatvaranja')}}:</label>
 					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" disabled>
 				</div>
-				
+
 			</div>
-            
+
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{__('Kreiraj')}}</button>
 		</form>
     </div>
@@ -107,6 +107,9 @@
 </x-app-layout>
 
 <script>
+    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
+
 	$('#submission_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',

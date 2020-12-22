@@ -79,10 +79,10 @@ class PoliciesController extends Controller
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
             CustomLog::info('Dokument Politike "'.$document->document_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Dokument je uspešno sačuvan!'));
+            $request->session()->flash('status', array('info', 'Dokument je uspešno sačuvan'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Politike "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
 
         return redirect('/policies');
@@ -120,11 +120,11 @@ class PoliciesController extends Controller
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
-            $request->session()->flash('status', array('info', 'Dokument je uspešno izmenjen!'));
+            $request->session()->flash('status', array('info', 'Dokument je uspešno izmenjen'));
             CustomLog::info('Dokument Politike "'.$document->document_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene dokumenta Politike '.$document->document_name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/policies');
     }
@@ -140,7 +140,7 @@ class PoliciesController extends Controller
             return back()->with('status', array('info', 'Dokument je uspešno uklonjen'));
         }catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Politike '.$document_name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 
@@ -158,7 +158,7 @@ class PoliciesController extends Controller
             return back()->with('status', array('info', 'Dokument je trajno uklonjen'));
         } catch(Exception $e) {
             CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Politike "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 
@@ -173,7 +173,7 @@ class PoliciesController extends Controller
             return back()->with('status', array('info', 'Dokument je uspešno vraćen'));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Politike "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
 }
