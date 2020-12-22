@@ -18,7 +18,7 @@
 
 			<div class="mb-4">
 				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis') }}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')"></textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')"></textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
@@ -26,7 +26,7 @@
 
 			<div class="mb-4">
 				<label for="probability" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Verovatnoća') }}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability" id="probability" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
@@ -35,7 +35,7 @@
 
             <div class="mb-4">
 				<label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Posledice') }}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="frequency" id="frequency" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
@@ -49,7 +49,7 @@
 
             <div class="mb-4">
 				<label for="acceptable" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prihvatljivo') }}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable" required oninvalid="this.setCustomValidity({{ __('Popunite polje') }})" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="acceptable" id="acceptable" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @for($i = 1; $i <= 25; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor

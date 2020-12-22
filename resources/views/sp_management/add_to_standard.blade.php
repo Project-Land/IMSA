@@ -41,7 +41,7 @@
                                 @endforeach
                             </select>
                             @error('standard')
-                                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                                <p class="text-sm text-red-600 mt-2">{{ __($message) }}</p>
                             @enderror
                         </div>
 
@@ -51,7 +51,7 @@
                                 <option value="0">{{ __('Choose') }}...</option>
                             </select>
                             @error('system_process')
-                                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                                <p class="text-sm text-red-600 mt-2">{{ __($message) }}</p>
                             @enderror
                         </div>
 
@@ -87,14 +87,14 @@
             axios.post('/system-processes/get-by-standard', { data })
             .then((response) => {
                 if(response.data.length == 0){
-                    $('#system_process').html('<option value="" selected>Nema dostupnih sistemskih procesa</option>');
+                    $('#system_process').html('<option value="" selected>{{ __("Nema dostupnih sistemskih procesa") }}</option>');
                     $('#system_process').prop('disabled', true);
                     $('#add-button').prop('disabled', true);
                 }
                 else{
                     let allData = "";
                     $.each(response.data, function (i, item){
-                        let option = `<option value="${ item.id }">${ item.name }</option>`;
+                        let option = `<option value="${ item.id }">{{ __('${ item.name }') }}</option>`;
                         allData += option;
                     });
                     $('#system_process').html(allData)
