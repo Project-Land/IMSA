@@ -90,17 +90,17 @@
 
     $('.yajra-datatable').DataTable({
         "language": {
-            "info": "Prikaz strane _PAGE_ od _PAGES_",
-            "infoEmpty": "Nema podataka",
-            "zeroRecords": "Nema podataka",
-            "infoFiltered": "(od _MAX_ ukupno rezultata)",
-            "lengthMenu": "Prikaži _MENU_ redova po stranici",
-            "search": "Pretraga",
+            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+            "infoEmpty": "{{__('Nema podataka')}}",
+            "zeroRecords": "{{__('Nema podataka')}}",
+            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+            "search": "{{__('Pretraga')}}",
             "paginate": {
-                "next": "Sledeća",
-                "previous": "Prethodna",
-                "first": "Prva",
-                "last": "Poslednja"
+                "next": "{{__('Sledeća')}}",
+                "previous": "{{__('Prethodna')}}",
+                "first": "{{__('Prva')}}",
+                "last": "{{__('Poslednja')}}"
             }
         },
         "columnDefs": [{

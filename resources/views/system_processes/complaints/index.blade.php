@@ -48,7 +48,7 @@
                                     <td class="text-center">{{ date('d.m.Y', strtotime($c->submission_date)) }}</td>
                                     <td class="text-center">{{ Str::length($c->description) < 35 ? $c->description : Str::limit($c->description, 35) }}</td>
                                     <td class="text-center">{{ $c->process }}</td>
-                                    <td class="text-center">{{ $c->accepted == 1 ? "DA" : "NE" }}</td>
+                                    <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
                                     <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
                                     <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td>
