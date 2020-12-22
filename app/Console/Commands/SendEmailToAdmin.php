@@ -54,7 +54,7 @@ class SendEmailToAdmin extends Command
             $query->whereDate('checkTime',Carbon::now()->addDay(15))
                   ->where('notifiable_type', 'App\\Models\\MeasuringEquipment');
         })->with('notifiable.standard')->get();
-        
+
         if(!$nots->count()){
             return;
         }
@@ -62,8 +62,8 @@ class SendEmailToAdmin extends Command
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             App::setlocale($team->lang);
-      
             $users=$team->allUsers();
+            
             foreach($users as $u){
                 $not_type= UserNotificationTypes::where('user_id',$u->id)->where('notifiable_type',$n->notifiable_type)->count();
                 if(($u->hasTeamRole($team, 'admin') && $not_type) || ($u->hasTeamRole($team, 'editor') && (!$u->hasTeamRole($team, 'super-admin')) && $n->notifiable_type=='App\\Models\\InternalCheck' && Str::contains($n->notifiable->leaders, $u->name))){
