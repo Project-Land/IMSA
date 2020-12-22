@@ -92,7 +92,7 @@ class InternalCheckReportController extends Controller
                         'user_id' => Auth::user()->id,
                         'standard_id' => session('standard'),
                         'sector_id' => 1,
-                        'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                        'name' => __("KKM")." ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
                         //'internal_check_report_id' => $report->id,
                         'measure_date' => Carbon::now(),

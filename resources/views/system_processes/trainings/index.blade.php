@@ -63,7 +63,7 @@
                                     <td class="text-center">{{ __($tp->type) }}</td>
                                     <td class="text-center">{{ Str::length($tp->description) < 35 ? $tp->description : Str::limit($tp->description, 35) }}</td>
                                     <td class="text-center">{{ $tp->num_of_employees }}</td>
-                                    <td class="text-center">{{ date('d.m.Y', strtotime($tp->training_date)) }} u {{ date('H:i', strtotime($tp->training_date)) }}, {{ $tp->place }}</td>
+                                    <td class="text-center">{{ date('d.m.Y', strtotime($tp->training_date)) }} {{ __('u') }} {{ date('H:i', strtotime($tp->training_date)) }}, {{ $tp->place }}</td>
                                     <td class="text-center">{{ Str::length($tp->resources) < 35 ? $tp->resources : Str::limit($tp->resources, 35) }}</td>
                                     <td class="text-center">{{ $tp->final_num_of_employees? : '/' }}</td>
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>

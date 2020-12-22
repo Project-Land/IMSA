@@ -70,7 +70,8 @@
 </x-app-layout>
 
 <script>
-    $.datetimepicker.setLocale('sr');
+    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
 
     $('#deadline').datetimepicker({
 		timepicker: false,

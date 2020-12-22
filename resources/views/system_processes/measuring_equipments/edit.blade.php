@@ -10,7 +10,7 @@
         	<a class="btn btn-light" href="{{ route('measuring-equipment.index') }}"><i class="fas fa-arrow-left"></i>{{__(' Nazad')}}</a>
      	</div>
 	</div>
-	
+
 	<div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 		<form action="{{ route('measuring-equipment.update', $measuring_equipment->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
@@ -47,7 +47,7 @@
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
-			
+
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{__('Izmeni')}}</button>
 		</form>
 	</div>
@@ -55,7 +55,8 @@
 </x-app-layout>
 
 <script>
-	$.datetimepicker.setLocale('sr');
+	var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
 
     $('#last_calibration_date').datetimepicker({
 		timepicker: false,

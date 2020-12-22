@@ -17,7 +17,7 @@
 
         <div class="mb-4">
             <label for="dokument_name" class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv dokumenta')}}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="document_name" name="document_name" value="{{ $document->document_name }}" autofocus required oninvalid="this.setCustomValidity('Naziv nije popunjen')" oninput="this.setCustomValidity('')">
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="document_name" name="document_name" value="{{ $document->document_name }}" autofocus required oninvalid="this.setCustomValidity('{{ __("Naziv nije popunjen") }}')" oninput="this.setCustomValidity('')">
             @error('document_name')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
@@ -25,7 +25,7 @@
 
         <div class="mb-4">
             <label for="version" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verzija')}}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ $document->version }}" required oninvalid="this.setCustomValidity('Verzija nije popunjena')" oninput="this.setCustomValidity('')">
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ $document->version }}" required oninvalid="this.setCustomValidity('{{ __("Verzija nije popunjena") }}')" oninput="this.setCustomValidity('')">
             @error('version')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror

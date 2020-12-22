@@ -64,7 +64,8 @@
 
     <script>
 
-        jQuery.datetimepicker.setLocale('sr');
+        var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+        jQuery.datetimepicker.setLocale(lang);
 
         let start_date_first = $('#checked_date').val().split(" ")[0].split(".").reverse().join("/").toString();
         $('#check_start').datetimepicker({

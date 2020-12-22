@@ -154,7 +154,7 @@ class ProceduresController extends Controller
             return back()->with('status', array('info', __('Dokument je uspešno uklonjen')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Procedure '.$doc_name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 
@@ -172,7 +172,7 @@ class ProceduresController extends Controller
             return back()->with('status', array('info', __('Dokument je trajno uklonjen')));
         } catch(Exception $e) {
             CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Procedure "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 
@@ -187,7 +187,7 @@ class ProceduresController extends Controller
             return back()->with('status', array('info', __('Dokument je uspešno vraćen')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Procedure "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 

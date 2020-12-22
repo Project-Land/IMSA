@@ -89,7 +89,7 @@ class ManualsController extends Controller
         try{
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
-            $request->session()->flash('status', array('info', __('Dokument je uspešno sačuvan!')));
+            $request->session()->flash('status', array('info', __('Dokument je uspešno sačuvan')));
             CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Uputstvo, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
@@ -133,7 +133,7 @@ class ManualsController extends Controller
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
-            $request->session()->flash('status', array('info', __('Dokument je uspešno izmenjen!')));
+            $request->session()->flash('status', array('info', __('Dokument je uspešno izmenjen')));
             CustomLog::info('Dokument Uputstvo "'.$document->document_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj izmene dokumenta Uputstvo "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
@@ -153,7 +153,7 @@ class ManualsController extends Controller
             return back()->with('status', array('info', __('Dokument je uspešno uklonjen')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Uputstvo "'.$doc_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 
@@ -171,7 +171,7 @@ class ManualsController extends Controller
             return back()->with('status', array('info', __('Dokument je trajno uklonjen')));
         } catch(Exception $e) {
             CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Upustvo "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 
@@ -186,7 +186,7 @@ class ManualsController extends Controller
             return back()->with('status', array('info', __('Dokument je uspešno vraćen')));
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Uputstvo "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+            return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
 }

@@ -76,7 +76,7 @@
                                                 <a data-toggle="tooltip" data-placement="top" title="{{ __('Kreirajte plan interne provere') }}" href="{{ route('plan-ip.edit',$check->planIp->id) }}"><i class="fas fa-plus"></i></a>
                                             @endcan
                                         @else
-                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled plana interne provere') }}" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{'PIP'}}  {{$check->planIp->name}}</span>
+                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled plana interne provere') }}" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{ __('PIP') }}  {{$check->planIp->name}}</span>
                                             @can('update', $check)
                                                 <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena plana interne provere') }}" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                             @endcan

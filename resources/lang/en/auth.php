@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Ne postoji korisnik sa unešenim podacima',
-    'throttle' => 'Previše neuspelih pokušaja prijavljivanja. Molimo pokušajte ponovo za :seconds sekundi.',
+    'failed' => 'There is no user with such username',
+    'throttle' => 'Too many failed login attempts. Please try again in :seconds seconds.',
 
 ];
