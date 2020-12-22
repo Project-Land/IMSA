@@ -439,7 +439,7 @@
     "Da li je reklamacija opravdana / prihvaćena":"Is the compliance justified / accepted",
     "Proces na koji se reklamacija odnosi":"The process to which the compliance relates",
     "Opravdana / prihvaćena":"Justified / accepted",
-    "Rok za realizaciju":"Deadline for goal fulfillment",
+    "Rok za realizaciju":"Deadline",
     "Rok za realizaciju reklamacije":"Deadline for realization of the compliance",
     "Lice odgovorno za rešavanje":"The person responsible for resolving the compliance",
     "Način rešavanja":"Way of solving",
@@ -607,7 +607,8 @@
     "Sektor ne može biti uklonjen jer je u direktnoj vezi sa pojedinim sistemskim procesima." : "Sector cannot be deleted because it is linked with particular system process",
     "KKM" : "CAR",
     "PIP" : "IAP",
-    "u" : "at"
+    "u" : "at",
+    "Rok za realizaciju cilja":"Deadline for goal fulfillment"
 
 
 }

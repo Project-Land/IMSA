@@ -45,7 +45,7 @@
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="deadline">{{ __('Rok za realizaciju') }}</label>
+                    <label for="deadline">{{ __('Rok za realizaciju cilja') }}</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @error('deadline')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>

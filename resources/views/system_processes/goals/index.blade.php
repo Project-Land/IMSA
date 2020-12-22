@@ -48,7 +48,7 @@
                                     <th>{{ __('KPI') }}</th>
                                     <th>{{ __('Potrebne aktivnosti za realizaciju cilja') }}</th>
                                     <th>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</th>
-                                    <th>{{ __('Rok za realizaciju') }}</th>
+                                    <th>{{ __('Rok za realizaciju cilja') }}</th>
                                     <th>{{ __('Potrebni resursi') }}</th>
                                     <th>{{ __('Analiza ispunjenosti cilja') }}</th>
                                     <th class="no-sort">{{ __('Akcije') }}</th>
@@ -163,7 +163,7 @@
                                     <div class="row">
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Godina') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
