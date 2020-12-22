@@ -89,7 +89,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje mere') }}:</label>
+				<label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje korektivne mere') }}:</label>
 				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
 					<option value="1" {{ $corrective_measure->measure_approval == "1" ? "selected" : "" }} >{{ __('Da') }}</option>
 					<option value="0" {{ $corrective_measure->measure_approval == "0" ? "selected" : "" }} >{{ __('Ne') }}</option>

@@ -78,7 +78,7 @@
         const compliance=document.getElementById('compliance');
         const divParent=document.getElementById('divParent');
 
-        if(compliance.value==1){
+        if(compliance.value==1 || compliance.value===""){
             divParent.innerHTML = "";
             console.log(compliance.value);
             return;
@@ -119,7 +119,7 @@
 
             </div>
             <div class="form-group">
-                <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{__('Odobravanje mere')}}:</label>
+                <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{__('Odobravanje korektivne mere')}}:</label>
                 <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval[${counter}]" id="measure_approval${counter}">
                     <option value="1" >{{__('DA')}}</option>
                     <option value="0" >{{__('NE')}}</option>

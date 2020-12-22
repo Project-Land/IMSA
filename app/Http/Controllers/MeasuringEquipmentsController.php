@@ -45,12 +45,14 @@ class MeasuringEquipmentsController extends Controller
         try{
             $me = MeasuringEquipment::create($request->all());
 
+            if($me->next_calibration_date!=null){
             $notification = Notification::create([
                 'message' => __('Datum narednog etaloniranja/baždarenja ').date('d.m.Y', strtotime($me->next_calibration_date)),
                 'team_id' => Auth::user()->current_team_id,
                 'checkTime' => $me->next_calibration_date
             ]);
             $me->notification()->save($notification);
+            }
 
             CustomLog::info('Merna oprema id: "'.$me->id.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Merna oprema je uspešno kreirana!')));
@@ -81,15 +83,17 @@ class MeasuringEquipmentsController extends Controller
 
         try{
             $me->update($request->all());
-
+            if($me->next_calibration_date!=null){
             $notification = $me->notification;
             if(!$notification){
                 $notification = new Notification();
                 $notification->team_id = Auth::user()->current_team_id;
             }
+        
             $notification->message = __('Datum narednog etaloniranja/baždarenja '). date('d.m.Y', strtotime($me->next_calibration_date));
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);
+        }
 
             CustomLog::info('Merna oprema id: "'.$me->id.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Merna oprema je uspešno izmenjena!')));
