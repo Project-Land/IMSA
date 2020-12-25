@@ -21,111 +21,111 @@
         <style>
 
 
-#i {
-	position: relative;
-	display: block;
-	width:65vw;
-	min-width:55vw;
-	height:35vw;
-	overflow: hidden;
-	border-radius: 5px;
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 70vw;
+  position: relative;
+  margin: auto;
+  margin-top:20px;
+  
 }
 
-#i:before, #i:after {
-	content: '<';
-	position: absolute;
-	top: 50%;
-	left: 1rem;
-	z-index: 2;
-	width: 2rem;
-	height: 2rem;
-	background: dodgerblue;
-	color: white;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	pointer-events: none;
+/* Hide the images by default */
+.mySlides {
+  display: none;
 }
 
-#i:after {
-	content: '>';
-	left: auto;
-	right: 1rem;
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: gray;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
 }
 
-/* I haven't found a way for IE and Edge to let me style inputs that way */
-.sliderInput {
-	appearance: none;
-	-ms-appearance: none;
-	-webkit-appearance: none;
-	display: block;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-radius: 5px;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	transform: translateX(100%);
-	transition: transform ease-in-out 400ms;
-	z-index: 1;
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
 }
 
-.sliderInput:focus {
-	outline: none;
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
 }
 
-.sliderInput:after {
-	
-	position: absolute;
-	top: 1rem;
-	left: 1rem;
-	background-color: rgba(0,0,0,0.4);
-	color: white;
-	padding: .5rem;
-	font-size: 1rem;
-	border-radius: 5px;
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
 }
 
-.sliderInput:not(checked):before {
-	content: '';
-	position: absolute;
-	width: 2rem;
-	height: 2rem;
-	border-radius: 50%;
-	top: 50%;
-	left: calc(-100% + 1rem);
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
 }
 
-.sliderInput:checked:before {
-	display: none;
-	left: 1rem;
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
 }
 
-.sliderInput:checked {
-	transform: translateX(0);
-	pointer-event: none;
-	z-index: 0;
-	box-shadow: -5px 10px 20px -15px rgba(0,0,0,1);
+.active, .dot:hover {
+ 
+ background-color: #cf1717;
+
 }
 
-.sliderInput:checked + input:before {
-	left: -3rem;
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
 }
 
-.sliderInput:checked + input ~ input:before {
-	display: none;
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
 }
 
 @media screen and (max-width: 600px) {
-  #i {width:100%;
-  height:50vw;
+	.slideshow-container {max-width:100%;
+  
   
   }
-}
 
         </style>
     </head>

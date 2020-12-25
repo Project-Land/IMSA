@@ -14,26 +14,110 @@
 
         {{ __('Osim opštih, specifični benefiti primene aplikacije su:') }}
         <ul class="ml-5">
-            <li><i class="fas fa-check"></i> {{ __('Obezbeđuje ažurnost korišćene dokumentacije') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Olakšava planiranje i organizovanje internih provera') }}</li>
             <li><i class="fas fa-check"></i> {{ __('Obezbeđuje sistemsko upravljanje rizicima') }}</li>
+            <li><i class="fas fa-check"></i> {{ __('Omogućava centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije') }}</li>
             <li><i class="fas fa-check"></i> {{ __('Obezbeđuje jasno i pregledno praćenje potreba i zahteva zainteresovanih strana') }}</li>
             <li><i class="fas fa-check"></i> {{ __('Olakšava praćenje performansi i ocenjivanje isporučilaca') }}</li>
             <li><i class="fas fa-check"></i> {{ __('Značajno ubrzava i pojednostavljuje proces preispitivanja od strane rukovodstva') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Omogućava centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije') }}</li>
             <li><i class="fas fa-check"></i> {{ __('Olakšava proces upravljanja reklamacijama') }}</li>
+            <li><i class="fas fa-check"></i> {{ __('Olakšava planiranje i organizovanje internih provera') }}</li>
+            <li><i class="fas fa-check"></i> {{ __('Obezbeđuje ažurnost korišćene dokumentacije') }}</li>           
             <li><i class="fas fa-check"></i> {{ __('Smanjuje rizik od gubljenja/suspenzije sertifikata') }}</li>
         </ul>
 
-        <div id="i" class="mt-10 mx-auto" >
-            <input class="sliderInput" checked type="radio" name="s" style="background-image: url({{asset('images/aplikacija5.png')}});" >
-            <input class="sliderInput"  type="radio" name="s" style="background-image: url({{asset('images/aplikacija4.png')}});" >
-            <input class="sliderInput" type="radio" name="s" style="background-image: url({{asset('images/aplikacija2.png')}});" >
-            <input class="sliderInput" type="radio" name="s" style="background-image: url({{asset('images/aplikacija3.png')}});" >
+        
+
+        <div class="slideshow-container">
+
+            <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+            </div>
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 7</div>
+                <img src="{{asset('images/1.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 7</div>
+                <img src="{{asset('images/2.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 7</div>
+                <img src="{{asset('images/3.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 7</div>
+                <img src="{{asset('images/4.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">5 / 7</div>
+                <img src="{{asset('images/5.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">6 / 7</div>
+                <img src="{{asset('images/6.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">7 / 7</div>
+                <img src="{{asset('images/7.jpg')}}" style="width:100%">
+                <div class="text">IMSA</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
 
-        <div class="p-10"></div>
+        <div class="p-10">
+
+        </div>
 
     </div>
+
+    <script>
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+    </script>
 
 </x-guest-layout>
