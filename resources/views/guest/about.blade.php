@@ -41,39 +41,39 @@
             <!-- Full-width images with number and caption text -->
             <div class="mySlides fade">
                 <div class="numbertext">1 / 7</div>
-                <img src="{{asset('images/1.jpg')}}" style="width:100%">
+                <img src="{{asset('images/1.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
 
             <div class="mySlides fade">
                 <div class="numbertext">2 / 7</div>
-                <img src="{{asset('images/2.jpg')}}" style="width:100%">
+                <img src="{{asset('images/2.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
 
             <div class="mySlides fade">
                 <div class="numbertext">3 / 7</div>
-                <img src="{{asset('images/3.jpg')}}" style="width:100%">
+                <img src="{{asset('images/3.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">4 / 7</div>
-                <img src="{{asset('images/4.jpg')}}" style="width:100%">
+                <img src="{{asset('images/4.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">5 / 7</div>
-                <img src="{{asset('images/5.jpg')}}" style="width:100%">
+                <img src="{{asset('images/5.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">6 / 7</div>
-                <img src="{{asset('images/6.jpg')}}" style="width:100%">
+                <img src="{{asset('images/6.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
             <div class="mySlides fade">
                 <div class="numbertext">7 / 7</div>
-                <img src="{{asset('images/7.jpg')}}" style="width:100%">
+                <img src="{{asset('images/7.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
 
