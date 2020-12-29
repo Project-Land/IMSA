@@ -33,6 +33,6 @@ class PlanIp extends Model
         else{
             $cr_percentage = ($cr_finished / $cr_total) * 100;
         }
-        return "Realizovano je ".$cr_finished. " provera od ukupno ".$cr_total." planiranih, što čini ".round($cr_percentage)."%";
+        return __("Realizovano je")." ".$cr_finished." ".__("provera od ukupno")." ".$cr_total." ".__("planiranih, što čini")." ".round($cr_percentage)."%";
     }
 }

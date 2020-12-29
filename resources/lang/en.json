@@ -608,7 +608,30 @@
     "KKM" : "CAR",
     "PIP" : "IAP",
     "u" : "at",
-    "Rok za realizaciju cilja":"Deadline for goal fulfillment"
+    "Rok za realizaciju cilja":"Deadline for goal fulfillment",
+    "Konsultovanje i učestvovanje radnika" : "Consulting and employee participation",
+    "Relevantno komuniciranje sa zainteresovanim stranama" : "Relevant communication with stakeholders",
+    "Pogodnost, adekvatnost i efektivnost OH&S" : "Convenience, adequacy and effectiveness of OH&S",
+    "Pogodnost, adekvatnost i efektivnost OH&S sistema menadžmenta" : "Convenience, adequacy and effectiveness of OH&S",
+    "Mere, ako su potrebne" : "Actions, if necessary",
+    "Incidenti" : "Incidents",
+    "Zatvoreno je": "Closed",
+    "mera od ukupno" : "actions out of a total of",
+    "pokrenutih, što čini" : "initiated, which makes",
+    "Ostvareno" : "Achieved",
+    "Realizovano je" : "Implemented",
+    "što čini" : "which makes",
+    "provera od ukupno" : "internal checks out of a total of",
+    "planiranih, što čini" : "planned, which makes",
+    "ciljeva od ukupno" : "goals out of a total of",
+    "Zatvoreno" : "Closed",
+    "Odobreno" : "Approved",
+    "isporučilaca od ukupno" : "suppliers out of a total of",
+    "Prepoznato je" : "Recognized",
+    "zahteva od čega je" : "requests from which",
+    "usaglašeno, što čini" : "are harmonized, which makes",
+    "aspekata od čega je" : "aspects from which",
+    "značajnih, što čini" : "are significant, which makes"
 
 
 }

@@ -23,7 +23,7 @@ class RiskManagement extends Model
         else{
             $rm_percentage = ($rm_closed / $rm_total) * 100;
         }
-        return "Zatvoreno ".$rm_closed. " mera od ukupno ".$rm_total.", što čini ".round($rm_percentage)."%";;
+        return __("Zatvoreno")." ".$rm_closed." ".__("mera od ukupno")." ".$rm_total.", ".__("što čini")." ".round($rm_percentage)."%";;
     }
 
     public function user()

@@ -41,6 +41,6 @@ class EvaluationOfLegalAndOtherRequirement extends Model
         else{
             $percentage = ($agreed / $total) * 100;
         }
-        return "Prepoznato je ".$total." zahteva od čega je ".$agreed." usaglašeno, što čini ".round($percentage)."%";
+        return __("Prepoznato je")." ".$total." ".__("zahteva od čega je")." ".$agreed." ".__("usaglašeno, što čini")." ".round($percentage)."%";
     }
 }

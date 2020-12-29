@@ -36,7 +36,7 @@ class Goal extends Model
         else{
             $os_percentage = ($os_fulfilled / $os_total) * 100;
         }
-        return "Ostvareno ".$os_fulfilled." ciljeva od ukupno ".$os_total.", što čini ".round($os_percentage)."%";
+        return __("Ostvareno")." ".$os_fulfilled." ".__("ciljeva od ukupno")." ".$os_total.", ".__("što čini")." ".round($os_percentage)."%";
     }
 
     public function notification()

@@ -95,6 +95,14 @@ class ManagementSystemReviewRequest extends FormRequest
             ]);
         }
 
+        //dodati model
+        if(session('standard_name') == 45001){
+            $this->merge([
+                'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year),
+                'incidents' => null
+            ]);
+        }
+
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,

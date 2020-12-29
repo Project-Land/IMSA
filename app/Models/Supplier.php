@@ -43,6 +43,6 @@ class Supplier extends Model
             $sup_percentage = ($sup_approved / $sup_total) * 100;
         }
 
-        return "Odobreno ".$sup_approved. " isporučilaca od ukupno ".$sup_total.", što čini ".round($sup_percentage)."%";
+        return __("Odobreno")." ".$sup_approved." ".__("isporučilaca od ukupno")." ".$sup_total.", ".__("što čini")." ".round($sup_percentage)."%";
     }
 }

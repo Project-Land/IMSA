@@ -37,6 +37,6 @@ class EnvironmentalAspect extends Model
         else{
             $ea_percentage = ($ea_significant / $ea_total) * 100;
         }
-        return "Prepoznato je ".$ea_total." aspekata od čega je ".$ea_significant." značajnih, što čini ".round($ea_percentage)."%";
+        return __("Prepoznato je")." ".$ea_total." ".__("aspekata od čega je")." ".$ea_significant." ".__("značajnih, što čini")." ".round($ea_percentage)."%";
     }
 }
