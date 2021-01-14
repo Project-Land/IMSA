@@ -38,4 +38,9 @@ class Standard extends Model
     {
         return $this->belongsToMany('App\Models\SystemProcess');
     }
+
+    public function accidents()
+    {
+        return $this->hasMany('App\Models\Accident');
+    }
 }

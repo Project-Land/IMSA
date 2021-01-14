@@ -110,4 +110,9 @@ class Team extends JetstreamTeam
         return $this->hasMany('App\Models\Notification');
     }
 
+    public function accidents()
+    {
+        return $this->hasMany('App\Models\Accident');
+    }
+
 }

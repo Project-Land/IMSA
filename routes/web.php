@@ -10,6 +10,7 @@ use App\Http\Controllers\GoalsController;
 use App\Http\Controllers\PlanIpController;
 use App\Http\Controllers\ManualsController;
 use App\Http\Controllers\SectorsController;
+use App\Http\Controllers\AccidentController;
 use App\Http\Controllers\PoliciesController;
 use App\Http\Controllers\StandardsController;
 use App\Http\Controllers\SuppliersController;
@@ -19,12 +20,12 @@ use App\Http\Controllers\ProceduresController;
 use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
-use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\SystemProcessesController;
 use App\Http\Controllers\RulesOfProceduresController;
 use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\MeasuringEquipmentsController;
+use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
 
@@ -134,6 +135,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
 
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
+
+    Route::resource('accidents', AccidentController::class);
 
 });
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Accident;
 use App\Models\CorrectiveMeasure;
 use App\Models\Document;
 use App\Models\InternalCheck;
@@ -22,6 +23,7 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Models\Standard;
 use App\Models\SystemProcess;
+use App\Policies\AccidentPolicy;
 use App\Policies\CorrectiveMeasurePolicy;
 use App\Policies\DocumentPolicy;
 use App\Policies\GoalPolicy;
@@ -75,7 +77,7 @@ class AuthServiceProvider extends ServiceProvider
         Standard::class => StandardPolicy::class,
         User::class => UserPolicy::class,
         EvaluationOfLegalAndOtherRequirement::class => EvaluationOfLegalAndOtherRequirementPolicy::class,
-
+        Accident::class => AccidentPolicy::class,
     ];
 
     /**
