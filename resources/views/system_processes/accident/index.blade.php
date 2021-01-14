@@ -38,9 +38,9 @@
                             <tbody>
                                 @foreach($accidents as $accident)
                                 <tr>
-                                    <td class="text-center">{{ date('d.m.Y H:i',strtotime($accident->injury_datetime)) }}</td>
+                                    <td class="text-center">{{ date('d.m.Y',strtotime($accident->injury_datetime)) }}</td>
                                     <td class="text-center">{{ $accident->name }}</td>
-                                    <td class="text-center">{{ __($accident->injury_type) }}</td>
+                                    <td class="text-center">{{ __(ucfirst($accident->injury_type)) }}</td>
                                 
                                     
                                     <td class="text-center">
