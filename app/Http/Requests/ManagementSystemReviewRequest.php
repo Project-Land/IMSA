@@ -99,7 +99,7 @@ class ManagementSystemReviewRequest extends FormRequest
         if(session('standard_name') == 45001){
             $this->merge([
                 'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year),
-                'incidents' => null
+                'incidents' => \App\Models\Accident::getStats(Auth::user()->current_team_id, $standardId, $this->year)
             ]);
         }
 

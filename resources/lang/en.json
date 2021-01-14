@@ -651,7 +651,7 @@
     "Podaci o svedoku-očevicu<br>– Ime prezime i broj telefona (ako je bilo)":"Witness-eyewitness data<br>- Name, surname and telephone number (if any)",
     "Podaci o neposrednom rukovodiocu povređenog<br>- Ime prezime i radno mesto":"Data on the immediate supervisor of the injured<br>- Name, surname and job title",
     "Datum/vreme prijave povrede":"Date / time of report of injury",
-    "Zapažanje/komentar":"Observation / comment", 
+    "Zapažanje/komentar":"Observation / comment",
     "Istraživanje incidenata":"Accident investigations",
     "Kreiraj istraživanje incidenta":"Create accident investigation",
     "mala":"Minor",
@@ -665,7 +665,11 @@
     "Istraživanje incidenta je uspešno izmenjeno!":"Accident investigation successfully changed",
     "Istraživanje incidenta je uspešno obrisano":"Accident investigation successfully deleted",
     "Datum ne može biti u budućnosti":"The date cannot be in the future",
-    "Brisanje istaživanja incidenta":"Delete accident investigation"
- 
+    "Brisanje istaživanja incidenta":"Delete accident investigation",
+    "Utvrđeno je" : "There was",
+    "povreda na radu od čega je" : "work injuries from which",
+    "malih i" : "are minor and",
+    "velikih" : "are major"
+
 
 }
