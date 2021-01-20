@@ -28,7 +28,7 @@
                         </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
-                                <label for="year" class="mr-3">{{ __('Year') }}</label>
+                                <label for="year" class="mr-3">{{ __('Godina') }}</label>
                                 <select name="year" id="trainings-year" class="form-control w-25 mr-2">
                                     @foreach(range(2019, date('Y')+10) as $year)
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
@@ -68,6 +68,7 @@
                                     <td class="text-center">{{ $tp->final_num_of_employees? : '/' }}</td>
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>
                                     <td class="text-center">
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-primary" onclick="showTraining({{ $tp->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $tp)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena obuke') }}" href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $tp->id }}" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">
@@ -181,6 +182,7 @@
                             <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
                             <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
                             <td class="text-center">
+                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-primary" onclick="showTraining(${ item.id })"><i class="fas fa-eye"></i></button>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena obuke') }}" href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
                                     <a class="text-red-600 cursor-pointer hover:text-red-700" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje obuke') }}" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
@@ -197,6 +199,52 @@
             console.log(error);
         })
     });
+
+    function showTraining(id){
+        axios.get('/trainings/'+id)
+            .then((response) => {
+                let modal = `<div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h5 class="modal-title font-weight-bold">${ response.data.name }</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row text-sm">
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Naziv') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.name }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Vrsta') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>{{ __('${ response.data.type }') }}</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opis') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.description }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.num_of_employees }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Termin') }} / {{ __('Mesto') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ response.data.place }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Resursi') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih') }} - {{ __('realizovano') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.final_num_of_employees != null ? response.data.final_num_of_employees : "/" }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Ocena efekata obuke') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.rating != null ? response.data.rating : "/" }</p></div>
+                                            </div>
+                                        </div>
+                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                $("body").append(modal);
+                $('#showData-'+id).modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     function confirmDeleteModal($id){
         let id = $id;

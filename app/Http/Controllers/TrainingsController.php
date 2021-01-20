@@ -66,8 +66,11 @@ class TrainingsController extends Controller
 
     public function show($id)
     {
+        if(!request()->expectsJson()){
+            abort(404);
+        }
         $training = Training::findOrFail($id);
-        abort(404);
+        return response()->json($training);
     }
 
     public function edit($id)

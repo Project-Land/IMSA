@@ -93,7 +93,24 @@
 						<option value="{{ $i }}">{{ $i }}</option>
 					@endfor
 				</select>
-			</div>
+            </div>
+
+            <div class="mb-4 doc_field" style="display: none">
+                <label for="name_file" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
+                <label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                    </svg>
+                    <small>{{__('Izaberi fajl')}}</small>
+                </label>
+                <input type="file" class="form-control-file d-none" id="name_file" name="file">
+                <span class="font-italic text-s ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
+                @error('file')
+                    <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                @enderror
+
+                <div id="more_fields"></div>
+            </div>
 
 			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
 		</form>
@@ -129,16 +146,73 @@
 		if($('#status').val() == 1){
 			$('#final_num_field').css('display', '');
 			$('#rating_field').css('display', '');
+            $('.doc_field').css('display', '');
 			$('#rating').attr('required', true);
 			$('#final_num_of_employees').attr('required', true);
 		}
 		else{
 			$('#final_num_field').css('display', 'none');
 			$('#rating_field').css('display', 'none');
+            $('.doc_field').css('display', 'none');
 			$('#final_num_of_employees').val('');
 			$('#rating').val('');
 			$('#rating').attr('required', false);
 			$('#final_num_of_employees').attr('required', false);
 		}
 	})
+
+    document.getElementById("name_file").addEventListener("change", function(e){
+        let file = document.getElementById('name_file').files[0];
+        if(file){
+            document.getElementById('old_document').textContent = file.name;
+            var counter = 1;
+            $('#more_fields').append(`
+                <div class="flex" id="block${counter}">
+                <label for="name_file${counter}" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                    </svg>
+                    <small>{{__('Izaberi fajl')}}</small>
+                </label>
+                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file${ counter }">
+                <span class="flex-1 pt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
+                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="remove(${counter})"><i class="fas fa-trash"></i></button>
+                </div>
+            `);
+
+            $('#name_file'+counter).change(function() {
+                add_one_more_field(counter);
+            });
+        }
+
+    });
+
+    function add_one_more_field(counter){
+        if(document.getElementById('name_file'+counter).files[0])
+            console.log(document.getElementById('name_file'+counter).files[0].name);
+            document.getElementById('old_document'+counter).textContent = document.getElementById('name_file'+counter).files[0].name;
+            counter ++;
+            $('#more_fields').append(`
+                <div class="flex" id="block${counter}">
+                <label for="name_file${counter}" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                    </svg>
+                    <small>{{__('Izaberi fajl')}}</small>
+                </label>
+                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file${ counter }">
+                <span class="flex-1 mt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
+                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="remove(${counter})"><i class="fas fa-trash"></i></button>
+                </div>
+            `);
+
+            $('#name_file'+counter).change(function() {
+                add_one_more_field(counter);
+            });
+    }
+
+    function remove(counter){
+        $('#block'+counter).remove();
+    }
+
 </script>
