@@ -42,7 +42,10 @@ class TrainingRequest extends FormRequest
             'description' => 'required',
             'place' => 'required|max:190',
             'resources' => 'required',
-            'training_date' => 'required|after:yesterday'
+            'training_date' => 'required|after:yesterday',
+            'file[]'=>'nullable'
+            
+            
         ];
     }
 
@@ -77,6 +80,8 @@ class TrainingRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        
+    
         $this->merge([
             'standard_id' => session('standard'),
             'team_id' => Auth::user()->current_team_id,
@@ -84,7 +89,8 @@ class TrainingRequest extends FormRequest
             'year' => date('Y', strtotime($this->training_date)),
             'training_date' => $this->training_date != null ? date('Y-m-d H:i:s', strtotime($this->training_date)) : null,
             'final_num_of_employees' => $this->final_num_of_employees != null ? $this->final_num_of_employees : null,
-            'rating' => $this->rating != null ? $this->rating : null
+            'rating' => $this->rating != null ? $this->rating : null,
+            
         ]);
     }
 }

@@ -27,4 +27,9 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\Team');
     }
+
+    public function training()
+    {
+        return $this->belongsTo('App\Models\Training');
+    }
 }

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Document;
 use App\Models\Training;
+use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Facades\CustomLog;
 use App\Http\Requests\TrainingRequest;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingsController extends Controller
 {
@@ -53,8 +56,23 @@ class TrainingsController extends Controller
     public function store(TrainingRequest $request)
     {
         $this->authorize('create', Training::class);
-        try{
+       
+        
+        try{ dd($request->file('file'));
+            
+            $path = $request->file->storeAs($this::getCompanyName())."/policy", $request->file('file')->getClientOriginalName().time().$request->file('file')->getClientOriginalExtension());
             $trainingPlan = Training::create($request->except('status'));
+            $upload_path = Str::snake($this::getCompanyName())."/Trainings";
+            $document = Document::create([
+                'training_id'=>$trainingPlan->id,
+                'standard_id'=>$trainingPlan->standard_id,
+                'team_id'=>$trainingPlan->team_id,
+                'user_id'=>$trainingPlan->user_id,
+                'document_name'=>$trainingPlan->name,
+                'version'=>1,
+                'file_name'=>'training' 
+                ]);
+            Storage::putFileAs($upload_path, $request->file, $request->file_name);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno sačuvana!'));
         }catch(Exception $e){

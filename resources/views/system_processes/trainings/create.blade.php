@@ -13,7 +13,7 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('trainings.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form action="{{ route('trainings.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 
 			<div class="mb-4">
