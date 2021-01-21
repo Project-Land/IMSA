@@ -65,7 +65,7 @@ class TrainingsController extends Controller
                 $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                 $name= $trainingPlan->name;
                 $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
+                $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
                 $document = Document::create([
                     'training_id'=>$trainingPlan->id,
                     'standard_id'=>$trainingPlan->standard_id,
@@ -115,7 +115,7 @@ class TrainingsController extends Controller
             foreach($trainingPlan->documents()->pluck('id') as $id){
                 if(!in_array($id,$request->file)){
                     $doc=Document::findOrFail($id);
-                    $path = $this::getCompanyName()."/training/".$doc->file_name;
+                    $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                     Storage::delete($path);
                     $doc->delete();
                 }
@@ -125,7 +125,7 @@ class TrainingsController extends Controller
                     $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                     $name= $trainingPlan->name;
                     $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                    $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
+                    $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
                     $document = Document::create([
                         'training_id'=>$trainingPlan->id,
                         'standard_id'=>$trainingPlan->standard_id,
@@ -155,7 +155,7 @@ class TrainingsController extends Controller
         $this->authorize('delete', $trainingPlan);
         try{
             foreach($trainingPlan->documents as $doc){
-                $path = $this::getCompanyName()."/training/".$doc->file_name;
+                $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
             }
             Training::destroy($id);
