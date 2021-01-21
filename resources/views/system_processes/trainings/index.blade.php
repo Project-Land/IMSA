@@ -203,6 +203,22 @@
     function showTraining(id){
         axios.get('/trainings/'+id)
             .then((response) => {
+
+                let documents = $.each(response.data.documents, function(i, item){
+                    response.data.documents[i].file_name
+                })
+
+                let docsBlock = "<div id='docsBlock'>";
+                Object.keys(documents).forEach(key => {
+                    docsBlock += (`<form class="inline" action="{{ route('document.preview') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="folder" value="${ response.data.company }/training">
+                        <input type="hidden" name="file_name" value="${ documents[key].file_name }">
+                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;">${ documents[key].file_name }</button>
+                    </form><br>`);
+                })
+                docsBlock+= "</div>"
+
                 let modal = `<div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -231,7 +247,9 @@
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Ocena efekata obuke') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.rating != null ? response.data.rating : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Dokumenti') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p></p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom">
+                                                    ${ documents.length === 0 ? "/" : docsBlock }
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="px-6 py-4 bg-gray-100 text-right">

@@ -56,14 +56,14 @@ class TrainingsController extends Controller
     public function store(TrainingRequest $request)
     {
         $this->authorize('create', Training::class);
-       
-      
-        try{ 
+
+
+        try{
             $trainingPlan = Training::create($request->except(['status','file']));
-            foreach($request->file('file') as $file){ 
+            foreach($request->file('file') as $file){
                 $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                 $name= $trainingPlan->name;
-                $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
+                $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
                 $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
                 $document = Document::create([
                     'training_id'=>$trainingPlan->id,
@@ -76,7 +76,7 @@ class TrainingsController extends Controller
                     'doc_category'=>'training'
                     ]);
             }
-           
+
             CustomLog::info('Obuka "'.$trainingPlan->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno sačuvana!'));
         }catch(Exception $e){
@@ -91,13 +91,14 @@ class TrainingsController extends Controller
         if(!request()->expectsJson()){
             abort(404);
         }
-        $training = Training::findOrFail($id);
+        $training = Training::with('documents')->findOrFail($id);
+        $training['company'] = strtolower(Auth::user()->currentTeam->name);
         return response()->json($training);
     }
 
     public function edit($id)
     {
-        $trainingPlan = Training::findOrFail($id);
+        $trainingPlan = Training::with('documents')->findOrFail($id);
         $this->authorize('update', $trainingPlan);
         return view('system_processes.trainings.edit', compact('trainingPlan'));
     }
