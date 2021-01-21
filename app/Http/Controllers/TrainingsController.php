@@ -111,7 +111,7 @@ class TrainingsController extends Controller
         $this->authorize('update', $trainingPlan);
         
         try{
-            
+            if(!$request->file)$request->file=[];
             foreach($trainingPlan->documents()->pluck('id') as $id){
                 if(!in_array($id,$request->file)){
                     $doc=Document::findOrFail($id);
