@@ -58,7 +58,10 @@ class TrainingRequest extends FormRequest
             'description' => 'required',
             'place' => 'required|max:190',
             'resources' => 'required',
-            'training_date' => 'required'
+            'training_date' => 'required',
+            'file[]'=>'nullable',
+            'new_file[]'=>'nullable',
+
         ];
     }
 
@@ -80,6 +83,10 @@ class TrainingRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if(!$this->file){
+            $this->merge([
+                'file' => []]);
+        }
         
     
         $this->merge([

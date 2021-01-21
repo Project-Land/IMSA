@@ -60,21 +60,23 @@ class TrainingsController extends Controller
       
         try{ 
             $trainingPlan = Training::create($request->except(['status','file']));
-            foreach($request->file('file') as $file){ 
-                $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                $name= $trainingPlan->name;
-                $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
-                $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
-                $document = Document::create([
-                    'training_id'=>$trainingPlan->id,
-                    'standard_id'=>$trainingPlan->standard_id,
-                    'team_id'=>$trainingPlan->team_id,
-                    'user_id'=>$trainingPlan->user_id,
-                    'document_name'=> $name,
-                    'version'=>1,
-                    'file_name'=>$trainingPlan->name,
-                    'doc_category'=>'training'
-                    ]);
+            if($request->file('file')){
+                foreach($request->file('file') as $file){ 
+                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                    $name= $trainingPlan->name;
+                    $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
+                    $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
+                    $document = Document::create([
+                        'training_id'=>$trainingPlan->id,
+                        'standard_id'=>$trainingPlan->standard_id,
+                        'team_id'=>$trainingPlan->team_id,
+                        'user_id'=>$trainingPlan->user_id,
+                        'document_name'=> $name,
+                        'version'=>1,
+                        'file_name'=>$trainingPlan->name,
+                        'doc_category'=>'training'
+                        ]);
+                }
             }
            
             CustomLog::info('Obuka "'.$trainingPlan->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
@@ -106,9 +108,35 @@ class TrainingsController extends Controller
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('update', $trainingPlan);
-
+        
         try{
-            $trainingPlan->update($request->except('status'));
+            foreach($trainingPlan->documents()->pluck('id') as $id){
+                if(!in_array($id,$request->file)){
+                    $doc=Document::findOrFail($id);
+                    $path = $this::getCompanyName()."/training/".$doc->file_name;
+                    Storage::delete($path);
+                }
+            }
+            if($request->file('new_file')){
+                foreach($request->file('new_file') as $file){
+                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                    $name= $trainingPlan->name;
+                    $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
+                    $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
+                    $document = Document::create([
+                        'training_id'=>$trainingPlan->id,
+                        'standard_id'=>$trainingPlan->standard_id,
+                        'team_id'=>$trainingPlan->team_id,
+                        'user_id'=>$trainingPlan->user_id,
+                        'document_name'=> $name,
+                        'version'=>1,
+                        'file_name'=>$trainingPlan->name,
+                        'doc_category'=>'training'
+                        ]);
+                }
+            }
+
+            $trainingPlan->update($request->except('status','file'));
             CustomLog::info('Obuka "'.$trainingPlan->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno izmenjena!'));
         } catch(Exception $e){
@@ -123,6 +151,10 @@ class TrainingsController extends Controller
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('delete', $trainingPlan);
         try{
+            foreach($trainingPlan->documents as $doc){
+                $path = $this::getCompanyName()."/training/".$doc->file_name;
+                Storage::delete($path);
+            }
             Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Obuka je uspešno uklonjena!'));
@@ -137,6 +169,10 @@ class TrainingsController extends Controller
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('delete', $trainingPlan);
         try{
+            foreach($trainingPlan->documents as $doc){
+                $path = $this::getCompanyName()."/training/".$doc->file_name;
+                Storage::delete($path);
+            }
             Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return true;
