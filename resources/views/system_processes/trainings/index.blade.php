@@ -230,6 +230,8 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.final_num_of_employees != null ? response.data.final_num_of_employees : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Ocena efekata obuke') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.rating != null ? response.data.rating : "/" }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Dokumenti') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p></p></div>
                                             </div>
                                         </div>
                                         <div class="px-6 py-4 bg-gray-100 text-right">
