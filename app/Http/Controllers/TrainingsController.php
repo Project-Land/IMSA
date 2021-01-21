@@ -57,22 +57,26 @@ class TrainingsController extends Controller
     {
         $this->authorize('create', Training::class);
        
-        
-        try{ dd($request->file('file'));
-            
-            $path = $request->file->storeAs($this::getCompanyName())."/policy", $request->file('file')->getClientOriginalName().time().$request->file('file')->getClientOriginalExtension());
-            $trainingPlan = Training::create($request->except('status'));
-            $upload_path = Str::snake($this::getCompanyName())."/Trainings";
-            $document = Document::create([
-                'training_id'=>$trainingPlan->id,
-                'standard_id'=>$trainingPlan->standard_id,
-                'team_id'=>$trainingPlan->team_id,
-                'user_id'=>$trainingPlan->user_id,
-                'document_name'=>$trainingPlan->name,
-                'version'=>1,
-                'file_name'=>'training' 
-                ]);
-            Storage::putFileAs($upload_path, $request->file, $request->file_name);
+      
+        try{ 
+            $trainingPlan = Training::create($request->except(['status','file']));
+            foreach($request->file('file') as $file){ 
+                $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                $name= $trainingPlan->name;
+                $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
+                $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
+                $document = Document::create([
+                    'training_id'=>$trainingPlan->id,
+                    'standard_id'=>$trainingPlan->standard_id,
+                    'team_id'=>$trainingPlan->team_id,
+                    'user_id'=>$trainingPlan->user_id,
+                    'document_name'=> $name,
+                    'version'=>1,
+                    'file_name'=>$trainingPlan->name,
+                    'doc_category'=>'training'
+                    ]);
+            }
+           
             CustomLog::info('Obuka "'.$trainingPlan->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno sačuvana!'));
         }catch(Exception $e){
