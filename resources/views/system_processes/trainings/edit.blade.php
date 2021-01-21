@@ -102,7 +102,7 @@
                     <div class="mb-2 flex">
                         <label for="newFile" class="mt-2 w-50">{{ $document->file_name }}</label>
                         <input class="bg-white" type="hidden" id="{{ $document->id }}" name="newFile[]" value="{{ $document->id }}" disabled>
-                        <button type="button" class="btn btn-danger ml-5"><i class="fas fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger ml-5" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
                     </div>
                 @endforeach
             </div>
