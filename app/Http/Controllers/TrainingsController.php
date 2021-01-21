@@ -111,11 +111,13 @@ class TrainingsController extends Controller
         $this->authorize('update', $trainingPlan);
         
         try{
+            
             foreach($trainingPlan->documents()->pluck('id') as $id){
                 if(!in_array($id,$request->file)){
                     $doc=Document::findOrFail($id);
                     $path = $this::getCompanyName()."/training/".$doc->file_name;
                     Storage::delete($path);
+                    $doc->delete();
                 }
             }
             if($request->file('new_file')){
@@ -137,7 +139,7 @@ class TrainingsController extends Controller
                 }
             }
 
-            $trainingPlan->update($request->except('status','file'));
+            $trainingPlan->update($request->except('status','file','new_file'));
             CustomLog::info('Obuka "'.$trainingPlan->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno izmenjena!'));
         } catch(Exception $e){

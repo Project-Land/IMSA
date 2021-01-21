@@ -101,7 +101,7 @@
                 @foreach($trainingPlan->documents as $document)
                     <div class="mb-2 flex">
                         <label for="newFile" class="mt-2 w-50">{{ $document->file_name }}</label>
-                        <input class="bg-white" type="hidden" id="{{ $document->id }}" name="newFile[]" value="{{ $document->id }}" disabled>
+                        <input class="bg-white" type="hidden" id="{{ $document->id }}" name="file[]" value="{{ $document->id }}" disabled>
                         <button type="button" class="btn btn-danger ml-5" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
                     </div>
                 @endforeach
@@ -115,7 +115,7 @@
                     </svg>
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
-                <input type="file" class="form-control-file d-none" id="name_file" name="file[]">
+                <input type="file" class="form-control-file d-none" id="name_file" name="new_file[]">
                 <span class="font-italic text-s ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
                 @error('file')
                     <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -201,7 +201,7 @@
                     </svg>
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
-                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file[]">
+                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="new_file[]">
                 <span class="flex-1 pt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
                 <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
             </div>
