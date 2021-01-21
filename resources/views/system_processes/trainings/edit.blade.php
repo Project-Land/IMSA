@@ -98,6 +98,13 @@
 
             <div class="mb-4" id="documents" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
                 <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Dokumenti') }}:</label>
+                @foreach($trainingPlan->documents as $document)
+                    <div class="mb-2 flex">
+                        <label for="newFile" class="mt-2 w-50">{{ $document->file_name }}</label>
+                        <input class="bg-white" type="hidden" id="{{ $document->id }}" name="newFile[]" value="{{ $document->id }}" disabled>
+                        <button type="button" class="btn btn-danger ml-5" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+                    </div>
+                @endforeach
             </div>
 
             <div class="mb-4 doc_field" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
