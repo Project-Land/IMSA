@@ -83,10 +83,7 @@ class TrainingRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if(!$this->file){
-            $this->merge([
-                'file' => []]);
-        }
+        
         
     
         $this->merge([

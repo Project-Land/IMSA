@@ -124,7 +124,7 @@ class TrainingsController extends Controller
                 foreach($request->file('new_file') as $file){
                     $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                     $name= $trainingPlan->name;
-                    $trainingPlan->name=$file_name.$file->getClientOriginalExtension();
+                    $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
                     $path = $file->storeAs($this::getCompanyName()."/training", $trainingPlan->name);
                     $document = Document::create([
                         'training_id'=>$trainingPlan->id,
