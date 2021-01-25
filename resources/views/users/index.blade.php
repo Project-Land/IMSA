@@ -50,7 +50,7 @@
 											</div>
 										</td>
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
-											{{ ($user->teamRole($user->currentTeam)->name) === "Owner" ? "Super Admin" : $user->teamRole($user->currentTeam)->name }}
+											{{ ($user->teamRole($user->currentTeam)->name) === "Owner" ? "Super Admin" : __($user->teamRole($user->currentTeam)->name) }}
 										</td>
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium">
 											<form class="inline" id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST">

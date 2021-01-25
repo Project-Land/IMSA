@@ -61,7 +61,7 @@
                             <x-jet-label for="role" value="{{ __('Uloga') }}" class="block font-medium text-sm text-gray-700" />
                             <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="role" id="role">
                                 <option value="user" {{ old('role') == "user" ? "selected":"" }}>{{ __('Korisnik') }}</option>
-                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>{{ __('Editor internih provera') }}</option>
+                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>{{ __('Interni proveravač') }}</option>
                                 <option value="admin" {{ old('role') == "admin" ? "selected":"" }}>{{ __('Administrator') }}</option>
                             </select>
                             @error('role')

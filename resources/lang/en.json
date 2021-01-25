@@ -86,12 +86,12 @@
     "Ukloni" : "Remove",
     "Napusti" : "Leave",
     "Korisnik" : "User",
-    "Editor Internih Provera" : "Internal audits editor",
-    "Editor internih provera" : "Internal audits editor",
+    "Interni proveravač" : "Internal auditor",
+    "Interni Proveravač" : "Internal auditor",
     "Upravljaj ulogama" : "Role management",
     "Korisnik ima ograničeni pristup." : "User has only view access.",
     "Administrator ima pristup svim segmentima aplikacije." : "Administrator has access to all application segments.",
-    "Editor internih provera može da dodaje, menja i briše interne provere." : "Internal audits editor can create, update and delete internal audits.",
+    "Interni proveravač može da dodaje, menja i briše interne provere." : "Internal auditor can create, update and delete internal audits.",
     "Da li ste sigurni da želite da uklonite ovaj korisnički nalog iz firme?" : "Are you sure you want to remove this user account from your company?",
     "Ukloni firmu" : "Remove company",
     "Trajno ukloni ovu firmu" : "Permanently remove this company",
@@ -672,7 +672,9 @@
     "velikih" : "are major",
     "Prikaz obuke" : "Training preview",
     "Sertifikat / Diploma / Izveštaj sa obuke" : "Certificate / Diploma / Training report",
-    "Dodaj još jedan dokument":"Add another document"
+    "Dodaj još jedan dokument":"Add another document",
+    "Dokumenti" : "Documents"
+
 
 
 }
