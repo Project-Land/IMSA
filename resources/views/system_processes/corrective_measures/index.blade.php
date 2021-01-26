@@ -153,6 +153,8 @@ if(id){
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_cause }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za otklanjanje neusaglašenosti') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju korektivne mere') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline_date != null ? new Date(response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera odobrena') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval == 1 ? "{{ __('Odobrena') }}" : "{{ __('Neodobrena') }}" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Razlog neodobravanja mere') }}</p></div>

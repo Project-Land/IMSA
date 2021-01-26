@@ -93,6 +93,9 @@
     </div>
 
     <script>
+        var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+        $.datetimepicker.setLocale(lang);
+
         let counter = 1;
 
         function removeInput(){
@@ -169,7 +172,6 @@
                     <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera za otklanjanje neusaglašenosti') }}:</label>
                     <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure${counter}" name="measure[${counter}]" required oninvalid="this.setCustomValidity('{{ __("Unesite meru za otklanjanje neusaglašenosti") }}')"
                     oninput="this.setCustomValidity('')"></textarea>
-
                 </div>
                 <div class="form-group">
                     <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje mere') }}:</label>
@@ -177,6 +179,10 @@
                         <option value="1">{{ __('Da') }}</option>
                         <option value="0">{{ __('Ne') }}</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="deadline_date${counter}" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju korektivne mere') }}:</label>
+                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date${counter}" name="deadline_date[${counter}]" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
                 </div>
                 <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                     <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Razlog neodobravanja mere') }}</label>
@@ -235,6 +241,14 @@
                     $(id_me).attr('required', false);
                 }
             })
+
+            $('#deadline_date'+counter).datetimepicker({
+                timepicker: false,
+                format: 'd.m.Y',
+                minDate: 0,
+                dayOfWeekStart: 1,
+                scrollInput: false
+            });
 
             counter++;
 
@@ -313,6 +327,10 @@
                             <option value="0">{{ __('Ne') }}</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="deadline_date${counter}" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju korektivne mere') }}:</label>
+                        <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date${counter}" name="deadline_date[${counter}]" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
+                    </div>
                     <div class="form-group" id="measure_reason_field${counter}" style="display: none">
                         <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Razlog neodobravanja mere') }}</label>
                         <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja')"
@@ -371,6 +389,14 @@
                         $(id_me).attr('required', false);
                     }
                 })
+
+                $('#deadline_date'+counter).datetimepicker({
+                    timepicker: false,
+                    format: 'd.m.Y',
+                    minDate: 0,
+                    dayOfWeekStart: 1,
+                    scrollInput: false
+                });
 
                 counter++;
 

@@ -55,7 +55,8 @@ class InternalCheckReportController extends Controller
             'measure_approval.*' => 'required',
             'measure_approval_reason.*' => 'nullable',
             'measure_status.*' => 'required',
-            'measure_effective.*' => 'nullable'
+            'measure_effective.*' => 'nullable',
+            'deadline_date' => 'required'
         ], [
             'noncompliance_source.*.required' => 'Izvor informacije o neusaglašenostima nije izabran',
             'noncompliance_description.*.required' => 'Opis neusaglašenosti nije popunjen',
@@ -63,6 +64,7 @@ class InternalCheckReportController extends Controller
             'measure.*.required' => 'Mera za otklanjanje neusaglašenosti nije popunjena',
             'measure_approval.*.required' => 'Razlog neodobravanja mere nije popunjen',
             'measure_status.*.required' => 'Polje mera efektivna nije popunjeno',
+            'deadline_date.required' => 'Unesite datum'
         ]);
 
         try{
@@ -88,11 +90,12 @@ class InternalCheckReportController extends Controller
                         'measure_approval' => $correctiveMeasureData['measure_approval'][$inc],
                         'measure_status' => $correctiveMeasureData['measure_status'][$inc],
                         'measure_effective' => $correctiveMeasureData['measure_effective'][$inc],
+                        'deadline_date' => date('Y-m-d', strtotime($correctiveMeasureData['deadline_date'][$inc])),
                         'team_id' => Auth::user()->current_team_id,
                         'user_id' => Auth::user()->id,
                         'standard_id' => session('standard'),
                         'sector_id' => 1,
-                        'name' => __("KKM")." ".Carbon::now()->year." / ".$counter,
+                        'name' => 'QMS '.__("KKM")." ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
                         //'internal_check_report_id' => $report->id,
                         'measure_date' => Carbon::now(),

@@ -14,7 +14,7 @@
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
 		<form action="{{ route('trainings.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-		
+
 			@csrf
 
 			<div class="mb-4">
@@ -110,7 +110,7 @@
                     <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
 
-                <span class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"> {{ __('Dodaj još jedan dokument') }}</i></span>
+                <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
 
                 <div id="more_fields"></div>
             </div>
@@ -140,7 +140,7 @@
 
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
-		minDate: 0,
+		minDate: 1,
 		dayOfWeekStart: 1,
 		scrollInput: false
 	});

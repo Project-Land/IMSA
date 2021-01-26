@@ -150,7 +150,7 @@
                                     <!-- Role Name -->
                                     <div class="flex items-center">
                                         <div class="text-sm text-gray-600 {{ $currentRole == $role->key ? 'font-semibold' : '' }}">
-                                            {{ $role->name }}
+                                            {{ __($role->name) }}
                                         </div>
 
                                         @if ($currentRole == $role->key)
@@ -160,7 +160,7 @@
 
                                     <!-- Role Description -->
                                     <div class="mt-2 text-xs text-gray-600">
-                                        {{ $role->description }}
+                                        {{ __($role->description) }}
                                     </div>
                                 </div>
                             </div>

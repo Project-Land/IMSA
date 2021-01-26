@@ -94,7 +94,15 @@
 					<option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
 					<option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
 				</select>
-			</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju korektivne mere') }}:</label>
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
+				@error('deadline_date')
+					<span class="text-red-700 italic text-sm">{{ $message }}</span>
+				@enderror
+            </div>
 
 			<div class="mb-4" id="measure_reason_field" style="display: none">
 				<label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Razlog neodobravanja mere') }}:</label>
@@ -128,6 +136,17 @@
 </x-app-layout>
 
 <script>
+
+    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+    $.datetimepicker.setLocale(lang);
+
+	$('#deadline_date').datetimepicker({
+		timepicker: false,
+		format: 'd.m.Y',
+		minDate: 0,
+		dayOfWeekStart: 1,
+    	scrollInput: false
+	});
 
 	$('#measure_approval').change( () => {
 		if($('#measure_approval').val() == 0){

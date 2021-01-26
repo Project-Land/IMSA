@@ -61,11 +61,11 @@ class JetstreamServiceProvider extends ServiceProvider
             'delete',
         ])->description(__('Administrator ima pristup svim segmentima aplikacije.'));
 
-        Jetstream::role('editor', __('Editor Internih Provera'), [
+        Jetstream::role('editor', __('Interni proveravač'), [
             'read',
             'create',
             'update',
-        ])->description(__('Editor internih provera može da dodaje, menja i briše interne provere.'));
+        ])->description(__('Interni proveravač može da dodaje, menja i briše interne provere.'));
 
         Jetstream::role('user', __('Korisnik'), [
             'read',
