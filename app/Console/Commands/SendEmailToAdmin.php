@@ -59,10 +59,8 @@ class SendEmailToAdmin extends Command
             return;
         }
 
-        foreach($nots as $n){
-            Mail::to(User::findOrFail(1))->send(new SendMailToAdmin($n));
-        }
-        /*
+        
+        
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             App::setlocale($team->lang);
@@ -77,6 +75,6 @@ class SendEmailToAdmin extends Command
 
                 }
             }
-        }  */
+        }  
     }
 }

@@ -16,6 +16,10 @@ class CorrectiveMeasuresController extends Controller
 
     public function index()
     {
+        if(request()->has('standard') && request()->has('standard_name')){
+            session(['standard' => request()->get('standard')]);
+            session(['standard_name' => request()->get('standard_name')]);
+        }
         if(session('standard') == null){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }

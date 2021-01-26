@@ -25,4 +25,9 @@ class Complaint extends Model
     {
         return $this->morphOne('App\Models\Notification', 'notifiable');
     }
+
+    public function standard()
+    {
+        return $this->belongsTo('App\Models\Standard');
+    }
 }

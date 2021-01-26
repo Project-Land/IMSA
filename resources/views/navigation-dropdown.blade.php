@@ -163,7 +163,7 @@
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>
                                         @elseif ($not->notifiable_type === 'App\Models\CorrectiveMeasure')
-                                        <x-jet-dropdown-link href="{{ asset('/corrective_measures#correctivemeasure'.$not->notifiable_id) }}" >
+                                        <x-jet-dropdown-link href="{{ asset('/corrective-measures#correctivemeasure'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>
                                         @elseif ($not->notifiable_type === 'App\Models\MeasuringEquipment')
