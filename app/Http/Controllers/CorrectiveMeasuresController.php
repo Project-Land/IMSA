@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Team;
 use App\Models\Sector;
 use App\Facades\CustomLog;
+use App\Models\Notification;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CorrectiveMeasuresRequest;
@@ -40,6 +41,12 @@ class CorrectiveMeasuresController extends Controller
         $this->authorize('create', CorrectiveMeasure::class);
         try{
             $correctiveMeasure = CorrectiveMeasure::create($request->all());
+            $notification = Notification::create([
+                'message'=>__('Rok za realizaciju korektivne mere ').date('d.m.Y', strtotime($correctiveMeasure->deadline_date)),
+                'team_id'=>Auth::user()->current_team_id,
+                'checkTime' => $correctiveMeasure->deadline_date
+            ]);
+        $correctiveMeasure->notification()->save($notification);
             CustomLog::info('Neusaglašenost / korektivna mera "'.$correctiveMeasure->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Neusaglašenost / korektivna mera je uspešno sačuvana'));
         } catch(Exception $e){
@@ -54,6 +61,12 @@ class CorrectiveMeasuresController extends Controller
         $this->authorize('create', CorrectiveMeasure::class);
         try{
             $correctiveMeasure = CorrectiveMeasure::create($request->all());
+            $notification = Notification::create([
+                'message'=>__('Rok za realizaciju korektivne mere ').date('d.m.Y', strtotime($correctiveMeasure->deadline_date)),
+                'team_id'=>Auth::user()->current_team_id,
+                'checkTime' => $correctiveMeasure->deadline_date
+            ]);
+            $correctiveMeasure->notification()->save($notification);
             CustomLog::info('Neusaglašenost / korektivna mera "'.$correctiveMeasure->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Neusaglašenost / korektivna mera je uspešno sačuvana'));
         } catch(Exception $e){
@@ -90,6 +103,14 @@ class CorrectiveMeasuresController extends Controller
 
         try{
             $correctiveMeasure->update($request->except('name'));
+            $notification = $correctiveMeasure->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
+            $notification->message = __('Rok za realizaciju korektivne mere ').date('d.m.Y', strtotime($request->deadline_date));
+            $notification->checkTime = $correctiveMeasure->deadline_date;
+            $correctiveMeasure->notification()->save($notification);
             CustomLog::info('Neusaglašenost / korektivna mera "'.$correctiveMeasure->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Neusaglašenost / korektivna mera je uspešno izmenjena'));
         } catch(Exception $e){
@@ -105,6 +126,7 @@ class CorrectiveMeasuresController extends Controller
         $correctiveMeasure = CorrectiveMeasure::findOrFail($id);
 
         try{
+            $correctiveMeasure->notification()->delete();
             CorrectiveMeasure::destroy($id);
             CustomLog::info('Neusaglašenost / korektivna mera "'.$correctiveMeasure->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Neusaglašenost / korektivna mera je uspešno obrisana'));

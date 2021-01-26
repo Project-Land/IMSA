@@ -49,7 +49,7 @@ class SendEmailToAdmin extends Command
        
         set_time_limit(200);
         $nots=Notification::whereDate('checkTime',Carbon::now()->addDay(7))
-        ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier'])
+        ->whereIn('notifiable_type',['App\\Models\\Goal','App\\Models\\InternalCheck','App\\Models\\Supplier','App\\Models\\Complaint','App\\Models\\CorrectiveMeasure'])
         ->orWhere(function($query) {
             $query->whereDate('checkTime',Carbon::now()->addDay(15))
                   ->where('notifiable_type', 'App\\Models\\MeasuringEquipment');
@@ -58,7 +58,11 @@ class SendEmailToAdmin extends Command
         if(!$nots->count()){
             return;
         }
-        
+
+        foreach($nots as $n){
+            Mail::to(User::findOrFail(1))->send(new SendMailToAdmin($n));
+        }
+        /*
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             App::setlocale($team->lang);
@@ -73,6 +77,6 @@ class SendEmailToAdmin extends Command
 
                 }
             }
-        }
+        }  */
     }
 }

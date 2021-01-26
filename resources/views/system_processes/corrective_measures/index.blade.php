@@ -38,8 +38,8 @@
                             </thead>
                             <tbody>
                             @foreach($measures as $measure)
-                                <tr>
-                                    <td class="text-center">{{ $measure->name }}</td>
+                                <tr id='trcorrectivemeasure{{$measure->id}}'><a id='correctivemeasure{{$measure->id}}'></a>>
+                                    <td id='tdcorrectivemeasure{{$measure->id}}' class="text-center">{{ $measure->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($measure->created_at)) }}</td>
                                     <td class="text-center">{{ $measure->standard->name }}</td>
                                     <td class="text-center">{{ $measure->measure_effective === 0 || $measure->measure_effective === null ? __('Otvorena') : __('Zatvorena') }}</td>
@@ -84,6 +84,25 @@
 </x-app-layout>
 
 <script>
+
+var myRe = /\bcorrective-measures\b/g;
+
+if(myRe.test(window.location.href)){
+  window.addEventListener('popstate', function (event) {
+      location.reload();
+  });
+}
+
+let href = window.location.href;
+id = href.split('#')[1];
+if(id){
+  let e = document.getElementById('tr' + id);
+  let i = document.getElementById('td' + id);
+  i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
+  e.style = "background:#d8ffcc;";
+}
+
+
     $('.yajra-datatable').DataTable({
         "language": {
             "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",

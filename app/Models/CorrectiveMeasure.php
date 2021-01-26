@@ -41,6 +41,11 @@ class CorrectiveMeasure extends Model
         return $this->belongsTo('App\Models\InternalCheckReport');
     }
 
+    public function notification()
+    {
+        return $this->morphOne('App\Models\Notification', 'notifiable');
+    }
+
     public static function getStats($teamId, $standardId, $year)
     {
         $icm_total = CorrectiveMeasure::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('measure_date', $year)->count();

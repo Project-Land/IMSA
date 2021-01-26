@@ -158,7 +158,15 @@
                                         <x-jet-dropdown-link href="{{ asset('/goals#goal'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>
-                                    @elseif ($not->notifiable_type === 'App\Models\MeasuringEquipment')
+                                    @elseif ($not->notifiable_type === 'App\Models\Complaint')
+                                        <x-jet-dropdown-link href="{{ asset('/complaints#complaint'.$not->notifiable_id) }}" >
+                                            {{ __($not->message) }}
+                                        </x-jet-dropdown-link>
+                                        @elseif ($not->notifiable_type === 'App\Models\CorrectiveMeasure')
+                                        <x-jet-dropdown-link href="{{ asset('/corrective_measures#correctivemeasure'.$not->notifiable_id) }}" >
+                                            {{ __($not->message) }}
+                                        </x-jet-dropdown-link>
+                                        @elseif ($not->notifiable_type === 'App\Models\MeasuringEquipment')
                                         <x-jet-dropdown-link href="{{ asset('/measuring-equipment#measuringequipment'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>

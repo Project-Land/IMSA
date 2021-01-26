@@ -24,7 +24,7 @@ class Notification extends Model
            ['checkTime', '<', Carbon::now()->addDays(7)],
            ['checkTime', '>', Carbon::now()],
            ['team_id', Auth::user()->current_team_id],
-        ])->whereHasMorph('notifiable',  ['App\Models\InternalCheck', 'App\Models\Goal', 'App\Models\Supplier'], function ($q){
+        ])->whereHasMorph('notifiable',  ['App\Models\InternalCheck', 'App\Models\Goal', 'App\Models\Supplier','App\Models\Complaint','App\Models\CorrectiveMeasure'], function ($q){
             $q->where('standard_id', session('standard'));
         })
         ->orWhere([

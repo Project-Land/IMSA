@@ -672,7 +672,9 @@
     "velikih" : "are major",
     "Prikaz obuke" : "Training preview",
     "Sertifikat / Diploma / Izveštaj sa obuke" : "Certificate / Diploma / Training report",
-    "Dodaj još jedan dokument":"Add another document"
+    "Dodaj još jedan dokument":"Add another document",
+    "Rok za realizaciju reklamacije ":"Deadline for realization of the complaint ",
+    "Rok za realizaciju korektivne mere ":"Deadline for implementation of the corrective action "
 
 
 }

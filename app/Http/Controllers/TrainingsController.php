@@ -173,7 +173,7 @@ class TrainingsController extends Controller
         $this->authorize('delete', $trainingPlan);
         try{
             foreach($trainingPlan->documents as $doc){
-                $path = $this::getCompanyName()."/training/".$doc->file_name;
+                $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
             }
             Training::destroy($id);

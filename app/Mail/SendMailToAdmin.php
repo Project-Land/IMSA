@@ -28,7 +28,7 @@ class SendMailToAdmin extends Mailable
         $this->standard_id=$not->notifiable->standard->id;
         $type=strtolower(substr($not->notifiable_type, strrpos($not->notifiable_type, '\\') + 1));
        
-            if($type=='goal'|| $type=='supplier'){
+            if($type=='goal'|| $type=='supplier' || $type=='complaint'){
                
                 $this->url="http://quality4.me/{$type}s?standard={$this->standard_id}&standard_name={$this->standard_name}#{$type}{$not->notifiable_id}";
             }
@@ -37,6 +37,9 @@ class SendMailToAdmin extends Mailable
             }
             else if($type=='measuringequipment'){
                 $this->url="http://quality4.me/measuring-equipment?standard={$this->standard_id}&standard_name={$this->standard_name}#{$type}{$not->notifiable_id}";
+            }   
+            else if($type=='correctivemeasure'){
+                $this->url="http://quality4.me/corrective-measures?standard={$this->standard_id}&standard_name={$this->standard_name}#{$type}{$not->notifiable_id}";
             }   
             else{
                 $this->url="http://quality4.me";

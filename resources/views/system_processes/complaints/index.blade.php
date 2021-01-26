@@ -43,8 +43,8 @@
                             </thead>
                             <tbody>
                                 @foreach($complaints as $c)
-                                <tr>
-                                    <td class="text-center">{{ $c->name }}</td>
+                                <tr id='trcomplaint{{$c->id}}'><a id='complaint{{$c->id}}'></a>
+                                    <td id='tdcomplaint{{$c->id}}' class="text-center">{{ $c->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($c->submission_date)) }}</td>
                                     <td class="text-center">{{ Str::length($c->description) < 35 ? $c->description : Str::limit($c->description, 35) }}</td>
                                     <td class="text-center">{{ $c->process }}</td>
@@ -93,6 +93,25 @@
 </x-app-layout>
 
 <script>
+ var myRe = /\bcomplaints\b/g;
+
+if(myRe.test(window.location.href)){
+  window.addEventListener('popstate', function (event) {
+      location.reload();
+  });
+}
+
+let href = window.location.href;
+id = href.split('#')[1];
+if(id){
+  let e = document.getElementById('tr' + id);
+  let i = document.getElementById('td' + id);
+  i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
+  e.style = "background:#d8ffcc;";
+}
+
+
+
     $('.yajra-datatable').DataTable({
         "language": {
             "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",

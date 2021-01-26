@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Complaint;
 use App\Facades\CustomLog;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ComplaintsRequest;
 
@@ -37,6 +38,12 @@ class ComplaintsController extends Controller
 
         try{
             $complaint = Complaint::create($request->all());
+            $notification = Notification::create([
+                'message'=>__('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($complaint->deadline_date)),
+                'team_id'=>Auth::user()->current_team_id,
+                'checkTime' => $complaint->deadline_date
+            ]);
+        $complaint->notification()->save($notification);
             CustomLog::info('Reklamacija "'.$complaint->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Reklamacija je uspešno sačuvana!')));
         } catch(Exception $e){
@@ -68,6 +75,14 @@ class ComplaintsController extends Controller
 
         try{
             $complaint->update($request->all());
+            $notification = $complaint->notification;
+            if(!$notification){
+                $notification=new Notification();
+                $notification->team_id=Auth::user()->current_team_id;
+            }
+            $notification->message = __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($request->deadline_date));
+            $notification->checkTime = $complaint->deadline_date;
+            $complaint->notification()->save($notification);
             CustomLog::info('Reklamacija "'.$complaint->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Reklamacija je uspešno izmenjena!')));
         } catch(Exception $e){
@@ -83,6 +98,7 @@ class ComplaintsController extends Controller
         $complaint = Complaint::findOrFail($id);
 
         try{
+            $complaint->notification()->delete();
             Complaint::destroy($id);
             CustomLog::info('Reklamacija "'.$complaint->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Reklamacija je uspešno obrisana')));
