@@ -59,8 +59,6 @@ class SendEmailToAdmin extends Command
             return;
         }
 
-        
-        
         foreach($nots as $n){
             $team=Team::find($n->team_id);
             App::setlocale($team->lang);

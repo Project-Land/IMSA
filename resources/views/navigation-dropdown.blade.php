@@ -162,14 +162,14 @@
                                         <x-jet-dropdown-link href="{{ asset('/complaints#complaint'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>
-                                        @elseif ($not->notifiable_type === 'App\Models\CorrectiveMeasure')
-                                        <x-jet-dropdown-link href="{{ asset('/corrective-measures#correctivemeasure'.$not->notifiable_id) }}" >
-                                            {{ __($not->message) }}
-                                        </x-jet-dropdown-link>
-                                        @elseif ($not->notifiable_type === 'App\Models\MeasuringEquipment')
-                                        <x-jet-dropdown-link href="{{ asset('/measuring-equipment#measuringequipment'.$not->notifiable_id) }}" >
-                                            {{ __($not->message) }}
-                                        </x-jet-dropdown-link>
+                                    @elseif ($not->notifiable_type === 'App\Models\CorrectiveMeasure')
+                                    <x-jet-dropdown-link href="{{ asset('/corrective-measures#correctivemeasure'.$not->notifiable_id) }}" >
+                                        {{ __($not->message) }}
+                                    </x-jet-dropdown-link>
+                                    @elseif ($not->notifiable_type === 'App\Models\MeasuringEquipment')
+                                    <x-jet-dropdown-link href="{{ asset('/measuring-equipment#measuringequipment'.$not->notifiable_id) }}" >
+                                        {{ __($not->message) }}
+                                    </x-jet-dropdown-link>
                                     @else
                                         <x-jet-dropdown-link href="{{ asset('/suppliers#supplier'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
