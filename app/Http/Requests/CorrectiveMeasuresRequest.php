@@ -32,6 +32,7 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_description' => 'required',
             'noncompliance_cause' => 'required',
             'measure' => 'required',
+            'deadline_date' => 'required'
         ];
     }
 
@@ -44,6 +45,7 @@ class CorrectiveMeasuresRequest extends FormRequest
             'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
             'noncompliance_cause.required' => 'Unesite uzrok neusaglašenosti',
             'measure.required' => 'Unesite meru za otklanjanje neusaglašenosti',
+            'deadline_date.required' => "Unesite rok za realizaciju"
         ];
     }
 
@@ -76,6 +78,7 @@ class CorrectiveMeasuresRequest extends FormRequest
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
+            'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'noncompliance_cause_date' => Carbon::now(),
             'measure_date' => Carbon::now(),
             'measure_approval_reason' => $this->measure_approval_reason != '' ? $this->measure_approval_reason : null,

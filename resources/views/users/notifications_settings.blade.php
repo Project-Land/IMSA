@@ -36,7 +36,9 @@
                             <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\Goal" {{ $selected->contains('notifiable_type', 'App\Models\Goal') ? "checked":"" }}/> {{ __('Ciljevi') }} </label><br>
                             <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\InternalCheck" {{ $selected->contains('notifiable_type', 'App\Models\InternalCheck') ? "checked":"" }}/> {{ __('Interne provere') }} </label><br>
                             <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\MeasuringEquipment" {{ $selected->contains('notifiable_type', 'App\Models\MeasuringEquipment') ? "checked":"" }} /> {{ __('Merna oprema') }} </label><br>
-                            <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\Supplier" {{ $selected->contains('notifiable_type', 'App\Models\Supplier') ? "checked":"" }}/> {{ __('Odobreni isporučioci') }} </label>
+                            <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\Supplier" {{ $selected->contains('notifiable_type', 'App\Models\Supplier') ? "checked":"" }}/> {{ __('Odobreni isporučioci') }} </label><br>
+                            <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\Complaint" {{ $selected->contains('notifiable_type', 'App\Models\Complaint') ? "checked":"" }}/> {{ __('Reklamacije') }} </label><br>
+                            <label><input type="checkbox" id="notification_types" name="notification_types[]" value="App\Models\CorrectiveMeasure" {{ $selected->contains('notifiable_type', 'App\Models\CorrectiveMeasure') ? "checked":"" }}/> {{ __('Korektivne mere') }} </label>
                         </div>
 
                         <div class="flex items-center justify-end mt-4">

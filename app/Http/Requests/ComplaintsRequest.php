@@ -38,7 +38,7 @@ class ComplaintsRequest extends FormRequest
         return [
             'name' => 'required|max:190',
             'description' => 'required',
-            'submission_date' => 'required|after:yesterday',
+            'submission_date' => 'required',
             'process' => 'required',
             'responsible_person' => 'nullable|max:190',
             'way_of_solving' => 'nullable|max:190',
@@ -66,7 +66,6 @@ class ComplaintsRequest extends FormRequest
             'name.max' => __('Polje može sadržati najviše 190 karaktera'),
             'desription.required' => __('Polje je obavezno'),
             'submission_date.required' => __('Polje je obavezno'),
-            'submission_date.after' => __('Unesite budući datum'),
             'process.required' => __('Polje je obavezno'),
             'process.max' => __('Polje može sadržati najviše 190 karaktera'),
             'responsible_person.max' => __('Polje može sadržati najviše 190 karaktera'),
@@ -83,7 +82,7 @@ class ComplaintsRequest extends FormRequest
             'standard_id' => session('standard'),
             'submission_date' => $this->submission_date != null ?  date('Y-m-d', strtotime($this->submission_date)) : null,
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
-            'status' => $this->status != null ? $this->status : 1,
+            'status' => $this->status != null ? $this->status : 0,
             'closing_date' => $this->status === 1 ? date('Y-m-d') : null
         ]);
     }

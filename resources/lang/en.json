@@ -291,7 +291,7 @@
     "Efikasna" : "Effective",
     "Neefikasna" : "Not effective",
     "Eksterna provera" : "External audit",
-    "Preispitivanje ISM-a" : "Management review",
+    "Preispitivanje ISM-a" : "Management system review",
     "Žalba" : "Complaint",
     "Da li je mera sprovedena?" : "Has the action been implemented?",
     "Organizaciona celina u kojoj je utvrđena neusaglašenost" : "Organizational unit in which the nonconformity was determined",
@@ -673,8 +673,8 @@
     "Prikaz obuke" : "Training preview",
     "Sertifikat / Diploma / Izveštaj sa obuke" : "Certificate / Diploma / Training report",
     "Dodaj još jedan dokument":"Add another document",
-    "Dokumenti" : "Documents"
-
-
+    "Dokumenti" : "Documents",
+    "Rok za realizaciju korektivne mere" : "Corrective action deadline",
+    "Korektivne mere" : "Corrective actions"
 
 }

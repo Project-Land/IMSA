@@ -88,8 +88,8 @@
 				<div class="mb-4">
 					<label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status reklamacije')}}:</label>
 					<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" name="status">
-						<option value="1" selected>{{__('Otvorena')}}</option>
-						<option value="0">{{__('Zatvorena')}}</option>
+						<option value="1">{{__('Otvorena')}}</option>
+						<option value="0" selected>{{__('Zatvorena')}}</option>
 					</select>
 				</div>
 
@@ -113,7 +113,7 @@
 	$('#submission_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',
-		minDate: 0,
+		minDate: 1,
 		dayOfWeekStart: 1,
     	scrollInput: false
 	});
