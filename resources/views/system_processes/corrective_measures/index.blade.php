@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                             @foreach($measures as $measure)
-                                <tr id='trcorrectivemeasure{{$measure->id}}'><a id='correctivemeasure{{$measure->id}}'></a>>
+                                <tr id='trcorrectivemeasure{{$measure->id}}'><a id='correctivemeasure{{$measure->id}}'></a>
                                     <td id='tdcorrectivemeasure{{$measure->id}}' class="text-center">{{ $measure->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($measure->created_at)) }}</td>
                                     <td class="text-center">{{ $measure->standard->name }}</td>
@@ -122,7 +122,7 @@ if(id){
             "targets": 'no-sort',
             "orderable": false,
         }],
-        "order": [[ 2, "desc" ]]
+        "order": [[ 1, "desc" ]]
     });
 
     function showMeasure(id){
