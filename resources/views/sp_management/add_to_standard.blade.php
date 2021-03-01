@@ -35,7 +35,7 @@
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="standard" value="{{ __('Standard') }}" class="block font-medium text-sm text-gray-700" />
                             <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard" required>
-                                <option value="0">{{ __('Choose') }}...</option>
+                                <option value="0">{{ __('Izaberi') }}...</option>
                                 @foreach($standards as $standard)
                                     <option value="{{ $standard->id }}">{{ $standard->name }}</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="system_process" value="{{ __('Sistemski proces') }}" class="block font-medium text-sm text-gray-700" />
                             <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="system_process" id="system_process" required>
-                                <option value="0">{{ __('Choose') }}...</option>
+                                <option value="0">{{ __('Izaberi') }}...</option>
                             </select>
                             @error('system_process')
                                 <p class="text-sm text-red-600 mt-2">{{ __($message) }}</p>

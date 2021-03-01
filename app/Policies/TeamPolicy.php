@@ -35,7 +35,7 @@ class TeamPolicy
         //return $user->belongsToTeam($team);
         return $user->hasTeamRole($user->currentTeam, 'super-admin');
     }
-    
+
     public function viewAllTeams(User $user){
 
         return $user->hasTeamRole($user->currentTeam, 'super-admin');
@@ -62,7 +62,7 @@ class TeamPolicy
     public function update(User $user, Team $team)
     {
         //return $user->ownsTeam($team);
-        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
 
     /**
@@ -75,7 +75,7 @@ class TeamPolicy
     public function addTeamMember(User $user, Team $team)
     {
         //return $user->ownsTeam($team);
-        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
 
     /**
@@ -88,7 +88,7 @@ class TeamPolicy
     public function updateTeamMember(User $user, Team $team)
     {
         //return $user->ownsTeam($team);
-        return $user->hasTeamRole($user->currentTeam, 'super-admin');
+        return $user->hasTeamRole($user->currentTeam, 'super-admin') || $user->hasTeamRole($user->currentTeam, 'admin');
     }
 
     /**

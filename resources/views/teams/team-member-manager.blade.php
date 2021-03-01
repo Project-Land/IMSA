@@ -78,7 +78,6 @@
     @endif -->
 
     @if ($team->users->isNotEmpty())
-        <x-jet-section-border />
 
         <!-- Manage Team Members -->
         <div class="mt-10 sm:mt-0">
@@ -104,7 +103,7 @@
                                 <div class="flex items-center">
                                     <!-- Manage Team Member Role -->
                                     @if (Gate::check('addTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
-                                        <button class="ml-2 text-sm text-gray-400 underline" @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin") wire:click="manageRole('{{ $user->id }}')" @endif>
+                                        <button class="ml-2 text-sm text-gray-400 underline" @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin" && $user->id != $this->user->id) wire:click="manageRole('{{ $user->id }}')" @endif>
                                             {{ __(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name) }}
                                         </button>
                                     @elseif (Laravel\Jetstream\Jetstream::hasRoles())

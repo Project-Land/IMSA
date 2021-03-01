@@ -245,10 +245,12 @@
                                     {{ __('Upravljanje firmama') }}
                                 </div>
 
-                                <!-- Team Settings -->
-                                <x-jet-dropdown-link href="{{ route('teams.index') }}">
-                                    {{ __('Lista svih firmi') }}
-                                </x-jet-dropdown-link>
+                                @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                                    <!-- Team Settings -->
+                                    <x-jet-dropdown-link href="{{ route('teams.index') }}">
+                                        {{ __('Lista svih firmi') }}
+                                    </x-jet-dropdown-link>
+                                @endcan
 
                                 <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                     {{ __('Podešavanja firme') }}
