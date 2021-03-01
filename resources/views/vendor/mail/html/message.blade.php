@@ -1,4 +1,4 @@
-@component('mail::layout',['message'=>$msg])
+@component('mail::layout',['message'=>$msg ?? 'a'])
 {{-- Header --}}
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
