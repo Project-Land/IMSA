@@ -58,7 +58,7 @@
                                     {{ __('Dodaj') }}
                                 </x-jet-button>
                             @else
-                                <a href="/teams" class="mr-4 mb-4 mr-4 px-4 py-2 text-xs font-semibold tracking-widest uppercase hover:bg-blue-500 text-blue-700 font-semibold hover:text-white hover:no-underline py-2 px-4 border border-blue-500 hover:border-transparent rounded"><i class="fas fa-arrow-left"></i> {{ __('Nazad') }}</a>
+                                <a href="/teams" class="mb-4 mr-4 px-4 py-2 text-xs font-semibold tracking-widest uppercase hover:bg-blue-500 text-blue-700 hover:text-white hover:no-underline border border-blue-500 hover:border-transparent rounded"><i class="fas fa-arrow-left"></i> {{ __('Nazad') }}</a>
                             @endif
                         </div>
                     </div>

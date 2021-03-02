@@ -10,7 +10,7 @@ class TeamController extends Controller
     public function index()
     {
         $this->authorize('viewAllTeams', Team::class);
-        $teams = Team::with('standards')->get();
+        $teams = Team::with('standards')->orderByRaw('LENGTH(name)', 'ASC')->orderBy('name', 'ASC')->get();
 
         return view('teams.index', compact('teams'));
     }
