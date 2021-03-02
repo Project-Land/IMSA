@@ -27,7 +27,8 @@ class HomeController extends Controller
         $teamId = Auth::user()->current_team_id;
         $standards = Standard::whereHas('teams', function($q) use ($teamId) {
             $q->where('team_id', $teamId);
-         })->get();
+         })->orderByRaw('LENGTH(name)', 'ASC')
+         ->orderBy('name', 'ASC')->get();
         return view('dashboard', compact('standards'));
     }
 
