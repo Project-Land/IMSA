@@ -3,6 +3,8 @@
         <x-slot name="logo">
             <img src="{{ asset('/images/logo.jpg') }}" class="w-3/5 ml-1/5" alt="imsa-logo">
         </x-slot>
+        
+  
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Zaboravili ste lozinku? Unesite vašu email adresu i poslaćemo vam link za resetovanje lozinke preko koga ćete moći da izaberete novu lozinku za vaš nalog.') }}
@@ -14,7 +16,11 @@
             </div>
         @endif
 
-        <x-jet-validation-errors class="mb-4" />
+        {{-- <x-jet-validation-errors class="mb-4" />  --}}
+
+        @if($errors->any())
+            <div class="text-red-700 text-center"> {{__('Email nije pronađen')}} </div>
+        @endif
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf

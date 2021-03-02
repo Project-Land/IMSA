@@ -3,7 +3,7 @@
         <x-slot name="logo">
             <img src="{{ asset('/images/logo.jpg') }}" class="w-3/5 ml-1/5" alt="imsa-logo">
         </x-slot>
-
+      
         <x-jet-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('password.update') }}">

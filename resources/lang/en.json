@@ -681,6 +681,8 @@
     "Pošalji link za resetovanje lozinke" : "Send password reset link",
     "Zaboravili ste lozinku? Unesite vašu email adresu i poslaćemo vam link za resetovanje lozinke preko koga ćete moći da izaberete novu lozinku za vaš nalog." : "Forgot your password? Enter your email address and we will send you link where you can reset your password.",
     "Resetuj lozinku" : "Reset Password",
-    "Zaboravili ste lozinku?" : "Forgot your password?"
+    "Zaboravili ste lozinku?" : "Forgot your password?",
+    "Email nije pronađen" : "Email not found",
+    "Statement of Applicability" : "Izjava o primenjivosti"
 
 }
