@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Izjava o primenljivosti')}} - {{__('Izmena') }}
+            {{ session('standard_name') }} - {{ __('Izjava o primenjivosti')}} - {{__('Izmena') }}
         </h2>
     </x-slot>
 

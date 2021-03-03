@@ -17,7 +17,7 @@ class CreateSoasTable extends Migration
             $table->id();
             $table->string('status');
             $table->string('comment');
-            $table->foreignId('soa_fields')->constrained();
+            $table->foreignId('soa_field_id')->constrained();
             $table->foreignId('standard_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('team_id')->constrained()->onDelete('cascade');

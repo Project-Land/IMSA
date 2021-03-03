@@ -31,4 +31,9 @@ class Soa extends Model
         return $this->belongsToMany('App\Models\Document');
     }
 
+    public function soaField()
+    {
+        return $this->BelongsTo('App\Models\SoaField');
+    }
+
 }
