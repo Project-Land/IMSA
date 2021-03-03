@@ -27,15 +27,20 @@ class SoaController extends Controller
         return view('system_processes.statement_of_applicability.create');
     }
 
-    public function store($request)
+    public function store(Request $request)
     {
         dd($request->all());
         $this->authorize('create', Soa::class);
         try{
 
-            DB::transaction(function () {
+            DB::transaction(function () use($request) {
 
-
+                foreach($request->except(['_token', '_method']) as $key => $req){
+                    Soa::where('id', $key)->update([
+                        'comment' => $req['comment'],
+                        'status' => $req['status']
+                    ]);
+                }
 
             }, 5);
 
@@ -59,14 +64,18 @@ class SoaController extends Controller
         return View('system_processes.statement_of_applicability.edit', compact('fields'));
     }
 
-    public function update($request, $id)
+    public function update(Request $request, $id)
     {
-        dd($request->all());
-        $this->authorize('update', Soa::find($id));
-        $soa = Soa::findOrFail($id);
+        DB::transaction(function () use($request) {
+            foreach($request->except(['_token', '_method']) as $key => $req){
+                Soa::where('id', $key)->update([
+                    'comment' => $req['comment'],
+                    'status' => $req['status']
+                ]);
+            }
+        }, 5);
 
         try{
-
             CustomLog::info('Soa izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
         } catch(Exception $e){
@@ -75,6 +84,7 @@ class SoaController extends Controller
         }
         return redirect('/statement-of-applicability');
     }
+
     public function destroy($id)
     {
         $this->authorize('delete', Soa::find($id));
