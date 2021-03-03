@@ -33,7 +33,7 @@ class Soa extends Model
 
     public function soaField()
     {
-        return $this->BelongsTo('App\Models\SoaField');
+        return $this->belongsTo('App\Models\SoaField');
     }
 
 }
