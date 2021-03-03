@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Izjava o primenljivosti') }}
+            {{ session('standard_name') }} - {{ __('Izjava o primenjivosti') }}
         </h2>
     </x-slot>
 

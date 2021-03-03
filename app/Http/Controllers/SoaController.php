@@ -27,7 +27,7 @@ class SoaController extends Controller
         return view('system_processes.statement_of_applicability.create');
     }
 
-    public function store($request)
+    public function store(Request $request)
     {
         dd($request->all());
         $this->authorize('create', Soa::class);
@@ -59,7 +59,7 @@ class SoaController extends Controller
         return View('system_processes.statement_of_applicability.edit', compact('fields'));
     }
 
-    public function update($request, $id)
+    public function update(Request $request, $id)
     {
         dd($request->all());
         $this->authorize('update', Soa::find($id));
