@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Soa;
+use App\Models\SoaFieldGroup;
 use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,19 +18,21 @@ class SoaController extends Controller
         if(session('standard') == null){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
-        $soas=Soa::where('team_id',Auth::user()->current_team_id);
-        return view('system_processes.statement_of_applicability.index',['soas'=>$soas]);
+        $soas = Soa::where('team_id',Auth::user()->current_team_id)->with('soaField')->get();
+        $groups = SoaFieldGroup::all();
+        return view('system_processes.statement_of_applicability.index',['soas'=>$soas, 'groups' => $groups]);
     }
 
     public function create()
     {
-        $this->authorize('create', Soa::class);
-        return view('system_processes.statement_of_applicability.create');
+        //$this->authorize('create', Soa::class);
+        $fields = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField')->get();
+        $groups = SoaFieldGroup::all();
+        return view('system_processes.statement_of_applicability.create', compact('fields', 'groups'));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->authorize('create', Soa::class);
         try{
 
@@ -44,10 +47,10 @@ class SoaController extends Controller
 
             }, 5);
 
-            CustomLog::info('Soa dodat, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Plan je uspešno sačuvan!'));
+            CustomLog::info('Izjava o primenljivosti dodata, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            $request->session()->flash('status', array('info', 'Izjava o primenljivosti je uspešno sačuvana!'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja soa, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja izjave o primenljivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/statement-of-applicability');
@@ -55,17 +58,21 @@ class SoaController extends Controller
 
     public function show($id)
     {
-        $soa = Soa::findOrFail($id);
-        return response()->json($soa);
+        //$soa = Soa::findOrFail($id);
+        //return response()->json($soa);
     }
 
     public function edit($teamId){
-        $fields = Soa::where('team_id', $teamId)->get();
-        return View('system_processes.statement_of_applicability.edit', compact('fields'));
+        $this->authorize('create', Soa::class);
+        $groups = SoaFieldGroup::all();
+        $fields = Soa::where('team_id', $teamId)->with('soaField')->get();
+        return View('system_processes.statement_of_applicability.edit', compact('fields', 'groups'));
     }
 
     public function update(Request $request, $id)
     {
+        $this->authorize('create', Soa::class);
+
         DB::transaction(function () use($request) {
             foreach($request->except(['_token', '_method']) as $key => $req){
                 Soa::where('id', $key)->update([
@@ -76,10 +83,10 @@ class SoaController extends Controller
         }, 5);
 
         try{
-            CustomLog::info('Soa izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
+            CustomLog::info('Izjava o primenljivosti izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            $request->session()->flash('status', array('info', 'Izjava o primenljivosti je uspešno izmenjena!'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene soa, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene izjave o primenljivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/statement-of-applicability');
@@ -87,18 +94,7 @@ class SoaController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('delete', Soa::find($id));
-        $risk = Soa::findOrFail($id);
-
-        try{
-
-            CustomLog::info('Soa uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-            return back()->with('status', array('info', 'Plan je uspešno uklonjen'));
-        }
-        catch (Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja soa, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
-            return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
-        }
+        //
     }
 
 }

@@ -21,6 +21,7 @@ use App\Models\MeasuringEquipment;
 use App\Models\EnvironmentalAspect;
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\Soa;
 use App\Models\Standard;
 use App\Models\SystemProcess;
 use App\Policies\AccidentPolicy;
@@ -45,6 +46,7 @@ use App\Policies\UserPolicy;
 use App\Policies\StandardPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\SystemProcessPolicy;
+use App\Policies\SoaPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -78,6 +80,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         EvaluationOfLegalAndOtherRequirement::class => EvaluationOfLegalAndOtherRequirementPolicy::class,
         Accident::class => AccidentPolicy::class,
+        Soa::class => SoaPolicy::class,
     ];
 
     /**

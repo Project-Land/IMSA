@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoaFieldsTable extends Migration
+class CreateSoaFieldGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateSoaFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('soa_fields', function (Blueprint $table) {
+        Schema::create('soa_field_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 150);
-            $table->string('description', 1024);
-            $table->foreignId('soa_field_group_id')->constrained();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateSoaFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('soa_fields');
+        Schema::dropIfExists('soa_field_groups');
     }
 }

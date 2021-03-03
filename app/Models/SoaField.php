@@ -13,4 +13,9 @@ class SoaField extends Model
     {
         return $this->hasMany('App\Models\Soa');
     }
+
+    public function soaFieldGroup()
+    {
+        return $this->BelongsTo('App\Models\SoaFieldGroup');
+    }
 }

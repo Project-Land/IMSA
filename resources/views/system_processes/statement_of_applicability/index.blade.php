@@ -22,7 +22,8 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-4">
-                            @can('create', App\Models\Training::class)
+                            @can('create', App\Models\Soa::class)
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
                                 <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
                             @endcan
                         </div>
@@ -32,35 +33,31 @@
                     <table class="table table-bordered" x-data="{ open5: true, open6: false }">
                         <thead>
                             <tr class="text-center font-bold">
-                                <td>Naziv</td>
-                                <td>Opis</td>
-                                <td>Status</td>
-                                <td>Komentar</td>
+                                <td class="w-1/6">Naziv</td>
+                                <td class="w-2/6">Opis</td>
+                                <td class="w-1/6">Status</td>
+                                <td class="w-2/6">Komentar</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <div>
-                                <tr class="font-bold">
-                                    <td colspan="4" class="cursor-pointer" @click="open5 = ! open5">Politike bezbednosti informacija <i class="ml-2 fas" :class="{'fa-chevron-up': open5, 'fa-chevron-down': ! open5 }"></i></td>
-                                </tr>
-                                <tr class="text-center" :class="{'': open5, 'hidden': ! open5 }">
-                                    <td>Politike bezbednosti informacija</td>
-                                    <td>Rukovodstvo mora da definiše i odobri skup politika bezbednosti informacija, da ih objavi i saopšti svim zaposlenima i odgovarajućim eksternim stranama.</td>
-                                    <td>Prihvaćen</td>
-                                    <td>Test comment</td>
-                                </tr>
-                            </div>
-                            <div>
-                                <tr class="font-bold">
-                                    <td colspan="4" class="cursor-pointer" @click="open6 = ! open6">Organizovanje bezbednosti informacija <i class="ml-2 fas" :class="{'fa-chevron-up': open6, 'fa-chevron-down': ! open6 }"></i></td>
-                                </tr>
-                                <tr class="text-center" :class="{'': open6, 'hidden': ! open6 }">
-                                    <td>Politike bezbednosti informacija</td>
-                                    <td>Rukovodstvo mora da definiše i odobri skup politika bezbednosti informacija, da ih objavi i saopšti svim zaposlenima i odgovarajućim eksternim stranama.</td>
-                                    <td>Prihvaćen</td>
-                                    <td>Test comment</td>
-                                </tr>
-                            </div>
+                            @foreach($groups as $group)
+                                <div>
+                                    <tr class="font-bold">
+                                        <td colspan="4" class="cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ __($group->name) }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></td>
+                                    </tr>
+
+                                    @foreach($soas as $soa)
+                                        @if($soa->soaField->soa_field_group_id == $group->id)
+                                            <tr class="text-center" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
+                                                <td>{{ __($soa->soaField->name) }}</td>
+                                                <td>{{ __($soa->soaField->description) }}</td>
+                                                <td>{{ __($soa->status) }}</td>
+                                                <td>{{ __($soa->comment) }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
