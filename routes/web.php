@@ -28,6 +28,8 @@ use App\Http\Controllers\MeasuringEquipmentsController;
 use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
+use App\Http\Controllers\SoaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -137,6 +139,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
     Route::resource('accidents', AccidentController::class);
+
+    Route::resource('statement-of-applicability', SoaController::class);
 
 });
 
