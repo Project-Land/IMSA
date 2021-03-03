@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Soa;
+use App\Models\SoaField;
 use App\Models\SoaFieldGroup;
 use App\Facades\CustomLog;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class SoaController extends Controller
     public function create()
     {
         //$this->authorize('create', Soa::class);
-        $fields = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField')->get();
+        $fields = SoaField::all();
         $groups = SoaFieldGroup::all();
         return view('system_processes.statement_of_applicability.create', compact('fields', 'groups'));
     }

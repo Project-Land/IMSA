@@ -20,15 +20,15 @@
                     <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
                 </div>
                 @foreach($fields as $field)
-                    @if($group->id == $field->soaField->soa_field_group_id)
+                    @if($group->id == $field->soa_field_group_id)
                         <div class="flex flex-wrap border-b-2 py-2 my-2" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
-                                <p class="text-xs sm:text-sm">{{ $field->soaField->name }}</p>
+                                <p class="text-xs sm:text-sm">{{ $field->name }}</p>
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Opis kontrole')}}:</label>
-                                <p class="text-xs sm:text-sm">{{ $field->soaField->description }}</p>
+                                <p class="text-xs sm:text-sm">{{ $field->description }}</p>
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
