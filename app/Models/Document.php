@@ -32,4 +32,9 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\Training');
     }
+
+    public function soas()
+    {
+        return $this->belongsToMany('App\Models\Soa');
+    }
 }
