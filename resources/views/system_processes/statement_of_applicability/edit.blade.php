@@ -22,7 +22,7 @@
                 </div>
                 @foreach($fields as $field)
                     @if($group->id == $field->soaField->soa_field_group_id)
-                        <div class="flex flex-wrap border-b-2 py-2 my-2" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
+                        <div id="{{ $field->id }}" class="flex flex-wrap border-b-2 py-2 my-2" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
                                 <p class="text-xs sm:text-sm">{{ $field->soaField->name }}</p>
