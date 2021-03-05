@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Soa;
 use App\Models\SoaField;
 use App\Models\SoaFieldGroup;
+use App\Models\Document;
 use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class SoaController extends Controller
         if(session('standard') == null){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
-        $soas = Soa::where('team_id',Auth::user()->current_team_id)->with('soaField')->get();
+        $soas = Soa::where('team_id',Auth::user()->current_team_id)->with('soaField', 'documents')->get();
         $groups = SoaFieldGroup::all();
         return view('system_processes.statement_of_applicability.index',['soas'=>$soas, 'groups' => $groups]);
     }
@@ -29,7 +30,19 @@ class SoaController extends Controller
         //$this->authorize('create', Soa::class);
         $fields = SoaField::all();
         $groups = SoaFieldGroup::all();
-        return view('system_processes.statement_of_applicability.create', compact('fields', 'groups'));
+
+        $documents = Document::where([
+            ['doc_category', 'policy'],
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->orWhere(function($query){
+                $query->where('doc_category', 'procedure')
+                ->where('standard_id', session('standard'))
+                ->where('team_id', Auth::user()->current_team_id);
+            })
+            ->get();
+
+        return view('system_processes.statement_of_applicability.create', compact('fields', 'groups', 'documents'));
     }
 
     public function store(Request $request)
@@ -40,10 +53,18 @@ class SoaController extends Controller
             DB::transaction(function () use($request) {
 
                 foreach($request->except(['_token', '_method']) as $key => $req){
-                    Soa::where('id', $key)->update([
-                        'comment' => $req['comment'],
-                        'status' => $req['status']
-                    ]);
+                    if(!empty($req)){
+                        $soa = Soa::create([
+                            'comment' => $req['comment']?? "",
+                            'status' => $req['status']?? "",
+                            'soa_field_id' => $key,
+                            'user_id' => Auth::user()->id,
+                            'team_id' => Auth::user()->current_team_id,
+                            'standard_id' => session('standard'),
+                        ]);
+
+                        $soa->documents()->sync($req['document']?? []);
+                    }
                 }
 
             }, 5);
@@ -66,8 +87,18 @@ class SoaController extends Controller
     public function edit($teamId){
         $this->authorize('create', Soa::class);
         $groups = SoaFieldGroup::all();
-        $fields = Soa::where('team_id', $teamId)->with('soaField')->get();
-        return View('system_processes.statement_of_applicability.edit', compact('fields', 'groups'));
+        $fields = Soa::where('team_id', $teamId)->with('soaField', 'documents')->get();
+        $alldocuments = Document::where([
+            ['doc_category', 'policy'],
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->orWhere(function($query){
+                $query->where('doc_category', 'procedure')
+                ->where('standard_id', session('standard'))
+                ->where('team_id', Auth::user()->current_team_id);
+            })
+            ->get();
+        return View('system_processes.statement_of_applicability.edit', compact('fields', 'groups', 'alldocuments'));
     }
 
     public function update(Request $request, $id)
@@ -76,10 +107,16 @@ class SoaController extends Controller
 
         DB::transaction(function () use($request) {
             foreach($request->except(['_token', '_method']) as $key => $req){
-                Soa::where('id', $key)->update([
+                $soa = Soa::find($key);
+                $soa->update([
                     'comment' => $req['comment'],
                     'status' => $req['status']
                 ]);
+
+                //$documents = $soa->documents;
+                $formDocuments = $req['document'];
+
+                $soa->documents()->sync($formDocuments);
             }
         }, 5);
 

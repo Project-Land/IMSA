@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Izjava o primenjivosti') }}
+            {{ session('standard_name') }} - {{ __('Izjava o primenljivosti') }}
         </h2>
     </x-slot>
 
@@ -23,20 +23,23 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\Soa::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
+                                @empty($soas)
+                                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
+                                @else
+                                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
+                                @endempty
                             @endcan
                         </div>
                     </div>
                 </div>
                 <div class="card-body bg-white mt-3">
-                    <table class="table table-bordered" x-data="{ open5: true, open6: false }">
+                    <table class="table table-bordered" x-data="{ @foreach($groups as $g) open{{ $g->id }}:true, @endforeach }">
                         <thead>
                             <tr class="text-center font-bold">
-                                <td class="w-1/6">Naziv</td>
-                                <td class="w-2/6">Opis</td>
-                                <td class="w-1/6">Status</td>
-                                <td class="w-2/6">Komentar</td>
+                                <td class="w-1/6">{{ __('Naziv') }}</td>
+                                <td class="w-2/6">{{ __('Opis') }}</td>
+                                <td class="w-1/6">{{ __('Status') }}</td>
+                                <td class="w-2/6">{{ __('Komentar') }}</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,8 +54,21 @@
                                             <tr class="text-center" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                                                 <td>{{ __($soa->soaField->name) }}</td>
                                                 <td>{{ __($soa->soaField->description) }}</td>
-                                                <td>{{ __($soa->status) }}</td>
-                                                <td>{{ __($soa->comment) }}</td>
+                                                <td>{{ ($soa->status !=  null)? __($soa->status) : "/" }}</td>
+                                                <td>
+                                                    {{ $soa->comment != null ? __($soa->comment) : '/' }}
+                                                    @if(!empty($soa->documents))
+                                                        @foreach($soa->documents as $doc)
+                                                        <br>
+                                                        <form class="inline" action="{{ route('document.preview') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$doc->doc_category }}">
+                                                            <input type="hidden" name="file_name" value="{{ $doc->file_name }}">
+                                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer" type="submit" formtarget="_blank">{{ $doc->document_name }}</button>
+                                                        </form>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endif
                                     @endforeach

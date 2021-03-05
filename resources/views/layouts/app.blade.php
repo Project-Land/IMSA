@@ -35,14 +35,18 @@
         <script src="https://kit.fontawesome.com/f94836499c.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 
+        @stack('scripts')
+
+
+
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
 
         <style>
-            #footer{ 
+            #footer{
                 background: rgb(52,95,99);
                 background: linear-gradient(180deg, rgba(52,95,99,1) 0%, rgba(199,208,202,1) 100%);
-                
+
             }
             .dropdown-menu {
                 position: static;
@@ -53,7 +57,7 @@
                 font-size: 14px;
             }
 
-            @media (max-width: 640px) {  
+            @media (max-width: 640px) {
                 .dataTables_length, .dataTables_filter, .pagination, .dataTables_info, .yajra-datatable {
                     font-size: 12px;
                 }
@@ -68,7 +72,7 @@
             <!-- Page Heading -->
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto pt-4 pb-4 px-4 sm:px-6 lg:px-8">
-                    {{ $header }} 
+                    {{ $header }}
                 </div>
             </header>
 
