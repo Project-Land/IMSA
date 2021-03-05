@@ -21,6 +21,7 @@ class SoaController extends Controller
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
         $soas = Soa::where('team_id',Auth::user()->current_team_id)->with('soaField', 'documents')->get();
+        
         $groups = SoaFieldGroup::all();
         return view('system_processes.statement_of_applicability.index',['soas'=>$soas, 'groups' => $groups]);
     }

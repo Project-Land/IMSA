@@ -22,14 +22,14 @@
 			@method('PUT')
 
             @foreach($groups as $group)
-                <div class="flex flex-grow" id="title-group-{{ $group->id }}">
+                <div class="flex flex-grow" id="title-group-{{ $group->id }}" onclick="checkGroup(this.id)">
                     <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
                     <span id="span-error" class="d-none text-red-500"><i class="fa fa-exclamation-triangle ml-4"></i></span>
                     <span id="span-success" class="d-none text-green-500"><i class="fa fa-check ml-4"></i></span>
                 </div>
                 @foreach($fields as $field)
                     @if($group->id == $field->soaField->soa_field_group_id)
-                        <div id="{{ $field->id }}" data-group="group-{{ $group->id }}" class="flex flex-wrap border-b-2 py-2 my-2 main-block group-{{ $group->id }}" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
+                        <div id="{{ $field->id }}" data-group="group-{{ $group->id }}" class="flex flex-wrap border-b-2 py-2 my-2 main-block group-{{ $group->id }} title-group-{{ $group->id }}" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
                                 <p class="text-xs sm:text-sm">{{ $field->soaField->name }}</p>
@@ -214,6 +214,51 @@
         form.target = "_blank";
         document.body.append(form);
         form.submit();
+    }
+
+    function checkGroup(group){
+        let doc=document.getElementsByClassName(group);
+        let err=false;
+        var spanS;
+        var spanE;
+        for(let row of doc){
+            let group=row.dataset.group;
+            let groupTitleBlock = document.getElementById('title-'+group);
+            let spanSuccess = groupTitleBlock.querySelector('#span-success');
+            let spanError = groupTitleBlock.querySelector('#span-error');
+            let status = row.querySelector('select').value;
+            let comment = row.querySelector('textarea').value;
+            let documents = row.lastElementChild.querySelector('select').value;
+            
+            if(status == "Prihvaćeno"){
+                if(comment != "" || documents != ""){
+            
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                }else{
+                    err=true;
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                    break;
+                }
+            }
+            else if (status == ""){
+                err = true;
+                spanS=groupTitleBlock.querySelector('#span-success');
+                spanE=groupTitleBlock.querySelector('#span-error');
+                break;
+            }
+            else{
+               
+            }
+            }
+            if(err){
+                spanS.classList.add('d-none');
+                spanE.classList.remove('d-none');
+            }else{
+                spanS.classList.remove('d-none');
+                spanE.classList.add('d-none');
+            }
     }
 
 </script>
