@@ -40,7 +40,7 @@
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
                                 <select class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]" data-id="{{ $loop->index }}" onChange="showDocument(this)">
-                                    <option value="#">{{ __('Izaberi') }}...</option>
+                                    <option value="">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
                                     <option value="Nije primenljivo">{{ __('Nije primenljivo') }}</option>
@@ -52,7 +52,7 @@
 
                             <div class="w-full sm:w-1/5">
                                 <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">{{__('Komentar')}}:</label>
-                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="{{ $field->id }}[comment]" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')"></textarea>
+                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="{{ $field->id }}[comment]" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')">{{ old($field->id) }}</textarea>
                                 @error('comment')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                                 @enderror
@@ -93,6 +93,28 @@
 <script>
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();
+
+        for(let select of document.getElementsByClassName('js-example-basic-multiple')){
+            $('#'+select.id).on('select2:select', function (e) {
+                let file = e.params.data.element.dataset.file;
+                let folder = e.params.data.element.dataset.folder;
+                let block = document.createElement('div');
+                block.setAttribute('id', 'bl-'+select.id+'-'+e.params.data.id)
+                let doc_element =`
+                            <form class="inline" action="{{ route('document.preview') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/' }}`+folder+`">
+                                <input type="hidden" name="file_name" value="`+file+`">
+                                <button class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">`+e.params.data.text+`</button>
+                            </form>`;
+                block.innerHTML = doc_element;
+                e.target.parentElement.insertAdjacentElement('beforeend', block);
+            });
+
+            $('#'+select.id).on('select2:unselect', function (e) {
+                document.getElementById('bl-'+select.id+'-'+e.params.data.id).remove();
+            });
+        }
     });
 
     function showDocument(obj){
