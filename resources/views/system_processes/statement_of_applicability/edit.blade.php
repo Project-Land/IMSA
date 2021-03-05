@@ -53,7 +53,7 @@
 
                             <div class="w-full sm:w-1/5">
                                 <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">{{__('Komentar')}}:</label>
-                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="{{ $field->id }}[comment]" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')">{{ $field->comment }}</textarea>
+                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="{{ $field->id }}[comment]" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')">{{ $field->comment }}</textarea>
                                 @error('comment')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                                 @enderror
@@ -61,8 +61,6 @@
 
                             <div class="w-full sm:w-1/5 pl-4 {{ ($field->status != "Prihvaćeno")? 'd-none':'' }}" id="document_col{{ $field->id }}">
                                 <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Dokumenti')}}:</label>
-
-
                                 <select class="js-example-basic-multiple" style="width: 100%; border-radius: 0;" name="{{ $field->id }}[document][]" id="select{{ $field->id }}" multiple="multiple">
                                     <optgroup label="Politike">
                                         @foreach($alldocuments as $document)
@@ -81,14 +79,14 @@
                                 </select>
 
                                 @foreach($field->documents as $document)
-                                <div id="bl-select{{ $field->id }}">
-                                    <div id="form-{{ $field->id }}-{{ $document->id }}" class="inline" action="{{ route('document.preview') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$document->doc_category }}">
-                                        <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                        <button class="button text-primary cursor-pointer" type="submit" formtarget="_blank" onclick="previewDocument(event)">{{ $document->document_name }}</button>
+                                    <div id="bl-select{{ $field->id }}-{{ $document->id }}">
+                                        <div id="form-{{ $field->id }}-{{ $document->id }}" class="inline" action="{{ route('document.preview') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$document->doc_category }}">
+                                            <input type="hidden" name="file_name" value="{{ $document->file_name }}">
+                                            <button class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank" onclick="previewDocument(event)">{{ $document->document_name }}</button>
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -112,19 +110,20 @@
                 let file = e.params.data.element.dataset.file;
                 let folder = e.params.data.element.dataset.folder;
                 let block = document.createElement('div');
-                block.setAttribute('id', 'bl-'+select.id)
-                let doc_element = `<form class="inline" action="{{ route('document.preview') }}" method="POST">
+                block.setAttribute('id', 'bl-'+select.id+'-'+e.params.data.id)
+                let doc_element =`
+                            <form class="inline" action="{{ route('document.preview') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/' }}`+folder+`">
                                 <input type="hidden" name="file_name" value="`+file+`">
-                                <button class="button text-primary cursor-pointer" type="submit" formtarget="_blank">`+e.params.data.text+`</button>
+                                <button class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">`+e.params.data.text+`</button>
                             </form>`;
                 block.innerHTML = doc_element;
-                e.target.insertAdjacentElement('afterend', block);
+                e.target.parentElement.insertAdjacentElement('beforeend', block);
             });
 
             $('#'+select.id).on('select2:unselect', function (e) {
-                document.getElementById('bl-'+select.id).remove();
+                document.getElementById('bl-'+select.id+'-'+e.params.data.id).remove();
             });
         }
     });
@@ -224,6 +223,8 @@
     }
     .select2-container--default .select2-selection--multiple {
         border-radius: 0;
+        border: 1px solid #dee2e6 !important;
+
     }
     .select2-container--default.select2-container--focus .select2-selection--multiple {
         border: 1px solid #dee2e6 !important;
@@ -233,6 +234,11 @@
     }
     .select2-container--default .select2-selection--multiple .select2-selection__choice{
         border-radius: 1px;
+    }
+
+    .select2-selection, .select2-selection--multiple{
+        padding-top: 5px;
+        padding-bottom: 10px;
     }
 </style>
 

@@ -27,7 +27,7 @@ class SoaController extends Controller
 
     public function create()
     {
-        //$this->authorize('create', Soa::class);
+        $this->authorize('create', Soa::class);
         $fields = SoaField::all();
         $groups = SoaFieldGroup::all();
 
@@ -85,7 +85,7 @@ class SoaController extends Controller
     }
 
     public function edit($teamId){
-        $this->authorize('create', Soa::class);
+        $this->authorize('update', Soa::class);
         $groups = SoaFieldGroup::all();
         $fields = Soa::where('team_id', $teamId)->with('soaField', 'documents')->get();
         $alldocuments = Document::where([
@@ -103,7 +103,7 @@ class SoaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->authorize('create', Soa::class);
+        $this->authorize('update', Soa::class);
 
         DB::transaction(function () use($request) {
             foreach($request->except(['_token', '_method']) as $key => $req){

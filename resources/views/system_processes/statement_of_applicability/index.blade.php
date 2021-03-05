@@ -23,11 +23,9 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\Soa::class)
-                                @if($soas->count() == 0)
-                                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
-                                @else
-                                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
-                                @endif
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
+                            @else
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
                             @endcan
                         </div>
                     </div>
@@ -57,15 +55,16 @@
                                                 <td>{{ ($soa->status !=  null)? __($soa->status) : "/" }}</td>
                                                 <td>
                                                     {{ $soa->comment != null ? __($soa->comment) : '/' }}
-                                                    @if(!empty($soa->documents))
+                                                    @if($soa->documents->count() != 0)
+                                                        <p class="font-bold text-sm mt-2 mb-0">Dokumenti:</p>
                                                         @foreach($soa->documents as $doc)
-                                                        <br>
                                                         <form class="inline" action="{{ route('document.preview') }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$doc->doc_category }}">
                                                             <input type="hidden" name="file_name" value="{{ $doc->file_name }}">
-                                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer" type="submit" formtarget="_blank">{{ $doc->document_name }}</button>
+                                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">{{ $doc->document_name }}</button>
                                                         </form>
+                                                        <br>
                                                         @endforeach
                                                     @endif
                                                 </td>
