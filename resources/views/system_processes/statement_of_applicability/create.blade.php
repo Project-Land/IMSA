@@ -24,7 +24,7 @@
                         <div id="{{ $loop->index }}" class="flex flex-wrap border-b-2 py-2 my-2" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
-                                <p class="text-xs sm:text-sm">{{ $field->name }}</p>
+                                <p class="text-xs sm:text-sm">{{ $field->name }}</p> 
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Opis kontrole')}}:</label>
@@ -32,7 +32,7 @@
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
-                                <select class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]">
+                                <select id="s{{$loop->index}}" onchange="a(this.id)" class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]">
                                     <option value="#">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
@@ -50,6 +50,7 @@
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
+                           
                         </div>
                     @endif
                 @endforeach
