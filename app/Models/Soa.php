@@ -28,7 +28,7 @@ class Soa extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Models\Document');
+        return $this->belongsToMany('App\Models\Document')->withPivot('id');
     }
 
     public function soaField()

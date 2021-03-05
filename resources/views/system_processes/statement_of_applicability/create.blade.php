@@ -1,7 +1,12 @@
 <x-app-layout>
+    @push('scripts')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Izjava o primenjivosti')}} - {{__('Kreiranje') }}
+            {{ session('standard_name') }} - {{ __('Izjava o primenljivosti')}} - {{__('Kreiranje') }}
         </h2>
     </x-slot>
 
@@ -16,12 +21,14 @@
 			@csrf
 
             @foreach($groups as $group)
-                <div class="flex flex-grow">
+                <div class="flex flex-grow" id="title-group-{{ $group->id }}">
                     <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
+                    <span id="span-error" class="d-none text-red-500"><i class="fa fa-exclamation-triangle ml-4"></i></span>
+                    <span id="span-success" class="d-none text-green-500"><i class="fa fa-check ml-4"></i></span>
                 </div>
                 @foreach($fields as $field)
                     @if($group->id == $field->soa_field_group_id)
-                        <div id="{{ $loop->index }}" class="flex flex-wrap border-b-2 py-2 my-2" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
+                        <div id="{{ $loop->index }}" data-group="group-{{ $group->id }}" class="flex flex-wrap border-b-2 py-2 my-2 main-block" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
                                 <p class="text-xs sm:text-sm">{{ $field->name }}</p>
@@ -32,7 +39,7 @@
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
-                                <select class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]">
+                                <select class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]" data-id="{{ $loop->index }}" onChange="showDocument(this)">
                                     <option value="#">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
@@ -45,10 +52,30 @@
 
                             <div class="w-full sm:w-1/5">
                                 <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">{{__('Komentar')}}:</label>
-                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="{{ $field->id }}[comment]" required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')"></textarea>
+                                <textarea class="text-xs sm:text-sm appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="{{ $field->id }}[comment]" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')"></textarea>
                                 @error('comment')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
                                 @enderror
+                            </div>
+
+                            <div class="w-full sm:w-1/5 pl-4 d-none" id="document_col{{ $loop->index }}">
+                                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Dokumenti')}}:</label>
+                                <select class="js-example-basic-multiple" style="width: 100%; border-radius: 0;" name="{{ $field->id }}[document][]" id="select{{ $loop->index }}" multiple="multiple">
+                                    <optgroup label="Politike">
+                                        @foreach($documents as $document)
+                                            @if($document->doc_category === 'policy')
+                                                <option value="{{ $document->id }}">{{ $document->document_name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Procedure">
+                                        @foreach($documents as $document)
+                                            @if($document->doc_category === 'procedure')
+                                                <option value="{{ $document->id }}">{{ $document->document_name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                </select>
                             </div>
                         </div>
                     @endif
@@ -60,3 +87,105 @@
 	</div>
 
 </x-app-layout>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+
+    function showDocument(obj){
+        if(obj.value == "Prihvaćeno"){
+            document.getElementById(obj.dataset.id).lastElementChild.classList.remove('d-none');
+        }
+        else{
+            $("#"+document.getElementById(obj.dataset.id).lastElementChild.querySelector("select").id).val(null).trigger('change');
+            document.getElementById(obj.dataset.id).lastElementChild.classList.add('d-none');
+        }
+    }
+
+    function formSubmit(){
+        let block = document.getElementsByClassName('main-block');
+
+        let error = false;
+
+        for(let div of block ){
+
+            let group = div.dataset.group;
+            let groupRows = document.getElementsByClassName(group);
+
+            let groupTitleBlock = document.getElementById('title-'+group);
+            groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
+
+            let status = div.querySelector('select').value;
+            let comment = div.querySelector('textarea').value;
+            let documents = div.lastElementChild.querySelector('select').value;
+
+            if(status == "Prihvaćeno"){
+                if(comment != "" || documents != ""){
+                    div.classList.remove('border-2');
+                    div.classList.remove('border-red-500');
+                    groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.add('d-none');
+                }
+
+                else{
+                    div.classList.add('border-2');
+                    div.classList.add('border-red-500');
+                    error = true;
+
+                    groupTitleBlock.querySelector('#span-success').classList.add('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
+
+                    for(let divs of groupRows){
+                        divs.classList.remove('hidden');
+                    }
+
+                }
+            }
+            else if (status == ""){
+                error = true;
+                div.classList.add('border-2');
+                div.classList.add('border-red-500');
+
+                groupTitleBlock.querySelector('#span-success').classList.add('d-none');
+                groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
+
+                for(let divs of groupRows){
+                    divs.classList.remove('hidden');
+                }
+            }
+            else{
+                div.classList.remove('border-2');
+                div.classList.remove('border-red-500');
+                groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
+                groupTitleBlock.querySelector('#span-error').classList.add('d-none');
+            }
+        }
+
+        if(error){
+            return
+        }
+
+        document.getElementById('form').submit();
+    }
+</script>
+
+<style>
+    .select2-results {
+        font-size: 0.875rem;
+    }
+    .select2-container--default .select2-selection--multiple {
+        border-radius: 0;
+    }
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border: 1px solid #dee2e6 !important;
+    }
+    .select2-selection__choice {
+        font-size: 0.875rem;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        border-radius: 1px;
+    }
+</style>

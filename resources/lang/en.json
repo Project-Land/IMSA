@@ -683,6 +683,13 @@
     "Resetuj lozinku" : "Reset Password",
     "Zaboravili ste lozinku?" : "Forgot your password?",
     "Email nije pronađen" : "Email not found",
-    "Izjava o primenjivosti" : "Statement of Applicability" 
+    "Izjava o primenjivosti" : "Statement of applicability",
+    "Izjava o primenljivosti" : "Statement of applicability",
+    "Kreiraj izjavu" : "Create statement",
+    "Popuni / Izmeni izjavu" : "Edit statement",
+    "Komentar" : "Comment",
+    "Naziv kontrole" : "Control name",
+    "Status kontrole" : "Control status",
+    "Opis kontrole" : "Control description"
 
 }

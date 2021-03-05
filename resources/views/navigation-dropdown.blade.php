@@ -37,12 +37,15 @@
 
                         <div class="dropdown-menu">
                             <x-slot name="content">
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/rules-of-procedures') }}">{{ __('Poslovnik') }}</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/policies') }}">{{ __('Politike') }}</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">{{ __('Procedure') }}</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
-                                <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
-                            </x-slot>
+                                @empty(Session::get('standard'))
+                                @else
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/rules-of-procedures') }}">{{ __('Poslovnik') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/policies') }}">{{ __('Politike') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">{{ __('Procedure') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
+                                @endempty
+                                </x-slot>
                         </div>
                     </x-jet-dropdown>
 
