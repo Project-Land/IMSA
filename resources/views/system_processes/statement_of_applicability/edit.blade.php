@@ -22,10 +22,10 @@
 			@method('PUT')
 
             @foreach($groups as $group)
-                <div class="flex flex-grow" id="title-group-{{ $group->id }}" onclick="checkGroup(this.id)">
+                <div class="flex flex-grow soa-group" id="title-group-{{ $group->id }}" onclick="checkGroup(this.id)">
                     <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
                     <span id="span-error" class="d-none text-red-500"><i class="fa fa-exclamation-triangle ml-4"></i></span>
-                    <span id="span-success" class="d-none text-green-500"><i class="fa fa-check ml-4"></i></span>
+                    <span id="span-success" class=" text-green-500"><i class="fa fa-check ml-4"></i></span>
                 </div>
                 @foreach($fields as $field)
                     @if($group->id == $field->soaField->soa_field_group_id)
@@ -258,6 +258,7 @@
                 spanS.classList.remove('d-none');
                 spanE.classList.add('d-none');
             }
+           
     }
 
 </script>

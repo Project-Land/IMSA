@@ -120,5 +120,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Accident');
     }
+
+    public function certificates()
+    {
+        return $this->belongsToMany('App\Models\Certificate');
+    }
     
 }
