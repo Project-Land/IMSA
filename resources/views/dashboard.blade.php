@@ -16,6 +16,16 @@
                 </div>
             </div>
 
+            @if(!Session::get('standard'))
+                <div class="row">
+                    <div class="col mx-2">
+                        <div class="bg-green-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative text-center" role="alert">
+                            <strong class="text-xl">{{ __('Izaberite standard!') }}</strong>
+                          </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="bg-white rounded-lg shadow-lg p-5 md:p-20 mx-2">
                 <div class="text-center">
                     <img class="inline-block items-center" src="{{ 'storage/logos/'.\Auth::user()->currentTeam->logo }}" alt="{{ \Auth::user()->currentTeam->name }} Logo">

@@ -106,6 +106,8 @@
         $('.js-example-basic-multiple').select2();
 
         for(let select of document.getElementsByClassName('js-example-basic-multiple')){
+            let mainblock = document.createElement('div');
+            mainblock.setAttribute('id', 'mainblock-'+select.id);
             $('#'+select.id).on('select2:select', function (e) {
                 let file = e.params.data.element.dataset.file;
                 let folder = e.params.data.element.dataset.folder;
@@ -119,7 +121,8 @@
                                 <button class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">`+e.params.data.text+`</button>
                             </form>`;
                 block.innerHTML = doc_element;
-                e.target.parentElement.insertAdjacentElement('beforeend', block);
+                mainblock.appendChild(block);
+                e.target.parentElement.insertAdjacentElement('beforeend', mainblock);
             });
 
             $('#'+select.id).on('select2:unselect', function (e) {
@@ -135,6 +138,7 @@
         else{
             $("#"+document.getElementById(obj.dataset.id).lastElementChild.querySelector("select").id).val(null).trigger('change');
             document.getElementById(obj.dataset.id).lastElementChild.classList.add('d-none');
+            obj.parentElement.parentElement.lastElementChild.lastElementChild.remove();
         }
     }
 
@@ -182,12 +186,12 @@
                 div.classList.add('border-2');
                 div.classList.add('border-red-500');
 
-                groupTitleBlock.querySelector('#span-success').classList.add('d-none');
-                groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
-
                 for(let divs of groupRows){
                     divs.classList.remove('hidden');
                 }
+
+                groupTitleBlock.querySelector('#span-success').classList.add('d-none');
+                groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
             }
             else{
                 div.classList.remove('border-2');
@@ -228,10 +232,10 @@
             let status = row.querySelector('select').value;
             let comment = row.querySelector('textarea').value;
             let documents = row.lastElementChild.querySelector('select').value;
-            
+
             if(status == "Prihvaćeno"){
                 if(comment != "" || documents != ""){
-            
+
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
                 }else{
@@ -248,7 +252,7 @@
                 break;
             }
             else{
-               
+
             }
             }
             if(err){
