@@ -23,11 +23,11 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\Soa::class)
-                                @empty($soas)
+                                @if($soas->count() == 0)
                                     <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
                                 @else
                                     <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
-                                @endempty
+                                @endif
                             @endcan
                         </div>
                     </div>

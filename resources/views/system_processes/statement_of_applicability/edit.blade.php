@@ -208,9 +208,10 @@
     function previewDocument(e){
         e.preventDefault();
         let form = document.createElement('form');
-        form.innerHTML = e.target.parentElement.innerHTML;
         form.method = "POST";
         form.action = "/file-preview";
+        form.innerHTML = e.target.parentElement.innerHTML;
+        form.target = "_blank";
         document.body.append(form);
         form.submit();
     }
