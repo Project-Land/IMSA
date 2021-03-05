@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col mx-2">
                         <div class="bg-green-200 border border-gray-400 text-gray-700 px-4 py-3 rounded relative text-center" role="alert">
-                            <strong class="text-xl">{{ __('Izaberite standard!') }}</strong>
+                        <div class="hidden md:inline"><i class="fas fa-hand-pointer float-left text-red-500 text-2xl ml-32  md:visible"></i></div><strong class="text-xl md:mr-32">  {{ __('Izaberite standard!') }}</strong>
                           </div>
                     </div>
                 </div>
