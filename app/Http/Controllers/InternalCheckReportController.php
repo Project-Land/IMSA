@@ -32,6 +32,7 @@ class InternalCheckReportController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->authorize('create', InternalCheck::class);
 
         $validatedData = $request->validate([
@@ -56,7 +57,7 @@ class InternalCheckReportController extends Controller
             'measure_approval_reason.*' => 'nullable',
             'measure_status.*' => 'required',
             'measure_effective.*' => 'nullable',
-            'deadline_date' => 'required'
+            'deadline_date.*' => 'required'
         ], [
             'noncompliance_source.*.required' => 'Izvor informacije o neusaglašenostima nije izabran',
             'noncompliance_description.*.required' => 'Opis neusaglašenosti nije popunjen',
@@ -64,7 +65,7 @@ class InternalCheckReportController extends Controller
             'measure.*.required' => 'Mera za otklanjanje neusaglašenosti nije popunjena',
             'measure_approval.*.required' => 'Razlog neodobravanja mere nije popunjen',
             'measure_status.*.required' => 'Polje mera efektivna nije popunjeno',
-            'deadline_date.required' => 'Unesite datum'
+            'deadline_date.*.required' => 'Unesite datum'
         ]);
 
         try{

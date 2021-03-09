@@ -120,6 +120,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
     Route::get('show-team-stats/{id}', [TeamController::class, 'showTeamUserStats']);
 
+    Route::get('users/deleteApi/{id}', [UserController::class, 'deleteApi'])->name('deleteApi');
     Route::resource('users', UserController::class);
     Route::get('change-current-team/{id}', [UserController::class, 'changeCurrentTeam']);
     Route::get('user/notification-settings', [UserController::class, 'notification_settings_show'])->name('users.notification-settings');
@@ -148,3 +149,5 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('manual', [HomeController::class, 'manual'])->name('manual');
 Route::get('lang/{lang}', [HomeController::class, 'lang'])->name('lang');
+
+

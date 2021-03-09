@@ -17,6 +17,13 @@ class PlanIpPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
+    public function before(User $user)
+    {
+        if  ($user->allTeams()->first()->membership->role=='super-admin') {
+            return true;
+        }
+    }
+
     public function viewAny(User $user)
     {
         //
@@ -43,7 +50,7 @@ class PlanIpPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin" || $role == "editor") {
+        if(($role == "admin" || $role == "super-admin" || $role == "editor") && $user->certificates->pluck('name')->contains('editor')) {
             return true;
         }
     }
@@ -59,7 +66,7 @@ class PlanIpPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $planIp->internalCheck->team_id){
-            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            if(($role == "admin" || $role == "super-admin" || $role == "editor") && $user->certificates->pluck('name')->contains('editor')) {
                 return true;
             }
         }
@@ -76,7 +83,7 @@ class PlanIpPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $planIp->internalCheck->team_id){
-            if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            if(($role == "admin" || $role == "super-admin" || $role == "editor") && $user->certificates->pluck('name')->contains('editor')) {
                 return true;
             }
         }

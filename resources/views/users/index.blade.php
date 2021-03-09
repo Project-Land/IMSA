@@ -33,7 +33,7 @@
 							<tbody class="bg-white divide-y divide-gray-200">
 								@foreach($users as $user)
 									@if($user->hasTeamRole($user->currentTeam, 'super-admin')) @continue @endif
-									<tr>
+									<tr id="userRow-{{$user->id}}">
 										<td class="px-6 py-2 whitespace-no-wrap">
 											<div class="flex items-center">
 												<div class="flex-shrink-0 h-10 w-10">
@@ -110,13 +110,29 @@
         "pageLength": 25
     });
 
-    function confirmDeleteModal($id){
-        let id = $id;
+    function confirmDeleteModal(id){
+       
         $('#confirm-delete-modal').modal();
         $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            let form = $('#delete-form-'+id);
-            form.submit();
+            // let form = $('#delete-form-'+id);
+            // form.submit(); 
+            axios.get('/users/deleteApi/'+id)
+            .then(function (response) {
+                if(response.data.message){
+                    $('#userRow-'+id).remove();
+                }else{
+                    alert('Error');
+                }
+        })
+        $('#confirm-delete-modal').off();
+        $('#confirm-delete-modal').modal('hide');         
+
         });
     }
+
+
+   
+
+      
 
 </script>

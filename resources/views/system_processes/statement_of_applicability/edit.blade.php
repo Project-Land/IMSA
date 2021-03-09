@@ -138,7 +138,10 @@
         else{
             $("#"+document.getElementById(obj.dataset.id).lastElementChild.querySelector("select").id).val(null).trigger('change');
             document.getElementById(obj.dataset.id).lastElementChild.classList.add('d-none');
-            obj.parentElement.parentElement.lastElementChild.lastElementChild.remove();
+            document.getElementById(obj.dataset.id).lastElementChild.querySelectorAll('[id^="bl"]').forEach(element => element.remove());
+
+         // $("#"+document.getElementById(obj.dataset.id).lastElementChild.querySelector("select").id).val(null).trigger('change');
+          //  document.getElementById(obj.dataset.id).lastElementChild.classList.add('d-none');
         }
     }
 
@@ -252,7 +255,9 @@
                 break;
             }
             else{
-
+                spanS=groupTitleBlock.querySelector('#span-success');
+                spanE=groupTitleBlock.querySelector('#span-error');
+                err = false;
             }
             }
             if(err){

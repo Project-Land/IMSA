@@ -48,6 +48,11 @@ class SoaController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request);
+        $validated = $request->validate([
+            '*.comment' => 'required'
+            
+        ]);
         $this->authorize('create', Soa::class);
         try{
 
@@ -70,10 +75,10 @@ class SoaController extends Controller
 
             }, 5);
 
-            CustomLog::info('Izjava o primenljivosti dodata, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Izjava o primenjivosti dodata, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Izjava o primenljivosti je uspešno sačuvana!'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja izjave o primenljivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj kreiranja izjave o primenjivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/statement-of-applicability');
@@ -122,10 +127,10 @@ class SoaController extends Controller
         }, 5);
 
         try{
-            CustomLog::info('Izjava o primenljivosti izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Izjava o primenjivosti izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Izjava o primenljivosti je uspešno izmenjena!'));
         } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene izjave o primenljivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::warning('Neuspeli pokušaj izmene izjave o primenjivosti, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/statement-of-applicability');

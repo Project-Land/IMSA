@@ -21,6 +21,7 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $users = User::where('current_team_id', Auth::user()->current_team_id)->get();
         return view('users.index', compact('users'));
+       
     }
 
     public function changeCurrentTeam($teamId)
@@ -114,6 +115,7 @@ class UserController extends Controller
     {
         $this->authorize('delete', User::find($id));
         $user = User::findOrFail($id);
+        echo $user;return;
 
         try{
             User::destroy($id);
@@ -164,4 +166,24 @@ class UserController extends Controller
             return back()->with('status', array('info', 'Sačuvano'));
         }
     }
+
+    public function deleteApi($id)
+    {
+        $user=User::find($id);
+        $this->authorize('delete', $user);
+        
+        try{
+            User::destroy($id);
+            $user->teams()->detach();
+            CustomLog::info('Obrisan korisnički nalog "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+           // return back()->with('status', array('info', 'Korisnički nalog je uspešno obrisan'));
+           echo json_encode(['message'=>$id]);
+        } catch(Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja korisničkog naloga "'.$user->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
+           // return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
+           echo json_encode(['message'=>0]);
+        }
+        
+    }
+
 }
