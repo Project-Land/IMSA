@@ -94,36 +94,48 @@
                 <x-slot name="content">
                     <div class="space-y-6">
                         @foreach ($team->users->sortBy('name') as $user)
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
+                            <div class="flex items-center flex-col sm:flex-row">
+                                <div class="flex items-center w-full sm:w-1/2">
                                     <img class="w-8 h-8 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
                                     <div class="ml-4">{{ $user->name }}</div>
                                 </div>
 
-                                <div class="flex items-center">
+                                <div class="flex items-center w-full sm:w-1/2 justify-end border-b sm:border-none">
                                     <!-- Manage Team Member Role -->
-                                    @if (Gate::check('addTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
-                                        <button class="ml-2 text-sm text-gray-400 underline" @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin" && $user->id != $this->user->id) wire:click="manageRole('{{ $user->id }}')" @endif>
-                                            {{ __(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name) }}
-                                        </button>
-                                    @elseif (Laravel\Jetstream\Jetstream::hasRoles())
-                                        <div class="ml-2 text-sm text-gray-400">
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
-                                        </div>
-                                    @endif
+                                    <div class="w-full sm:w-28">
+                                        @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Korisnik")
+                                            <button class="ml-2 text-sm text-gray-400 underline" onclick="toggleModal('{{ $user->id }}')">
+                                                {{ __('Sertifikati') }}
+                                            </button>
+                                        @endif
+                                    </div>
 
-                                    <!-- Leave Team -->
-                                    @if ($this->user->id === $user->id && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
-                                        <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none" wire:click="$toggle('confirmingLeavingTeam')">
-                                            {{ __('Napusti') }}
-                                        </button>
+                                    <div class="w-full sm:w-28 text-center">
+                                        @if (Gate::check('addTeamMember', $team) && Laravel\Jetstream\Jetstream::hasRoles())
+                                            <button class="ml-2 text-sm text-gray-400 underline" @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin" && $user->id != $this->user->id) wire:click="manageRole('{{ $user->id }}')" @endif>
+                                                {{ __(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name) }}
+                                            </button>
+                                        @elseif (Laravel\Jetstream\Jetstream::hasRoles())
+                                            <div class="ml-2 text-sm text-gray-400">
+                                                {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                    <!-- Remove Team Member -->
-                                    @elseif (Gate::check('removeTeamMember', $team) && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
-                                        <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
-                                            {{ __('Ukloni') }}
-                                        </button>
-                                    @endif
+                                    <!-- <div class="w-full sm:w-24">
+
+                                        @if ($this->user->id === $user->id && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
+                                            <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none" wire:click="$toggle('confirmingLeavingTeam')">
+                                                {{ __('Napusti') }}
+                                            </button>
+
+
+                                        @elseif (Gate::check('removeTeamMember', $team) && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
+                                            <button class="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')">
+                                                {{ __('Ukloni') }}
+                                            </button>
+                                        @endif
+                                    </div>-->
                                 </div>
                             </div>
                         @endforeach
@@ -220,4 +232,85 @@
             </x-jet-danger-button>
         </x-slot>
     </x-jet-confirmation-modal>
+
 </div>
+
+
+
+<script>
+
+    let certificates = [];
+
+    axios.get('/certificates')
+        .then((response) => {
+            $.each(response.data, function (i, item){
+                certificates.push(item)
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+
+    function toggleModal(modalID){
+        axios.get('/user/'+modalID+'/certificates')
+            .then((response) => {
+                sessionStorage.setItem('selectedCertificates', response.data)
+            })
+            .then((resp) => {
+                let selectedCertificates = sessionStorage.getItem('selectedCertificates').split(',');
+
+                sessionStorage.clear();
+
+                let modal = `<div class="modal fade" id="certificates-${ modalID }" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="text-lg">
+                                                {{ __('Upravljaj sertifikatima') }}
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="mt-1 border border-gray-200 rounded-lg">
+                                                    ${ Object.keys(certificates).map(key => (
+                                                        `<div class="px-4 py-3 border-t border-gray-200">
+                                                            <label class="inline-flex items-center mt-3 cursor-pointer">
+                                                                <input type="checkbox" name="certificates[]" value="${ certificates[key].id }" class="form-checkbox h-5 w-5 text-gray-600" ${ selectedCertificates.includes(certificates[key].id.toString()) ? 'checked':'' }><span class="ml-2 text-gray-700">${ certificates[key].name }</span>
+                                                            </label>
+                                                        </div>`
+                                                    )).join('') }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="px-6 py-4 bg-gray-100 text-right">
+                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                                            <button type="button" onclick="updateUser(${ modalID })" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-2" data-dismiss="modal">{{ __('Sačuvaj') }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                $("body").append(modal);
+                $('#certificates-'+modalID).modal();
+                    })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+
+    function updateUser(id){
+        var selecteditems = [];
+
+        $("#certificates-"+id).find("input:checked").each(function (i, ob) {
+            selecteditems.push($(ob).val());
+        });
+
+        axios.post('/update-user-certificates/'+id, {
+            selecteditems
+        })
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
+</script>

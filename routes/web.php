@@ -142,6 +142,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('statement-of-applicability', SoaController::class);
 
+    Route::get('certificates', [TeamController::class, 'getAllCertificates']);
+    Route::get('user/{id}/certificates', [UserController::class, 'getUserCertificates']);
+    Route::post('update-user-certificates/{id}', [UserController::class, 'updateUserCertificates']);
+
 });
 
 Route::get('about', [HomeController::class, 'about'])->name('about');

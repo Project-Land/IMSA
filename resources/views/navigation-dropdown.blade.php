@@ -296,7 +296,7 @@
                             @endif
 
                             <!-- Server management -->
-                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Gate::check('update', $team))
+                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && auth()->user()->allTeams()->first()->membership->role == "super-admin")
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Server info') }}
                                 </div>

@@ -69,6 +69,20 @@
                             @enderror
                         </div>
 
+                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6 d-none">
+                            <x-jet-label for="certificates" value="{{ __('Sertifikati') }}" class="block font-medium text-sm text-gray-700" />
+
+                            @foreach($certificates as $certificate)
+                                <label class="inline-flex items-center mt-3 cursor-pointer mr-2">
+                                    <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600"><span class="ml-2 text-gray-700 text-sm">{{ __($certificate->name) }}</span>
+                                </label>
+                            @endforeach
+
+                            @error('certificates')
+                                <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="password" value="{{ __('Lozinka') }}" class="block font-medium text-sm text-gray-700" />
                             <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" autocomplete="new-password" />
@@ -102,3 +116,17 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    $('#role').change(() => {
+        if($('#role').val() == 'user'){
+            $('input[name="certificates[]"]').each(function() {
+                this.checked = false;
+            });
+            $('#certificates-block').addClass('d-none')
+        }
+        else{
+            $('#certificates-block').removeClass('d-none')
+        }
+    });
+</script>

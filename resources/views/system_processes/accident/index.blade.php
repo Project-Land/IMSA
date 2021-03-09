@@ -41,8 +41,8 @@
                                     <td class="text-center">{{ date('d.m.Y',strtotime($accident->injury_datetime)) }}</td>
                                     <td class="text-center">{{ $accident->name }}</td>
                                     <td class="text-center">{{ __(ucfirst($accident->injury_type)) }}</td>
-                                
-                                    
+
+
                                     <td class="text-center">
                                     <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="button text-primary cursor-pointer" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
                                         @canany(['update', 'delete'], $accident)
@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row text-sm">
-                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Prezime, ime povređenog') }}</p></div>  
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Prezime, ime povređenog') }}</p></div>
                                                 <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.name.split(' ').reverse().join(' ') }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Poslovi i zadaci koje obavlјa') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.jobs_and_tasks_he_performs }</p></div>
