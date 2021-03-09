@@ -11,6 +11,7 @@ use Laravel\Jetstream\Events\TeamMemberAdded;
 use App\Facades\CustomLog;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserNotificationTypes;
+use App\Models\Certificate;
 
 class UserController extends Controller
 {
@@ -38,7 +39,8 @@ class UserController extends Controller
     public function create()
     {
         $this->authorize('create', User::class);
-        return view('users.create');
+        $certificates = Certificate::all();
+        return view('users.create', compact('certificates'));
     }
 
     public function store(Request $request)
@@ -70,13 +72,17 @@ class UserController extends Controller
         $teamID = Auth::user()->current_team_id;
 
         try{
-            $userID = User::create([
+            $user = User::create([
                 'name' => $request['name'],
                 'username' => $request['username'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
                 'current_team_id' => $teamID
             ]);
+
+            if($request->certificates){
+                $user->certificates()->sync($request->certificates);
+            }
 
             $role = $request['role'];
 
@@ -186,4 +192,20 @@ class UserController extends Controller
         
     }
 
+    public function getUserCertificates($id)
+    {
+        $selectedCertificates = Certificate::whereHas('users', function($q) use($id) {
+            $q->where('user_id', $id);
+        })->get();
+        return response()->json($selectedCertificates->pluck('id'));
+    }
+
+    public function updateUserCertificates(Request $request, $id)
+    {
+        $user = User::find($id);
+        $selectedCertificates = $request->selecteditems;
+
+        $user->certificates()->sync($selectedCertificates);
+        return true;
+    }
 }
