@@ -3,12 +3,12 @@
     <!-- Guest Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 mt-2">
-            <div class="flex">
+            <div class="flex items-center">
 
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center pb-2">
                     <a href="{{ route('login') }}">
-                        <img src="{{ asset('images/logo.jpg') }}" alt="imsa-logo" class="w-15 h-15 mt-2">
+                        <img src="{{ asset('images/logo.jpg') }}" alt="imsa-logo" class="w-15 h-15">
                     </a>
                 </div>
 
@@ -41,7 +41,7 @@
                         <x-slot name="content">
                             @if(session('locale') != "sr")
                                 <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'sr']) }}">
-                                    <div class="inline-flex items-center justify-end">
+                                    <div class="inline-flex items-center justify-end mt-1">
                                         <div><img src="{{ asset('images/sr.png') }}" alt="sr"></div>
                                         <div class="ml-3">{{ __('Srpski') }}</div>
                                     </div>
@@ -50,7 +50,7 @@
 
                             @if(session('locale') != "en")
                                 <x-jet-dropdown-link href="{{ route('lang',['lang'=>'en']) }}">
-                                    <div class="inline-flex items-center justify-end">
+                                    <div class="inline-flex items-center justify-end mt-1">
                                         <div><img src="{{ asset('images/en.png') }}" alt="en"></div>
                                         <div class="ml-3">{{ __('English') }}</div>
                                     </div>
@@ -78,12 +78,11 @@
 
     <!-- Responsive menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="{{ route('manual') }}" :active="request()->routeIs('manual')">
+        <x-jet-responsive-nav-link href="#" :active="request()->routeIs('manual')">
             {{ __('Uputstvo za korišćenje') }}
         </x-jet-responsive-nav-link>
 
@@ -94,7 +93,6 @@
         <x-jet-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
             {{ __('Kontakt') }}
         </x-jet-responsive-nav-link>
-
     </div>
 
 </nav>

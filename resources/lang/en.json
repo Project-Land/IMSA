@@ -690,6 +690,11 @@
     "Komentar" : "Comment",
     "Naziv kontrole" : "Control name",
     "Status kontrole" : "Control status",
-    "Opis kontrole" : "Control description"
+    "Opis kontrole" : "Control description",
+    "Sertifikati" : "Certificates",
+    "Upravljaj sertifikatima": "Certificates management",
+    "Prihvaćeno" : "Accepted",
+    "Neprihvaćeno" : "Denied",
+    "Nije primenljivo" : "Not applicable"
 
 }

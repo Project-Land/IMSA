@@ -49,14 +49,14 @@
 
                                     @foreach($soas as $soa)
                                         @if($soa->soaField->soa_field_group_id == $group->id)
-                                            <tr class="text-center" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
+                                            <tr class="text-center text-sm" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                                                 <td>{{ __($soa->soaField->name) }}</td>
                                                 <td>{{ __($soa->soaField->description) }}</td>
                                                 <td>{{ ($soa->status !=  null)? __($soa->status) : "/" }}</td>
                                                 <td>
                                                     {{ $soa->comment != null ? __($soa->comment) : '/' }}
                                                     @if($soa->documents->count() != 0)
-                                                        <p class="font-bold text-sm mt-2 mb-0">Dokumenti:</p>
+                                                        <p class="font-bold text-sm mt-2 mb-0">{{ __('Dokumenti') }}:</p>
                                                         @foreach($soa->documents as $doc)
                                                         <form class="inline" action="{{ route('document.preview') }}" method="POST">
                                                             @csrf

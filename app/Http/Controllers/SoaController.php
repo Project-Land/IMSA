@@ -21,7 +21,7 @@ class SoaController extends Controller
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
         $soas = Soa::where('team_id',Auth::user()->current_team_id)->with('soaField', 'documents')->get();
-        
+
         $groups = SoaFieldGroup::all();
         return view('system_processes.statement_of_applicability.index',['soas'=>$soas, 'groups' => $groups]);
     }
@@ -48,14 +48,11 @@ class SoaController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request);
         $validated = $request->validate([
             '*.comment' => 'required'
-            
         ]);
         $this->authorize('create', Soa::class);
         try{
-
             DB::transaction(function () use($request) {
 
                 foreach($request->except(['_token', '_method']) as $key => $req){
@@ -86,8 +83,7 @@ class SoaController extends Controller
 
     public function show($id)
     {
-        //$soa = Soa::findOrFail($id);
-        //return response()->json($soa);
+        abort('404');
     }
 
     public function edit($teamId){

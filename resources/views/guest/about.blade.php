@@ -1,42 +1,40 @@
 <x-guest-layout>
 
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto pt-4 pb-4 px-4 sm:px-6 lg:px-8">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('O aplikaciji') }}
-        </div>
-    </header>
+        </h2>
+    </x-slot>
 
-    <div class="container mt-5 mx-auto text-lg p-2">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
 
-        <p class="w-75">
+        <p class="w-75 sm:text-lg">
         {{ __('Aplikacija podrazumeva efikasno i pouzdano rešenje koje je jednostavno za upotrebu i predstavlja neophodan korak ka unapređenju sistema menadžmenta.Predstavlja pouzdan alat za otklanjanje nepotrebnih gubitaka koji se javljaju zbog spore distribucije dokumenata, nepotrebnih troškova štampanja dokumenata, neprecizne kontrole pristupa dokumentima, česte upotrebe nevalidne verzije dokumentacije, nepravovremenog ili neadekvatnog obaveštavanja zaposlenih o svim izmenama u sistemu, i dr.') }}
         </p>
 
-        {{ __('Osim opštih, specifični benefiti primene aplikacije su:') }}
-        <ul class="ml-5">
-            <li><i class="fas fa-check"></i> {{ __('Obezbeđuje sistemsko upravljanje rizicima') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Omogućava centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Obezbeđuje jasno i pregledno praćenje potreba i zahteva zainteresovanih strana') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Olakšava praćenje performansi i ocenjivanje isporučilaca') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Značajno ubrzava i pojednostavljuje proces preispitivanja od strane rukovodstva') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Olakšava proces upravljanja reklamacijama') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Olakšava planiranje i organizovanje internih provera') }}</li>
-            <li><i class="fas fa-check"></i> {{ __('Obezbeđuje ažurnost korišćene dokumentacije') }}</li>           
-            <li><i class="fas fa-check"></i> {{ __('Smanjuje rizik od gubljenja/suspenzije sertifikata') }}</li>
+        <p class="sm:text-lg mt-3 mb-1">{{ __('Osim opštih, specifični benefiti primene aplikacije su:') }}</p>
+
+        <ul class="ml-5 sm:text-lg">
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Omogućava centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Obezbeđuje sistemsko upravljanje rizicima') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Olakšava praćenje performansi i ocenjivanje isporučilaca') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Značajno ubrzava i pojednostavljuje proces preispitivanja od strane rukovodstva') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Olakšava proces upravljanja reklamacijama') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Olakšava planiranje i organizovanje internih provera') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Obezbeđuje ažurnost korišćene dokumentacije') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Smanjuje rizik od gubljenja/suspenzije sertifikata') }}</li>
+            <li class="pb-1"><i class="fas fa-check mr-1"></i> {{ __('Obezbeđuje jasno i pregledno praćenje potreba i zahteva zainteresovanih strana') }}</li>
         </ul>
 
-        
-
         <div class="slideshow-container">
-
-            <div style="text-align:center">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
-            <span class="dot" onclick="currentSlide(5)"></span>
-            <span class="dot" onclick="currentSlide(6)"></span>
-            <span class="dot" onclick="currentSlide(7)"></span>
+            <div class="text-center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
             </div>
             <!-- Full-width images with number and caption text -->
             <div class="mySlides fade">
@@ -44,13 +42,11 @@
                 <img src="{{asset('images/1.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
-
             <div class="mySlides fade">
                 <div class="numbertext">2 / 7</div>
                 <img src="{{asset('images/2.JPG')}}" style="width:100%">
                 <div class="text">IMSA</div>
             </div>
-
             <div class="mySlides fade">
                 <div class="numbertext">3 / 7</div>
                 <img src="{{asset('images/3.JPG')}}" style="width:100%">
@@ -82,42 +78,40 @@
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
 
-        <div class="p-10">
-
-        </div>
+        <div class="p-10"></div>
 
     </div>
 
     <script>
 
-var slideIndex = 1;
-showSlides(slideIndex);
+        var slideIndex = 1;
+        showSlides(slideIndex);
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
 
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
 
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-}
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+        }
     </script>
 
 </x-guest-layout>

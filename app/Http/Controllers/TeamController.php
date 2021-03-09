@@ -25,7 +25,13 @@ class TeamController extends Controller
     public function getAllCertificates()
     {
         $certificates = Certificate::all();
-        return response()->json($certificates);
+
+        $translatedCertificates = $certificates->map(function($cert, $key) {
+            $cert->name = __($cert->name);
+
+            return $cert;
+        });
+        return response()->json($translatedCertificates);
     }
 
 }

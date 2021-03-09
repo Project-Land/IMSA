@@ -23,18 +23,18 @@
 
             @foreach($groups as $group)
                 <div class="flex flex-grow soa-group" id="title-group-{{ $group->id }}" onclick="checkGroup(this.id)">
-                    <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
+                    <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ __($group->name) }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
                     <span id="span-error" class="d-none text-red-500"><i class="fa fa-exclamation-triangle ml-4"></i></span>
                     <span id="span-success" class=" text-green-500"><i class="fa fa-check ml-4"></i></span>
                 </div>
                 @foreach($fields as $field)
                     @if($group->id == $field->soaField->soa_field_group_id)
                         <div id="{{ $field->id }}" data-group="group-{{ $group->id }}" class="flex flex-wrap border-b-2 py-2 my-2 main-block group-{{ $group->id }} title-group-{{ $group->id }}" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
-                            <div class="w-full sm:w-1/5">
+                            <div class="w-full sm:w-1/5 pl-2">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
                                 <p class="text-xs sm:text-sm">{{ $field->soaField->name }}</p>
                             </div>
-                            <div class="w-full sm:w-1/5">
+                            <div class="w-full sm:w-1/5 pr-2">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Opis kontrole')}}:</label>
                                 <p class="text-xs sm:text-sm">{{ $field->soaField->description }}</p>
                             </div>
@@ -267,7 +267,7 @@
                 spanS.classList.remove('d-none');
                 spanE.classList.add('d-none');
             }
-           
+
     }
 
 </script>

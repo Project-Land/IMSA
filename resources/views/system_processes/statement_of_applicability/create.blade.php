@@ -15,7 +15,7 @@
         	<a class="btn btn-light" href="{{ route('statement-of-applicability.index') }}"><i class="fas fa-arrow-left"></i> {{__('Nazad')}}</a>
      	</div>
 	</div>
-  
+
 
 	<div class="mx-auto md:w-full mt-1 md:p-10 sm:p-2 rounded" x-data="{ @foreach($groups as $g) open{{ $g->id }}:false, @endforeach }">
 		<form action="{{ route('statement-of-applicability.store', \Auth::user()->current_team_id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -23,7 +23,7 @@
 
             @foreach($groups as $group)
                 <div class="flex flex-grow soa-group" id="title-group-{{ $group->id }}" onclick="checkGroup(this.id)">
-                    <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ $group->name }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
+                    <p class="font-bold cursor-pointer" @click="open{{ $group->id }} = ! open{{ $group->id }}">{{ __($group->name) }} <i class="ml-2 fas" :class="{'fa-chevron-up': open{{ $group->id }}, 'fa-chevron-down': ! open{{ $group->id }} }"></i></p>
                     <span id="span-error" class=" text-red-500"><i class="fa fa-exclamation-triangle ml-4"></i></span>
                     <span id="span-success" class="d-none text-green-500"><i class="fa fa-check ml-4"></i></span>
                 </div>
@@ -65,9 +65,9 @@
                                     <optgroup label="Politike">
                                         @foreach($documents as $document)
                                             @if($document->doc_category === 'policy')
-                                                <option 
+                                                <option
                                                 @if( is_array(old($field->id.'.document')))
-                                                @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif 
+                                                @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif
                                                 @endif value="{{ $document->id }}">{{ $document->document_name }}</option>
                                             @endif
                                         @endforeach
@@ -76,13 +76,13 @@
                                         @foreach($documents as $document)
                                             @if($document->doc_category === 'procedure')
                                                 <option  @if( is_array(old($field->id.'.document')))
-                                                @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif 
+                                                @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif
                                                 @endif value="{{ $document->id }}">{{ $document->document_name }}</option>
                                             @endif
                                         @endforeach
                                     </optgroup>
                                 </select>
-                                
+
 
                             </div>
                         </div>
@@ -216,10 +216,10 @@
             let status = row.querySelector('select').value;
             let comment = row.querySelector('textarea').value;
             let documents = row.lastElementChild.querySelector('select').value;
-            
+
             if(status == "Prihvaćeno"){
                 if(comment != "" || documents != ""){
-            
+
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
                 }else{
@@ -248,7 +248,7 @@
                 spanS.classList.remove('d-none');
                 spanE.classList.add('d-none');
             }
-           
+
     }
 
 
