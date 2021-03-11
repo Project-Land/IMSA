@@ -20,9 +20,9 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::where('current_team_id', Auth::user()->current_team_id)->get();
-        return view('users.index', compact('users'));
-       
+        $users = User::where('current_team_id', Auth::user()->current_team_id)->with('certificates')->get();
+        $certificates = Certificate::all();
+        return view('users.index', compact('users', 'certificates'));
     }
 
     public function changeCurrentTeam($teamId)
@@ -177,7 +177,7 @@ class UserController extends Controller
     {
         $user=User::find($id);
         $this->authorize('delete', $user);
-        
+
         try{
             User::destroy($id);
             $user->teams()->detach();
@@ -189,7 +189,7 @@ class UserController extends Controller
            // return back()->with('status', array('danger', 'Došlo je do greške! Pokušajte ponovo.'));
            echo json_encode(['message'=>0]);
         }
-        
+
     }
 
     public function getUserCertificates($id)

@@ -6,7 +6,6 @@ use Exception;
 use App\Models\Document;
 use App\Models\Training;
 use App\Facades\CustomLog;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TrainingRequest;
@@ -17,7 +16,7 @@ class TrainingsController extends Controller
 
     public function index()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -49,6 +48,9 @@ class TrainingsController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', Training::class);
         return view('system_processes.trainings.create');
     }
@@ -56,7 +58,6 @@ class TrainingsController extends Controller
     public function store(TrainingRequest $request)
     {
         $this->authorize('create', Training::class);
-
 
         try{
             $trainingPlan = Training::create($request->except(['status','file']));
@@ -109,7 +110,7 @@ class TrainingsController extends Controller
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('update', $trainingPlan);
-        
+
         try{
             if(!$request->file)$request->file=[];
             foreach($trainingPlan->documents()->pluck('id') as $id){

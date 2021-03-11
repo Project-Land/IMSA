@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\Request;
 use App\Models\MeasuringEquipment;
 use App\Facades\CustomLog;
 use App\Models\Notification;
@@ -20,8 +19,8 @@ class MeasuringEquipmentsController extends Controller
             session(['standard_name' => request()->get('standard_name')]);
         }
 
-        if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
         }
 
         $me = MeasuringEquipment::where([
@@ -34,6 +33,9 @@ class MeasuringEquipmentsController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', MeasuringEquipment::class);
         return view('system_processes.measuring_equipments.create');
     }
@@ -89,7 +91,7 @@ class MeasuringEquipmentsController extends Controller
                 $notification = new Notification();
                 $notification->team_id = Auth::user()->current_team_id;
             }
-        
+
             $notification->message = __('Datum narednog etaloniranja/baždarenja '). date('d.m.Y', strtotime($me->next_calibration_date));
             $notification->checkTime = $me->next_calibration_date;
             $me->notification()->save($notification);

@@ -42,7 +42,12 @@ class SuppliersRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $total = $this->quality + $this->price + $this->shippment_deadline;
+        if($this->quality == '1' || $this->price == '1' || $this->shippment_deadline == '1'){
+            $total = 0;
+        }
+        else{
+            $total = $this->quality + $this->price + $this->shippment_deadline;
+        }
 
         $deadlineDate = Carbon::parse(Carbon::now()->toDateTimeString())->addMonths(6);
         $this->merge([

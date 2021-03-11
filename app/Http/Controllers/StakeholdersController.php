@@ -13,7 +13,7 @@ class StakeholdersController extends Controller
 
     public function index()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
@@ -27,6 +27,9 @@ class StakeholdersController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', Stakeholder::class);
         return view('system_processes.stakeholders.create');
     }

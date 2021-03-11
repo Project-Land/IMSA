@@ -24,7 +24,9 @@ class MeasuringEquipmentPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
-            return true;
+            if(session('standard_name') === "9001"){
+                return true;
+            }
         }
     }
 
@@ -33,7 +35,9 @@ class MeasuringEquipmentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $measuring_equipment->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "9001"){
+                    return true;
+                }
             }
         }
     }
@@ -43,7 +47,9 @@ class MeasuringEquipmentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $measuring_equipment->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "9001"){
+                    return true;
+                }
             }
         }
     }

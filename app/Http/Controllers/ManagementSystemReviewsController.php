@@ -47,8 +47,10 @@ class ManagementSystemReviewsController extends Controller
 
     public function create()
     {
+        if(session('standard') == null){
+            return redirect('/');
+        }
         $this->authorize('create', ManagementSystemReview::class);
-
         return view('system_processes.management_system_reviews_'.session('standard_name').'.create');
     }
 

@@ -14,8 +14,8 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
 {
     public function index(){
 
-        if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
+        if(session('standard') == null || (! (session('standard_name') == "45001" || session('standard_name') == "14001"))){
+            return redirect('/');
         }
 
         $EvaluationOfLegalAndOtherRequirement = EvaluationOfLegalAndOtherRequirement::where([
@@ -23,11 +23,13 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                 ['team_id', Auth::user()->current_team_id]
             ])->with(['standard','correctiveMeasures'])->get();
 
-
         return view('system_processes.evaluation_of_requirement.index', ['EvaluationOfLegalAndOtherRequirement' => $EvaluationOfLegalAndOtherRequirement]);
     }
 
     public function create(){
+        if(session('standard') == null || (! (session('standard_name') == "45001" || session('standard_name') == "14001"))){
+            return redirect('/');
+        }
         $this->authorize('create', EvaluationOfLegalAndOtherRequirement::class);
         return view('system_processes.evaluation_of_requirement.create');
     }
@@ -165,7 +167,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             ]);
 
             if( isset($correctiveMeasureData['noncompliance_description'])){
-               
+
                     $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
                     ->where([
                         ['standard_id', session('standard')],
@@ -173,7 +175,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                     ])
                     ->count() + 1;
                     if($requirement->correctiveMeasures()->count()){
-                  
+
                             $correctiveMeasure= $requirement->correctiveMeasures[0];
                             $correctiveMeasure->update([
                             'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
@@ -208,9 +210,9 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                             'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
                         ]);
                     }
-    
+
                     $requirement->correctiveMeasures()->save($correctiveMeasure);
-                     
+
             }else{
                // $requirement->correctiveMeasures()->delete();
             }

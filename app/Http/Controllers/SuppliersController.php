@@ -19,8 +19,8 @@ class SuppliersController extends Controller
             session(['standard_name' => request()->get('standard_name')]);
         }
 
-        if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
         }
 
         $suppliers = Supplier::where([

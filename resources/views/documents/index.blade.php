@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ Session::get('standard_name') }} - {{ __($doc_type) }}
         </h2>
     </x-slot>
@@ -21,8 +21,12 @@
             <div class="card">
                 @can('create', App\Models\Document::class)
                     <div class="card-header">
-                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj novi dokument')}}</a>
-                        <a class="inline-block sm:float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obrisanih dokumenata') }}"><i class="fas fa-trash"></i> {{__('Obrisani dokumenti')}} </a>
+                        <div class="flex flex-wrap justify-between">
+                            <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-blue-500 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route($route_name.'.create') }}"><i class="fas fa-plus mr-2"></i> {{ __('Kreiraj novi dokument') }}</a>
+                            <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-red-500 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route($route_name.'.deleted') }}"><i class="fas fa-trash mr-2"></i> {{ __('Obrisani dokumenti') }}</a>
+                        </div>
+                        {{-- <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj novi dokument')}}</a> --}}
+                        {{-- <a class="inline-block sm:float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obrisanih dokumenata') }}"><i class="fas fa-trash"></i> {{__('Obrisani dokumenti')}} </a> --}}
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -31,7 +35,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>{{__('Naziv dokumenta')}}</th>
-                                    <th>{{__('Verzija')}}</th>
+                                    @unless($route_name == 'external-documents')<th>{{__('Verzija')}}</th>@endunless
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>{{__('Sektor')}}</th>@endif
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
@@ -40,16 +44,16 @@
                                 @foreach($documents as $document)
                                     <tr>
                                         <td class="text-center">{{ $document->document_name }}</td>
-                                        <td class="text-center">{{ $document->version }}</td>
+                                        @unless($route_name == 'external-documents')<td class="text-center">{{ $document->version }}</td>@endunless
                                         @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                         <td class="text-center">
                                             @if($route_name != 'forms')
-                                            <form class="inline" action="{{ route('document.preview') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="folder" value="{{ $folder }}">
-                                                <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
-                                            </form>
+                                                <form class="inline" action="{{ route('document.preview') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="folder" value="{{ $folder }}">
+                                                    <input type="hidden" name="file_name" value="{{ $document->file_name }}">
+                                                    <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
+                                                </form>
                                             @endif
                                             <form class="inline" action="{{ route('document.download') }}" method="POST">
                                                 @csrf
@@ -58,12 +62,12 @@
                                                 <button data-toggle="tooltip" data-placement="top" title="{{__('Preuzimanje dokumenta')}}" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
-                                            <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena dokumenta')}}" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
-                                            <form class="inline" id="delete-form-{{ $document->id }}" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Brisanje dokumenta')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" id="delete" onclick="confirmDeleteModal({{ $document->id }})"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                                <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena dokumenta')}}" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
+                                                <form class="inline" id="delete-form-{{ $document->id }}" action="{{ route($route_name.'.destroy', $document->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button data-toggle="tooltip" data-placement="top" title="{{__('Brisanje dokumenta')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" id="delete" onclick="confirmDeleteModal({{ $document->id }})"><i class="fas fa-trash"></i></button>
+                                                </form>
                                             @endcanany
                                         </td>
                                     </tr>

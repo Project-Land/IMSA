@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Vrednovanje zakonskih i drugih zahteva') }}
         </h2>
     </x-slot>
@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\EvaluationOfLegalAndOtherRequirement::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj zakon/zahtev')}}</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj zakon / zahtev')}}</a>
                             @endcan
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ __('Logovi') }}
         </h2>
     </x-slot>
@@ -45,7 +45,7 @@
                         <table id="example" class="stripe hover min-w-full divide-y divide-gray-200 yajra-datatable">
                             <thead>
                                 <tr>
-                                    <th class="text-center px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    <th class="text-center px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         {{ __('Tip') }}
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-			{{ session("standard_name").' - '.__($doc_type). '- '.  __('Kreiranje')}}
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
+			{{ session("standard_name").' - '.__($doc_type). ' - '.  __('Kreiranje')}}
         </h2>
     </x-slot>
 
@@ -22,13 +22,15 @@
             @enderror
         </div>
 
+        @unless($doc_type == "Eksterna dokumenta")
         <div class="mb-4">
             <label for="version" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verzija')}}:</label>
             <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ old('version') }}" required oninvalid="this.setCustomValidity('{{ __("Verzija nije popunjena") }}')" oninput="this.setCustomValidity('')">
             @error('version')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
         </div>
+        @endunless
 
         @if(isset($category) && ($category == 'procedures' || $category == 'forms' || $category == 'manuals'))
             <div class="mb-4">
@@ -40,7 +42,7 @@
                     @endforeach
                 </select>
                 @error('sector_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
         @endif
@@ -55,7 +57,7 @@
             <input type="file" class="form-control-file d-none" id="name_file" name="file">
             <span class="font-italic text-s ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
             @error('file')
-                <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <br><span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
         </div>
 

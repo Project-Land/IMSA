@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ Session::get('standard_name') }} - {{ __($doc_type) }} - {{__('Obrisani dokumenti')}}
         </h2>
     </x-slot>
@@ -32,7 +32,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>{{__('Naziv dokumenta')}}</th>
-                                    <th>{{__('Verzija')}}</th>
+                                    @unless($route_name == 'external-documents')<th>{{__('Verzija')}}</th>@endunless
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>{{__('Sektor')}}</th>@endif
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
@@ -41,7 +41,7 @@
                                 @foreach($documents as $document)
                                     <tr>
                                         <td class="text-center">{{ $document->document_name }}</td>
-                                        <td class="text-center">{{ $document->version }}</td>
+                                        @unless($route_name == 'external-documents')<td class="text-center">{{ $document->version }}</td>@endunless
                                         @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                         <td class="text-center">
                                             @if($route_name != 'forms')

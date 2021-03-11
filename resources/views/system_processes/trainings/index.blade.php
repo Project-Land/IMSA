@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Godišnji planovi obuka') }}
         </h2>
     </x-slot>
@@ -210,7 +210,7 @@
 
                 let docsBlock = "<div id='docsBlock'>";
                 Object.keys(documents).forEach(key => {
-                    docsBlock += (`<form class="inline" action="{{ route('document.preview') }}" method="POST">
+                    docsBlock += (`<form class="inline" action="{{ route('document.preview') }}" method="POST" target="_blank">
                         @csrf
                         <input type="hidden" name="folder" value="${ response.data.company }/training">
                         <input type="hidden" name="file_name" value="${ documents[key].file_name }">

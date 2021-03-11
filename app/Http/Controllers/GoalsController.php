@@ -19,8 +19,8 @@ class GoalsController extends Controller
             session(['standard' => request()->get('standard')]);
             session(['standard_name' => request()->get('standard_name')]);
         }
-        
-        if(session('standard') == null){
+
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -53,6 +53,9 @@ class GoalsController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', Goal::class);
         return view('system_processes.goals.create');
     }

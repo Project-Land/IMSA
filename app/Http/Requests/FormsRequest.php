@@ -56,13 +56,13 @@ class FormsRequest extends FormRequest
     public function messages()
     {
         return [
-            'file.required' => __('Izaberite fajl'),
-            'document_name.required' => __('Unesite naziv dokumenta'),
-            'document_name.max' => __('Naziv dokumenta ne sme biti duži od 255 karaktera'),
-            'version.required' => __('Unesite verziju dokumenta'),
-            'sector_id.required' => __('Izaberite pripadajući sektor'),
-            'file.max' => __('Fajl ne sme biti veći od 10mb'),
-            'file.mimes' => __('Fajl mora biti u nekom od dozvoljenih formata: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif')
+            'file.required' => 'Izaberite fajl',
+            'document_name.required' => 'Unesite naziv dokumenta',
+            'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
+            'version.required' => 'Unesite verziju dokumenta',
+            'sector_id.required' => 'Izaberite pripadajući sektor',
+            'file.max' => 'Fajl ne sme biti veći od 10mb',
+            'file.mimes' => 'Fajl mora biti u nekom od dozvoljenih formata: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif'
         ];
     }
 

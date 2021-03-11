@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProcedureRequest extends FormRequest
+class ExternalDocumentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,11 +18,6 @@ class ProcedureRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         if($this->isMethod('post')){
@@ -36,9 +32,7 @@ class ProcedureRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
-            'version' => 'required',
-            'file' => 'required|max:10000|mimes:pdf',
-            'sector_id' => 'required'
+            'file' => 'required|max:10000|mimes:pdf'
         ];
     }
 
@@ -46,9 +40,7 @@ class ProcedureRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
-            'version' => 'required',
-            'file' => 'max:10000|mimes:pdf',
-            'sector_id' => 'required'
+            'file' => 'max:10000|mimes:pdf, doc, docx'
         ];
     }
 
@@ -56,18 +48,16 @@ class ProcedureRequest extends FormRequest
     {
         return [
             'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u PDF formatu',
+            'file.mimes' => 'Fajl mora biti u nekom od dozvoljenih formata: pdf, doc, docx',
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
-            'version.required' => 'Unesite verziju dokumenta',
-            'sector_id.required' => 'Izaberite pripadajući sektor'
         ];
     }
 
     protected function prepareForValidation(): void
     {
         if($this->file){
-            $this->merge([ 'file_name' => 'procedure_'.time().'.'.$this->file->getClientOriginalExtension() ]);
+            $this->merge([ 'file_name' => 'external_document_'.time().'.'.$this->file->getClientOriginalExtension() ]);
         }
 
         if($this->isMethod('post')){
@@ -77,7 +67,7 @@ class ProcedureRequest extends FormRequest
                 'user_id' => Auth::user()->id,
                 'team_id' => Auth::user()->current_team_id,
                 'standard_id' => (int)$standardId,
-                'doc_category' => 'procedure'
+                'doc_category' => 'external_document'
             ]);
         }
     }

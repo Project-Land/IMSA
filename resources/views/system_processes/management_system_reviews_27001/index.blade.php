@@ -23,7 +23,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             @can('create', App\Models\ManagementSystemReview::class)
-                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('management-system-reviews.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj zapisnik')}}</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('management-system-reviews.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj zapisnik')}}</a>
                             @endcan
                         </div>
                         <div class="col-sm-8">
@@ -54,12 +54,12 @@
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled zapisnika')}}" class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $m)
-                                        <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena zapisnika')}}" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" id="delete-form-{{ $m->id }}" action="{{ route('management-system-reviews.destroy', $m->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Brisanje zapisnika')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" onclick="confirmDeleteModal({{ $m->id }})"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                            <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena zapisnika')}}" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
+                                            <form class="inline" id="delete-form-{{ $m->id }}" action="{{ route('management-system-reviews.destroy', $m->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Brisanje zapisnika')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" onclick="confirmDeleteModal({{ $m->id }})"><i class="fas fa-trash"></i></button>
+                                            </form>
                                         @endcanany
                                     </td>
                                 </tr>
