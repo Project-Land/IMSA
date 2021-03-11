@@ -695,6 +695,14 @@
     "Upravljaj sertifikatima": "Certificates management",
     "Prihvaćeno" : "Accepted",
     "Neprihvaćeno" : "Denied",
-    "Nije primenljivo" : "Not applicable"
+    "Nije primenljivo" : "Not applicable",
+
+
+    "Veliki":"High",
+    "Srednji":"Medium",
+    "Mali":"Low",
+    "Nivo važnosti":"Level of importance",
+    "Koeficijent ostvarenih ciljeva je":"The coefficient of achieved goals is",
+    "od ukupno":"out of a total of"
 
 }

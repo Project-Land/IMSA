@@ -31,7 +31,8 @@
                                 <tr class="text-center">
                                     <th>{{__('Oznaka')}}</th>
                                     <th>{{__('Datum podnošenja')}}</th>
-                                    <th>{{__('Opis')}}</th>
+                                    {{-- <th>{{__('Opis')}}</th> --}}
+                                    <th>{{__('Dokumenta')}}</th>
                                     <th>{{__('Proces na koji se reklamacija odnosi')}}</th>
                                     <th>{{__('Opravdana / prihvaćena')}}</th>
                                     <th>{{__('Rok za realizaciju')}}</th>
@@ -46,7 +47,18 @@
                                 <tr id='trcomplaint{{$c->id}}'><a id='complaint{{$c->id}}'></a>
                                     <td id='tdcomplaint{{$c->id}}' class="text-center">{{ $c->name }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($c->submission_date)) }}</td>
-                                    <td class="text-center">{{ Str::length($c->description) < 35 ? $c->description : Str::limit($c->description, 35) }}</td>
+                                    {{--  <td class="text-center">{{ Str::length($c->description) < 35 ? $c->description : Str::limit($c->description, 35) }}</td> --}}
+                                    <td class="text-center">@foreach($c->documents as $d)
+                                    
+                                    <form class="inline" action="{{ route('document.preview') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$d->doc_category }}">
+                                                            <input type="hidden" name="file_name" value="{{ $d->file_name }}">
+                                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">{{ $d->document_name }}</button>
+                                                        </form>
+                                    
+                                    @endforeach
+                                    </td>
                                     <td class="text-center">{{ $c->process }}</td>
                                     <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>

@@ -30,4 +30,9 @@ class Complaint extends Model
     {
         return $this->belongsTo('App\Models\Standard');
     }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Models\Document');
+    }
 }

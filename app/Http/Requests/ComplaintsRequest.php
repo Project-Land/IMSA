@@ -42,7 +42,10 @@ class ComplaintsRequest extends FormRequest
             'process' => 'required',
             'responsible_person' => 'nullable|max:190',
             'way_of_solving' => 'nullable|max:190',
-            'deadline_date' => 'nullable|after:submission_date'
+            'deadline_date' => 'nullable|after:submission_date',
+            'file[]'=>'nullable',
+           
+
         ];
     }
 
@@ -55,7 +58,9 @@ class ComplaintsRequest extends FormRequest
             'process' => 'required',
             'responsible_person' => 'nullable|max:190',
             'way_of_solving' => 'nullable|max:190',
-            'deadline_date' => 'nullable|after:submission_date'
+            'deadline_date' => 'nullable|after:submission_date',
+            'file[]'=>'nullable',
+            'new_file[]'=>'nullable',
         ];
     }
 
