@@ -26,8 +26,8 @@ class CreateSoasTable extends Migration
 
         Schema::create('document_soa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('soa_id')->constrained();
-            $table->foreignId('document_id')->constrained();
+            $table->foreignId('soa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('document_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

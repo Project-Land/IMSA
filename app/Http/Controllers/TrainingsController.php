@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\User;
 use App\Models\Document;
 use App\Models\Training;
 use App\Facades\CustomLog;
@@ -52,7 +53,8 @@ class TrainingsController extends Controller
             return redirect('/');
         }
         $this->authorize('create', Training::class);
-        return view('system_processes.trainings.create');
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+        return view('system_processes.trainings.create', compact('users'));
     }
 
     public function store(TrainingRequest $request)
@@ -60,29 +62,34 @@ class TrainingsController extends Controller
         $this->authorize('create', Training::class);
 
         try{
-            $trainingPlan = Training::create($request->except(['status','file']));
-            if($request->file('file')){
-            foreach($request->file('file') as $file){
-                $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                $name= $trainingPlan->name;
-                $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
-                $document = Document::create([
-                    'training_id'=>$trainingPlan->id,
-                    'standard_id'=>$trainingPlan->standard_id,
-                    'team_id'=>$trainingPlan->team_id,
-                    'user_id'=>$trainingPlan->user_id,
-                    'document_name'=> $name,
-                    'version'=>1,
-                    'file_name'=>$trainingPlan->name,
-                    'doc_category'=>'training'
-                    ]);
+            $trainingPlan = Training::create($request->except(['status','file','users']));
+
+            if($request->users){
+                $trainingPlan->users()->sync($request->users);
             }
-        }
+
+            if($request->file('file')){
+                foreach($request->file('file') as $file){
+                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                    $name= $trainingPlan->name;
+                    $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
+                    $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
+                    $document = Document::create([
+                        'training_id'=>$trainingPlan->id,
+                        'standard_id'=>$trainingPlan->standard_id,
+                        'team_id'=>$trainingPlan->team_id,
+                        'user_id'=>$trainingPlan->user_id,
+                        'document_name'=> $name,
+                        'version'=>1,
+                        'file_name'=>$trainingPlan->name,
+                        'doc_category'=>'training'
+                        ]);
+                }
+            }
 
             CustomLog::info('Obuka "'.$trainingPlan->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno sačuvana!'));
-        }catch(Exception $e){
+        } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj kreiranja obuke, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
@@ -101,9 +108,10 @@ class TrainingsController extends Controller
 
     public function edit($id)
     {
-        $trainingPlan = Training::with('documents')->findOrFail($id);
+        $trainingPlan = Training::with('documents')->with('users')->findOrFail($id);
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
         $this->authorize('update', $trainingPlan);
-        return view('system_processes.trainings.edit', compact('trainingPlan'));
+        return view('system_processes.trainings.edit', compact('trainingPlan', 'users'));
     }
 
     public function update(TrainingRequest $request, $id)
@@ -140,7 +148,14 @@ class TrainingsController extends Controller
                 }
             }
 
-            $trainingPlan->update($request->except('status','file','new_file'));
+            $arrOfUsers = [];
+            if($request->users){
+                $arrOfUsers = $request->users;
+            }
+
+            $trainingPlan->users()->sync($arrOfUsers);
+
+            $trainingPlan->update($request->except('status','file','new_file','users'));
             CustomLog::info('Obuka "'.$trainingPlan->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno izmenjena!'));
         } catch(Exception $e){

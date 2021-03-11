@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComplaintDocumentTable extends Migration
+class CreateTrainingUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateComplaintDocumentTable extends Migration
      */
     public function up()
     {
-        Schema::create('complaint_document', function (Blueprint $table) {
+        Schema::create('training_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('complaint_id')->constrained()->onDelete('cascade');
-            $table->foreignId('document_id')->constrained()->onDelete('cascade');
+            $table->foreignId('training_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateComplaintDocumentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('complaint_document');
+        Schema::dropIfExists('training_user');
     }
 }

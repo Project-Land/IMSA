@@ -120,7 +120,7 @@
                         @enderror
                     </div>
                     <div>
-                        <span class="bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-base w-full mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
+                        <span class="bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm w-full mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
                     </div>
                 </div>
                 <div id="more_fields" class="mt-4 sm:mt-0"></div>
@@ -129,8 +129,11 @@
             <div class="mb-4 d-none" id="users-field">
                 <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
                 <select class="js-example-basic-multiple" name="users[]" multiple="multiple" style="width: 100%;">
-                    <option value="0">Test</option>
-                    <option value="1">Test2</option>
+                    @foreach($users as $user)
+                        @if($user->teams[0]->membership->role != 'super-admin')
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endif
+                    @endforeach
                 </select>
             </div>
 
@@ -203,6 +206,7 @@
 			$('#rating').val('');
 			$('#rating').attr('required', false);
 			$('#final_num_of_employees').attr('required', false);
+            $('.js-example-basic-multiple').val(null).trigger('change');
 		}
 	})
 
@@ -277,7 +281,7 @@
             counter++;
             sessionStorage.setItem('counter',counter );
         }
-       
+
 
         $('#more_fields').append(`
             <div class="flex items-center justify-between flex-wrap" id="block">
@@ -294,7 +298,7 @@
                     <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
                 </div>
                 <div class="w-1/2 sm:w-1/4">
-                    <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+                    <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
         `);
