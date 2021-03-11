@@ -51,14 +51,14 @@
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
                 <input type="file" class="form-control-file d-none" id="name_file" name="file[]">
-                <span class="font-italic text-s ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
+                <span class="font-italic text-xs sm:text-sm ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
                 @error('file')
                     <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
 
-                <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
+                <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 text-xs sm:text-sm w-full mt-1 sm:mt-0 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
 
-                <div id="more_fields"></div>
+                <div id="more_fields" class="mt-3 sm:mt-0"></div>
             </div>
 
 			<div class="mb-4">
@@ -196,7 +196,7 @@
             counter++;
 			sessionStorage.setItem('counter',counter );
         }
-        
+
 
         $('#more_fields').append(`
             <div class="flex" id="block">
@@ -207,7 +207,7 @@
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
                 <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file[]">
-                <span class="flex-1 pt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
+                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
                 <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
             </div>
         `);

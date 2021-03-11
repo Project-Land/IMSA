@@ -25,4 +25,9 @@ class Training extends Model
     {
         return $this->hasMany(Document::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User')->withTimestamps();
+    }
 }

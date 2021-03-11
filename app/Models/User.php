@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function trainings()
     {
-        return $this->hasMany('App\Models\Training');
+        return $this->belongsToMany('App\Models\Training')->withTimestamps();
     }
 
     public function accidents()
@@ -125,5 +125,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Certificate');
     }
-    
+
 }

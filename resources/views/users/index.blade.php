@@ -88,12 +88,29 @@
                                                     </div>
                                                     <div class="mt-4">
                                                         <div class="mt-1 border border-gray-200 rounded-lg">
-                                                            <div class="px-4 py-3 border-t border-gray-200">
-                                                                Obuka 1
-                                                            </div>
-                                                            <div class="px-4 py-3 border-t border-gray-200">
-                                                                Obuka 2
-                                                            </div>
+                                                            @forelse($user->trainings as $training)
+                                                                <div class="px-4 py-3 border-t border-gray-200 flex flex-wrap justify-between">
+                                                                    <div class="w-full sm:w-1/2">
+                                                                        <p class="font-bold">{{ $training->name }}</p>
+                                                                        <p class="text-sm">{{ date('d.m.Y', strtotime($training->training_date)) }} {{ __('u') }} {{ date('H:i', strtotime($training->training_date)) }}, {{ $training->place }}</p>
+                                                                    </div>
+                                                                    <div class="w-full sm:w-1/2">
+                                                                        <p class="text-sm italic">{{ __('Dokumenti') }}:</p>
+                                                                        @foreach($training->documents as $doc)
+                                                                            <form class="inline" action="{{ route('document.preview') }}" method="POST" target="_blank">
+                                                                                @csrf
+                                                                                <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$doc->doc_category }}">
+                                                                                <input type="hidden" name="file_name" value="{{ $doc->file_name }}">
+                                                                                <button class="button text-primary cursor-pointer text-left" type="submit">{{ $doc->file_name }}</button>
+                                                                            </form><br>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            @empty
+                                                                <div class="px-4 py-3 border-t border-gray-200 flex flex-wrap justify-between">
+                                                                    /
+                                                                </div>
+                                                            @endforelse
                                                         </div>
                                                     </div>
                                                 </div>

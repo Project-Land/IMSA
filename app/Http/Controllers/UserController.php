@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::where('current_team_id', Auth::user()->current_team_id)->with('certificates')->get();
+        $users = User::where('current_team_id', Auth::user()->current_team_id)->with('certificates')->with('trainings.documents')->get();
         $certificates = Certificate::all();
         return view('users.index', compact('users', 'certificates'));
     }
