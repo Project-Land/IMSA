@@ -15,8 +15,8 @@ class CreateSoasTable extends Migration
     {
         Schema::create('soas', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
-            $table->string('comment');
+            $table->string('status')->nullable();
+            $table->string('comment')->nullable();
             $table->foreignId('soa_field_id')->constrained();
             $table->foreignId('standard_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
