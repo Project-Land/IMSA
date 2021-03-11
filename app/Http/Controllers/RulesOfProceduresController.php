@@ -14,7 +14,7 @@ class RulesOfProceduresController extends Controller
 {
     public function index()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -36,7 +36,7 @@ class RulesOfProceduresController extends Controller
 
     public function showDeleted()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -59,6 +59,9 @@ class RulesOfProceduresController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', Document::class);
         return view('documents.create',
             [

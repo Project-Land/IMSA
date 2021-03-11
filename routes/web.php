@@ -29,6 +29,7 @@ use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
 use App\Http\Controllers\SoaController;
+use App\Http\Controllers\ExternalDocumentsController;
 
 
 /*
@@ -72,6 +73,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('forms-deleted', [FormsController::class, 'showDeleted'])->name('forms.deleted');
     Route::delete('forms-force-delete/{id}', [FormsController::class, 'forceDestroy'])->name('forms.force-destroy');
     Route::post('forms-restore/{id}', [FormsController::class, 'restore'])->name('forms.restore');
+
+    Route::resource('external-documents', ExternalDocumentsController::class);
+    Route::get('external-documents-deleted', [ExternalDocumentsController::class, 'showDeleted'])->name('external-documents.deleted');
+    Route::delete('external-documents-force-delete/{id}', [ExternalDocumentsController::class, 'forceDestroy'])->name('external-documents.force-destroy');
+    Route::post('external-documents-restore/{id}', [ExternalDocumentsController::class, 'restore'])->name('external-documents.restore');
 
     Route::resource('sectors', SectorsController::class);
 

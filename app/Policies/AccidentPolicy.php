@@ -18,7 +18,7 @@ class AccidentPolicy
      */
     public function viewAny(User $user)
     {
-        
+
     }
 
     /**
@@ -45,7 +45,9 @@ class AccidentPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
-            return true;
+            if(session('standard_name') === "45001"){
+                return true;
+            }
         }
     }
 
@@ -61,7 +63,9 @@ class AccidentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $accident->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "45001"){
+                    return true;
+                }
             }
         }
     }
@@ -78,7 +82,9 @@ class AccidentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $accident->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "45001"){
+                    return true;
+                }
             }
         }
     }

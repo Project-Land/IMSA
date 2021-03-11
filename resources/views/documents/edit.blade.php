@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session("standard_name").' - '.__($doc_type).' - '. __('Izmena') }}
         </h2>
     </x-slot>
@@ -11,7 +11,7 @@
       	</div>
     </div>
 
-    <form action="{{ $url }}" method="POST" enctype="multipart/form-data" class="bg-white mx-auto md:w-3/5 mt-2 md:mt-1 shadow-md rounded px-8 pt-6 pb-4 mb-4" autocomplete="off">
+    <form action="{{ $url }}" method="POST" enctype="multipart/form-data" class="bg-white mx-auto md:w-3/5 mt-2 md:mt-1 shadow-md rounded px-8 pt-6 pb-4 mb-4">
         @csrf
         @method('PUT')
 
@@ -19,17 +19,19 @@
             <label for="dokument_name" class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv dokumenta')}}:</label>
             <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="document_name" name="document_name" value="{{ $document->document_name }}" autofocus required oninvalid="this.setCustomValidity('{{ __("Naziv nije popunjen") }}')" oninput="this.setCustomValidity('')">
             @error('document_name')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
         </div>
 
+        @unless($doc_type == "Eksterna dokumenta")
         <div class="mb-4">
             <label for="version" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verzija')}}:</label>
             <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ $document->version }}" required oninvalid="this.setCustomValidity('{{ __("Verzija nije popunjena") }}')" oninput="this.setCustomValidity('')">
             @error('version')
-                <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
         </div>
+        @endunless
 
         @if(isset($category) && ($category == 'procedures' || $category == 'forms' || $category == 'manuals'))
             <div class="mb-4">
@@ -41,7 +43,7 @@
                     @endforeach
                 </select>
                 @error('sector_id')
-                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>
         @endif
@@ -56,7 +58,7 @@
             <input type="file" class="form-control-file" id="name_file" name="file" style="display:none;">
             <span class="font-italic text-xs md:text-sm mx-2" id="old_document">{{ $document->file_name }}</span>
             @error('file')
-                <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                <br><span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
         </div>
 

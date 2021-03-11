@@ -20,8 +20,8 @@ class CreateDocumentsTable extends Migration
             $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('sector_id')->nullable()->constrained()->onDelete('set null');
             $table->string('document_name');
-            $table->string('version');
-            $table->enum('doc_category', ['rules_procedure', 'policy', 'procedure', 'manual', 'form','training']);
+            $table->string('version')->nullable();
+            $table->enum('doc_category', ['rules_procedure', 'policy', 'procedure', 'manual', 'form', 'training', 'external_document', 'complaint']);
             $table->string('file_name');
             $table->timestamps();
         });

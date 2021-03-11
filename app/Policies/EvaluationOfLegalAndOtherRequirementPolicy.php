@@ -43,7 +43,9 @@ class EvaluationOfLegalAndOtherRequirementPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
-            return true;
+            if(session('standard_name') === "45001" || session('standard_name') === "14001"){
+                return true;
+            }
         }
     }
 
@@ -59,7 +61,9 @@ class EvaluationOfLegalAndOtherRequirementPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $evaluationOfLegalAndOtherRequirement->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "45001" || session('standard_name') === "14001"){
+                    return true;
+                }
             }
         }
     }
@@ -76,7 +80,9 @@ class EvaluationOfLegalAndOtherRequirementPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $evaluationOfLegalAndOtherRequirement->team_id){
             if($role == "admin" || $role == "super-admin") {
-                return true;
+                if(session('standard_name') === "45001" || session('standard_name') === "14001"){
+                    return true;
+                }
             }
         }
     }

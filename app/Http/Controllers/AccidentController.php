@@ -5,39 +5,42 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Accident;
 use App\Facades\CustomLog;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccidentRequest;
 
 class AccidentController extends Controller
 {
-    
+
     public function index(){
 
-        if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
+        if(session('standard') == null || session('standard_name') != "45001"){
+            return redirect('/');
         }
+
         $accidents = Accident::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
         ])->get();
-        
+
         return view('system_processes.accident.index',['accidents'=>$accidents]);
     }
 
-    public function show($id){ 
+    public function show($id){
         $accident=Accident::findOrFail($id);
         $this->authorize('view', $accident);
         echo $accident;
     }
 
     public function create(){
+        if(session('standard') == null || session('standard_name') != "45001"){
+            return redirect('/');
+        }
         $this->authorize('create', Accident::class);
         return view('system_processes.accident.create');
     }
 
     public function store(AccidentRequest $request){
-       
+
         $this->authorize('create', Accident::class);
         try{
             $accident = Accident::create($request->all());
@@ -74,7 +77,7 @@ class AccidentController extends Controller
     public function destroy($id){
         $accident = Accident::findOrFail($id);
         $this->authorize('delete', $accident);
-       
+
         try{
             Accident::destroy($id);
             CustomLog::info('Istraživanje incidenta za radnika "'.$accident->name.'" je uklonjeno, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);

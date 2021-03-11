@@ -34,7 +34,7 @@ class InternalCheckController extends Controller
             session(['standard_name' => request()->get('standard_name')]);
         }
 
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -60,6 +60,9 @@ class InternalCheckController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', InternalCheck::class);
 
         $team = Team::findOrFail(Auth::user()->current_team_id);

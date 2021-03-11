@@ -19,10 +19,10 @@ class ComplaintsController extends Controller
         if(request()->has('standard') && request()->has('standard_name')){
             session(['standard' => request()->get('standard')]);
             session(['standard_name' => request()->get('standard_name')]);
-           
-        } 
-        if(session('standard') == null){
-            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
+
+        }
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
         }
 
         $complaints = Complaint::where([
@@ -35,6 +35,9 @@ class ComplaintsController extends Controller
 
     public function create()
     {
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
+        }
         $this->authorize('create', Complaint::class);
         return view('system_processes.complaints.create');
     }

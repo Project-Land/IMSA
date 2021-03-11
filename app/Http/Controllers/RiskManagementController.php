@@ -14,7 +14,7 @@ class RiskManagementController extends Controller
 
     public function index()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
@@ -28,6 +28,9 @@ class RiskManagementController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
         $this->authorize('create', RiskManagement::class);
         return view('system_processes.risk_management.create');
     }

@@ -13,8 +13,8 @@ class EnvironmentalAspectsController extends Controller
 
     public function index()
     {
-        if(session('standard') == null || session('standard_name') != 14001){
-            return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
+        if(session('standard') == null || session('standard_name') != "14001"){
+            return redirect('/');
         }
 
         $environmental_aspects = EnvironmentalAspect::where([
@@ -26,6 +26,9 @@ class EnvironmentalAspectsController extends Controller
 
     public function create()
     {
+        if(session('standard') == null || session('standard_name') != "14001"){
+            return redirect('/');
+        }
         $this->authorize('create', EnvironmentalAspect::class);
         return view('system_processes.environmental_aspects.create');
     }

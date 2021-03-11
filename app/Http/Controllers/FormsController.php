@@ -16,7 +16,7 @@ class FormsController extends Controller
 
     public function index()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', __('Izaberite standard')));
         }
         $sector = Sector::where('is_global', 1)->get()->first()->id;
@@ -44,7 +44,7 @@ class FormsController extends Controller
 
     public function showDeleted()
     {
-        if(session('standard') == null){
+        if(empty(session('standard'))){
             return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
@@ -67,6 +67,10 @@ class FormsController extends Controller
 
     public function create()
     {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+
         $this->authorize('create', Document::class);
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
         return view('documents.create',
@@ -82,6 +86,9 @@ class FormsController extends Controller
 
     public function store(FormsRequest $request)
     {
+        if(session('standard') == null){
+            return redirect('/');
+        }
         $this->authorize('create', Document::class);
         $document = new Document();
         $upload_path = Str::snake($this::getCompanyName())."/form";

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ $users->first()->currentTeam->name }} - {{ __('Lista korisničkih naloga') }}
         </h2>
     </x-slot>
@@ -12,6 +12,8 @@
             @endif
         </div>
     </div>
+
+    <a class="inline-flex hover:no-underline items-center px-4 py-2 mb-3 bg-blue-600 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route('users.create') }}"><i class="fas fa-plus mr-2"></i> {{ __('Kreiraj novog korisnika') }}</a>
 
     <div class="flex flex-col">
 		<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -27,7 +29,13 @@
 									<th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 										{{ __('Uloga') }}
 									</th>
-									<th class="px-6 py-3 bg-gray-50">{{ __('Akcije') }}</th>
+                                    <th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+										{{ __('Obuke') }}
+									</th>
+                                    <th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+										{{ __('Sertifikati') }}
+									</th>
+									<th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Akcije') }}</th>
 								</tr>
 							</thead>
 							<tbody class="bg-white divide-y divide-gray-200">
@@ -52,6 +60,16 @@
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
 											{{ ($user->teamRole($user->currentTeam)->name) === "Owner" ? "Super Admin" : __($user->teamRole($user->currentTeam)->name) }}
 										</td>
+                                        <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
+											<span class="cursor-pointer" onclick="toggleTrainingsModal({{ $user->id }})">{{ __('Lista obuka') }}</span>
+										</td>
+                                        <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
+											@if($user->teamRole($user->currentTeam)->name != "Korisnik")
+                                                <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}')">{{ __('Lista sertifikata') }}</span>
+                                            @else
+                                                /
+                                            @endif
+										</td>
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium">
 											<form class="inline" id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST">
 												@method('DELETE')
@@ -60,6 +78,32 @@
 											</form>
 										</td>
 									</tr>
+
+                                    <div class="modal fade" id="trainings-modal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="trainings-modal-{{ $user->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="text-lg">
+                                                        {{ __('Lista obuka za korisnika') }}: {{ $user->name }}
+                                                    </div>
+                                                    <div class="mt-4">
+                                                        <div class="mt-1 border border-gray-200 rounded-lg">
+                                                            <div class="px-4 py-3 border-t border-gray-200">
+                                                                Obuka 1
+                                                            </div>
+                                                            <div class="px-4 py-3 border-t border-gray-200">
+                                                                Obuka 2
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 								@endforeach
 							</tbody>
 						</table>
@@ -111,11 +155,8 @@
     });
 
     function confirmDeleteModal(id){
-       
         $('#confirm-delete-modal').modal();
         $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            // let form = $('#delete-form-'+id);
-            // form.submit(); 
             axios.get('/users/deleteApi/'+id)
             .then(function (response) {
                 if(response.data.message){
@@ -123,16 +164,70 @@
                 }else{
                     alert('Error');
                 }
-        })
-        $('#confirm-delete-modal').off();
-        $('#confirm-delete-modal').modal('hide');         
-
+            })
+            $('#confirm-delete-modal').off();
+            $('#confirm-delete-modal').modal('hide');
         });
     }
 
+    function toggleTrainingsModal(id){
+        $('#trainings-modal-'+id).modal();
+    }
 
-   
+    function toggleCertsModal(id, certs){
+        let userCerts = JSON.parse(certs);
+        let arrayOfCerts = [];
+        $.each(userCerts, function(i, item){
+            arrayOfCerts.push(item.pivot.certificate_id.toString())
+        })
 
-      
+        let modal = `<div class="modal fade" id="certificates-${ id }" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="text-lg">
+                                            {{ __('Upravljaj sertifikatima') }}
+                                        </div>
+                                        <div class="mt-4">
+                                            <div class="mt-1 border border-gray-200 rounded-lg">
+                                                @foreach($certificates as $certificate)
+                                                    <div class="px-4 py-3 border-t border-gray-200">
+                                                        <label class="inline-flex items-center mt-3 cursor-pointer">
+                                                            <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ $certificate->name }}</span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 py-4 bg-gray-100 text-right">
+                                        <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani') }}</button>
+                                        <button type="button" onclick="updateUser(${ id })" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-2" data-dismiss="modal">{{ __('Sačuvaj') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+
+            $("body").append(modal);
+            $('#certificates-'+id).modal();
+    }
+
+    function updateUser(id){
+        var selecteditems = [];
+
+        $("#certificates-"+id).find("input:checked").each(function (i, ob) {
+            selecteditems.push($(ob).val());
+        });
+
+        axios.post('/update-user-certificates/'+id, {
+            selecteditems
+        })
+        .then((response) => {
+            //console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    }
 
 </script>

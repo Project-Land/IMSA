@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Vrednovanje zakonskih i drugih zahteva')}} - {{__('Izmena') }}
         </h2>
     </x-slot>
@@ -143,7 +143,7 @@
 
 let counter=1;
 function addCorrectiveMeasure(){
-   
+
     if(document.getElementById('noncompliance_description') && counter==1){
         return;
     } counter++;
@@ -262,7 +262,7 @@ function addCorrectiveMeasure(){
                         $(id_mef).css('display', 'none');
                         $(id_me).attr('required', false);
                     }
-                }) 
+                })
                // counter++;
 
 }

@@ -16,7 +16,7 @@ class SoaPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
             $soas = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField', 'documents')->get();
-            if($soas->count() == 0){
+            if($soas->count() == 0 && session('standard_name') === "27001"){
                 return true;
             }
         }
@@ -27,7 +27,7 @@ class SoaPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
             $soas = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField', 'documents')->get();
-            if($soas->count() != 0){
+            if($soas->count() != 0 && session('standard_name') === "27001"){
                 return true;
             }
         }

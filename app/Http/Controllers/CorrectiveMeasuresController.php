@@ -33,6 +33,9 @@ class CorrectiveMeasuresController extends Controller
 
     public function create()
     {
+        if(session('standard') == null){
+            return redirect('/');
+        }
         $this->authorize('create', CorrectiveMeasure::class);
         $team = Team::findOrFail(Auth::user()->current_team_id);
         $standards = $team->standards->where('id', session('standard'));

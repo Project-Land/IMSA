@@ -44,6 +44,7 @@
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">{{ __('Procedure') }}</a>
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/external-documents') }}">{{ __('Eksterna dokumenta') }}</a>
                                 @endempty
                             </x-slot>
                         </div>
@@ -388,6 +389,7 @@
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/procedures') }}">{{ __('Procedure') }}</a>
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
+                            <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/external-documents') }}">{{ __('Eksterna dokumenta') }}</a>
                         @endempty
                     </div>
                 </div>
@@ -447,18 +449,18 @@
             <div class="mt-3 space-y-1">
 
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" class="hover:no-underline" :active="request()->routeIs('profile.show')">
                     {{ __('Profil') }}
                 </x-jet-responsive-nav-link>
 
                 @if(Gate::check('userManagement', $team))
-                    <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" :active="request()->routeIs('users.notification-settings')">
+                    <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" class="hover:no-underline" :active="request()->routeIs('users.notification-settings')">
                         {{ __('Podešavanje notifikacija') }}
                     </x-jet-responsive-nav-link>
                 @endif
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
+                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" class="hover:no-underline" :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokeni') }}
                     </x-jet-responsive-nav-link>
                 @endif
@@ -466,9 +468,10 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                    <x-jet-responsive-nav-link
+                        href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        this.closest('form').submit();">
                         {{ __('Odjava') }}
                     </x-jet-responsive-nav-link>
                 </form>
@@ -481,16 +484,16 @@
                         {{ __('Upravljanje firmama') }}
                     </div>
 
-                    <x-jet-responsive-nav-link href="{{ route('teams.index') }}" :active="request()->routeIs('teams.index')">
+                    <x-jet-responsive-nav-link href="{{ route('teams.index') }}" class="hover:no-underline" :active="request()->routeIs('teams.index')">
                         {{ __('Lista svih firmi') }}
                     </x-jet-responsive-nav-link>
 
-                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
+                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" class="hover:no-underline" :active="request()->routeIs('teams.show')">
                         {{ __('Podešavanja firme') }}
                     </x-jet-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" class="hover:no-underline" :active="request()->routeIs('teams.create')">
                             {{ __('Kreiraj novu firmu') }}
                         </x-jet-responsive-nav-link>
                     @endcan
@@ -504,11 +507,11 @@
                         {{ __('Upravljanje korisnicima') }}
                     </div>
 
-                    <x-jet-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                    <x-jet-responsive-nav-link href="{{ route('users.index') }}" class="hover:no-underline" :active="request()->routeIs('users.index')">
                         {{ __('Lista korisnika') }}
                     </x-jet-responsive-nav-link>
 
-                    <x-jet-responsive-nav-link href="{{ route('users.create') }}" :active="request()->routeIs('users.create')">
+                    <x-jet-responsive-nav-link href="{{ route('users.create') }}" class="hover:no-underline" :active="request()->routeIs('users.create')">
                         {{ __('Kreiraj novog korisnika') }}
                     </x-jet-responsive-nav-link>
 
@@ -521,7 +524,7 @@
                         {{ __('Sistemski procesi') }}
                     </div>
 
-                    <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" :active="request()->routeIs('system-processes.add-to-standard')">
+                    <x-jet-responsive-nav-link href="{{ route('system-processes.add-to-standard') }}" class="hover:no-underline" :active="request()->routeIs('system-processes.add-to-standard')">
                         {{ __('Dodavanje procesa za standard') }}
                     </x-jet-responsive-nav-link>
 
@@ -534,7 +537,7 @@
                         {{ __('Server info') }}
                     </div>
 
-                    <x-jet-responsive-nav-link href="{{ route('analytics') }}">
+                    <x-jet-responsive-nav-link href="{{ route('analytics') }}" class="hover:no-underline">
                         {{ __('Server log') }}
                     </x-jet-responsive-nav-link>
 

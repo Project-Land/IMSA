@@ -19,6 +19,7 @@
                         <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/procedures') }}">{{ __('Procedure') }}</a></div>
                         <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a></div>
                         <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a></div>
+                        <div class="font-bold xl:text-lg sm:text-sm mb-2"><a class="hover:no-underline" href="{{ asset('/external-documents') }}">{{ __('Eksterna dokumenta') }}</a></div>
                     </div>
                 </div>
             </div>

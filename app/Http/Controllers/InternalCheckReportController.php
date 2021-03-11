@@ -23,6 +23,9 @@ class InternalCheckReportController extends Controller
 
     public function createReport($id)
     {
+        if(session('standard') == null){
+            return redirect('/');
+        }
         $internalCheck = InternalCheck::findOrFail($id);
         $this->authorize('update', $internalCheck);
 
@@ -32,7 +35,6 @@ class InternalCheckReportController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
         $this->authorize('create', InternalCheck::class);
 
         $validatedData = $request->validate([
