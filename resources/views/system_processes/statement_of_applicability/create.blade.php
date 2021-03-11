@@ -18,7 +18,7 @@
 
 
 	<div class="mx-auto md:w-full mt-1 md:p-10 sm:p-2 rounded" x-data="{ @foreach($groups as $g) open{{ $g->id }}:false, @endforeach }">
-		<form action="{{ route('statement-of-applicability.store', \Auth::user()->current_team_id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form id="form" action="{{ route('statement-of-applicability.store', \Auth::user()->current_team_id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 
             @foreach($groups as $group)
@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option  @if( old($field->id.'.status')=='Prihvaćeno' ){{'selected'}} @endif value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option  @if( old($field->id.'.status')=='Neprihvaćeno' ){{'selected'}} @endif value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
-                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenljivo">{{ __('Nije primenljivo') }}</option>
+                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenjivo">{{ __('Nije primenjivo') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -134,71 +134,7 @@
         }
     }
 
-    function formSubmit(){
-        let block = document.getElementsByClassName('main-block');
-
-        let error = false;
-
-        for(let div of block ){
-
-            let group = div.dataset.group;
-            let groupRows = document.getElementsByClassName(group);
-
-            let groupTitleBlock = document.getElementById('title-'+group);
-            groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
-
-            let status = div.querySelector('select').value;
-            let comment = div.querySelector('textarea').value;
-            let documents = div.lastElementChild.querySelector('select').value;
-
-            if(status == "Prihvaćeno"){
-                if(comment != "" || documents != ""){
-                    div.classList.remove('border-2');
-                    div.classList.remove('border-red-500');
-                    groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
-                    groupTitleBlock.querySelector('#span-error').classList.add('d-none');
-                }
-
-                else{
-                    div.classList.add('border-2');
-                    div.classList.add('border-red-500');
-                    error = true;
-
-                    groupTitleBlock.querySelector('#span-success').classList.add('d-none');
-                    groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
-
-                    for(let divs of groupRows){
-                        divs.classList.remove('hidden');
-                    }
-
-                }
-            }
-            else if (status == ""){
-                error = true;
-                div.classList.add('border-2');
-                div.classList.add('border-red-500');
-
-                groupTitleBlock.querySelector('#span-success').classList.add('d-none');
-                groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
-
-                for(let divs of groupRows){
-                    divs.classList.remove('hidden');
-                }
-            }
-            else{
-                div.classList.remove('border-2');
-                div.classList.remove('border-red-500');
-                groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
-                groupTitleBlock.querySelector('#span-error').classList.add('d-none');
-            }
-        }
-
-        if(error){
-            return
-        }
-
-        document.getElementById('form').submit();
-    }
+   
 
 
     function checkGroup(group){
@@ -216,7 +152,7 @@
             let documents = row.lastElementChild.querySelector('select').value;
 
             if(status == "Prihvaćeno"){
-                if(comment != "" || documents != ""){
+                if(comment.trim() != "" || documents.trim() != ""){
 
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
@@ -232,6 +168,17 @@
                 spanS=groupTitleBlock.querySelector('#span-success');
                 spanE=groupTitleBlock.querySelector('#span-error');
                 break;
+            }else if (status == "Neprihvaćeno"){
+                if(comment.trim() == ""){
+                    err = true;
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                    break;
+                }else{
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                    
+                }
             }
             else{
                 spanS=groupTitleBlock.querySelector('#span-success');
@@ -268,7 +215,7 @@
             let documents = div.lastElementChild.querySelector('select').value;
 
             if(status == "Prihvaćeno"){
-                if(comment != "" || documents != ""){
+                if(comment.trim() != "" || documents.trim() != ""){
                     div.classList.remove('border-2');
                     div.classList.remove('border-red-500');
                     groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
@@ -301,6 +248,22 @@
                 groupTitleBlock.querySelector('#span-success').classList.add('d-none');
                 groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
             }
+            else if(status == "Neprihvaćeno"){
+                
+                if (comment.trim() == ""){
+                    error = true;
+                    div.classList.add('border-2');
+                    div.classList.add('border-red-500');
+                    groupTitleBlock.querySelector('#span-success').classList.add('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
+                }else{
+                    div.classList.remove('border-2');
+                    div.classList.remove('border-red-500');
+                    groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.add('d-none');
+                }
+            }
+
             else{
                 div.classList.remove('border-2');
                 div.classList.remove('border-red-500');
