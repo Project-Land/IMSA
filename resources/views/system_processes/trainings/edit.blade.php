@@ -97,7 +97,7 @@
             </div>
 
             <div class="mb-4" id="documents" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
-                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Dokumenti') }}:</label>
+                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Dokumenta') }}:</label>
                 @foreach($trainingPlan->documents as $document)
                     <div class="mb-2 flex">
                         <label for="newFile" class="mt-2 w-50">{{ $document->file_name }}</label>

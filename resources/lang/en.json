@@ -704,6 +704,12 @@
     "Lista sertifikata" : "List of certificates",
     "Lista obuka za korisnika" : "List of trainings for user",
     "Lista obuka" : "List of trainings",
-    "Incident bez povrede" : "Accident without injury"
+    "Incident bez povrede" : "Accident without injury",
+    "Veliki":"High",
+    "Srednji":"Medium",
+    "Mali":"Low",
+    "Nivo važnosti":"Level of importance",
+    "Koeficijent ostvarenih ciljeva je":"The coefficient of achieved goals is",
+    "od ukupno":"out of a total of"
 
 }

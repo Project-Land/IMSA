@@ -275,8 +275,9 @@
         else{
             var counter = sessionStorage.getItem('counter');
             counter++;
+            sessionStorage.setItem('counter',counter );
         }
-        console.log(sessionStorage.getItem('counter'));
+       
 
         $('#more_fields').append(`
             <div class="flex items-center justify-between flex-wrap" id="block">

@@ -37,4 +37,9 @@ class Document extends Model
     {
         return $this->belongsToMany('App\Models\Soa');
     }
+
+    public function complaints()
+    {
+        return $this->belongsToMany('App\Models\Complaint');
+    }
 }

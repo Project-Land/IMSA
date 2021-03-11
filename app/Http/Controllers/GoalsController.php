@@ -45,6 +45,7 @@ class GoalsController extends Controller
         if(!$goals->isEmpty()){
             $goals = $goals->map(function($item, $key) use($isAdmin){
                 $item->isAdmin = $isAdmin;
+                
                 return $item;
             });
         }
@@ -90,7 +91,9 @@ class GoalsController extends Controller
         }
 
         $goal = Goal::findOrFail($id);
-        return response()->json($goal);
+        $level=$goal->level < 3 ? ($goal->level == 2 ? __('Srednji') : __('Mali')) : __('Veliki');
+        $goal->level=$level;
+;        return response()->json($goal);
     }
 
     public function edit($id)
