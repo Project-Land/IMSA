@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno" {{ $field->status == 'Prihvaćeno' ? 'selected':'' }}>{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno" {{ $field->status == 'Neprihvaćeno' ? 'selected':'' }}>{{ __('Neprihvaćeno') }}</option>
-                                    <option value="Nije primenljivo" {{ $field->status == 'Nije primenljivo' ? 'selected':'' }}>{{ __('Nije primenljivo') }}</option>
+                                    <option value="Nije primenljivo" {{ $field->status == 'Nije primenjivo' ? 'selected':'' }}>{{ __('Nije primenjivo') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -163,7 +163,7 @@
             let documents = div.lastElementChild.querySelector('select').value;
 
             if(status == "Prihvaćeno"){
-                if(comment != "" || documents != ""){
+                if(comment.trim() != "" || documents.trim() != ""){
                     div.classList.remove('border-2');
                     div.classList.remove('border-red-500');
                     groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
@@ -196,6 +196,22 @@
                 groupTitleBlock.querySelector('#span-success').classList.add('d-none');
                 groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
             }
+            else if(status == "Neprihvaćeno"){
+                
+                if (comment.trim() == ""){
+                    error = true;
+                    div.classList.add('border-2');
+                    div.classList.add('border-red-500');
+                    groupTitleBlock.querySelector('#span-success').classList.add('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
+                }else{
+                    div.classList.remove('border-2');
+                    div.classList.remove('border-red-500');
+                    groupTitleBlock.querySelector('#span-success').classList.remove('d-none');
+                    groupTitleBlock.querySelector('#span-error').classList.add('d-none');
+                }
+            }
+
             else{
                 div.classList.remove('border-2');
                 div.classList.remove('border-red-500');
@@ -237,7 +253,7 @@
             let documents = row.lastElementChild.querySelector('select').value;
 
             if(status == "Prihvaćeno"){
-                if(comment != "" || documents != ""){
+                if(comment.trim() != "" || documents.trim() != ""){
 
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
@@ -253,6 +269,17 @@
                 spanS=groupTitleBlock.querySelector('#span-success');
                 spanE=groupTitleBlock.querySelector('#span-error');
                 break;
+            }else if (status == "Neprihvaćeno"){
+                if(comment.trim() == ""){
+                    err = true;
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                    break;
+                }else{
+                    spanS=groupTitleBlock.querySelector('#span-success');
+                    spanE=groupTitleBlock.querySelector('#span-error');
+                    
+                }
             }
             else{
                 spanS=groupTitleBlock.querySelector('#span-success');

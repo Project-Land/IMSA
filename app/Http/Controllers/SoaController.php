@@ -55,9 +55,9 @@ class SoaController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            '*.comment' => 'required'
-        ]);
+      //  $validated = $request->validate([
+      //      '*.comment' => 'required'
+      //  ]);
         $this->authorize('create', Soa::class);
         try{
             DB::transaction(function () use($request) {
@@ -73,7 +73,7 @@ class SoaController extends Controller
                             'standard_id' => session('standard'),
                         ]);
 
-                        $soa->documents()->sync($req['document']?? []);
+                        $soa->documents()->sync($req['document'] ?? []);
                     }
                 }
 
@@ -123,7 +123,7 @@ class SoaController extends Controller
                 ]);
 
                 //$documents = $soa->documents;
-                $formDocuments = $req['document'];
+                $formDocuments = $req['document'] ?? [];
 
                 $soa->documents()->sync($formDocuments);
             }
