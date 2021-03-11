@@ -99,18 +99,19 @@ class ComplaintsController extends Controller
     public function update(ComplaintsRequest $request, $id)
     {
         $this->authorize('update', Complaint::find($id));
-        //dd($request->all());
-        $complaint = Complaint::findOrFail($id);
-        $files= $request->file ?? [];
-        foreach($complaint->documents()->pluck('document_id')->diff($files) as $docId){
-            $doc=Document::find($docId);
-            Storage::delete(strtolower($this->getCompanyName()).'/complaint/'.$doc->file_name);
-            $complaint->documents()->wherePivot('document_id',$docId)->detach();
-            $doc->forceDelete();
-        }
         
+        $complaint = Complaint::findOrFail($id);
        
         try{
+
+            $files= $request->file ?? [];
+            foreach($complaint->documents()->pluck('document_id')->diff($files) as $docId){
+                $doc=Document::find($docId);
+                Storage::delete(strtolower($this->getCompanyName()).'/complaint/'.$doc->file_name);
+                $complaint->documents()->wherePivot('document_id',$docId)->detach();
+                $doc->forceDelete();
+            }
+
             $complaint->update($request->except(['file','new_file']));
             $notification = $complaint->notification;
             if(!$notification){
@@ -120,8 +121,6 @@ class ComplaintsController extends Controller
             $notification->message = __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($request->deadline_date));
             $notification->checkTime = $complaint->deadline_date;
             $complaint->notification()->save($notification);
-
-            
 
             if($request->file('new_file')){
                 foreach($request->file('new_file') as $file){
