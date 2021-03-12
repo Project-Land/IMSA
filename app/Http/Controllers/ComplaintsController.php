@@ -48,12 +48,14 @@ class ComplaintsController extends Controller
         
         try{
             $complaint = Complaint::create($request->except(['file']));
+            if($request->deadline_date){
             $notification = Notification::create([
                 'message'=>__('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($complaint->deadline_date)),
                 'team_id'=>Auth::user()->current_team_id,
                 'checkTime' => $complaint->deadline_date
             ]);
             $complaint->notification()->save($notification);
+            }
            
             if($request->file('file')){
                 foreach($request->file('file') as $file){
@@ -160,6 +162,12 @@ class ComplaintsController extends Controller
         $complaint = Complaint::findOrFail($id);
 
         try{
+            foreach($complaint->documents()->pluck('document_id') as $docId){
+                $doc=Document::find($docId);
+                Storage::delete(strtolower($this->getCompanyName()).'/complaint/'.$doc->file_name);
+                $complaint->documents()->wherePivot('document_id',$docId)->detach();
+                $doc->forceDelete();
+            }
             $complaint->notification()->delete();
             Complaint::destroy($id);
             CustomLog::info('Reklamacija "'.$complaint->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
