@@ -145,7 +145,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 5, "desc" ]]
+        "order": [[ 6, "asc" ]]
     });
 
     function showGoal(id){
@@ -167,7 +167,7 @@
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Nivo važnosti') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.level }</p></div>
-                                        
+
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</p></div>

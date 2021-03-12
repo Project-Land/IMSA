@@ -130,7 +130,7 @@
             "targets": 'no-sort',
             "orderable": false,
         }],
-        "order": [[ 6, "desc" ]]
+        //"order": [[ 6, "desc" ]]
     });
 
     function deleteTraining(id){

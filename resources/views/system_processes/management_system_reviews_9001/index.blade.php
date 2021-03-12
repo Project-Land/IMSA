@@ -111,6 +111,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
+        "order": [[ 0, "desc" ]]
     });
 
     function showMSR(id){

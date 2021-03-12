@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 
 
 use Exception;
-use Throwable;
-use Carbon\Carbon;
 use App\Models\Team;
-use App\Models\User;
 use App\Models\PlanIp;
 use App\Models\InternalCheckReport;
-
-use App\Models\Standard;
-use App\Models\Supplier;
 use App\Facades\CustomLog;
 use App\Http\Requests\StoreInternalCheckRequest;
 use App\Http\Requests\UpdateInternalCheckRequest;
@@ -41,8 +35,9 @@ class InternalCheckController extends Controller
         $internal_checks = InternalCheck::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp'])->get();
+            ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp'])->orderBy('date', 'desc')->get();
 
+        //dd($internal_checks);
 
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
@@ -52,7 +47,7 @@ class InternalCheckController extends Controller
         $internal_checks = InternalCheck::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id],
-        ])->whereYear('date', '=', $year)->with(['sector','standard','planIp'])->get();
+        ])->whereYear('date', '=', $year)->with(['sector','standard','planIp'])->orderBy('date', 'desc')->get();
 
         $request->session()->flash('year', $year);
         return view('system_processes.internal_check.index', compact('internal_checks'));

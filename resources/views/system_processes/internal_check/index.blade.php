@@ -181,7 +181,7 @@
         	"targets": 'no-sort',
         	"orderable": false,
         }],
-		"order": [[ 0, "asc" ]]
+        "order": [[ 0, "desc" ]]
     });
 
     const planIpShow = document.getElementById('planIp.show');

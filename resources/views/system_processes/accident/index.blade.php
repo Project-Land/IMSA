@@ -109,7 +109,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 1, "desc" ]]
+        "order": [[ 0, "desc" ]]
     });
 
     function confirmDeleteModal($id){

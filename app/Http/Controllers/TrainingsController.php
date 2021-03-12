@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Document;
 use App\Models\Training;
 use App\Facades\CustomLog;
@@ -25,7 +26,7 @@ class TrainingsController extends Controller
                 ['standard_id', session('standard')],
                 ['year', date('Y')],
                 ['team_id',Auth::user()->current_team_id]
-            ])->get();
+            ])->orderBy('training_date', 'desc')->get();
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 
@@ -126,7 +127,7 @@ class TrainingsController extends Controller
                     $doc=Document::findOrFail($id);
                     $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                     Storage::delete($path);
-                    $doc->delete();
+                    $doc->forceDelete();
                 }
             }
             if($request->file('new_file')){
@@ -173,6 +174,7 @@ class TrainingsController extends Controller
             foreach($trainingPlan->documents as $doc){
                 $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
+                $doc->forceDelete();
             }
             Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
@@ -191,6 +193,7 @@ class TrainingsController extends Controller
             foreach($trainingPlan->documents as $doc){
                 $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
+                $doc->forceDelete();
             }
             Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);

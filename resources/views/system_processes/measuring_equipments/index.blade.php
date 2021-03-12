@@ -102,7 +102,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 2, "desc" ]]
+        "order": [[ 3, "asc" ]]
     });
 
     $('[data-toggle="tooltip"]').tooltip();

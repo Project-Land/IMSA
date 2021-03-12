@@ -105,7 +105,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 3, "desc" ]]
+        "order": [[ 4, "asc" ]]
     });
 
     var myRe = /\bsuppliers\b/g;
