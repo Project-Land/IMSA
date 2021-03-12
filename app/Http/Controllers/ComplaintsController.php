@@ -118,14 +118,18 @@ class ComplaintsController extends Controller
             }
 
             $complaint->update($request->except(['file','new_file']));
-            $notification = $complaint->notification;
-            if(!$notification){
-                $notification=new Notification();
-                $notification->team_id=Auth::user()->current_team_id;
+            if($request->deadline_date){
+                $notification = $complaint->notification;
+                if(!$notification){
+                    $notification=new Notification();
+                    $notification->team_id=Auth::user()->current_team_id;
+                }
+                $notification->message = __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($request->deadline_date));
+                $notification->checkTime = $complaint->deadline_date;
+                $complaint->notification()->save($notification);
+            }else{
+                $complaint->notification->delete();
             }
-            $notification->message = __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($request->deadline_date));
-            $notification->checkTime = $complaint->deadline_date;
-            $complaint->notification()->save($notification);
 
             if($request->file('new_file')){
                 foreach($request->file('new_file') as $file){
