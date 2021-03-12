@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\Models\Document;
 use App\Models\Training;
 use App\Facades\CustomLog;
@@ -74,7 +75,7 @@ class TrainingsController extends Controller
                     $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                     $name= $trainingPlan->name;
                     $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                    $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
+                    $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $trainingPlan->name);
                     $document = Document::create([
                         'training_id'=>$trainingPlan->id,
                         'standard_id'=>$trainingPlan->standard_id,
@@ -103,7 +104,7 @@ class TrainingsController extends Controller
             abort(404);
         }
         $training = Training::with('documents')->findOrFail($id);
-        $training['company'] = strtolower(Auth::user()->currentTeam->name);
+        $training['company'] = Str::snake(Auth::user()->currentTeam->name);
         return response()->json($training);
     }
 
@@ -125,7 +126,7 @@ class TrainingsController extends Controller
             foreach($trainingPlan->documents()->pluck('id') as $id){
                 if(!in_array($id,$request->file)){
                     $doc=Document::findOrFail($id);
-                    $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
+                    $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                     Storage::delete($path);
                     $doc->forceDelete();
                 }
@@ -135,7 +136,7 @@ class TrainingsController extends Controller
                     $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
                     $name= $trainingPlan->name;
                     $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                    $path = $file->storeAs(strtolower($this::getCompanyName())."/training", $trainingPlan->name);
+                    $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $trainingPlan->name);
                     $document = Document::create([
                         'training_id'=>$trainingPlan->id,
                         'standard_id'=>$trainingPlan->standard_id,
@@ -172,7 +173,7 @@ class TrainingsController extends Controller
         $this->authorize('delete', $trainingPlan);
         try{
             foreach($trainingPlan->documents as $doc){
-                $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
+                $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
                 $doc->forceDelete();
             }
@@ -191,7 +192,7 @@ class TrainingsController extends Controller
         $this->authorize('delete', $trainingPlan);
         try{
             foreach($trainingPlan->documents as $doc){
-                $path = strtolower($this::getCompanyName())."/training/".$doc->file_name;
+                $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
                 $doc->forceDelete();
             }

@@ -111,7 +111,6 @@ class SoaController extends Controller
     {
         $this->authorize('update', Soa::class);
 
-        //dd($request);
         DB::transaction(function () use($request) {
             foreach($request->except(['_token', '_method', 'folder', 'file_name']) as $key => $req){
                 $soa = Soa::find($key);

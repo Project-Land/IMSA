@@ -54,8 +54,8 @@
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$d->doc_category }}">
                                                 <input type="hidden" name="file_name" value="{{ $d->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">{{ $d->document_name }}</button>
-                                            </form>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary cursor-pointer text-sm" type="submit" formtarget="_blank">{{ $d->file_name }}</button>
+                                            </form><br>
                                         @empty
                                             /
                                         @endforelse
