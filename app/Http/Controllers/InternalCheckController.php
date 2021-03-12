@@ -209,12 +209,16 @@ class InternalCheckController extends Controller
 
         try{
             $internal_check->notification()->delete();
-
             InternalCheck::destroy($id);
-            PlanIp::destroy($internal_check->plan_ip_id);
-            $report=InternalCheckReport::findOrFail($internal_check->internal_check_report_id);
-            $report->correctiveMeasures()->delete();
-            InternalCheckReport::destroy($internal_check->internal_check_report_id);
+           if($internal_check->plan_ip_id){
+                PlanIp::destroy($internal_check->plan_ip_id);
+           }
+            $report=InternalCheckReport::find($internal_check->internal_check_report_id);
+            if($report){
+                $report->correctiveMeasures()->delete();
+                InternalCheckReport::destroy($internal_check->internal_check_report_id);
+            }
+           
 
             CustomLog::info('Godišnji plan interne provere id: "'.$internal_check->id.'" je obrisan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Godišnji plan interne provere je uspešno uklonjen'));
