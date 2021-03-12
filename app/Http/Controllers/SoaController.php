@@ -55,9 +55,6 @@ class SoaController extends Controller
 
     public function store(Request $request)
     {
-      //  $validated = $request->validate([
-      //      '*.comment' => 'required'
-      //  ]);
         $this->authorize('create', Soa::class);
         try{
             DB::transaction(function () use($request) {
@@ -114,15 +111,15 @@ class SoaController extends Controller
     {
         $this->authorize('update', Soa::class);
 
+        //dd($request);
         DB::transaction(function () use($request) {
-            foreach($request->except(['_token', '_method']) as $key => $req){
+            foreach($request->except(['_token', '_method', 'folder', 'file_name']) as $key => $req){
                 $soa = Soa::find($key);
                 $soa->update([
                     'comment' => $req['comment'],
                     'status' => $req['status']
                 ]);
 
-                //$documents = $soa->documents;
                 $formDocuments = $req['document'] ?? [];
 
                 $soa->documents()->sync($formDocuments);

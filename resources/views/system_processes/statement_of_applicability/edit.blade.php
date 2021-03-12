@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno" {{ $field->status == 'Prihvaćeno' ? 'selected':'' }}>{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno" {{ $field->status == 'Neprihvaćeno' ? 'selected':'' }}>{{ __('Neprihvaćeno') }}</option>
-                                    <option value="Nije primenljivo" {{ $field->status == 'Nije primenjivo' ? 'selected':'' }}>{{ __('Nije primenjivo') }}</option>
+                                    <option value="Nije primenljivo" {{ $field->status == 'Nije primenljivo' ? 'selected':'' }}>{{ __('Nije primenjivo') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
@@ -197,7 +197,7 @@
                 groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
             }
             else if(status == "Neprihvaćeno"){
-                
+
                 if (comment.trim() == ""){
                     error = true;
                     div.classList.add('border-2');
@@ -278,7 +278,7 @@
                 }else{
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
-                    
+
                 }
             }
             else{
