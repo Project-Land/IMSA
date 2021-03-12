@@ -128,7 +128,9 @@ class ComplaintsController extends Controller
                 $notification->checkTime = $complaint->deadline_date;
                 $complaint->notification()->save($notification);
             }else{
-                $complaint->notification->delete();
+                if( $complaint->notification){
+                    $complaint->notification->delete();
+                }
             }
 
             if($request->file('new_file')){
