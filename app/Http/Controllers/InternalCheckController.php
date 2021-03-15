@@ -35,9 +35,9 @@ class InternalCheckController extends Controller
         $internal_checks = InternalCheck::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp'])->orderBy('date', 'desc')->get();
+            ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp','user'])->orderBy('date', 'desc')->get();
 
-        //dd($internal_checks);
+       
 
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }

@@ -32,6 +32,7 @@
                                     <th>{{ __('Zainteresovana strana')}}</th>
                                     <th>{{ __('Potrebe i očekivanja zainteresovane strane')}}</th>
                                     <th>{{ __('Odgovor preduzeća na potrebe i očekivanja')}}</th>
+                                    <th>{{ __('Kreirao')}}</th>
                                     <th class="no-sort">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
@@ -41,6 +42,7 @@
                                     <td class="text-center">{{ $s->name }}</td>
                                     <td class="text-center">{{ Str::length($s->expectation) < 100 ? $s->expectation : Str::limit($s->expectation, 100) }}</td>
                                     <td class="text-center">{{ Str::length($s->response) < 100 ? $s->response : Str::limit($s->response, 100) }}</td>
+                                    <td class="text-center">{{ $s->user->name }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $s)
                                             <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zainteresovane strane')}}" href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>

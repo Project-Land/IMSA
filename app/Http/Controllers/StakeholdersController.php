@@ -20,7 +20,7 @@ class StakeholdersController extends Controller
         $stakeholders = Stakeholder::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->with(['user'])->get();
 
         return view('system_processes.stakeholders.index', compact('stakeholders'));
     }

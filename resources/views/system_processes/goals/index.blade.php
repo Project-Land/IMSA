@@ -182,6 +182,8 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 1 ? "{{ __('Da') }}":"{{ __('Ne') }}" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Analiza') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.analysis != null ? response.data.analysis : "/" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name  }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">

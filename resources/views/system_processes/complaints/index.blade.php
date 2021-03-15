@@ -37,7 +37,7 @@
                                     <th>{{__('Opravdana / prihvaćena')}}</th>
                                     <th>{{__('Rok za realizaciju')}}</th>
                                     <th>{{__('Lice odgovorno za rešavanje')}}</th>
-                                    <th>{{__('Način rešavanja')}}</th>
+                                   {{-- <th>{{__('Način rešavanja')}}</th> --}}
                                     <th>{{__('Status')}}</th>
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
@@ -64,9 +64,10 @@
                                     <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
                                     <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
-                                    <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td>
+                                   {{-- <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td> --}}
                                     <td class="text-center">{{ ($c->status == '1') ? 'Otvorena' : 'Zatvorena' }}</td>
                                     <td class="text-center">
+                                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled reklamacije') }}" class="button text-primary" onclick="showComplaint({{ $c->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $c)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena reklamacije')}}" href="{{ route('complaints.edit', $c->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $c->id }}" action="{{ route('complaints.destroy', $c->id) }}" method="POST">
@@ -157,5 +158,58 @@ if(id){
     }
 
     $('[data-toggle="tooltip"]').tooltip();
+
+    function showComplaint(id){
+        axios.get('/complaints/'+id)
+            .then((response) => {
+                let modal = `
+                    <div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content rounded-0">
+                                <div class="modal-header text-center">
+                                    <h5 class="modal-title font-weight-bold">${ response.data.name }</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Oznaka') }}</p></div>
+                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.name }</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Opis') }}</p></div>
+                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
+
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum podnošenja') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.submission_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Proces na koji se reklamacija odnosi') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.process }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opravdana / prihvaćena') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.accepted == 1 ? "{{ __('Da') }}":"{{ __('Ne') }}" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${response.data.deadline_date ? new Date (response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : '/' }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Lice odgovorno za rešavanje') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsible_person ? response.data.responsible_person : '/' }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Način rešavanja') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.way_of_solving ? response.data.way_of_solving :'/' }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 1 ? "{{ __('Otvorena') }}":"{{ __('Zatvorena') }}" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name  }</p></div>
+                                    </div>
+                                </div>
+                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                $("body").append(modal);
+                $('#showData-'+id).modal();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
 </script>

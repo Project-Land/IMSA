@@ -90,8 +90,8 @@ class ComplaintsController extends Controller
 
     public function show($id)
     {
-        $complaint = Complaint::findOrFail($id);
-        abort(404);
+        $complaint = Complaint::with('user')->findOrFail($id);
+        return $complaint;
     }
 
     public function edit($id)

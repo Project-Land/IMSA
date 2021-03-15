@@ -90,7 +90,7 @@ class GoalsController extends Controller
             abort(404);
         }
 
-        $goal = Goal::findOrFail($id);
+        $goal = Goal::with('user')->findOrFail($id);
         $level=$goal->level < 3 ? ($goal->level == 2 ? __('Srednji') : __('Mali')) : __('Veliki');
         $goal->level=$level;
 ;        return response()->json($goal);

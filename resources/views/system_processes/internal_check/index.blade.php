@@ -54,6 +54,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>{{ __('Termin provere') }}</th>
+                                    <th>{{ __('Kreirao') }}</th>
                                     <th>{{ __('Područje provere') }}</th>
                                     <th>{{ __('Vođe tima i proveravači') }}</th>
                                     <th>{{ __('Standard') }}</th>
@@ -66,6 +67,7 @@
                                 @forelse($internal_checks as $check)
                                 <tr id='trinternalcheck{{$check->id}}'><a id='internalcheck{{$check->id}}'></a>
                                     <td id='tdinternalcheck{{$check->id}}' class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
+                                    <td class="text-center">{{ $check->user->name }}</td>
                                     <td class="text-center">{{ $check->sector->name }}</td>
                                     <td class="text-center">{{$check->leaders}}</td>
                                     <td class="text-center">{{ $check->standard->name }}</td>
