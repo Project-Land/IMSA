@@ -65,7 +65,8 @@
                                     <optgroup label="Politike">
                                         @foreach($documents as $document)
                                             @if($document->doc_category === 'policy')
-                                                <option
+                                                <option data-folder="{{ $document->doc_category }}"
+                                                data-file="{{ $document->file_name }}"
                                                 @if( is_array(old($field->id.'.document')))
                                                 @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif
                                                 @endif value="{{ $document->id }}">{{ $document->document_name }}</option>
@@ -75,7 +76,9 @@
                                     <optgroup label="Procedure">
                                         @foreach($documents as $document)
                                             @if($document->doc_category === 'procedure')
-                                                <option  @if( is_array(old($field->id.'.document')))
+                                                <option data-folder="{{ $document->doc_category }}"
+                                                data-file="{{ $document->file_name }}"
+                                                 @if( is_array(old($field->id.'.document')))
                                                 @if( in_array($document->id,old($field->id.'.document'))  ){{'selected'}} @endif
                                                 @endif value="{{ $document->id }}">{{ $document->document_name }}</option>
                                             @endif
