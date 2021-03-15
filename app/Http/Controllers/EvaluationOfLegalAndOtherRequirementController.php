@@ -21,7 +21,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         $EvaluationOfLegalAndOtherRequirement = EvaluationOfLegalAndOtherRequirement::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->with(['standard','correctiveMeasures'])->get();
+            ])->with(['standard', 'correctiveMeasures', 'user'])->get();
 
         return view('system_processes.evaluation_of_requirement.index', ['EvaluationOfLegalAndOtherRequirement' => $EvaluationOfLegalAndOtherRequirement]);
     }

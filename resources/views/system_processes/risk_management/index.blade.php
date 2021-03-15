@@ -20,9 +20,10 @@
 
             <div class="card">
                 <div class="card-header">
-                @can('create', App\Models\RiskManagement::class)
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj rizik / priliku') }}</a>
-                @endcan
+                    @can('create', App\Models\RiskManagement::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj rizik / priliku') }}</a>
+                    @endcan
+                    {{-- <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="#"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a> --}}
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -35,6 +36,7 @@
                                     <th>{{ __('Ukupno') }}</th>
                                     <th>{{ __('Prihvatljivo') }}</th>
                                     <th>{{ __('Mera') }}</th>
+                                    <th>{{ __('Kreirao') }}</th>
                                     <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
@@ -46,13 +48,14 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center"><span @if($risk->measure) style="cursor: pointer; color: blue;" onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
+                                    <td class="text-center text-sm"><span @if($risk->measure) style="cursor: pointer; color: blue;" onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
                                             @can('update', $risk)
                                                 <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
                                             @endcan
                                         @endif
                                     </td>
+                                    <td class="text-center">{{ $risk->user->name }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $risk)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena rizika/prilike') }}" href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>

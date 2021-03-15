@@ -164,6 +164,8 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status === 1 ? '{{ __("Odobren") }}' : '{{ __("Neodobren") }}' }</p></div>
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{ __('Datum sledećeg preispitivanja') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{ __('Kreirao') }}</p></div>
+                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">

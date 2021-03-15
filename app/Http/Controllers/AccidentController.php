@@ -26,7 +26,7 @@ class AccidentController extends Controller
     }
 
     public function show($id){
-        $accident=Accident::findOrFail($id);
+        $accident = Accident::with('user')->findOrFail($id);
         $this->authorize('view', $accident);
         echo $accident;
     }

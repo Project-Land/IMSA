@@ -38,6 +38,7 @@
                                     <th>{{ __('Ocena usaglašenosti')}}</th>
                                     <th>{{ __('Datum poslednjeg ažuriranja')}}</th>
                                     <th>{{ __('Napomena')}}</th>
+                                    <th>{{ __('Kreirao')}}</th>
                                     <th class="no-sort">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                     <td class="text-center">{{ $requirement->compliance ? __('Usaglašen') : __('Neusaglašen') }}</td>
                                     <td class="text-center">{{ date('d.m.Y H:i', strtotime($requirement->updated_at)) }}</td>
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
+                                    <td class="text-center">{{ $requirement->user->name }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $requirement)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zakona/zahteva')}}" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>

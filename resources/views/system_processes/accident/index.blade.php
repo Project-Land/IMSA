@@ -160,15 +160,15 @@
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Da li ispunjava sve uslove za te poslove?') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.job_requirements }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{!! __('Podaci o svedoku-očevicu<br>- Ime, prezime i broj telefona (ako je bilo)') !!}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.witness?response.data.witness:'/' }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.witness ?? '/' }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{!! __('Podaci o neposrednom rukovodiocu povređenog/aktera incidenta<br>- Ime, prezime i radno mesto') !!}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.supervisor }</p></div>
-
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum i vreme prijave povrede/incidenta') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.injury_report_datetime).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Zapažanje/komentar') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment?response.data.comment:'/' }</p></div>
-
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment ?? '/' }</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                             </div>
                                         </div>
                                         <div class="px-6 py-4 bg-gray-100 text-right">

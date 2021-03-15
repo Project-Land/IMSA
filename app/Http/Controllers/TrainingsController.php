@@ -103,7 +103,7 @@ class TrainingsController extends Controller
         if(!request()->expectsJson()){
             abort(404);
         }
-        $training = Training::with('documents')->findOrFail($id);
+        $training = Training::with('documents')->with('user')->findOrFail($id);
         $training['company'] = Str::snake(Auth::user()->currentTeam->name);
         return response()->json($training);
     }

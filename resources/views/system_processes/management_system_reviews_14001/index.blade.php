@@ -171,6 +171,8 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.opportunities ? response.data.opportunities : "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Eventualne posledice po strateško usmerenje organizacije')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.consequences ? response.data.consequences : "/" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Kreirao')}}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">

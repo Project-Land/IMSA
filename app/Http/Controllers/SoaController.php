@@ -24,7 +24,7 @@ class SoaController extends Controller
         $soas = Soa::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->with('soaField', 'documents')->get();
+        ])->with('soaField', 'documents', 'user')->get();
 
         $groups = SoaFieldGroup::all();
         return view('system_processes.statement_of_applicability.index', ['soas' => $soas, 'groups' => $groups]);

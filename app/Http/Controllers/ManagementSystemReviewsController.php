@@ -75,8 +75,7 @@ class ManagementSystemReviewsController extends Controller
             abort(404);
         }
 
-        $msr = ManagementSystemReview::findOrFail($id);
-        return response()->json($msr);
+        return response()->json(ManagementSystemReview::with('user')->findOrFail($id));
     }
 
     public function edit(int $id)

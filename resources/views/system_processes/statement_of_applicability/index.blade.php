@@ -75,6 +75,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <p>Kreirao: {{ $soas[0]->user->name }}</p>
                 </div>
             </div>
 

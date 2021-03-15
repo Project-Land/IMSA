@@ -20,8 +20,8 @@ class RiskManagementController extends Controller
 
         $riskManagements = RiskManagement::where([
                 ['standard_id', session('standard')],
-                ['team_id',Auth::user()->current_team_id]
-            ])->get();
+                ['team_id',Auth::user()->current_team_id],
+            ])->with('user')->get();
 
         return view('system_processes.risk_management.index', compact('riskManagements'));
     }

@@ -50,7 +50,10 @@ class EnvironmentalAspectsController extends Controller
 
     public function show($id)
     {
-        abort(404);
+        if(!request()->expectsJson()){
+            abort(404);
+        }
+        return response()->json(EnvironmentalAspect::with('user')->findOrFail($id));
     }
 
     public function edit($id)

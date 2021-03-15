@@ -68,7 +68,7 @@ class SuppliersController extends Controller
             abort(404);
         }
 
-        return response()->json(Supplier::findOrFail($id));
+        return response()->json(Supplier::with('user')->findOrFail($id));
     }
 
     public function edit($id)

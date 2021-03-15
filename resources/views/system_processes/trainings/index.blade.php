@@ -250,6 +250,8 @@
                                                 <div class="col-sm-7 mt-3 border-bottom">
                                                     ${ documents.length === 0 ? "/" : docsBlock }
                                                 </div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                             </div>
                                         </div>
                                         <div class="px-6 py-4 bg-gray-100 text-right">

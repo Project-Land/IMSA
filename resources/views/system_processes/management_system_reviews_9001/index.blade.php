@@ -160,6 +160,8 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_change ? response.data.needs_for_change : "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Potrebe za resursima')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.needs_for_resources ? response.data.needs_for_resources : "/" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Kreirao')}}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">

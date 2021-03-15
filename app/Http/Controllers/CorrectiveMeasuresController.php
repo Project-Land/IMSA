@@ -88,7 +88,7 @@ class CorrectiveMeasuresController extends Controller
         if(!request()->expectsJson()){
             abort(404);
         }
-        $corrective_measure = CorrectiveMeasure::with('standard')->with('sector')->findOrFail($id);
+        $corrective_measure = CorrectiveMeasure::with('standard')->with('sector')->with('user')->findOrFail($id);
         return response()->json($corrective_measure);
     }
 

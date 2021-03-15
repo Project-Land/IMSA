@@ -33,6 +33,7 @@
                                     <th>{{__('Naziv merne opreme')}}</th>
                                     <th>{{__('Datum poslednjeg etaloniranja/baždarenja')}}</th>
                                     <th>{{__('Datum narednog etaloniranja/baždarenja')}}</th>
+                                    <th>{{__('Kreirao')}}</th>
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                     <td class="text-center">{{ $me->name }}</td>
                                     <td class="text-center">@if($me->last_calibration_date){{ date('d.m.Y', strtotime($me->last_calibration_date)) }}@else {{"/"}}@endif</td>
                                     <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
+                                    <td class="text-center">{{ $me->user->name }}</td>
                                     <td class="text-center">
                                         @canany(['update', 'delete'], $me)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena merne opreme')}}" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>

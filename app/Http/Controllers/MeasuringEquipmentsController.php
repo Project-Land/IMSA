@@ -26,7 +26,7 @@ class MeasuringEquipmentsController extends Controller
         $me = MeasuringEquipment::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->with('user')->get();
 
         return view('system_processes.measuring_equipments.index', ['measuring_equipment' => $me]);
     }
