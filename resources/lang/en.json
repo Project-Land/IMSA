@@ -670,8 +670,9 @@
     "Brisanje istaživanja incidenta":"Delete accident investigation",
     "Utvrđeno je" : "There was",
     "povreda na radu od čega je" : "work injuries from which",
-    "malih i" : "are minor and",
-    "velikih" : "are major",
+    "malih, " : "are minor, ",
+    "velikih i" : "are major and",
+    "incidenata bez povrede" : "accidents without injury",
     "Prikaz obuke" : "Training preview",
     "Sertifikat / Diploma / Izveštaj sa obuke" : "Certificate / Diploma / Training report",
     "Dodaj još jedan dokument":"Add another document",
@@ -712,6 +713,7 @@
     "Koeficijent ostvarenih ciljeva je":"The coefficient of achieved goals is",
     "od ukupno":"out of a total of",
     "Dokumenta" : "Documents",
-    "Interni proveravači" : "Internal auditors"
+    "Interni proveravači" : "Internal auditors",
+    "Da li je cilj ispunjen" : "Is the goal fulfilled"
 
 }

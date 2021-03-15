@@ -25,15 +25,13 @@
                     </select>
                 </div>
 
-                
                 <div class="form-group col-md-3">
                     <label for="level" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Nivo važnosti') }}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="level" name="level" required oninvalid="this.setCustomValidity('{{ __("Izaberite nivo") }}')" oninput="this.setCustomValidity('')">
-                            <option value=""   >{{ __('Izaberite nivo...') }}</option>
-                            <option value="1" {{ old('level') == "1" ? "selected" : "" }} >{{ __('Mali') }}</option>
-                            <option value="2" {{ old('level') == "2" ? "selected" : "" }} >{{ __('Srednji') }}</option>
-                            <option value="3" {{ old('level') == "3" ? "selected" : "" }}>{{ __('Veliki') }}</option>
-                       
+                        <option value="">{{ __('Izaberite nivo...') }}</option>
+                        <option value="1" {{ old('level') == "1" ? "selected" : "" }} >{{ __('Mali') }}</option>
+                        <option value="2" {{ old('level') == "2" ? "selected" : "" }} >{{ __('Srednji') }}</option>
+                        <option value="3" {{ old('level') == "3" ? "selected" : "" }}>{{ __('Veliki') }}</option>
                     </select>
                 </div>
 
@@ -44,7 +42,6 @@
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
-
             </div>
 
             <div class="form-row">
@@ -91,8 +88,21 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="analysis" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Analiza') }}</label>
-                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Da li je cilj ispunjen') }}</label>
+                            <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" name="status" disabled>
+                                <option value="0" selected>{{ __('Ne') }}</option>
+                                <option value="1">{{ __('Da') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="analysis" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Analiza') }}</label>
+                            <textarea rows="5" class="h-28 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" disabled>{{ old('analysis') }}</textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -15,8 +15,9 @@ class RiskManagement extends Model
 
     public static function getStats($teamId, $standardId, $year)
     {
-        $rm_total = RiskManagement::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->count();;
-        $rm_closed =Supplier::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('created_at', $year)->where('status', 0)->count();;
+        $rm_total = RiskManagement::where('team_id', $teamId)->where('standard_id', $standardId)->count();
+        $rm_closed =RiskManagement::where('team_id', $teamId)->where('standard_id', $standardId)->where('status', 0)->count();
+
         if($rm_total == 0){
             $rm_percentage = 0;
         }
