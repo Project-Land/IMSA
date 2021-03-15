@@ -33,7 +33,7 @@
 										{{ __('Obuke') }}
 									</th>
                                     <th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-										{{ __('Sertifikati') }}
+										{{ __('Interni proveravači') }}
 									</th>
 									<th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Akcije') }}</th>
 								</tr>
@@ -210,7 +210,7 @@
                                                 @foreach($certificates as $certificate)
                                                     <div class="px-4 py-3 border-t border-gray-200">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
-                                                            <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ $certificate->name }}</span>
+                                                            <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ $certificate->name == "editor"? __('Interni proveravač') : $certificate->name }}</span>
                                                         </label>
                                                     </div>
                                                 @endforeach

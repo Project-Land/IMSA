@@ -137,7 +137,7 @@
         }
     }
 
-   
+
 
 
     function checkGroup(group){
@@ -180,7 +180,7 @@
                 }else{
                     spanS=groupTitleBlock.querySelector('#span-success');
                     spanE=groupTitleBlock.querySelector('#span-error');
-                    
+
                 }
             }
             else{
@@ -252,7 +252,7 @@
                 groupTitleBlock.querySelector('#span-error').classList.remove('d-none');
             }
             else if(status == "Neprihvaćeno"){
-                
+
                 if (comment.trim() == ""){
                     error = true;
                     div.classList.add('border-2');

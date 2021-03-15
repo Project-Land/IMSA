@@ -273,7 +273,7 @@
                                                 ${ Object.keys(certificates).map(key => (
                                                     `<div class="px-4 py-3 border-t border-gray-200">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
-                                                            <input type="checkbox" name="certificates[]" value="${ certificates[key].id }" class="form-checkbox h-5 w-5 text-gray-600" ${ selectedCertificates.includes(certificates[key].id.toString()) ? 'checked':'' }><span class="ml-2 text-gray-700">${ certificates[key].name }</span>
+                                                            <input type="checkbox" name="certificates[]" value="${ certificates[key].id }" class="form-checkbox h-5 w-5 text-gray-600" ${ selectedCertificates.includes(certificates[key].id.toString()) ? 'checked':'' }><span class="ml-2 text-gray-700">${ certificates[key].name == "editor"? "{{ __('Interni proveravač') }}" : certificates[key].name }</span>
                                                         </label>
                                                     </div>`
                                                 )).join('') }
