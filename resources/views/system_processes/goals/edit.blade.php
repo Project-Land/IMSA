@@ -18,8 +18,8 @@
             @method('PUT')
 
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="year">{{ __('Godina') }}</label>
+                <div class="form-group col-md-3">
+                    <label for="year" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Godina') }}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="year" name="year" required oninvalid="this.setCustomValidity('{{ __("Izaberite godinu") }}')" oninput="this.setCustomValidity('')">
                         @foreach(range(2019, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == $goal->year ? "selected" : "" }}>{{ $year }}</option>
@@ -30,16 +30,15 @@
                 <div class="form-group col-md-3">
                     <label for="level" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Nivo važnosti') }}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="level" name="level" required oninvalid="this.setCustomValidity('{{ __("Izaberite nivo") }}')" oninput="this.setCustomValidity('')">
-                            <option value=""  >{{ __('Izaberite nivo') }}</option>
-                            <option value="1" @if($goal->level == '1'){{'selected'}} @endif >{{ __('Mali') }}</option>
-                            <option value="2" @if($goal->level == '2'){{'selected'}} @endif >{{ __('Srednji') }}</option>
-                            <option value="3" @if($goal->level == '3'){{'selected'}} @endif >{{ __('Veliki') }}</option>
-                       
+                        <option value="" >{{ __('Izaberite nivo') }}</option>
+                        <option value="1" @if($goal->level == '1'){{'selected'}} @endif >{{ __('Mali') }}</option>
+                        <option value="2" @if($goal->level == '2'){{'selected'}} @endif >{{ __('Srednji') }}</option>
+                        <option value="3" @if($goal->level == '3'){{'selected'}} @endif >{{ __('Veliki') }}</option>
                     </select>
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="responsibility">{{ __('Odgovornost za praćenje i realizaciju cilja') }}</label>
+                    <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odgovornost za praćenje i realizaciju cilja') }}</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="responsibility" id="responsibility" value="{{ $goal->responsibility }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @error('responsibility')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
@@ -55,35 +54,26 @@
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="deadline">{{ __('Rok za realizaciju cilja') }}</label>
+                <div class="form-group col-md-6">
+                    <label for="deadline" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju cilja') }}</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="xx.xx.xxxx" name="deadline" id="deadline" value="{{ date('d.m.Y', strtotime($goal->deadline)) }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @error('deadline')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="level1" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Da li je cilj ispunjen?') }}</label>
-                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="level1" name="level1" required oninvalid="this.setCustomValidity('{{ __("Izaberite nivo") }}')" oninput="this.setCustomValidity('')">
-                            <option value=""  >{{ __('Izaberite') }}</option>
-                            <option value="1" @if($goal->level == '1'){{'selected'}} @endif >{{ __('Da') }}</option>
-                            <option value="2" @if($goal->level == '2'){{'selected'}} @endif >{{ __('Ne') }}</option>
-                           
-                       
-                    </select>
-                </div>
+                
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="kpi">{{ __('KPI') }}</label>
+                    <label for="kpi" class="block text-gray-700 text-sm font-bold mb-2">{{ __('KPI') }}</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="kpi" id="kpi" value="{{ $goal->kpi }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @error('kpi')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="resources">{{ __('Resursi') }}</label>
+                    <label for="resources" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Resursi') }}</label>
                     <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="resources" id="resources" value="{{ $goal->resources }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @error('resources')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
@@ -94,15 +84,28 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="activities">{{ __('Aktivnosti') }}</label>
+                    <label for="activities" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Aktivnosti') }}</label>
                     <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="activities" id="activities" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">{{ $goal->activities }}</textarea>
                     @error('activities')
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="analysis">{{ __('Analiza') }}</label>
-                    <textarea rows="10" style="height:200px;" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis"  oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')" {{ $goal->deadline <= date('Y-m-d') ? "required" : "disabled" }} >{{ $goal->analysis }}</textarea>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Da li je cilj ispunjen') }}</label>
+                            <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status" name="status" {{ $goal->deadline <= date('Y-m-d') ? "required" : "disabled" }}>
+                                <option value="0" {{ $goal->status == 0 ? "selected":"" }}>{{ __('Ne') }}</option>
+                                <option value="1" {{ $goal->status == 1 ? "selected":"" }}>{{ __('Da') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="analysis" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Analiza') }}</label>
+                            <textarea rows="5" class="h-28 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="analysis" id="analysis" oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')" {{ $goal->deadline <= date('Y-m-d') ? "" : "disabled" }} >{{ $goal->analysis }}</textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
 

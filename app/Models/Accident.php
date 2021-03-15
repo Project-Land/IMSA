@@ -30,9 +30,10 @@ class Accident extends Model
     {
         $ac_total = Accident::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('injury_datetime', $year)->count();
         $ac_minor = Accident::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('injury_datetime', $year)->where('injury_type', "mala")->count();
-        $ac_major = Accident::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('injury_datetime', $year)->where('injury_type', "velika")->count();;
+        $ac_major = Accident::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('injury_datetime', $year)->where('injury_type', "velika")->count();
+        $ac_accident = Accident::where('team_id', $teamId)->where('standard_id', $standardId)->whereYear('injury_datetime', $year)->where('injury_type', "incident")->count();
 
-        return __("Utvrđeno je")." ".$ac_total." ".__("povreda na radu od čega je")." ".$ac_minor." ".__("malih i")." ".$ac_major." ".__("velikih");
+        return __("Utvrđeno je")." ".$ac_total." ".__("povreda na radu od čega je")." ".$ac_minor." ".__("malih, ")." ".$ac_major." ".__("velikih i ")." ".$ac_accident." ".__("incidenata bez povrede");
     }
 
 }
