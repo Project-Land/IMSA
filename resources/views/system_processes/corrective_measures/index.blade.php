@@ -19,11 +19,13 @@
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\CorrectiveMeasure::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('corrective-measures.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novu neusaglašenost / meru') }}</a>
+                    @can('create', App\Models\CorrectiveMeasure::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('corrective-measures.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novu neusaglašenost / meru') }}</a>
+                    @endcan
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('corrective-measures.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
-                @endcan
+
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">

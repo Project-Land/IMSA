@@ -23,7 +23,7 @@
                     @can('create', App\Models\RiskManagement::class)
                         <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj rizik / priliku') }}</a>
                     @endcan
-                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="#"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('risk-management.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">

@@ -102,6 +102,6 @@ class StakeholdersController extends Controller
             return redirect('/');
         }
 
-        return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')).'.xlsx');
+        return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')).'_'.session('standard_name').'.xlsx');
     }
 }

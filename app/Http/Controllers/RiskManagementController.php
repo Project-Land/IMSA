@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
 use App\Http\Requests\UpdateRiskManagementPlanRequest;
 use App\Http\Requests\RiskManagementRequest;
+use App\Exports\RiskManagementExport;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RiskManagementController extends Controller
 {
@@ -114,5 +117,13 @@ class RiskManagementController extends Controller
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
         return redirect('/risk-management');
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new RiskManagementExport, Str::snake(__('Rizici i prilike')).'_'.session('standard_name').'.xlsx');
     }
 }

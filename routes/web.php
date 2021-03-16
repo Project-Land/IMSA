@@ -92,9 +92,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('risk-management', RiskManagementController::class);
     Route::get('risk-management/{id}/plan-edit', [RiskManagementController::class, 'editPlan'])->name('risk-management.edit-plan');
     Route::put('risk-management/{id}/plan-update', [RiskManagementController::class, 'updatePlan'])->name('risk-management.update-plan');
+    Route::get('risk-management-export', [RiskManagementController::class, 'export'])->name('risk-management.export');
 
     Route::resource('corrective-measures', CorrectiveMeasuresController::class);
     Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
+    Route::get('corrective-measures-export', [CorrectiveMeasuresController::class, 'export'])->name('corrective-measures.export');
 
     Route::resource('stakeholders', StakeholdersController::class);
     Route::get('stakeholders-export', [StakeholdersController::class, 'export'])->name('stakeholders.export');

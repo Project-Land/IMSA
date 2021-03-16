@@ -10,6 +10,9 @@ use App\Models\Notification;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CorrectiveMeasuresRequest;
+use App\Exports\CorrectiveMeasuresExport;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CorrectiveMeasuresController extends Controller
 {
@@ -141,5 +144,13 @@ class CorrectiveMeasuresController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja neusaglašenosti / korektivne mere "'.$correctiveMeasure->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new CorrectiveMeasuresExport, Str::snake(__('Neusaglašenosti i korektivne mere')).'_'.session('standard_name').'.xlsx');
     }
 }
