@@ -159,8 +159,9 @@ class InternalCheckReportController extends Controller
         ], ['inconsistencies.*.required' => 'Neusaglašenost nije popunjena (popunite ili obrišite)']);
 
         $recommendationsData = $request->validate([
-            'recommendations.*' => 'required',
-        ], ['recommendations.*.required' => 'Preporuka nije popunjena (popunite ili obrišite polje)']);
+            'recommendations.*' => 'string',
+        ], ['recommendations.*.required' => 'Preporuka nije popunjena (popunite ili obrišite polje)']);if(!$recommendationsData) $recommendationsData['recommendations']=[];
+        
 
         $recInputs=[]; $recMsg=[];
         for($i = 1; $i <= 10; $i++){
