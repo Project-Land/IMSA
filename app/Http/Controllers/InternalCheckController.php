@@ -6,16 +6,19 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Team;
 use App\Models\PlanIp;
-use App\Models\InternalCheckReport;
 use App\Facades\CustomLog;
-use App\Http\Requests\StoreInternalCheckRequest;
-use App\Http\Requests\UpdateInternalCheckRequest;
+use Illuminate\Support\Str;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Models\InternalCheck;
-
 use Illuminate\Support\Facades\DB;
+use App\Models\InternalCheckReport;
+
+use App\Exports\InternalCheckExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\StoreInternalCheckRequest;
+use App\Http\Requests\UpdateInternalCheckRequest;
 
 
 class InternalCheckController extends Controller
@@ -227,5 +230,14 @@ class InternalCheckController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja godišnjeg plana interne provere id: "'.$internal_check->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+
+        return Excel::download(new InternalCheckExport, Str::snake(__('Interne provere')).'_'.session('standard_name').'.xlsx');
     }
 }

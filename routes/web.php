@@ -80,7 +80,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('external-documents-restore/{id}', [ExternalDocumentsController::class, 'restore'])->name('external-documents.restore');
 
     Route::resource('sectors', SectorsController::class);
-
+    Route::get('internal-check-export', [InternalCheckController::class, 'export'])->name('internal-check.export');
     Route::resource('internal-check', InternalCheckController::class);
     Route::get('internal-check/get-data/{year}', [InternalCheckController::class, 'getData']);
 
