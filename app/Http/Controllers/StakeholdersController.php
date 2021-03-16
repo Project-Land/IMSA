@@ -7,6 +7,9 @@ use App\Models\Stakeholder;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
 use App\Http\Requests\StakeholdersRequest;
+use App\Exports\StakeholdersExport;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StakeholdersController extends Controller
 {
@@ -91,5 +94,14 @@ class StakeholdersController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja zainteresovane strane '.$stakeholder->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+
+        return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')).'.xlsx');
     }
 }

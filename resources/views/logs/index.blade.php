@@ -96,7 +96,8 @@
                                         {{ Str::of($log['user'])->split('/[,]+/')[1] }}
                                     </td>
                                     <td class="py-2 px-6 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                        {{ Str::of($log['time'])->split('/[\s]+/')[0] }} u {{ Str::of($log['time'])->split('/[\s]+/')[1] }}
+                                        {{-- {{ Str::of($log['time'])->split('/[\s]+/')[0] }} u {{ Str::of($log['time'])->split('/[\s]+/')[1] }} --}}
+                                        {{ strtok($log['time'], ' ')." u ".strtok(' ') }}
                                     </td>
                                 </tr>
                                 @endforeach

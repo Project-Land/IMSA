@@ -97,6 +97,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('corrective-measures/store-from-icr',[CorrectiveMeasuresController::class, 'storeApi'])->name('corrective-measures.store-from-icr');
 
     Route::resource('stakeholders', StakeholdersController::class);
+    Route::get('stakeholders-export', [StakeholdersController::class, 'export'])->name('stakeholders.export');
 
     Route::resource('suppliers', SuppliersController::class);
 

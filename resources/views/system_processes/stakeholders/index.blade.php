@@ -19,11 +19,12 @@
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\Stakeholder::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('stakeholders.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj zainteresovanu stranu')}}</a>
+                    @can('create', App\Models\Stakeholder::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('stakeholders.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj zainteresovanu stranu')}}</a>
+                    @endcan
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('stakeholders.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
-                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
