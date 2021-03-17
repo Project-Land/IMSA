@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Soa;
-use App\Models\SoaField;
-use App\Models\SoaFieldGroup;
 use App\Models\Document;
+use App\Models\SoaField;
 use App\Facades\CustomLog;
+use App\Exports\SoasExport;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\SoaFieldGroup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SoaController extends Controller
 {
@@ -138,6 +141,14 @@ class SoaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new SoasExport, Str::snake(__('Izjava o primenjivosti')).'_'.session('standard_name').'.xlsx');
     }
 
 }

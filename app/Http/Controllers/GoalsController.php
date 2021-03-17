@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Goal;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
+use App\Exports\GoalsExport;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Http\Requests\GoalsRequest;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GoalsController extends Controller
 {
@@ -159,5 +162,17 @@ class GoalsController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja cilja id: "'.$goal->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return false;
         }
+    }
+
+    public function export(Request $request)
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        if($request->year == null){
+            $request->year=date('Y');
+        }
+
+        return Excel::download(new GoalsExport($request->year), Str::snake(__('Ciljevi')).'_'.session('standard_name').'.xlsx');
     }
 }

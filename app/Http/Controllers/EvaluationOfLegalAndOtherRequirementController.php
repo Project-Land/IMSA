@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Exception;
 use Carbon\Carbon;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use App\Models\CorrectiveMeasure;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\EvaluationOfLegalAndOtherRequirement;
 use App\Http\Requests\EvaluationOfRequirementRequest;
+use App\Exports\EvaluationOfLegalAndOtherRequirementsExport;
 
 class EvaluationOfLegalAndOtherRequirementController extends Controller
 {
@@ -190,6 +193,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                            // 'measure_date' => Carbon::now(),
                            // 'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
                         ]);
+                        if( !$correctiveMeasure->measure_status)$correctiveMeasure->measure_effective=null;
                     }else{
                             $correctiveMeasure=CorrectiveMeasure::create([
                             'noncompliance_source' => $correctiveMeasureData['noncompliance_source'],
@@ -239,6 +243,14 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja Vrednovanja zakonskih i drugih zahteva id: "'.$requirement->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new  EvaluationOfLegalAndOtherRequirementsExport(), Str::snake(__('Vrednovanje zakonskih i drugih zahteva')).'_'.session('standard_name').'.xlsx');
     }
 
 }

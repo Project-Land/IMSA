@@ -33,7 +33,7 @@
                         <div class="col-sm-4 mt-3 mt-md-0">
                             <form id="formYear" class="form-inline" method="get" action="{{ asset('/internal-check/get-data') }}">
                                 <label for="year" class="mr-3 mt-sm-0 mt-2 text-xs sm:text-base">{{ __('Godina') }}</label>
-                                <select id="year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select id="year"  class="w-2/3 sm:w-1/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
                                         @else
@@ -46,7 +46,7 @@
                             </form>
                         </div>
                         <div class="col-sm-4 float-right">
-                        <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/internal-check-export'.'?year='.session('year') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                         </div>
                     </div>
                 </div>
@@ -322,4 +322,6 @@
 
     $('[data-toggle="tooltip"]').tooltip();
 
+
+   
 </script>

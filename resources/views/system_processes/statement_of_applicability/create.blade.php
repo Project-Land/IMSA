@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option  @if( old($field->id.'.status')=='Prihvaćeno' ){{'selected'}} @endif value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option  @if( old($field->id.'.status')=='Neprihvaćeno' ){{'selected'}} @endif value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
-                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenjivo">{{ __('Nije primenjivo') }}</option>
+                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenljivo">{{ __('Nije primenjivo') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>

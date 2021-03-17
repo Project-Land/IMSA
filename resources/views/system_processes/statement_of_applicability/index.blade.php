@@ -12,6 +12,7 @@
                 <x-alert :type="Session::get('status')[0]" :message="__(Session::get('status')[1])"/>
             @endif
         </div>
+       
     </div>
 
     <div class="row mt-3">
@@ -20,14 +21,17 @@
 
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-4">
+                    <div class="">
+                       
                             @can('create', App\Models\Soa::class)
                                 <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj izjavu') }}</a>
                             @else
                                 <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('statement-of-applicability.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Popuni / Izmeni izjavu') }}</a>
                             @endcan
-                        </div>
+                       
+                       
+                            <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/statement-of-applicability-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                        
                     </div>
                 </div>
                 <div class="card-body bg-white mt-3">
@@ -75,7 +79,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <p>Kreirao: {{ $soas[0]->user->name }}</p>
+                    <p>Kreirao: {{ $soas[0]->user->name ?? "" }}</p>
                 </div>
             </div>
 

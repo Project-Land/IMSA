@@ -113,6 +113,10 @@ class CorrectiveMeasuresController extends Controller
 
         try{
             $correctiveMeasure->update($request->except('name'));
+            if( !$correctiveMeasure->measure_status){
+                $correctiveMeasure->measure_effective=null;
+                $correctiveMeasure->save();
+            }
             $notification = $correctiveMeasure->notification;
             if(!$notification){
                 $notification=new Notification();
