@@ -644,6 +644,7 @@
     "Datum i vreme povrede":"Date and time of injury",
     "Uzrok povrede":"Cause of injury",
     "KRATAK OPIS POVREDE/INCIDENTA <br>(kako je došlo do povrede/incidenta - u fazama)":"BRIEF DESCRIPTION OF THE INJURY/ACCIDENT <br>(how the injury/accident occurred - in stages)",
+    "KRATAK OPIS POVREDE/INCIDENTA (kako je došlo do povrede/incidenta - u fazama)" : "BRIEF DESCRIPTION OF THE INJURY/ACCIDENT (how the injury/accident occurred - in stages)",
     "Šta je greška?":"What is wrong?",
     "Po čijem je nalogu radio?":"On whose orders was he/she working?",
     "Da li je obučen za rad i upoznat sa opasnostima i rizicima za te poslove?":"Is he/she trained to work and aware of the dangers and risks to those jobs?",
@@ -651,7 +652,9 @@
     "Da li je radio na poslovima sa povećanim rizikom?":"Did he/she work on a high-risk jobs?",
     "Da li ispunjava sve uslove za te poslove?":"Does he/she meet all the requirements for these jobs?",
     "Podaci o svedoku-očevicu<br>- Ime, prezime i broj telefona (ako je bilo)":"Witness-eyewitness data<br>- Name, surname and telephone number (if any)",
+    "Podaci o svedoku-očevicu: Ime, prezime i broj telefona (ako je bilo)" : "Witness-eyewitness data: Name, surname and telephone number (if any)",
     "Podaci o neposrednom rukovodiocu povređenog/aktera incidenta<br>- Ime, prezime i radno mesto":"Info on the immediate supervisor of the injured/accident participant<br>- Name, surname and job title",
+    "Podaci o neposrednom rukovodiocu povređenog/aktera incidenta: Ime, prezime i radno mesto" : "Info on the immediate supervisor of the injured/accident participant: Name, surname and job title",
     "Datum i vreme prijave povrede/incidenta":"Date and time of the injury/accident report",
     "Zapažanje/komentar":"Observation/comment",
     "Istraživanje incidenata":"Accident investigations",
@@ -719,6 +722,11 @@
     "Aspekt životne sredine": "Environmental aspect",
     "Tabela zainteresovanih strana" : "List of all stakeholders",
     "Tabela rizika i prilika" : "List of all risks and opportunities",
-    "Tabela neusaglašenosti i korektivnih mera" : "List of nonconformities and corrective actions"
+    "Tabela neusaglašenosti i korektivnih mera" : "List of nonconformities and corrective actions",
+    "Tabela obuka" : "List of all trainings",
+    "Sve godine" : "All years",
+    "Tabela odobrenih isporučilaca" : "List of all suppliers",
+    "Tabela reklamacija" : "List of all compliances",
+    "Eksport zapisnika u excel" : "Export to excel"
 
 }

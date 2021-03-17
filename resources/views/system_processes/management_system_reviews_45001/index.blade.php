@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Zapisnici sa preispitivanja') }}
         </h2>
     </x-slot>
@@ -28,10 +28,11 @@
                         </div>
                         <div class="col-sm-8">
                             <form class="form-inline">
-                                <label for="year" class="mr-3">{{__('Godina')}}</label>
-                                <select name="year" id="reviews-year" class="form-control w-25 mr-2">
-                                    @foreach(range(2019, date('Y')+10) as $year)
-                                        <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
+                                <label for="year" class="mr-3 text-xs md:text-base">{{__('Godina')}}</label>
+                                <select name="year" id="reviews-year" class="w-1/3 sm:w-1/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option value="all">{{ __('Sve godine') }}</option>
+                                    @foreach(range(2020, date('Y')+10) as $year)
+                                        <option value="{{ $year }}">{{ $year }}</option>
                                     @endforeach
                                 </select>
                             </form>
@@ -53,8 +54,11 @@
                                     <td class="text-center">{{__('Zapisnik sa preispitivanja')}} {{ $m->year }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled zapisnika')}}" class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
-                                        @canany(['update', 'delete'], $m)
+                                        @canany(['update'], $m)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena zapisnika')}}" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
+                                        @endcanany
+                                        <a href="{{ route('msr.export', $m->id) }}" class="text-green-500 hover:text-green-700" data-toggle="tooltip" data-placement="top" title="{{__('Eksport zapisnika u excel')}}"><i class="fas fa-file-export"></i></a>
+                                        @canany(['delete'], $m)
                                         <form class="inline" id="delete-form-{{ $m->id }}" action="{{ route('management-system-reviews.destroy', $m->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
@@ -236,7 +240,10 @@
                                 <button class="button text-primary" onclick="showMSR(${ item.id })"><i class="fas fa-eye"></i></button>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a href="/management-system-reviews/${ item.id }/edit"><i class="fas fa-edit"></i></a>
-                                    <a style="cursor: pointer; color: red;" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
+                                </span>
+                                <a href="/msr-export/${ item.id }" class="text-green-500 hover:text-green-700" data-toggle="tooltip" data-placement="top" title="{{__('Eksport zapisnika u excel')}}"><i class="fas fa-file-export"></i></a>
+                                <span class="${ item.isAdmin === false ? 'd-none' : '' }">
+                                    <a class="cursor-pointer text-red-600 hover:text-red-800" onclick="deleteSingleReview(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>
                                 </span>
                             </td>
                         </tr>

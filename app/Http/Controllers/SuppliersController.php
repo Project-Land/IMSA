@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
 use App\Models\Notification;
 use App\Http\Requests\SuppliersRequest;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SuppliersExport;
 
 class SuppliersController extends Controller
 {
@@ -118,5 +121,13 @@ class SuppliersController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja isporučioca "'.$supplier->supplier_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new SuppliersExport, Str::snake(__('Odobreni isporučioci')).'_'.session('standard_name').'.xlsx');
     }
 }

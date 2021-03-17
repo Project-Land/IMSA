@@ -21,6 +21,11 @@ class Training extends Model
         return $this->belongsTo('App\Models\Team');
     }
 
+    public function standard()
+    {
+        return $this->belongsTo('App\Models\Standard');
+    }
+
     public function documents()
     {
         return $this->hasMany(Document::class);

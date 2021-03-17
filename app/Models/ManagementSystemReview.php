@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ManagementSystemReview extends Model
 {
     protected $table = "management_system_reviews";
-    
+
     use HasFactory;
 
     protected $guarded = [];
@@ -21,5 +21,10 @@ class ManagementSystemReview extends Model
     public function team()
     {
         return $this->belongsTo('App\Models\Team');
+    }
+
+    public function standard()
+    {
+        return $this->belongsTo('App\Models\Standard');
     }
 }

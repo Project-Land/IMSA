@@ -102,12 +102,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('stakeholders-export', [StakeholdersController::class, 'export'])->name('stakeholders.export');
 
     Route::resource('suppliers', SuppliersController::class);
+    Route::get('suppliers-export', [SuppliersController::class, 'export'])->name('suppliers.export');
 
     Route::resource('trainings', TrainingsController::class);
     Route::post('trainings/get-data', [TrainingsController::class, 'getData']);
     Route::delete('trainings/delete/{id}', [TrainingsController::class, 'deleteApi']);
+    Route::get('trainings-export', [TrainingsController::class, 'export'])->name('trainings.export');
 
     Route::resource('complaints', ComplaintsController::class);
+    Route::get('complaints-export', [ComplaintsController::class, 'export'])->name('complaints.export');
 
     Route::resource('plan-ip', PlanIpController::class);
 
@@ -117,6 +120,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('management-system-reviews', ManagementSystemReviewsController::class);
     Route::post('management-system-reviews/get-data', [ManagementSystemReviewsController::class, 'getData']);
     Route::delete('management-system-reviews/delete/{id}', [ManagementSystemReviewsController::class, 'deleteApi']);
+    Route::get('msr-export/{id}', [ManagementSystemReviewsController::class, 'export'])->name('msr.export');
 
     Route::get('system-processes/add-to-standard', [SystemProcessesController::class, 'addToStandard'])->name('system-processes.add-to-standard');
     Route::post('system-processes/store-to-standard', [SystemProcessesController::class, 'storeToStandard'])->name('system-processes.store-to-standard');
@@ -149,6 +153,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
     Route::resource('accidents', AccidentController::class);
+    Route::get('accidents-export', [AccidentController::class, 'export'])->name('accidents.export');
 
     Route::resource('statement-of-applicability', SoaController::class);
 

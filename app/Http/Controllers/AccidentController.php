@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Accident;
+use Illuminate\Support\Str;
 use App\Facades\CustomLog;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AccidentRequest;
+use App\Exports\AccidentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AccidentController extends Controller
 {
@@ -86,5 +89,13 @@ class AccidentController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja istraživanja incidenta za radnika "'.$accident->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new AccidentsExport, Str::snake(__('Istraživanje incidenata')).'_'.session('standard_name').'.xlsx');
     }
 }

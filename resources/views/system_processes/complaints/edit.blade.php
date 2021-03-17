@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Reklamacija') }}  - {{ __('Izmena') }}
         </h2>
     </x-slot>
@@ -125,7 +125,7 @@
 					</select>
 				</div>
 
-				<div class="mb-4 d-none" id="closing_date_block">
+				<div class="mb-4 {{ $complaint->closing_date == null ? 'd-none':'' }}" id="closing_date_block">
 					<label for="closing_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Datum zatvaranja')}}:</label>
 					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" value="{{ $complaint->closing_date }}" disabled>
 				</div>

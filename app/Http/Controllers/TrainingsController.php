@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Document;
 use App\Models\Training;
@@ -13,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TrainingRequest;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TrainingsExport;
 
 class TrainingsController extends Controller
 {
@@ -23,19 +24,31 @@ class TrainingsController extends Controller
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
+
+        session(['training_year' => date('Y')]);
         $trainingPlans = Training::where([
                 ['standard_id', session('standard')],
                 ['year', date('Y')],
                 ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
+
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 
     public function getData(Request $request) {
-        $trainingPlans = Training::where([
+        if($request->data['year'] == 'all'){
+            session(['training_year' => 'all']);
+            $trainingPlans = Training::where([
+                ['standard_id', session('standard')]
+            ])->orderBy('training_date', 'desc')->get();
+        }
+        else{
+            session(['training_year' => $request->data['year']]);
+            $trainingPlans = Training::where([
                 ['standard_id', session('standard')],
                 ['year', $request->data['year']]
-            ])->get();
+            ])->orderBy('training_date', 'desc')->get();
+        }
 
         $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
 
@@ -203,5 +216,13 @@ class TrainingsController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja obuke "'.$trainingPlan->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return false;
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new TrainingsExport, Str::snake(__('Obuke')).'_'.session('standard_name').'.xlsx');
     }
 }

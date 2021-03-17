@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Godišnji plan internih provera') }}
         </h2>
     </x-slot>
@@ -27,7 +27,7 @@
                             @can('create', App\Models\InternalCheck::class)
 						        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('internal-check.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novu internu proveru') }}</a>
 					        @endcan
-                           
+
                         </div>
 
                         <div class="col-sm-4 mt-3 mt-md-0">

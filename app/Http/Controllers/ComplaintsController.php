@@ -11,6 +11,8 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ComplaintsRequest;
+use App\Exports\ComplaintsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ComplaintsController extends Controller
 {
@@ -183,5 +185,13 @@ class ComplaintsController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja reklamacije "'.$complaint->name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new ComplaintsExport, Str::snake(__('Reklamacije')).'_'.session('standard_name').'.xlsx');
     }
 }

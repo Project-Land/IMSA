@@ -20,21 +20,25 @@
 
             <div class="card">
                 <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-4">
+                    <div class="flex flex-wrap justify-between">
+                        <div class="w-full sm:flex-1">
                             @can('create', App\Models\Training::class)
-                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj obuku') }}</a>
+                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('trainings.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj obuku') }}</a>
                             @endcan
                         </div>
-                        <div class="col-sm-8">
+                        <div class="w-full sm:flex-1">
                             <form class="form-inline">
-                                <label for="year" class="mr-3">{{ __('Godina') }}</label>
-                                <select name="year" id="trainings-year" class="form-control w-25 mr-2">
-                                    @foreach(range(2019, date('Y')+10) as $year)
+                                <label for="year" class="mr-3 text-xs md:text-base">{{ __('Godina') }}</label>
+                                <select name="year" id="trainings-year" class="w-1/3 sm:w-2/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option value="all">{{ __('Sve godine') }}</option>
+                                    @foreach(range(2020, date('Y')+10) as $year)
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
                             </form>
+                        </div>
+                        <div class="w-full sm:flex-1">
+                            <a class="inline-block sm:float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('trainings.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                         </div>
                     </div>
                 </div>

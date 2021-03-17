@@ -90,7 +90,7 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
             'K' => 55,
             'L' => 55,
             'M' => 55,
-            
+
         ];
     }
 
@@ -116,8 +116,8 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
             $internalCheck->planIp->check_end ?? '/',
             $internalCheck->planIp->report_deadline ?? '/',
             $internalCheck->internalCheckReport->specification ?? '/',
-            $internalCheck->internalCheckReport->recommendations ?$internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(' / ') : '/',
-            $internalCheck->internalCheckReport->correctiveMeasures ? $internalCheck->internalCheckReport->correctiveMeasures()->pluck('name')->implode(' -- ') : '/',
+            isset($internalCheck->internalCheckReport->recommendations) ? $internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(' / ') : '/',
+            isset($internalCheck->internalCheckReport->correctiveMeasures) ? $internalCheck->internalCheckReport->correctiveMeasures()->pluck('name')->implode(' -- ') : '/',
         ];
     }
 }

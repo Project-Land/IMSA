@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ Session::get('standard_name') }} - {{ __('Reklamacije') }}
         </h2>
     </x-slot>
@@ -19,11 +19,12 @@
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\Complaint::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('complaints.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj reklamaciju')}}</a>
+                    @can('create', App\Models\Complaint::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('complaints.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj reklamaciju')}}</a>
+                    @endcan
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('complaints.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
-                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -65,7 +66,7 @@
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
                                     <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
                                    {{-- <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td> --}}
-                                    <td class="text-center">{{ ($c->status == '1') ? 'Otvorena' : 'Zatvorena' }}</td>
+                                    <td class="text-center">{{ ($c->status == '1') ? __('Otvorena') : __('Zatvorena') }}</td>
                                     <td class="text-center">
                                     <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled reklamacije') }}" class="button text-primary" onclick="showComplaint({{ $c->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $c)
@@ -193,6 +194,8 @@ if(id){
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.way_of_solving ? response.data.way_of_solving :'/' }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 1 ? "{{ __('Otvorena') }}":"{{ __('Zatvorena') }}" }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum zatvaranja') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${response.data.closing_date ? new Date (response.data.closing_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : '/' }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name  }</p></div>
                                     </div>

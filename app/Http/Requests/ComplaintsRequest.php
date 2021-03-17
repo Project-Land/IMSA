@@ -44,8 +44,6 @@ class ComplaintsRequest extends FormRequest
             'way_of_solving' => 'nullable|max:190',
             'deadline_date' => 'nullable|after:submission_date',
             'file[]'=>'nullable',
-           
-
         ];
     }
 
@@ -88,7 +86,7 @@ class ComplaintsRequest extends FormRequest
             'submission_date' => $this->submission_date != null ?  date('Y-m-d', strtotime($this->submission_date)) : null,
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'status' => $this->status != null ? $this->status : 0,
-            'closing_date' => $this->status === 1 ? date('Y-m-d') : null
+            'closing_date' => $this->status == 0 ? date('Y-m-d') : null
         ]);
     }
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Odobreni isporučioci') }}
         </h2>
     </x-slot>
@@ -19,11 +19,12 @@
         <div class="col">
 
             <div class="card">
-                @can('create', App\Models\Supplier::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj isporučioca') }}</a>
+                    @can('create', App\Models\Supplier::class)
+                        <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('suppliers.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj isporučioca') }}</a>
+                    @endcan
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('suppliers.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
-                @endcan
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Support\Str;
 use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ManagementSystemReview;
 use App\Http\Requests\ManagementSystemReviewRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ManagementSystemReviews9001Export;
+use App\Exports\ManagementSystemReviews14001Export;
+use App\Exports\ManagementSystemReviews45001Export;
 
 class ManagementSystemReviewsController extends Controller
 {
@@ -20,7 +25,7 @@ class ManagementSystemReviewsController extends Controller
 
         $msr = ManagementSystemReview::where([
                 ['standard_id', session('standard')],
-                ['team_id',Auth::user()->current_team_id]
+                ['team_id',Auth::user()->current_team_id],
             ])->get();
 
         return view('system_processes.management_system_reviews_'.session('standard_name').'.index', compact('msr'));
@@ -28,10 +33,18 @@ class ManagementSystemReviewsController extends Controller
 
     public function getData(Request $request)
     {
-        $reviews = ManagementSystemReview::where([
+        if($request->data['year'] == 'all'){
+            $reviews = ManagementSystemReview::where([
+                ['standard_id', session('standard')],
+            ])->get();
+        }
+
+        else{
+            $reviews = ManagementSystemReview::where([
                 ['standard_id', session('standard')],
                 ['year', $request->data['year']]
             ])->get();
+        }
 
         $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
 
@@ -129,6 +142,24 @@ class ManagementSystemReviewsController extends Controller
         } catch(Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja zapisnika sa preispitivanja "'.$msr->year.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return false;
+        }
+    }
+
+    public function export($id)
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        $standard_name = session('standard_name');
+
+        if($standard_name == 9001){
+            return (new ManagementSystemReviews9001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
+        }
+        if($standard_name == 14001){
+            return (new ManagementSystemReviews14001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
+        }
+        if($standard_name == 45001){
+            return (new ManagementSystemReviews45001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
         }
     }
 }
