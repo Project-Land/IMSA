@@ -232,12 +232,15 @@ class InternalCheckController extends Controller
         }
     }
 
-    public function export()
+    public function export(Request $request)
     {
         if(empty(session('standard'))){
             return redirect('/');
         }
+        if($request->year == null){
+            $request->year=date('Y');
+        }
 
-        return Excel::download(new InternalCheckExport, Str::snake(__('Interne provere')).'_'.session('standard_name').'.xlsx');
+        return Excel::download(new InternalCheckExport($request->year), Str::snake(__('Interne provere')).'_'.session('standard_name').'.xlsx');
     }
 }

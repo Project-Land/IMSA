@@ -23,7 +23,11 @@
                     @can('create', App\Models\EnvironmentalAspect::class)
                         <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('environmental-aspects.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj aspekt')}}</a>
                     @endcan
+                    <div class="col-sm-4 float-right">
+                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/environmental-aspects-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                    </div>
                 </div>
+                
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">

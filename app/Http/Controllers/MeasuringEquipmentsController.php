@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\MeasuringEquipment;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use App\Models\Notification;
+use App\Models\MeasuringEquipment;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MeasuringEquipmentsExport;
 use App\Http\Requests\MeasuringEquipmentsRequest;
 
 class MeasuringEquipmentsController extends Controller
@@ -120,5 +123,13 @@ class MeasuringEquipmentsController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja merne opreme id: "'.$me->id.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new MeasuringEquipmentsExport(), Str::snake(__('Merna oprema')).'_'.session('standard_name').'.xlsx');
     }
 }

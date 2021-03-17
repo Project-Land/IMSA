@@ -22,6 +22,9 @@
                 @can('create', App\Models\MeasuringEquipment::class)
                 <div class="card-header">
                     <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('measuring-equipment.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj mernu opremu')}}</a>
+                    <div class="col-sm-4 float-right">
+                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/measuring-equipment-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                    </div>
                 </div>
                 @endcan
                 <div class="card-body bg-white mt-3">

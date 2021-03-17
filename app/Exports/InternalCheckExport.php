@@ -17,6 +17,13 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles,WithMapping, WithColumnWidths, WithProperties
 {
+    private $year;
+    public function __construct($year)
+    {
+         $this->year=$year;
+    }
+
+
     public function properties(): array
     {
         return [
@@ -52,7 +59,7 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
         $count = InternalCheck::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->count() + 1;
+        ])->whereYear('created_at', $this->year)->count() + 1;
 
         $sheet->getStyle('A1:M1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
         $sheet->getStyle('A2:M'.$count)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
@@ -99,7 +106,7 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
         return InternalCheck::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->with(['standard','sector','user','planIp','internalCheckReport.recommendations','internalCheckReport.correctiveMeasures'])->get();
+        ])->whereYear('created_at', $this->year)->with(['standard','sector','user','planIp','internalCheckReport.recommendations','internalCheckReport.correctiveMeasures'])->get();
     }
 
     public function map($internalCheck): array
@@ -116,8 +123,8 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
             $internalCheck->planIp->check_end ?? '/',
             $internalCheck->planIp->report_deadline ?? '/',
             $internalCheck->internalCheckReport->specification ?? '/',
-            $internalCheck->internalCheckReport->recommendations ?$internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(' / ') : '/',
-            $internalCheck->internalCheckReport->correctiveMeasures ? $internalCheck->internalCheckReport->correctiveMeasures()->pluck('name')->implode(' -- ') : '/',
+            isset($internalCheck->internalCheckReport->recommendations) ?$internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(' / ') : '/',
+            isset($internalCheck->internalCheckReport->correctiveMeasures) ? $internalCheck->internalCheckReport->correctiveMeasures()->pluck('name')->implode(' -- ') : '/',
         ];
     }
 }

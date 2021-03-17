@@ -83,7 +83,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('internal-check-export', [InternalCheckController::class, 'export'])->name('internal-check.export');
     Route::resource('internal-check', InternalCheckController::class);
     Route::get('internal-check/get-data/{year}', [InternalCheckController::class, 'getData']);
-
+    Route::get('goals-export', [GoalsController::class, 'export'])->name('goals.export');
     Route::resource('goals', GoalsController::class);
     Route::post('goals/filter-year', [GoalsController::class, 'filterYear'])->name('goals.filter-year');
     Route::post('goals/get-data', [GoalsController::class, 'getData']);
@@ -122,8 +122,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('system-processes/store-to-standard', [SystemProcessesController::class, 'storeToStandard'])->name('system-processes.store-to-standard');
     Route::post('system-processes/get-by-standard', [SystemProcessesController::class, 'getByStandard']);
 
+    Route::get('measuring-equipment-export', [MeasuringEquipmentsController::class, 'export'])->name('measuring-equipment.export');
     Route::resource('measuring-equipment', MeasuringEquipmentsController::class);
 
+    Route::get('environmental-aspects-export', [EnvironmentalAspectsController::class, 'export'])->name('environmental-aspects.export');
     Route::resource('environmental-aspects', EnvironmentalAspectsController::class);
 
     Route::get('teams', [TeamController::class, 'index'])->name('teams.index');
@@ -146,10 +148,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
 
+    Route::get('evaluation-of-requirements-export', [EvaluationOfLegalAndOtherRequirementController::class, 'export'])->name('evaluation-of-requirements.export');
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
     Route::resource('accidents', AccidentController::class);
 
+    Route::get('statement-of-applicability-export', [SoaController::class, 'export'])->name('statement-of-applicability.export');
     Route::resource('statement-of-applicability', SoaController::class);
 
     Route::get('certificates', [TeamController::class, 'getAllCertificates']);

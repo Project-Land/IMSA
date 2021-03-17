@@ -26,15 +26,18 @@
                                 <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('goals.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj novi cilj') }}</a>
                             @endcan
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-4">
                             <form class="form-inline">
                                 <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">{{ __('Godina') }}</label>
-                                <select name="goals-year" id="goals-year" class="w-2/3 sm:w-1/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select name="goals-year" id="goals-year" onchange="excelYear()" class="w-2/3 sm:w-1/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     @foreach(range(2019, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
                             </form>
+                        </div>
+                        <div class="col-sm-4 float-right">
+                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/goals-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                         </div>
                     </div>
                 </div>
@@ -278,5 +281,11 @@
     }
 
     $('[data-toggle="tooltip"]').tooltip();
+
+    function excelYear(){
+       
+        document.getElementById('excelBtn').href += '?year='+document.getElementById('goals-year').value;
+   }
+
 
 </script>

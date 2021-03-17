@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use App\Models\EnvironmentalAspect;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EnvironmentalAspectsExport;
 use App\Http\Requests\EnvironmentalAspectsRequest;
 
 class EnvironmentalAspectsController extends Controller
@@ -92,5 +95,13 @@ class EnvironmentalAspectsController extends Controller
             CustomLog::warning('Neuspeli pokušaj brisanja aspekta životne sredine za proces "'.$environmental_aspect->process.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo')));
         }
+    }
+
+    public function export()
+    {
+        if(empty(session('standard'))){
+            return redirect('/');
+        }
+        return Excel::download(new EnvironmentalAspectsExport, Str::snake(__('Aspekti životne sredine')).'_'.session('standard_name').'.xlsx');
     }
 }
