@@ -24,6 +24,8 @@ use App\Models\User;
 use App\Models\Soa;
 use App\Models\Standard;
 use App\Models\SystemProcess;
+use App\Models\CustomerSatisfaction;
+use App\Models\SatisfactionColumn;
 use App\Policies\AccidentPolicy;
 use App\Policies\CorrectiveMeasurePolicy;
 use App\Policies\DocumentPolicy;
@@ -47,6 +49,8 @@ use App\Policies\StandardPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\SystemProcessPolicy;
 use App\Policies\SoaPolicy;
+use App\Policies\CustomerSatisfactionPolicy;
+use App\Policies\SatisfactionColumnsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -81,6 +85,9 @@ class AuthServiceProvider extends ServiceProvider
         EvaluationOfLegalAndOtherRequirement::class => EvaluationOfLegalAndOtherRequirementPolicy::class,
         Accident::class => AccidentPolicy::class,
         Soa::class => SoaPolicy::class,
+        CustomerSatisfaction::class => CustomerSatisfactionPolicy::class,
+        SatisfactionColumn::class => SatisfactionColumnsPolicy::class
+
     ];
 
     /**

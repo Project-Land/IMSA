@@ -20,15 +20,15 @@
 
             <div class="card">
                 <div class="card-header">
-                    {{-- @can('create', App\Models\CustomerSatisfaction::class) --}}
+                    @can('create', App\Models\CustomerSatisfaction::class)
                         @if(!$poll->isNotEmpty())
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj anketu')}}</a>
                         @else
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.create') }}"><i class="fas fa-poll"></i> {{ __('Popuni anketu')}}</a>
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Izmeni anketu')}}</a>
                         @endempty
-                    {{-- @endcan --}}
-                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('stakeholders.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                    @endcan
+                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -44,7 +44,6 @@
                                         <th>{{ __('Datum') }}</th>
                                     @endif
                                     <th>{{ __('Prosek') }}</th>
-                                    {{-- <th>{{ __('Kreirao')}}</th> --}}
                                     <th class="no-sort">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
@@ -62,21 +61,21 @@
                                     <td class="font-bold">{{ $row->average() }}</td>
                                     <td>
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled ankete') }}" class="button text-primary" onclick="showPoll({{ $row->id }})"><i class="fas fa-eye"></i></button>
-                                        {{-- @canany(['update', 'delete'], $row) --}}
+                                        @canany(['update', 'delete'], $row)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena ankete')}}" href="{{ route('customer-satisfaction.edit', $row->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $row->id }}" action="{{ route('customer-satisfaction.destroy', $row->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button type="button" class="text-red-600 cursor-pointer hover:text-red-800" data-toggle="tooltip" data-placement="top" title="{{__('Brisanje ankete')}}" onclick="confirmDeleteModal({{ $row->id }})"><i class="fas fa-trash"></i></button>
                                         </form>
-                                        {{-- @endcanany --}}
+                                        @endcanany
                                     </td>
                                 </tr>
                                 @endforeach
                                 <tr class="font-bold text-center">
                                     <td class="bg-green-200">{{__('Prosek')}}</td>
                                     @for($i = 1; $i < $poll->count()+1; $i++)
-                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs->count()) == 0 ? "/" : $cs->sum('col'.$i)/$cs->count() }} @endif</td>
+                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs->count()) == 0 ? "/" : round($cs->sum('col'.$i)/$cs->count(), 1) }} @endif</td>
                                     @endfor
                                     @if($poll->count() <= 4)
                                     <td class="bg-green-200"></td>
@@ -164,18 +163,18 @@
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Klijent') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.customer }</p></div>
                                 `;
-                                
+
                                 for(col of response.data.columns){
                                     modal += `<div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>${col.name}</p></div>
-                                    <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data[col.column_name] }</p></div>`;
+                                    <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data[col.column_name] ?? "/" }</p></div>`;
                                 }
                                 modal += `
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Prosek') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p class="font-bold">${ response.data.average }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Napomena') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment ?? "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Prosek') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.average }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>

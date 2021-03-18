@@ -10,13 +10,26 @@ use Illuminate\Support\Facades\Auth;
 class SatisfactionColumnsController extends Controller
 {
 
+    public function index()
+    {
+        abort(404);
+    }
+
     public function create()
     {
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
+        }
+
+        $this->authorize('create', SatisfactionColumn::class);
+
         return view('system_processes.customer_satisfaction.create_poll');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', SatisfactionColumn::class);
+
         foreach($request->except('_token') as $key => $req){
             $cols = new SatisfactionColumn;
             $cols->column_name = $key;
@@ -32,17 +45,25 @@ class SatisfactionColumnsController extends Controller
 
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     public function edit($teamId)
     {
+        if(session('standard') == null || session('standard_name') != "9001"){
+            return redirect('/');
+        }
+
+        $this->authorize('update', SatisfactionColumn::class);
+
         $poll = SatisfactionColumn::where('team_id', $teamId)->get();
         return view('system_processes.customer_satisfaction.edit_poll', compact('poll'));
     }
 
     public function update(Request $request, $id)
     {
+        $this->authorize('update', SatisfactionColumn::class);
+
         $cols = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->get();
         foreach($request->except('_token', '_method') as $key => $req){
             foreach($cols as $col){

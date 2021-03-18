@@ -43,4 +43,9 @@ class Standard extends Model
     {
         return $this->hasMany('App\Models\Accident');
     }
+
+    public function customerSatisfaction()
+    {
+        return $this->hasMany('App\Models\CustomerSatisfaction');
+    }
 }
