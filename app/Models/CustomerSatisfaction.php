@@ -13,6 +13,18 @@ class CustomerSatisfaction extends Model
 
     protected $table = "customer_satisfaction";
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Models\Team');
+    }
+
+  
+
     public function average()
     {
         $sum = 0;
