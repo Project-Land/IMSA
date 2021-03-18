@@ -30,6 +30,8 @@ use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
 use App\Http\Controllers\SoaController;
 use App\Http\Controllers\ExternalDocumentsController;
+use App\Http\Controllers\CustomerSatisfactionController;
+use App\Http\Controllers\SatisfactionColumnsController;
 
 
 /*
@@ -165,6 +167,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('user/{id}/certificates', [UserController::class, 'getUserCertificates']);
     Route::post('update-user-certificates/{id}', [UserController::class, 'updateUserCertificates']);
 
+    Route::resource('customer-satisfaction', CustomerSatisfactionController::class);
+    Route::resource('customer-satisfaction-poll', SatisfactionColumnsController::class);
 });
 
 Route::get('about', [HomeController::class, 'about'])->name('about');

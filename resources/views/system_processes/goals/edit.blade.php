@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Izmena cilja') }}
         </h2>
     </x-slot>
@@ -21,7 +21,7 @@
                 <div class="form-group col-md-3">
                     <label for="year" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Godina') }}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="year" name="year" required oninvalid="this.setCustomValidity('{{ __("Izaberite godinu") }}')" oninput="this.setCustomValidity('')">
-                        @foreach(range(2019, date("Y")+10) as $year)
+                        @foreach(range(2020, date("Y")+10) as $year)
                             <option value="{{ $year }}" {{ $year == $goal->year ? "selected" : "" }}>{{ $year }}</option>
                         @endforeach
                     </select>
@@ -61,7 +61,7 @@
 					    <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				    @enderror
                 </div>
-                
+
             </div>
 
             <div class="form-row">
@@ -80,7 +80,7 @@
 				    @enderror
                 </div>
             </div>
-            
+
 
             <div class="form-row">
                 <div class="form-group col-md-6">

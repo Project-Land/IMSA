@@ -48,7 +48,8 @@ class GoalsController extends Controller
         if(!$goals->isEmpty()){
             $goals = $goals->map(function($item, $key) use($isAdmin){
                 $item->isAdmin = $isAdmin;
-                
+                $level = $item->level < 3 ? ($item->level == 2 ? __('Srednji') : __('Mali')) : __('Veliki');
+                $item->level = $level;
                 return $item;
             });
         }
@@ -172,7 +173,6 @@ class GoalsController extends Controller
         if($request->year == null){
             $request->year=date('Y');
         }
-
         return Excel::download(new GoalsExport($request->year), Str::snake(__('Ciljevi')).'_'.session('standard_name').'.xlsx');
     }
 }

@@ -33,8 +33,8 @@
                         <div class="col-sm-4 mt-3 mt-md-0">
                             <form id="formYear" class="form-inline" method="get" action="{{ asset('/internal-check/get-data') }}">
                                 <label for="year" class="mr-3 mt-sm-0 mt-2 text-xs sm:text-base">{{ __('Godina') }}</label>
-                                <select id="year"  class="w-2/3 sm:w-1/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                    @foreach(range(2019, date("Y")+10) as $year))
+                                <select id="year"  class="w-2/3 sm:w-2/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @foreach(range(2020, date("Y")+10) as $year))
                                         <option value="{{ $year }}"@if(session('year')){{ session('year') == $year ? "selected" : "" }}
                                         @else
                                         {{ date('Y') == $year ? "selected" : "" }}
@@ -323,5 +323,5 @@
     $('[data-toggle="tooltip"]').tooltip();
 
 
-   
+
 </script>

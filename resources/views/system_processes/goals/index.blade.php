@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Ciljevi') }}
         </h2>
     </x-slot>
@@ -29,8 +29,8 @@
                         <div class="col-sm-4">
                             <form class="form-inline">
                                 <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">{{ __('Godina') }}</label>
-                                <select name="goals-year" id="goals-year" onchange="excelYear()" class="w-2/3 sm:w-1/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                    @foreach(range(2019, date("Y")+10) as $year))
+                                <select name="goals-year" id="goals-year" onchange="excelYear()" class="w-2/3 sm:w-2/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @foreach(range(2020, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
                                 </select>
@@ -168,9 +168,8 @@
                                     <div class="row">
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Godina') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Nivo važnosti') }}</p></div>
-                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.level }</p></div>
-
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Nivo važnosti') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.level }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</p></div>
@@ -245,6 +244,7 @@
                     let row = `
                         <tr>
                             <td class="text-center">${ item.year }</td>
+                            <td class="text-center">${ item.level }</td>
                             <td class="text-center">${ item.goal.length < 35 ? item.goal : item.goal.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.kpi.length < 35 ? item.kpi : item.kpi.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.activities.length < 35 ? item.activities : item.activities.substr(0, 35) + "..."}</td>
@@ -283,7 +283,7 @@
     $('[data-toggle="tooltip"]').tooltip();
 
     function excelYear(){
-       
+
         document.getElementById('excelBtn').href += '?year='+document.getElementById('goals-year').value;
    }
 
