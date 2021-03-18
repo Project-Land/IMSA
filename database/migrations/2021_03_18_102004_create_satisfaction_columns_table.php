@@ -17,7 +17,7 @@ class CreateSatisfactionColumnsTable extends Migration
             $table->id();
             $table->foreignId('team_id')->constrained()->onDelete('cascade');
             $table->string('column_name');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
