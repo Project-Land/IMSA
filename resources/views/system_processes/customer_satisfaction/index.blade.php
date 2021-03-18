@@ -76,7 +76,7 @@
                                 <tr class="font-bold text-center">
                                     <td class="bg-green-200">{{__('Prosek')}}</td>
                                     @for($i = 1; $i < $poll->count()+1; $i++)
-                                        <td class="bg-green-200">{{ ($cs->sum('col'.$i)/$cs->count()) == 0 ? "/" : $cs->sum('col'.$i)/$cs->count() }}</td>
+                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs->count()) == 0 ? "/" : $cs->sum('col'.$i)/$cs->count() }} @endif</td>
                                     @endfor
                                     @if($poll->count() <= 4)
                                     <td class="bg-green-200"></td>
@@ -176,6 +176,8 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Prosek') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.average }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>
                                 </div>
                                 <div class="px-6 py-4 bg-gray-100 text-right">

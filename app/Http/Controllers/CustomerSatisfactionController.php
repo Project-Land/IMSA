@@ -49,7 +49,7 @@ class CustomerSatisfactionController extends Controller
     
     public function show($id)
     {
-        $cs = CustomerSatisfaction::findOrFail($id);
+        $cs = CustomerSatisfaction::with('user')->findOrFail($id);
         $poll = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
 
         $cs->columns = $poll;
