@@ -115,4 +115,14 @@ class Team extends JetstreamTeam
         return $this->hasMany('App\Models\Accident');
     }
 
+    public function satisfactionColumns()
+    {
+        return $this->hasMany('App\Models\SatisfactionColumn');
+    }
+
+    public function customerSatisfactions()
+    {
+        return $this->hasMany('App\Models\CustomerSatisfaction');
+    }
+
 }
