@@ -284,7 +284,7 @@
 
     function excelYear(){
        
-        document.getElementById('excelBtn').href += '?year='+document.getElementById('goals-year').value;
+        document.getElementById('excelBtn').href = '/goals-export?year='+document.getElementById('goals-year').value;
    }
 
 
