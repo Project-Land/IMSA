@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 use App\Facades\CustomLog;
 use Illuminate\Support\Str;
 use App\Models\CustomerSatisfaction;
+use Illuminate\Http\Request;
 use App\Models\SatisfactionColumn;
+use App\Models\CustomerSatisfaction;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CustomerSatisfactionExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -56,7 +58,7 @@ class CustomerSatisfactionController extends Controller
         return redirect('/customer-satisfaction');
     }
 
-    
+
     public function show($id)
     {
         $cs = CustomerSatisfaction::with('user')->findOrFail($id);
@@ -77,7 +79,7 @@ class CustomerSatisfactionController extends Controller
         $poll = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
 
         $this->authorize('update', $cs);
-        
+
         return view('system_processes.customer_satisfaction.edit', compact('poll', 'cs'));
     }
 
@@ -86,7 +88,7 @@ class CustomerSatisfactionController extends Controller
         $cs = CustomerSatisfaction::findOrFail($id);
 
         $this->authorize('update', $cs);
-        
+
         try{
             $cs->update($request->except('_token', '_method'));
             CustomLog::info('Anketa za klijenta "'.$cs->customer.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
@@ -120,5 +122,22 @@ class CustomerSatisfactionController extends Controller
             return redirect('/');
         }
         return Excel::download(new CustomerSatisfactionExport, Str::snake(__('Zadovoljstvo korisnika')).'_'.session('standard_name').'.xlsx');
+    }
+
+    public function deleteColumn($column)
+    {
+        $column='col'.$column;
+        try{
+            $cs = CustomerSatisfaction::where('team_id',Auth::user()->current_team_id)->update([$column => null]);
+            SatisfactionColumn::where([
+                ['team_id',Auth::user()->current_team_id],
+                ['column_name',$column]
+                ])->update(['name'=>null]);
+            CustomLog::info('Kolona "'.$column.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            return back()->with('status', array('info', __('Kolona je uspešno uklonjena i svi zapisi su obrisani')));
+        } catch (Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja kolone '.$column.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+        }
     }
 }

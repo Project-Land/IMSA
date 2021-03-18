@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CustomerSatisfaction extends Model
 {
@@ -39,5 +40,12 @@ class CustomerSatisfaction extends Model
             }
         }
         return round($sum/$count, 1);
+    }
+
+    public function columnCount($col)
+    {
+        $count= self::where('team_id', Auth::user()->current_team_id)->whereNotNull($col)->count();
+       $count= ($count == 0) ? 1:$count;
+        return $count;
     }
 }

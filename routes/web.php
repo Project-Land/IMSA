@@ -167,6 +167,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('user/{id}/certificates', [UserController::class, 'getUserCertificates']);
     Route::post('update-user-certificates/{id}', [UserController::class, 'updateUserCertificates']);
 
+    
+    Route::post('customer-satisfaction/delete-col/{id}', [CustomerSatisfactionController::class,'deleteColumn'])->name('deleteColumn');
     Route::resource('customer-satisfaction', CustomerSatisfactionController::class);
     Route::get('customer-satisfaction-export', [CustomerSatisfactionController::class, 'export'])->name('customer-satisfaction.export');
     Route::resource('customer-satisfaction-poll', SatisfactionColumnsController::class);
