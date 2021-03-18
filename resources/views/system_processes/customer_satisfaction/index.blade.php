@@ -24,7 +24,7 @@
                         @if(!$poll->isNotEmpty())
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj anketu')}}</a>
                         @else
-                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.create') }}"><i class="fas fa-plus"></i> {{ __('Popuni anketu')}}</a>
+                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.create') }}"><i class="fas fa-poll"></i> {{ __('Popuni anketu')}}</a>
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Izmeni anketu')}}</a>
                         @endempty
                     {{-- @endcan --}}
