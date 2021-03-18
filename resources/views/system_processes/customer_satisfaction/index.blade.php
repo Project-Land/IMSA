@@ -52,9 +52,10 @@
                                 @foreach($cs as $row)
                                 <tr class="text-center">
                                     <td>{{ $row->customer }}</td>
-                                    @for($i = 1; $i < $poll->count()+1; $i++)
-                                        <td>{{ $row->{'col'.$i} ?? "/" }}</td>
-                                    @endfor
+                                    @foreach($poll as $po)
+                                        <td>{{ $row->{$po->column_name} ?? "/" }}</td>
+                                    @endforeach
+
                                     @if($poll->count() <= 4)
                                         <td>{{ $row->comment ?? "/" }}</td>
                                         <td>{{ date('d.m.Y', strtotime($row->created_at)) }}</td>
@@ -76,7 +77,7 @@
                                 <tr class="font-bold text-center">
                                     <td class="bg-green-200">{{__('Prosek')}}</td>
                                     @for($i = 1; $i < $poll->count()+1; $i++)
-                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs->count()) == 0 ? "/" : $cs->sum('col'.$i)/$cs->count() }} @endif</td>
+                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs[0]->columnCount('col'.$i)) == 0 ? "/" : $cs->sum('col'.$i)/$cs[0]->columnCount('col'.$i) }} @endif</td>
                                     @endfor
                                     @if($poll->count() <= 4)
                                     <td class="bg-green-200"></td>

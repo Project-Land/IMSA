@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 use App\Facades\CustomLog;
-use App\Models\CustomerSatisfaction;
+use Illuminate\Http\Request;
 use App\Models\SatisfactionColumn;
+use App\Models\CustomerSatisfaction;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerSatisfactionController extends Controller
@@ -89,6 +90,23 @@ class CustomerSatisfactionController extends Controller
             return back()->with('status', array('info', __('Anketa je uspešno uklonjena')));
         } catch (Exception $e){
             CustomLog::warning('Neuspeli pokušaj brisanja ankete za korisnika '.$cs->customer.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+            return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
+        }
+    }
+
+    public function deleteColumn($column)
+    {
+        $column='col'.$column;
+        try{
+            $cs = CustomerSatisfaction::where('team_id',Auth::user()->current_team_id)->update([$column => null]);
+            SatisfactionColumn::where([
+                ['team_id',Auth::user()->current_team_id],
+                ['column_name',$column]
+                ])->update(['name'=>null]);
+            CustomLog::info('Kolona "'.$column.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            return back()->with('status', array('info', __('Kolona je uspešno uklonjena i svi zapisi su obrisani')));
+        } catch (Exception $e){
+            CustomLog::warning('Neuspeli pokušaj brisanja kolone '.$column.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
     }
