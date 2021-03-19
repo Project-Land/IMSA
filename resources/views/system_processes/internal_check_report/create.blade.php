@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group col">
-                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Standard') }}</label>
+                    <label for="standard" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sistem menadžment') }}</label>
                     <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="standard" name="standard" value="{{$internalCheck->standard->name}}" readonly>
                 </div>
 

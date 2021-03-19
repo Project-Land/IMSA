@@ -2,10 +2,8 @@
 
 namespace App\Exports;
 
-//use App\InternalCheck;
 use App\Models\InternalCheck;
 use Illuminate\Support\Facades\Auth;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -50,7 +48,6 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
             __('Izveštaj sa interne provere - opis'),
             __('Preporuke'),
             __('Neusaglašenosti i korektivne mere'),
-
         ];
     }
 
@@ -67,7 +64,6 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
         $sheet->getStyle('1')->getFont()->setBold(true);
         $sheet->getStyle('1')->getFont()->setSize(12);
         $sheet->getStyle('1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A:M')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A:M')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A2:F'.$count)->getFill()
@@ -85,19 +81,18 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
     {
         return [
             'A' => 25,
-            'B' => 55,
-            'C' => 55,
-            'D' => 55,
-            'E' => 55,
-            'F' => 55,
-            'G' => 55,
-            'H' => 55,
-            'I' => 55,
-            'J' => 55,
-            'K' => 55,
-            'L' => 55,
-            'M' => 55,
-
+            'B' => 30,
+            'C' => 50,
+            'D' => 15,
+            'E' => 20,
+            'F' => 15,
+            'G' => 15,
+            'H' => 25,
+            'I' => 25,
+            'J' => 25,
+            'K' => 50,
+            'L' => 50,
+            'M' => 50,
         ];
     }
 
@@ -123,7 +118,7 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
             $internalCheck->planIp->check_end ?? '/',
             $internalCheck->planIp->report_deadline ?? '/',
             $internalCheck->internalCheckReport->specification ?? '/',
-            isset($internalCheck->internalCheckReport->recommendations) ?$internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(' / ') : '/',
+            isset($internalCheck->internalCheckReport->recommendations) ?$internalCheck->internalCheckReport->recommendations()->pluck('description')->implode(', ') : '/',
             isset($internalCheck->internalCheckReport->correctiveMeasures) ? $internalCheck->internalCheckReport->correctiveMeasures()->pluck('name')->implode(' -- ') : '/',
         ];
     }

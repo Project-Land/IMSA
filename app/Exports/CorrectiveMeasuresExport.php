@@ -76,7 +76,7 @@ class CorrectiveMeasuresExport implements FromCollection, WithHeadings, ShouldAu
             'C' => 15,
             'D' => 15,
             'E' => 25,
-            'F' => 20,
+            'F' => 30,
             'G' => 40,
             'H' => 40,
             'I' => 30,
@@ -99,10 +99,10 @@ class CorrectiveMeasuresExport implements FromCollection, WithHeadings, ShouldAu
     public function map($measure): array
     {
         if($measure->measure_effective == '1'){
-            $measureEffective = __('Efektivna');
+            $measureEffective = __('Da');
         }
         elseif($measure->measure_effective == '0'){
-            $measureEffective = __('Neefektivna');
+            $measureEffective = __('Ne');
         }
         elseif($measure->measure_effective == null){
             $measureEffective = "/";
@@ -117,7 +117,7 @@ class CorrectiveMeasuresExport implements FromCollection, WithHeadings, ShouldAu
             $measure->measure_status == 1 ? __('Otvorena') : __('Zatvorena'),
             $measure->standard->name,
             $measure->sector->name,
-            $measure->noncompliance_source,
+            __($measure->noncompliance_source),
             $measure->noncompliance_description,
             $measure->noncompliance_cause,
             $measure->measure,

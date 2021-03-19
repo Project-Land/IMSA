@@ -164,7 +164,7 @@ if(id){
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum odobravanja mere') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_date != null ? new Date(response.data.measure_approval_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera efektivna') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "{{ __('Efektivna') }}" : "{{ __('Neefektivna') }}" : "/" }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "{{ __('Da') }}" : "{{ __('Ne') }}" : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                             </div>

@@ -62,14 +62,14 @@
                             <div class="w-full sm:w-1/5 pl-4 {{ ($field->status != "Prihvaćeno")? 'd-none':'' }}" id="document_col{{ $field->id }}">
                                 <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Dokumenti')}}:</label>
                                 <select class="js-example-basic-multiple" style="width: 100%; border-radius: 0;" name="{{ $field->id }}[document][]" id="select{{ $field->id }}" multiple="multiple">
-                                    <optgroup label="Politike">
+                                    <optgroup label="{{ __('Politike') }}">
                                         @foreach($alldocuments as $document)
                                             @if($document->doc_category === 'policy')
                                                 <option data-folder="{{ $document->doc_category }}" data-file="{{ $document->file_name }}" value="{{ $document->id }}" {{ $field->documents->pluck('id')->contains($document->id) ? "selected":"" }}>{{ $document->document_name }}</option>
                                             @endif
                                         @endforeach
                                     </optgroup>
-                                    <optgroup label="Procedure">
+                                    <optgroup label="{{ __('Procedure') }}">
                                         @foreach($alldocuments as $document)
                                             @if($document->doc_category === 'procedure')
                                                 <option data-folder="{{ $document->doc_category }}" data-file="{{ $document->file_name }}" value="{{ $document->id }}" {{ $field->documents->pluck('id')->contains($document->id) ? "selected":"" }}>{{ $document->document_name }}</option>
