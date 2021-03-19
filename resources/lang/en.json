@@ -735,6 +735,10 @@
     "Prosek" : "Average",
     "Popuna ankete" : "Fill out the survey",
     "Izmena ankete" : "Edit the survey",
-    "Brisanje unosa ankete" : "Delete suvery entry"
+    "Brisanje unosa ankete" : "Delete suvery entry",
+
+    "Izveštaj sa interne provere - opis" : "Internal audit report - description",
+    "Učesnici":"Participants",
+    "Termin / Mesto":"Date / Place"
 
 }
