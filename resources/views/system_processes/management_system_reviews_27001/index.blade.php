@@ -135,13 +135,10 @@
                                     <div class="row text-sm">
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold text-sm"><p>{{__('Učestvovali u preispitivanju')}}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.participants }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>
-                                        {{__('Status mera iz prethodnog preispitivanja')}}</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Status mera iz prethodnog preispitivanja')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_status }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Promene u eksternim i internim pitanjima koje su relevantne za sistem menadžmenta')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.internal_external_changes }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Zadovoljstvo korisnika i povratne informacije zainteresovanih strana')}}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.customer_satisfaction }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Obim ispunjenosti ciljeva')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.objectives_scope }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Neusaglašenosti i korektivne mere')}}</p></div>
@@ -150,14 +147,10 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.monitoring_measurement_results }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Rezultati internih provera')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Rezultati eksternih provera')}}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Performanse eksternih isporučilaca')}}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.external_suppliers_performance }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Adekvatnost resursa')}}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resource_adequacy }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Efektivnost mera koje se odnose na rizike i prilike')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_effectiveness }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Povratne informacije od zainteresovanih strana')}}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Prilike za poboljšanje')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Potrebe za izmenama u sistemu menadžmenta')}}</p></div>
