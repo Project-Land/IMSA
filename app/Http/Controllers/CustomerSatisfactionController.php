@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use App\Models\CustomerSatisfaction;
 use Illuminate\Http\Request;
 use App\Models\SatisfactionColumn;
-use App\Models\CustomerSatisfaction;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CustomerSatisfactionExport;
 use Maatwebsite\Excel\Facades\Excel;

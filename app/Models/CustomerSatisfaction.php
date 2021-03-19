@@ -44,8 +44,8 @@ class CustomerSatisfaction extends Model
 
     public function columnCount($col)
     {
-        $count= self::where('team_id', Auth::user()->current_team_id)->whereNotNull($col)->count();
-       $count= ($count == 0) ? 1:$count;
+        $count = self::where('team_id', Auth::user()->current_team_id)->whereNotNull($col)->count();
+        $count = ($count == 0) ? 1 : $count;
         return $count;
     }
 }
