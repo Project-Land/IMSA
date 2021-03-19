@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use App\Models\CustomerSatisfaction;
 use Illuminate\Http\Request;
 use App\Models\SatisfactionColumn;
-use App\Models\CustomerSatisfaction;
 use Illuminate\Support\Facades\Auth;
 use App\Exports\CustomerSatisfactionExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -126,9 +125,15 @@ class CustomerSatisfactionController extends Controller
 
     public function deleteColumn($column)
     {
+        $customerSat = CustomerSatisfaction::where('team_id',Auth::user()->current_team_id)->get();
+        if(!$customerSat->count()){
+            return back()->with('status', array('info', __('Kolona je uspešno uklonjena i svi zapisi su obrisani')));
+        }
+        $this->authorize('delete', $customerSat[0]);
+
         $column='col'.$column;
         try{
-            $cs = CustomerSatisfaction::where('team_id',Auth::user()->current_team_id)->update([$column => null]);
+            $customerSat = CustomerSatisfaction::where('team_id',Auth::user()->current_team_id)->update([$column => null]);
             SatisfactionColumn::where([
                 ['team_id',Auth::user()->current_team_id],
                 ['column_name',$column]

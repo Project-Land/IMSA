@@ -5,6 +5,14 @@
         </h2>
     </x-slot>
 
+    <div class="row mt-1">
+        <div class="col">
+            @if(Session::has('status'))
+                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+            @endif
+        </div>
+    </div>
+
     <div class="row">
     	<div class="col-sm-2">
         	<a class="btn btn-light" href="{{ route('customer-satisfaction.index') }}"><i class="fas fa-arrow-left"></i> {{__('Nazad')}}</a>
@@ -21,14 +29,14 @@
                     @if($p->column_name == 'col'.$i)
                     <div class="mb-4">
                         <label for="col{{ $i }}" class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kolone')}} {{ $i }}:</label>
-                        <input type="text" class="appearance-none border w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="col{{ $i }}" name="col{{ $i }}" value="{{ $p->name }}" @if($i == 1) autofocus required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')" @endif> 
-                        
-                        <button onclick="confirmDeleteModal({{ $p->id }})" type="button" class="ml-4 w-full md:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline"><i class="fa fa-trash"></i></button>
-                        
+                        <input type="text" class="appearance-none border w-4/5 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="col{{ $i }}" name="col{{ $i }}" value="{{ $p->name }}" @if($i == 1) autofocus required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')" @endif>
+
+                        <button onclick="confirmDeleteModal({{ $i }})" type="button" class="ml-4 w-full md:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline"><i class="fa fa-trash"></i></button>
+
                         @error('col{{ $i }}')
                             <span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
-                       
+
                     </div>
                     @endif
                 @endforeach
@@ -79,7 +87,7 @@ function confirmDeleteModal($id){
             document.body.innerHTML+=form;
             form=document.getElementById('form'+id);
             form.submit();
-            
+
         });
     }
 
