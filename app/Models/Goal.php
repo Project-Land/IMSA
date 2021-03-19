@@ -46,4 +46,13 @@ class Goal extends Model
     {
         return $this->morphOne('App\Models\Notification', 'notifiable');
     }
+
+    public function levelIs(){
+        if($this->level){
+            $lvl= ($this->level < '3') ?(($this->level == '2') ? __('Srednji') : __('Mali')) :  __('Veliki');
+        }else{
+            $lvl="/";
+        }
+       return $lvl;
+    }
 }

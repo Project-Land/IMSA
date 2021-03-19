@@ -105,11 +105,15 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
 
     public function map($goal): array
     {
+        if($goal->level)
+            $level= $goal->level < 3 ? ($goal->level == 1 ? __('Mali'): __('Srednji')): __('Veliki');
+            else
+            $level= '/';
         return [
             $goal->goal,
             $goal->year,
             $goal->standard->name,
-            $goal->level < 3 ? ($goal->level == 1 ? __('Mali'): __('Srednji')): __('Veliki'),
+            $level,
             $goal->deadline,
             $goal->responsibility ?? '/',
             $goal->resources ?? '/',

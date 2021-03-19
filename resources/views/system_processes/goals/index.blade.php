@@ -62,7 +62,7 @@
                             @foreach($goals as $goal)
                                 <tr id='trgoal{{$goal->id}}'><a id='goal{{$goal->id}}'></a>
                                     <td id='tdgoal{{$goal->id}}' class="text-center">{{ $goal->year }}</td>
-                                    <td class="text-center">{{ ($goal->level < '3') ?(($goal->level == '2') ? __('Srednji') : __('Mali')) :  __('Veliki') }}</td>
+                                    <td class="text-center">{{ $goal->levelIs() }}</td>
                                     <td class="text-center">{{ Str::length($goal->goal) < 35 ? $goal->goal : Str::limit($goal->goal, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->kpi) < 35 ? $goal->kpi : Str::limit($goal->kpi, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
