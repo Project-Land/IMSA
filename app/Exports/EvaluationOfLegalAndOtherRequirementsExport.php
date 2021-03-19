@@ -47,8 +47,6 @@ class EvaluationOfLegalAndOtherRequirementsExport implements FromCollection, Wit
             __('Razlog neodobravanja mere'),
             __('Da li je mera sprovedena?'),
             __('Mera efektivna'),
-          
-            
         ];
     }
 
@@ -65,8 +63,11 @@ class EvaluationOfLegalAndOtherRequirementsExport implements FromCollection, Wit
         $sheet->getStyle('1')->getFont()->setBold(true);
         $sheet->getStyle('1')->getFont()->setSize(12);
         $sheet->getStyle('1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('A:P')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('E')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('G')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:P'.$count)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A:P')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A2:G'.$count)->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
@@ -74,31 +75,28 @@ class EvaluationOfLegalAndOtherRequirementsExport implements FromCollection, Wit
         $sheet->getStyle('E2:P'.$count)->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setARGB('FFFFFFD4');
-       
+
     }
 
     public function columnWidths(): array
     {
         return [
             'A' => 25,
-            'B' => 55,
-            'C' => 55,
-            'D' => 55,
-            'E' => 55,
-            'F' => 55,
-            'G' => 55,
-            'H' => 55,
-            'I' => 55,
-            'J' => 55,
-            'K' => 55,
-            'L' => 55,
-            'M' => 55,
-            'N' => 55,
-            'O' => 55,
-            'P' => 55,
-          
-            
-            
+            'B' => 30,
+            'C' => 20,
+            'D' => 20,
+            'E' => 15,
+            'F' => 40,
+            'G' => 15,
+            'H' => 40,
+            'I' => 40,
+            'J' => 40,
+            'K' => 40,
+            'L' => 40,
+            'M' => 15,
+            'N' => 30,
+            'O' => 15,
+            'P' => 15,
         ];
     }
 
@@ -113,14 +111,14 @@ class EvaluationOfLegalAndOtherRequirementsExport implements FromCollection, Wit
     public function map($requirement): array
     {
         return [
-            $requirement->requirement_level,
+            __($requirement->requirement_level),
             $requirement->document_name,
             $requirement->compliance == 1? __('Usaglašen') : __('Neusaglašen'),
             $requirement->updated_at,
             $requirement->standard->name,
             $requirement->note,
             $requirement->user->name,
-            isset($requirement->correctiveMeasures[0]) ? 
+            isset($requirement->correctiveMeasures[0]) ?
             $requirement->correctiveMeasures[0]->name  :'/',
             isset($requirement->correctiveMeasures[0]) ? $requirement->correctiveMeasures[0]->noncompliance_source :'/',
             isset($requirement->correctiveMeasures[0]) ? $requirement->correctiveMeasures[0]->noncompliance_description  :'/',

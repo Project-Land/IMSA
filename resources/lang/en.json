@@ -736,9 +736,13 @@
     "Popuna ankete" : "Fill out the survey",
     "Izmena ankete" : "Edit the survey",
     "Brisanje unosa ankete" : "Delete suvery entry",
-
     "Izveštaj sa interne provere - opis" : "Internal audit report - description",
     "Učesnici":"Participants",
-    "Termin / Mesto":"Date / Place"
+    "Termin / Mesto":"Date / Place",
+    "Naziv kolone" : "Column name",
+    "Anketa zadovoljstva korisnika je uspešno izmenjena!" : "Customer satisfaction survey successfully edited!",
+    "Kolona je uspešno uklonjena i svi zapisi su obrisani" : "All column entries are successfully deleted!",
+    "Brisanjem ove kolone trajno uklanjate sve njene podatke." : "By deleting this column, you will permanently delete all of its data.",
+    "Obrišite samo ako ste sigurni da vam podaci iz ove kolone više nisu potrebni." : "Proceed only if you are sure that you no longer need data in this column."
 
 }
