@@ -109,7 +109,7 @@ class CustomerSatisfactionExport implements FromCollection, WithHeadings, Should
 
     public function registerEvents(): array
     {
-        $arr = ['Prosek'];
+        $arr = [__('Prosek')];
         $cs = CustomerSatisfaction::where('team_id', Auth::user()->current_team_id)->get();
         $columns = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
         foreach($columns as $col){

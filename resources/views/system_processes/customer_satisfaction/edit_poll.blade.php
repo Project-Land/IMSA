@@ -62,7 +62,10 @@
             <div class="modal-content">
                 <div class="px-6 py-4">
                     <div class="text-lg">{{ __('Brisanje unosa ankete')}}</div>
-                    <div class="mt-4">{{ __('Da li ste sigurni?')}}</div>
+                    <div class="mt-4">
+                        <p>{{ __('Brisanjem ove kolone trajno uklanjate sve njene podatke.') }}</p>
+                        <p>{{ __('Obrišite samo ako ste sigurni da vam podaci iz ove kolone više nisu potrebni.')}}</p>
+                    </div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani')}}</button>

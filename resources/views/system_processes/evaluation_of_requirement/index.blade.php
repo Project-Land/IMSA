@@ -48,7 +48,7 @@
                             <tbody id="table-body">
                             @foreach($EvaluationOfLegalAndOtherRequirement as $requirement )
                                 <tr>
-                                    <td class="text-center">{{ $requirement->requirement_level }}</td>
+                                    <td class="text-center">{{ __($requirement->requirement_level) }}</td>
                                     <td class="text-center">{{ $requirement->document_name }}</td>
                                     <td class="text-center">{{ $requirement->compliance ? __('Usaglašen') : __('Neusaglašen') }}</td>
                                     <td class="text-center">{{ date('d.m.Y H:i', strtotime($requirement->updated_at)) }}</td>
