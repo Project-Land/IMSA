@@ -17,6 +17,7 @@ class HomeController extends Controller
     {
 
     }
+
     public function index()
     {
         if(!session()->has('locale')){
@@ -24,12 +25,14 @@ class HomeController extends Controller
         }
         session()->forget('standard');
         session()->forget('standard_name');
-        $teamId = Auth::user()->current_team_id;
-        $standards = Standard::whereHas('teams', function($q) use ($teamId) {
+        //$teamId = Auth::user()->current_team_id;
+        /*$standards = Standard::whereHas('teams', function($q) use ($teamId) {
             $q->where('team_id', $teamId);
          })->orderByRaw('LENGTH(name)', 'ASC')
-         ->orderBy('name', 'ASC')->get();
-        return view('dashboard', compact('standards'));
+         ->orderBy('name', 'ASC')->get();*/
+        //return view('dashboard', compact('standards'));
+
+         return redirect('/standards/1');
     }
 
     public function standard($id)

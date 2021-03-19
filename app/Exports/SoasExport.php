@@ -36,7 +36,7 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
             __('Status'),
             __('Komentar'),
             __('Dokumenta'),
-           
+
         ];
     }
 
@@ -46,15 +46,14 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
         ])->count() + 1;
-       
-        
+
+
         $sheet->getStyle('A1:E1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
         $sheet->getStyle('A2:E'.$count)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
         $sheet->getStyle('A2:E'.$count)->getAlignment()->setIndent(1);
         $sheet->getStyle('1')->getFont()->setBold(true);
         $sheet->getStyle('1')->getFont()->setSize(12);
         $sheet->getStyle('1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A:E')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A:E')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A2:E'.$count)->getFill()

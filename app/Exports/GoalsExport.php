@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\WithStyles;
@@ -14,13 +13,9 @@ use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles,WithMapping, WithColumnWidths, WithProperties
+class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithMapping, WithColumnWidths, WithProperties
 
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-
     private $year;
     public function __construct($year)
     {
@@ -52,7 +47,6 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             __('Da li je cilj ispunjen'),
             __('Analiza'),
             __('Kreirao'),
-            
         ];
     }
 
@@ -70,34 +64,33 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
         $sheet->getStyle('1')->getFont()->setBold(true);
         $sheet->getStyle('1')->getFont()->setSize(12);
         $sheet->getStyle('1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('C')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-        $sheet->getStyle('D')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+        $sheet->getStyle('B2:L'.$count)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+        $sheet->getStyle('C2:L'.$count)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+        $sheet->getStyle('D2:L'.$count)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
         $sheet->getStyle('A:L')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('L')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A:L')->getAlignment()->setWrapText(true);
         $sheet->getStyle('A2:L'.$count)->getFill()
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setARGB('FFFFFFED');
-       
     }
 
     public function columnWidths(): array
     {
         return [
             'A' => 25,
-            'B' => 55,
-            'C' => 55,
-            'D' => 55,
-            'E' => 55,
-            'F' => 55,
-            'G' => 55,
-            'H' => 55,
-            'I' => 55,
-            'J' => 55,
-            'K' => 55,
-            'L' => 55,
-            
-            
+            'B' => 15,
+            'C' => 15,
+            'D' => 15,
+            'E' => 15,
+            'F' => 30,
+            'G' => 30,
+            'H' => 30,
+            'I' => 30,
+            'J' => 15,
+            'K' => 30,
+            'L' => 20,
         ];
     }
 
@@ -122,11 +115,9 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             $goal->resources ?? '/',
             $goal->kpi ?? '/',
             $goal->activities ?? '/',
-            $goal->status ==1 ? __('Da'):__('Ne'),
+            $goal->status == 1 ? __('Da'):__('Ne'),
             $goal->analysis ?? "/",
             $goal->user->name,
-            
-           
         ];
     }
 }

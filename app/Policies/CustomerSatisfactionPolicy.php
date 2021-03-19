@@ -3,10 +3,8 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\CustomerSatisfaction;
-use Illuminate\Support\Facades\Auth;
 
 class CustomerSatisfactionPolicy
 {

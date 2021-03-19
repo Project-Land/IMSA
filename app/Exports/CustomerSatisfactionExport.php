@@ -13,8 +13,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class CustomerSatisfactionExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths, WithProperties, WithMapping
+class CustomerSatisfactionExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithColumnWidths, WithProperties, WithMapping, WithEvents
 {
     public function properties(): array
     {
@@ -102,6 +104,34 @@ class CustomerSatisfactionExport implements FromCollection, WithHeadings, Should
 
         return [
             $res
+        ];
+    }
+
+    public function registerEvents(): array
+    {
+        $arr = ['Prosek'];
+        $cs = CustomerSatisfaction::where('team_id', Auth::user()->current_team_id)->get();
+        $columns = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
+        foreach($columns as $col){
+            array_push($arr, round($cs->sum($col->column_name)/$cs[0]->columnCount($col->column_name), 1));
+        }
+
+        $count = CustomerSatisfaction::where([
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->count() + 2;
+
+        return [
+            AfterSheet::class    => function(AfterSheet $event) use($arr, $count) {
+                $event->sheet->appendRows(array(
+                    $arr,
+                ), $event);
+                $event->sheet->getStyle('A'.$count.':O'.$count)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $event->sheet->getStyle('A'.$count.':O'.$count)->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setARGB('FFEDFFFF');
+                $event->sheet->getStyle('A'.$count.':O'.$count)->getFont()->setBold(true);
+            },
         ];
     }
 }

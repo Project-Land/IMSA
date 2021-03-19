@@ -73,11 +73,12 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @if($cs->count())
                                 <tr class="font-bold text-center">
                                     <td class="bg-green-200">{{__('Prosek')}}</td>
-                                    @for($i = 1; $i < $poll->count()+1; $i++)
-                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum('col'.$i)/$cs[0]->columnCount('col'.$i)) == 0 ? "/" : round($cs->sum('col'.$i)/$cs[0]->columnCount('col'.$i),1) }} @endif</td>
-                                    @endfor
+                                    @foreach($poll as $po)
+                                        <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum($po->column_name)/$cs[0]->columnCount($po->column_name)) == 0 ? "/" : round($cs->sum($po->column_name)/$cs[0]->columnCount($po->column_name), 1) }} @endif</td>
+                                    @endforeach
                                     @if($poll->count() <= 4)
                                     <td class="bg-green-200"></td>
                                     <td class="bg-green-200"></td>
@@ -85,6 +86,7 @@
                                     <td class="bg-green-200"></td>
                                     <td class="bg-green-200"></td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
