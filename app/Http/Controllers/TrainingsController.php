@@ -39,14 +39,16 @@ class TrainingsController extends Controller
         if($request->data['year'] == 'all'){
             session(['training_year' => 'all']);
             $trainingPlans = Training::where([
-                ['standard_id', session('standard')]
+                ['standard_id', session('standard')],
+                ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
         }
         else{
             session(['training_year' => $request->data['year']]);
             $trainingPlans = Training::where([
                 ['standard_id', session('standard')],
-                ['year', $request->data['year']]
+                ['year', $request->data['year']],
+                ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
         }
 
