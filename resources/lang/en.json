@@ -743,6 +743,22 @@
     "Anketa zadovoljstva korisnika je uspešno izmenjena!" : "Customer satisfaction survey successfully edited!",
     "Kolona je uspešno uklonjena i svi zapisi su obrisani" : "All column entries are successfully deleted!",
     "Brisanjem ove kolone trajno uklanjate sve njene podatke." : "By deleting this column, you will permanently delete all of its data.",
-    "Obrišite samo ako ste sigurni da vam podaci iz ove kolone više nisu potrebni." : "Proceed only if you are sure that you no longer need data in this column."
+    "Obrišite samo ako ste sigurni da vam podaci iz ove kolone više nisu potrebni." : "Proceed only if you are sure that you no longer need data in this column.",
+    "Performanse bezbednosti informacija" : "Information security performance",
+    "Relevantna dokumenta" : "Relevant documents",
+    "Politike bezbednosti informacija" : "Information security policies",
+    "Organizovanje bezbednosti informacija" : "Organizing information security",
+    "Bezbednost ljudskih resursa" : "Human resource security",
+    "Menadžment imovinom" : "Asset management",
+    "Kontrola pristupa" : "Access control",
+    "Kriptografija" : "Cryptography",
+    "Fizička bezbednost i bezbednost u okruženju" : "Physical security and safety in the environment",
+    "Bezbednost funkcionisanja" : "Operational safety",
+    "Bezbednost komunikacija" : "Security of communication",
+    "Nabavka, razvoj i održavanje sistema" : "Procurement, development and maintenance of the system",
+    "Odnosi sa isporučiocima" : "Supplier relations",
+    "Menadžment incidentima narušavanja bezbednosti informacija" : "Information security breach incident management",
+    "Aspekti bezbednosti informacija kod menadžmenta kontiunitetom poslovanja" : "Aspects of information security in business continuity management",
+    "Usklađenost" : "Compatibility"
 
 }

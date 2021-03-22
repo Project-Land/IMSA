@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="w-full sm:w-1/5 pl-4 {{ ($field->status != "Prihvaćeno")? 'd-none':'' }}" id="document_col{{ $field->id }}">
-                                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Dokumenti')}}:</label>
+                                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Relevantna dokumenta')}}:</label>
                                 <select class="js-example-basic-multiple" style="width: 100%; border-radius: 0;" name="{{ $field->id }}[document][]" id="select{{ $field->id }}" multiple="multiple">
                                     <optgroup label="{{ __('Politike') }}">
                                         @foreach($alldocuments as $document)

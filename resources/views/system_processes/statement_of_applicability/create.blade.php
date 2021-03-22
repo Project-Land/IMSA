@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="w-full sm:w-1/5 pl-4" id="document_col{{ $loop->index }}">
-                                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Dokumenti')}}:</label>
+                                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{__('Relevantna dokumenta')}}:</label>
                                 <select class="js-example-basic-multiple" style="width: 100%; border-radius: 0;" name="{{ $field->id }}[document][]" id="select{{ $loop->index }}" multiple="multiple">
                                     <optgroup label="{{ __('Politike') }}">
                                         @foreach($documents as $document)

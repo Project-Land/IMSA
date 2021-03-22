@@ -53,15 +53,7 @@
 				@enderror
 			</div>
 
-			<div class="mb-4">
-				<label for="customer_satisfaction" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Potrebe i očekivanja zainteresovanih strana i obaveze za usklađenost')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customer_satisfaction" name="customer_satisfaction" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">{{ $msr->customer_satisfaction }}</textarea>
-				@error('customer_satisfaction')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<p class="text-lg">{{ __('OH&S Performanse')}}</p><hr>
+			<p class="text-lg">{{ __('Performanse bezbednosti informacija')}}</p><hr>
 
 			<div class="mb-4">
 				<label for="monitoring_measurement_results" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rezultati praćenja i merenja')}}:</label>
@@ -80,33 +72,9 @@
             </div>
 
             <div class="mb-4">
-				<label for="consulting_and_employee_participation" class="block text-gray-700 text-sm font-bold mb-2">{{__('Konsultovanje i učestvovanje radnika')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="consulting_and_employee_participation" name="consulting_and_employee_participation" required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')">{{ $msr->consulting_and_employee_participation }}</textarea>
-				@error('consulting_and_employee_participation')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-            </div>
-
-			<div class="mb-4">
-				<label for="resource_adequacy" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Adekvatnost resursa')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resource_adequacy" name="resource_adequacy" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">{{ $msr->resource_adequacy }}</textarea>
-				@error('resource_adequacy')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="mb-4">
-				<label for="relevant_communication_with_stakeholders" class="block text-gray-700 text-sm font-bold mb-2">{{__('Relevantno komuniciranje sa zainteresovanim stranama')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="relevant_communication_with_stakeholders" name="relevant_communication_with_stakeholders">{{ $msr->relevant_communication_with_stakeholders }}</textarea>
+				<label for="relevant_communication_with_stakeholders" class="block text-gray-700 text-sm font-bold mb-2">{{__('Povratne informacije od zainteresovanih strana')}}:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="relevant_communication_with_stakeholders" name="relevant_communication_with_stakeholders" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">{{ $msr->relevant_communication_with_stakeholders }}</textarea>
 				@error('relevant_communication_with_stakeholders')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-            <div class="mb-4">
-				<label for="improvement_opportunities" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prilike za poboljšanja')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="improvement_opportunities" name="improvement_opportunities">{{ $msr->improvement_opportunities }}</textarea>
-				@error('improvement_opportunities')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
@@ -114,19 +82,10 @@
 			<p class="text-lg">{{ __('Izlazne tačke preispitivanja')}}</p><hr>
 
 			<div class="mb-4">
-				<label for="cae" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Pogodnost, adekvatnost i efektivnost OH&S')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cae" name="cae">{{ $msr->cae }}</textarea>
+				<label for="improvement_opportunities" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prilike za poboljšanja')}}:</label>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="improvement_opportunities" name="improvement_opportunities">{{ $msr->improvement_opportunities }}</textarea>
 				<span class="text-xs text-gray-400 font-italic">{{ __('Polje nije obavezno')}}</span>
-				@error('cae')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="mb-4">
-				<label for="continous_improvement_opportunities" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prilike za stalna poboljšanja')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="continous_improvement_opportunities" name="continous_improvement_opportunities">{{ $msr->continous_improvement_opportunities }}</textarea>
-				<span class="text-xs text-gray-400 font-italic">{{ __('Polje nije obavezno')}}</span>
-				@error('continous_improvement_opportunities')
+                @error('improvement_opportunities')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>
@@ -145,33 +104,6 @@
 				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="needs_for_resources" name="needs_for_resources">{{ $msr->needs_for_resources }}</textarea>
 				<span class="text-xs text-gray-400 font-italic">{{__('Polje nije obavezno')}}</span>
 				@error('needs_for_resources')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="mb-4">
-				<label for="measures_optional" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mere, ako su potrebne')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measures_optional" name="measures_optional">{{ $msr->measures_optional }}</textarea>
-				<span class="text-xs text-gray-400 font-italic">{{ __('Polje nije obavezno')}}</span>
-				@error('measures_optional')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="mb-4">
-				<label for="opportunities" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Prilike za poboljšanje i integrisanje sa drugim procesima i sistemima menadžmenta')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="opportunities" name="opportunities">{{ $msr->opportunities }}</textarea>
-				<span class="text-xs text-gray-400 font-italic">{{ __('Polje nije obavezno')}}</span>
-				@error('opportunities')
-					<span class="text-red-700 italic text-sm">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="mb-4">
-				<label for="consequences" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Eventualne posledice po strateško usmerenje organizacije')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="consequences" name="consequences">{{ $msr->consequences }}</textarea>
-				<span class="text-xs text-gray-400 font-italic">{{ __('Polje nije obavezno')}}</span>
-				@error('consequences')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>

@@ -60,7 +60,7 @@
                                                 <td>
                                                     {{ $soa->comment != null ? __($soa->comment) : '/' }}
                                                     @if($soa->documents->count() != 0)
-                                                        <p class="font-bold text-sm mt-2 mb-0">{{ __('Dokumenti') }}:</p>
+                                                        <p class="font-bold text-sm mt-2 mb-0">{{ __('Relevantna dokumenta') }}:</p>
                                                         @foreach($soa->documents as $doc)
                                                         <form class="inline" action="{{ route('document.preview') }}" method="POST">
                                                             @csrf

@@ -147,10 +147,12 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.monitoring_measurement_results }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Rezultati internih provera')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Rezultati eksternih provera')}}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.checks_results_desc }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Efektivnost mera koje se odnose na rizike i prilike')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measures_effectiveness }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Povratne informacije od zainteresovanih strana')}}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.relevant_communication_with_stakeholders }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Prilike za poboljšanje')}}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.improvement_opportunities ? response.data.improvement_opportunities : "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{__('Potrebe za izmenama u sistemu menadžmenta')}}</p></div>

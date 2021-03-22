@@ -35,8 +35,7 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
             __('Opis'),
             __('Status'),
             __('Komentar'),
-            __('Dokumenta'),
-
+            __('Relevantna dokumenta'),
         ];
     }
 
@@ -87,7 +86,7 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
             $soa->soaField->description,
             $soa->status,
             $soa->comment,
-            count($soa->documents)>0 ? $soa->documents()->pluck('file_name')->implode(' / '): '/',
+            count($soa->documents)>0 ? $soa->documents()->pluck('file_name')->implode(', '): '/',
         ];
     }
 }

@@ -74,7 +74,7 @@
 
                             @foreach($certificates as $certificate)
                                 <label class="inline-flex items-center mt-3 cursor-pointer mr-2">
-                                    <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600"><span class="ml-2 text-gray-700 text-sm">{{ __($certificate->name) }}</span>
+                                    <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600"><span class="ml-2 text-gray-700 text-sm">{{ $certificate->name === "editor"? __('Interni proveravač'):__($certificate->name) }}</span>
                                 </label>
                             @endforeach
 

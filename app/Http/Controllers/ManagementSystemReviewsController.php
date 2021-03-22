@@ -12,6 +12,7 @@ use App\Http\Requests\ManagementSystemReviewRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ManagementSystemReviews9001Export;
 use App\Exports\ManagementSystemReviews14001Export;
+use App\Exports\ManagementSystemReviews27001Export;
 use App\Exports\ManagementSystemReviews45001Export;
 
 class ManagementSystemReviewsController extends Controller
@@ -157,6 +158,9 @@ class ManagementSystemReviewsController extends Controller
         }
         if($standard_name == 14001){
             return (new ManagementSystemReviews14001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
+        }
+        if($standard_name == 27001){
+            return (new ManagementSystemReviews27001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
         }
         if($standard_name == 45001){
             return (new ManagementSystemReviews45001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');

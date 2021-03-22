@@ -41,26 +41,26 @@ class ManagementSystemReviewRequest extends FormRequest
                     return $query->where('year', $this->year)->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'));
                 }
             )],
-            'participants' => 'required',
-            'measures_status' => 'required',
-            'internal_external_changes' => 'required',
-            'monitoring_measurement_results' => 'required',
-            'customer_satisfaction' => 'required',
-            'resource_adequacy' => 'required',
-            'checks_results_desc' => 'required'
+            //'participants' => 'required',
+            //'measures_status' => 'required',
+            //'internal_external_changes' => 'required',
+            //'monitoring_measurement_results' => 'required',
+            //'customer_satisfaction' => 'required',
+            //'resource_adequacy' => 'required',
+            //'checks_results_desc' => 'required'
         ];
     }
 
     public function updateRules()
     {
         return [
-            'participants' => 'required',
-            'measures_status' => 'required',
-            'internal_external_changes' => 'required',
-            'monitoring_measurement_results' => 'required',
-            'customer_satisfaction' => 'required',
-            'resource_adequacy' => 'required',
-            'checks_results_desc' => 'required'
+            //'participants' => 'required',
+            //'measures_status' => 'required',
+            //'internal_external_changes' => 'required',
+            //'monitoring_measurement_results' => 'required',
+            //'customer_satisfaction' => 'required',
+            //'resource_adequacy' => 'required',
+            //'checks_results_desc' => 'required'
         ];
     }
 
@@ -95,7 +95,6 @@ class ManagementSystemReviewRequest extends FormRequest
             ]);
         }
 
-        //dodati model
         if(session('standard_name') == 45001){
             $this->merge([
                 'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year),
