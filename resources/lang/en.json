@@ -309,7 +309,7 @@
     "Godišnji planovi obuka" : "Annual training plans",
     "Dodaj obuku" : "Add new training",
     "Vrsta" : "Type",
-    "Br. zaposlenih" : "Number of trainees",
+    "Br. zaposlenih - planirano" : "Number of trainees - planned",
     "Termin" : "Date",
     "Mesto" : "Place",
     "Resursi" : "Resources",
@@ -326,7 +326,7 @@
     "Naziv obuke" : "Training title",
     "Opis obuke" : "Training description",
     "Vrsta obuke" : "Training type",
-    "Broj zaposlenih" : "Number of trainees",
+    "Broj zaposlenih - planirano" : "Number of trainees - planned",
     "Ocena" : "Rating",
     "Planirani termin" : "Training date",
     "Mesto obuke" : "Place",
@@ -547,7 +547,7 @@
     "Naziv dokumenta ne sme biti duži od 255 karaktera":"The title of the document must not be longer than 255 characters",
     "Unesite verziju dokumenta":"Enter the document version",
     "Izaberite pripadajući sektor":"Select a sector",
-    "Fajl ne sme biti veći od 10mb":"The maximum file size is 10mb",
+    "Dokument ne sme biti veći od 50mb":"The maximum file size is 50mb",
     "Fajl mora biti u nekom od dozvoljenih formata: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif":"Allowed formats: pdf, csv, xls, xlsx, doc, docx, jpeg, png, bmp, webp, gif",
     "Izveštaj za izabranu godinu već postoji":"The report for the selected year already exists",
     "Fajl mora biti u PDF formatu":"File must be in PDF format",
@@ -760,9 +760,9 @@
     "Menadžment incidentima narušavanja bezbednosti informacija" : "Information security breach incident management",
     "Aspekti bezbednosti informacija kod menadžmenta kontiunitetom poslovanja" : "Aspects of information security in business continuity management",
     "Usklađenost" : "Compatibility",
-
-
-
-    "Odštampaj":"Print"
+    "Odštampaj":"Print",
+    "Već postoji dokument sa takvim nazivom" : "Document with such name already exists",
+    "Brisanje ankete" : "Delete the survey",
+    "Pregled ankete" : "Survey preview"
 
 }

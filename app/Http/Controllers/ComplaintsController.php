@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Str;
 use App\Models\Document;
 use App\Models\Complaint;
+use App\Models\Sector;
 use App\Facades\CustomLog;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class ComplaintsController extends Controller
         $complaints = Complaint::where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
-            ])->get();
+            ])->with('sector')->get();
 
         return view('system_processes.complaints.index', compact('complaints'));
     }
@@ -41,8 +42,13 @@ class ComplaintsController extends Controller
         if(session('standard') == null || session('standard_name') != "9001"){
             return redirect('/');
         }
+
+        $sectors = Sector::where([
+            ['team_id', Auth::user()->current_team_id]
+        ])->get();
+
         $this->authorize('create', Complaint::class);
-        return view('system_processes.complaints.create');
+        return view('system_processes.complaints.create', compact('sectors'));
     }
 
     public function store(ComplaintsRequest $request)
@@ -92,7 +98,7 @@ class ComplaintsController extends Controller
 
     public function show($id)
     {
-        $complaint = Complaint::with('user')->findOrFail($id);
+        $complaint = Complaint::with('user', 'sector')->findOrFail($id);
         return $complaint;
     }
 
@@ -100,8 +106,12 @@ class ComplaintsController extends Controller
     {
         $this->authorize('update', Complaint::find($id));
 
+        $sectors = Sector::where([
+            ['team_id', Auth::user()->current_team_id]
+        ])->get();
+
         $complaint = Complaint::findOrFail($id);
-        return view('system_processes.complaints.edit', compact('complaint'));
+        return view('system_processes.complaints.edit', compact('complaint', 'sectors'));
     }
 
     public function update(ComplaintsRequest $request, $id)

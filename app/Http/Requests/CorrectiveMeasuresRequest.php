@@ -26,7 +26,6 @@ class CorrectiveMeasuresRequest extends FormRequest
     public function rules()
     {
         return [
-            'standard_id' => 'required',
             'sector_id' => 'required',
             'noncompliance_source' => 'required',
             'noncompliance_description' => 'required',
@@ -39,7 +38,6 @@ class CorrectiveMeasuresRequest extends FormRequest
     public function messages()
     {
         return [
-            'standard_id.required' => 'Izaberite standard',
             'sector_id.required' => 'Izaberite organizacionu celinu',
             'noncompliance_source.required' => 'Unesite izvor informacije o neusaglašenosti',
             'noncompliance_description.required' => 'Unesite opis neusaglašenosti',
@@ -78,6 +76,7 @@ class CorrectiveMeasuresRequest extends FormRequest
         $this->merge([
             'user_id' => Auth::user()->id,
             'team_id' => Auth::user()->current_team_id,
+            'standard_id' => session('standard'),
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'noncompliance_cause_date' => Carbon::now(),
             'measure_date' => Carbon::now(),

@@ -47,7 +47,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih') }}:</label>
+				<label for="num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih - planirano') }}:</label>
 				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="num_of_employees" name="num_of_employees" value="{{ old('num_of_employees') }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
 				@error('num_of_employees')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
@@ -80,7 +80,7 @@
 
 			<div class="mb-4">
 				<label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Realizovano') }}:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="status" id="status">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status">
 					<option value="0">{{ __('Ne') }}</option>
 					<option value="1">{{ __('Da') }}</option>
 				</select>
@@ -208,59 +208,6 @@
 		}
 	})
 
-    /*document.getElementById("name_file").addEventListener("change", function(e){
-        let file = document.getElementById('name_file').files[0];
-        if(file){
-            document.getElementById('old_document').textContent = file.name;
-            var counter = 1;
-            $('#more_fields').append(`
-                <div class="flex" id="block${counter}">
-                <label for="name_file${counter}" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                    </svg>
-                    <small>{{__('Izaberi fajl')}}</small>
-                </label>
-                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file${ counter }">
-                <span class="flex-1 pt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
-                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="remove(${counter})"><i class="fas fa-trash"></i></button>
-                </div>
-            `);
-
-            $('#name_file'+counter).change(function() {
-                add_one_more_field(counter);
-            });
-        }
-
-    });
-
-    function add_one_more_field(counter){
-        if(document.getElementById('name_file'+counter).files[0])
-            console.log(document.getElementById('name_file'+counter).files[0].name);
-            document.getElementById('old_document'+counter).textContent = document.getElementById('name_file'+counter).files[0].name;
-            counter ++;
-            $('#more_fields').append(`
-                <div class="flex" id="block${counter}">
-                <label for="name_file${counter}" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                    </svg>
-                    <small>{{__('Izaberi fajl')}}</small>
-                </label>
-                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file${ counter }">
-                <span class="flex-1 mt-3 font-italic text-s ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
-                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="remove(${counter})"><i class="fas fa-trash"></i></button>
-                </div>
-            `);
-
-            $('#name_file'+counter).change(function() {
-                add_one_more_field(counter);
-            });
-    }
-
-    function remove(counter){
-        $('#block'+counter).remove();
-    }*/
 
     $('#name_file').change( () => {
         let file = document.getElementById('name_file').files[0];

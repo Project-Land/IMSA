@@ -30,4 +30,9 @@ class Sector extends Model
     {
         return $this->hasMany('App\Models\InternalCheck');
     }
+
+    public function complaints()
+    {
+        return $this->hasMany('App\Models\Complaint');
+    }
 }

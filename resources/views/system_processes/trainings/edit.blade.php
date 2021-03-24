@@ -47,7 +47,7 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih') }}:</label>
+				<label for="num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih - planirano') }}:</label>
 				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="num_of_employees" name="num_of_employees" value="{{ $trainingPlan->num_of_employees  }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
 				@error('num_of_employees')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
@@ -80,7 +80,7 @@
 
 			<div class="mb-4">
 				<label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Realizovano') }}:</label>
-				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="status" id="status">
+				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="status">
 					<option value="0">{{ __('Ne') }}</option>
 					<option value="1" {{ $trainingPlan->rating != null ? "selected" : "" }} >{{ __('Da') }}</option>
 				</select>

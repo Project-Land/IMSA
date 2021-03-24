@@ -61,7 +61,7 @@
                                             /
                                         @endforelse
                                     </td>
-                                    <td class="text-center">{{ $c->process }}</td>
+                                    <td class="text-center">{{ $c->sector->name }}</td>
                                     <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
                                     <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
@@ -183,7 +183,7 @@ if(id){
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum podnošenja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.submission_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Proces na koji se reklamacija odnosi') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.process }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.sector.name }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opravdana / prihvaćena') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.accepted == 1 ? "{{ __('Da') }}":"{{ __('Ne') }}" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
