@@ -102,36 +102,42 @@
             </div>
 
             <div class="mb-4 doc_field" style="display: none">
-                <label for="name_file" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
-
+                <div class="flex justify-between items-center">
+                    <label for="name_file" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
+                    <span class="w-1/3 bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addGroup"><i class="fas fa-plus"></i>  {{ __('Dodaj novi unos') }}</span>
+                </div>
+                
+                
                 <label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                     </svg>
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
-                <input type="file" class="form-control-file d-none" id="name_file" name="file[]">
+                <input type="file" class="form-control-file d-none" id="name_file" name="training[0][file][]" multiple>
 
                 <span class="font-italic text-xs sm:text-sm ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
                 @error('file')
                     <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                 @enderror
 
-                <span class="bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm w-full mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i>  {{ __('Dodaj još jedan dokument') }}</span>
+                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearFile('')"><i class="fas fa-trash"></i></button>
+
+                <div class="mb-4 d-none" id="users-field">
+                    <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
+                    <select class="js-example-basic-multiple" name="training[0][users][]" multiple="multiple" style="width: 100%;">
+                        @foreach($users as $user)
+                            @if($user->teams[0]->membership->role != 'super-admin')
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
 
                 <div id="more_fields" class="mt-3 sm:mt-0"></div>
             </div>
 
-            <div class="mb-4 d-none" id="users-field">
-                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
-                <select class="js-example-basic-multiple" name="users[]" multiple="multiple" style="width: 100%;">
-                    @foreach($users as $user)
-                        @if($user->teams[0]->membership->role != 'super-admin')
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+
 
 			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
 		</form>
@@ -210,46 +216,67 @@
 
 
     $('#name_file').change( () => {
-        let file = document.getElementById('name_file').files[0];
-        if(file)
-            document.getElementById('old_document').textContent = file.name;
+        let file = document.getElementById('name_file').files;
+        document.getElementById('old_document').textContent = "";
+        for(f of file){
+            if(f)
+                document.getElementById('old_document').textContent += f.name + ", ";
+        }
     });
 
-    $("#addMore").click(function(e) {
-        e.preventDefault();
-        if(sessionStorage.length == 0){
-            sessionStorage.setItem('counter', 0);
-            var counter = 0;
-        }
-        else{
-            var counter = sessionStorage.getItem('counter');
-            counter++;
-            sessionStorage.setItem('counter',counter );
-        }
+    let groupCounter = 1;
 
+    $("#addGroup").click(function(e) {
 
         $('#more_fields').append(`
+        <div class="border-2 my-3">
             <div class="flex" id="block">
-                <label for="name_file${ counter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                <label for="name_file${ groupCounter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                     </svg>
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
-                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="file[]">
-                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
-                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ groupCounter }" name="training[${ groupCounter }][file][]" multiple>
+                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
+            <button type="button" class="text-lg flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
+                <button type="button" class="text-lg bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
             </div>
+            <div class="mb-4" id="users-field">
+                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
+                <select class="js-example-basic-multiple" name="training[${ groupCounter }][users][]" multiple="multiple" style="width: 100%;">
+                    @foreach($users as $user)
+                        @if($user->teams[0]->membership->role != 'super-admin')
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
         `);
 
-        $('#name_file'+counter).change( () => {
-            let file = document.getElementById('name_file'+counter).files[0];
-            if(file)
-                document.getElementById('old_document'+counter).textContent = file.name;
-                sessionStorage.setItem('counter', counter);
+
+        $('.js-example-basic-multiple').select2();
+
+        let cnt = groupCounter.toString();
+
+        $('#name_file'+cnt).change( () => {
+            
+            let file = document.getElementById(`name_file${cnt}`).files;
+            document.getElementById(`old_document${cnt}`).textContent = "";
+            for(f of file){
+                if(f)
+                    document.getElementById(`old_document${cnt}`).textContent += f.name + ", ";
+                    sessionStorage.setItem('counter', cnt);
+            }
         });
+
+        groupCounter++;
     });
 
-
+    function clearFile(id){
+        document.getElementById(`name_file${id}`).value = "";
+        document.getElementById(`old_document${id}`).textContent = "{{ __('Fajl nije izabran') }}";
+    }
 
 </script>

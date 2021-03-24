@@ -45,6 +45,6 @@ class Document extends Model
 
     public function users()
     {
-        return $this->belongsTo('App\Models\User', 'training_user')->withPivot('training_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'training_user')->withPivot('training_id')->withTimestamps();
     }
 }

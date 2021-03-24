@@ -31,9 +31,6 @@ class TrainingsController extends Controller
                 ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
 
-        //get document by training and user
-        //dd($trainingPlans[0]->users->find(1)->documents()->where('training_id', $trainingPlans[0]->id)->get());
-
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
 
@@ -81,28 +78,35 @@ class TrainingsController extends Controller
         $this->authorize('create', Training::class);
         
         try{
-            $trainingPlan = Training::create($request->except(['file','users']));
+            $trainingPlan = Training::create($request->except(['training']));
 
-            if($request->users){
-                $trainingPlan->users()->sync($request->users);
-            }
+            foreach($request->training as $block){
 
-            if($request->file('file')){
-                foreach($request->file('file') as $file){
-                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                    $name= $trainingPlan->name;
-                    $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                    $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $trainingPlan->name);
-                    $document = Document::create([
-                        'training_id'=>$trainingPlan->id,
-                        'standard_id'=>$trainingPlan->standard_id,
-                        'team_id'=>$trainingPlan->team_id,
-                        'user_id'=>$trainingPlan->user_id,
-                        'document_name'=> $name,
-                        'version'=>1,
-                        'file_name'=>$trainingPlan->name,
-                        'doc_category'=>'training'
-                        ]);
+                if($block['file']){
+                    foreach($block['file'] as $file){
+                        $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                        $name= $trainingPlan->name;
+                        $newFileName=$file_name.".".$file->getClientOriginalExtension();
+                        $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $newFileName);
+                        $document = Document::create([
+                            'standard_id'=>$trainingPlan->standard_id,
+                            'team_id'=>$trainingPlan->team_id,
+                            'user_id'=>$trainingPlan->user_id,
+                            'document_name'=> $name,
+                            'version'=>1,
+                            'file_name'=>$newFileName,
+                            'doc_category'=>'training'
+                            ]);
+
+                        foreach($block['users'] as $user){
+                            $document->users()->attach($user, ['training_id' => $trainingPlan->id]);
+                        }
+                    }
+                }
+                else{
+                    foreach($block['users'] as $user){
+                        $trainingPlan->users()->attach($user, ['document_id' => null]);
+                    }
                 }
             }
 
@@ -120,7 +124,10 @@ class TrainingsController extends Controller
         if(!request()->expectsJson()){
             abort(404);
         }
-        $training = Training::with('documents')->with('user')->findOrFail($id);
+        
+        $training = Training::with(['usersWithoutDocument', 'user', 'documents.users'])->findOrFail($id);
+        $training->docArray = $training->documents->unique();
+        
         $training['company'] = Str::snake(Auth::user()->currentTeam->name);
         return response()->json($training);
     }

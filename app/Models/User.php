@@ -123,7 +123,7 @@ class User extends Authenticatable
 
     public function trainings()
     {
-        return $this->belongsToMany('App\Models\Training')->withPivot('document_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Training', 'training_user')->withPivot('document_id')->withTimestamps();
     }
 
     public function trainingDocument()

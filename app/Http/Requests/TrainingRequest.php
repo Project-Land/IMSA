@@ -43,8 +43,7 @@ class TrainingRequest extends FormRequest
             'place' => 'required|max:190',
             'resources' => 'required',
             'training_date' => 'required',
-            'file[]'=>'nullable',
-            'users[]' => 'nullable'
+            'training.*'=>'nullable',
         ];
     }
 
@@ -58,9 +57,10 @@ class TrainingRequest extends FormRequest
             'place' => 'required|max:190',
             'resources' => 'required',
             'training_date' => 'required',
-            'file[]'=>'nullable',
-            'new_file[]'=>'nullable',
-            'users[]' => 'nullable'
+            'training.*' => 'nullable',
+            //'file[]'=>'nullable',
+            //'new_file[]'=>'nullable',
+            //'users[]' => 'nullable'
         ];
     }
 

@@ -40,4 +40,9 @@ class Training extends Model
     {
         return $this->belongsToMany('App\Models\Document', 'training_user')->withPivot('user_id')->withTimestamps();
     }
+
+    public function usersWithoutDocument()
+    {
+        return $this->belongsToMany('App\Models\User', 'training_user')->wherePivot('document_id',null)->withTimestamps();
+    }
 }
