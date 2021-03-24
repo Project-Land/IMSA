@@ -145,4 +145,15 @@ class CustomerSatisfactionController extends Controller
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
     }
+
+    public function print($id)
+    {
+        $cs = CustomerSatisfaction::with('user')->findOrFail($id);
+        $this->authorize('view', $cs);
+        $poll = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
+        $cs->columns = $poll;
+        $cs->average = round($cs->average(), 1);
+        return view('system_processes.customer_satisfaction.print', compact('cs'));
+
+    }
 }

@@ -172,6 +172,8 @@
 </style>
 
 <script>
+    
+    console.log( {!! json_encode($users->toArray()) !!});
 	var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
     $.datetimepicker.setLocale(lang);
 

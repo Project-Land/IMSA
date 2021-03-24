@@ -33,6 +33,7 @@ class HomeController extends Controller
         //return view('dashboard', compact('standards'));
 
          return redirect('/standards/1');
+       
     }
 
     public function standard($id)

@@ -77,7 +77,7 @@ class TrainingsController extends Controller
     public function store(TrainingRequest $request)
     {
         $this->authorize('create', Training::class);
-
+        
         try{
             $trainingPlan = Training::create($request->except(['status','file','users']));
 
