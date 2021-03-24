@@ -22,15 +22,10 @@ class Document extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-    
+
     public function team()
     {
         return $this->belongsTo('App\Models\Team');
-    }
-
-    public function training()
-    {
-        return $this->belongsTo('App\Models\Training');
     }
 
     public function soas()
@@ -41,5 +36,15 @@ class Document extends Model
     public function complaints()
     {
         return $this->belongsToMany('App\Models\Complaint');
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany('App\Models\Training', 'training_user')->withPivot('user_id')->withTimestamps();
+    }
+
+    public function users()
+    {
+        return $this->belongsTo('App\Models\User', 'training_user')->withPivot('training_id')->withTimestamps();
     }
 }

@@ -111,11 +111,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Supplier');
     }
 
-    public function trainings()
-    {
-        return $this->belongsToMany('App\Models\Training')->withTimestamps();
-    }
-
     public function accidents()
     {
         return $this->hasMany('App\Models\Accident');
@@ -124,6 +119,16 @@ class User extends Authenticatable
     public function certificates()
     {
         return $this->belongsToMany('App\Models\Certificate');
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany('App\Models\Training')->withPivot('document_id')->withTimestamps();
+    }
+
+    public function trainingDocument()
+    {
+        return $this->belongsToMany('App\Models\Document', 'training_user')->withPivot('training_id')->withTimestamps();
     }
 
 }

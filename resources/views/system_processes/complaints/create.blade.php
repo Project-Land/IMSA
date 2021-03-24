@@ -62,10 +62,15 @@
             </div>
 
 			<div class="mb-4">
-				<label for="process" class="block text-gray-700 text-sm font-bold mb-2">{{__('Proces na koji se reklamacija odnosi')}}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="process" name="process" value="{{ old('process') }}" required oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')"
-                oninput="this.setCustomValidity('')" >
-				@error('process')
+				<label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">{{__('Proces na koji se reklamacija odnosi')}}:</label>
+
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector_id" name="sector_id" required oninvalid="this.setCustomValidity('{{ __("Izaberite proces") }}')" oninput="this.setCustomValidity('')">
+                    <option value="">{{ __('Izaberite') }}...</option>
+                    @foreach($sectors as $sector)
+                        <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                    @endforeach
+                </select>
+				@error('sector_id')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
 			</div>

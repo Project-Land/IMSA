@@ -35,4 +35,9 @@ class Complaint extends Model
     {
         return $this->belongsToMany('App\Models\Document');
     }
+
+    public function sector()
+    {
+        return $this->belongsTo('App\Models\Sector');
+    }
 }

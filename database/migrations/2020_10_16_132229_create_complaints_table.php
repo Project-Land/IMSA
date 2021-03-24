@@ -21,7 +21,7 @@ class CreateComplaintsTable extends Migration
             $table->string('name');
             $table->date('submission_date');
             $table->string('description',500);
-            $table->string('process');
+            $table->foreignId('sector_id')->constrained()->onDelete('cascade');
             $table->boolean('accepted');
             $table->date('deadline_date')->nullable();
             $table->string('responsible_person')->nullable();

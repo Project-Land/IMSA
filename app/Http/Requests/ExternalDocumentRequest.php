@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ExternalDocumentRequest extends FormRequest
@@ -32,7 +32,10 @@ class ExternalDocumentRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
-            'file' => 'required|max:10000|mimes:pdf'
+            'document_name' => Rule::unique('documents')->where( function ($query) {
+                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+            }),
+            'file' => 'required|max:50000|mimes:pdf'
         ];
     }
 
@@ -40,7 +43,10 @@ class ExternalDocumentRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
-            'file' => 'max:10000|mimes:pdf, doc, docx'
+            'document_name' => Rule::unique('documents')->ignore($this->route('external_document'))->where( function ($query) {
+                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+            }),
+            'file' => 'max:50000|mimes:pdf, doc, docx'
         ];
     }
 
@@ -49,8 +55,11 @@ class ExternalDocumentRequest extends FormRequest
         return [
             'file.required' => 'Izaberite fajl',
             'file.mimes' => 'Fajl mora biti u nekom od dozvoljenih formata: pdf, doc, docx',
+            'file.max' => 'Dokument ne sme biti veći od 50mb',
             'document_name.required' => 'Unesite naziv dokumenta',
+            'document_name.unique' => "Već postoji dokument sa takvim nazivom",
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
+            'document_name.unique' => "Već postoji dokument sa takvim nazivom",
         ];
     }
 

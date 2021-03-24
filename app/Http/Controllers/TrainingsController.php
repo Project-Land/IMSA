@@ -24,13 +24,15 @@ class TrainingsController extends Controller
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
-
         session(['training_year' => date('Y')]);
         $trainingPlans = Training::where([
                 ['standard_id', session('standard')],
                 ['year', date('Y')],
                 ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
+
+        //get document by training and user
+        //dd($trainingPlans[0]->users->find(1)->documents()->where('training_id', $trainingPlans[0]->id)->get());
 
         return view('system_processes.trainings.index', compact('trainingPlans'));
     }
@@ -79,7 +81,7 @@ class TrainingsController extends Controller
         $this->authorize('create', Training::class);
 
         try{
-            $trainingPlan = Training::create($request->except(['status','file','users']));
+            $trainingPlan = Training::create($request->except(['file','users']));
 
             if($request->users){
                 $trainingPlan->users()->sync($request->users);

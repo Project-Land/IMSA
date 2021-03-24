@@ -32,7 +32,7 @@ class TrainingsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
             __('Naziv'),
             __('Vrsta'),
             __('Opis'),
-            __('Br. zaposlenih'),
+            __('Br. zaposlenih - planirano'),
             __('Termin / Mesto'),
             __('Resursi'),
             __('Br. zaposlenih').'-'.__('realizovano'),

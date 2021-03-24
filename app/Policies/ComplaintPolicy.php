@@ -10,18 +10,6 @@ class ComplaintPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-
-
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;

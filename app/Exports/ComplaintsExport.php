@@ -87,7 +87,7 @@ class ComplaintsExport implements FromCollection, WithHeadings, ShouldAutoSize, 
         return Complaint::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->with('standard')->get();
+        ])->with('standard', 'sector')->get();
     }
 
     public function map($complaint): array
@@ -96,7 +96,7 @@ class ComplaintsExport implements FromCollection, WithHeadings, ShouldAutoSize, 
             $complaint->name,
             $complaint->description,
             date('d.m.Y', strtotime($complaint->submission_date)),
-            $complaint->process,
+            $complaint->sector->name,
             $complaint->accepted == 0 ? __('Ne') : __('Da'),
             $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : "/",
             $complaint->responsible_person ?? "/",

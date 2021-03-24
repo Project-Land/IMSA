@@ -230,7 +230,7 @@
 
                             @if(Gate::check('userManagement', $team))
                                 <x-jet-dropdown-link href="{{ route('users.notification-settings') }}">
-                                    {{ __('Podešavanje notifikacija') }}
+                                    {{ __('Podešavanje email notifikacija') }}
                                 </x-jet-dropdown-link>
                             @endif
 
@@ -455,7 +455,7 @@
 
                 @if(Gate::check('userManagement', $team))
                     <x-jet-responsive-nav-link href="{{ route('users.notification-settings') }}" class="hover:no-underline" :active="request()->routeIs('users.notification-settings')">
-                        {{ __('Podešavanje notifikacija') }}
+                        {{ __('Podešavanje email notifikacija') }}
                     </x-jet-responsive-nav-link>
                 @endif
 

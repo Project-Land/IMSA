@@ -26,13 +26,18 @@ class Training extends Model
         return $this->belongsTo('App\Models\Standard');
     }
 
-    public function documents()
-    {
-        return $this->hasMany(Document::class);
-    }
+    // public function documents()
+    // {
+    //     return $this->hasMany(Document::class);
+    // }
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User')->withTimestamps();
+        return $this->belongsToMany('App\Models\User', 'training_user')->withPivot('document_id')->withTimestamps();
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Models\Document', 'training_user')->withPivot('user_id')->withTimestamps();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ManualRequest extends FormRequest
 {
@@ -36,9 +37,12 @@ class ManualRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
+            'document_name' => Rule::unique('documents')->where( function ($query) {
+                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+            }),
             'version' => 'required',
-            'file' => 'required|max:10000|mimes:pdf',
-            'sector_id' => 'required'
+            'file' => 'required|max:50000|mimes:pdf',
+            'sector_id' => 'required',
         ];
     }
 
@@ -46,8 +50,11 @@ class ManualRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
+            'document_name' => Rule::unique('documents')->ignore($this->route('manual'))->where( function ($query) {
+                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+            }),
             'version' => 'required',
-            'file' => 'max:10000|mimes:pdf',
+            'file' => 'max:50000|mimes:pdf',
             'sector_id' => 'required'
         ];
     }
@@ -57,8 +64,10 @@ class ManualRequest extends FormRequest
         return [
             'file.required' => 'Izaberite fajl',
             'file.mimes' => 'Fajl mora biti u PDF formatu',
+            'file.max' => 'Dokument ne sme biti veći od 50mb',
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.max' => 'Naziv dokumenta ne sme biti duži od 255 karaktera',
+            'document_name.unique' => "Već postoji dokument sa takvim nazivom",
             'version.required' => 'Unesite verziju dokumenta',
             'sector_id.required' => 'Izaberite pripadajući sektor'
         ];

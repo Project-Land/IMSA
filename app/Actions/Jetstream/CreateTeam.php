@@ -60,6 +60,9 @@ class CreateTeam implements CreatesTeams
             ['role' => 'super-admin']
         );
 
+        $standard = \App\Models\Standard::where('name', 9001)->get();
+        $team->standards()->attach($standard);
+
         TeamMemberAdded::dispatch($team, $newTeamMember);
 
         return $team;

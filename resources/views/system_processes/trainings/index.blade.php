@@ -51,7 +51,7 @@
                                     <th>{{ __('Naziv') }}</th>
                                     <th>{{ __('Vrsta') }}</th>
                                     <th>{{ __('Opis') }}</th>
-                                    <th>{{ __('Br. zaposlenih') }}</th>
+                                    <th>{{ __('Br. zaposlenih - planirano') }}</th>
                                     <th>{{ __('Termin') }} / {{ __('Mesto') }}</th>
                                     <th>{{ __('Resursi') }}</th>
                                     <th>{{ __('Br. zaposlenih') }} - {{ __('realizovano') }}</th>
@@ -240,7 +240,7 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>{{ __('${ response.data.type }') }}</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opis') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.description }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih') }}</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih - planirano') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.num_of_employees }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Termin') }} / {{ __('Mesto') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ response.data.place }</p></div>
