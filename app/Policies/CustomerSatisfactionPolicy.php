@@ -10,6 +10,15 @@ class CustomerSatisfactionPolicy
 {
     use HandlesAuthorization;
 
+    public function view(User $user,CustomerSatisfaction $cs)
+    {
+       if($cs->team_id == $user->current_team_id){
+            if(session('standard_name') === "9001"){
+                return true;
+            }
+        }
+    }
+
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
