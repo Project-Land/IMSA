@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Models\Document;
 use App\Models\Training;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Exports\TrainingsExport;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\TrainingRequest;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\TrainingsExport;
 
 class TrainingsController extends Controller
 {
@@ -76,36 +77,38 @@ class TrainingsController extends Controller
     public function store(TrainingRequest $request)
     {
         $this->authorize('create', Training::class);
-        
+
         try{
             $trainingPlan = Training::create($request->except(['training']));
 
-            foreach($request->training as $block){
+            if($request->has('training')){
+                foreach($request->training as $block){
 
-                if($block['file']){
-                    foreach($block['file'] as $file){
-                        $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                        $name= $trainingPlan->name;
-                        $newFileName=$file_name.".".$file->getClientOriginalExtension();
-                        $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $newFileName);
-                        $document = Document::create([
-                            'standard_id'=>$trainingPlan->standard_id,
-                            'team_id'=>$trainingPlan->team_id,
-                            'user_id'=>$trainingPlan->user_id,
-                            'document_name'=> $name,
-                            'version'=>1,
-                            'file_name'=>$newFileName,
-                            'doc_category'=>'training'
-                            ]);
+                    if(isset($block['file'])){
+                        foreach($block['file'] as $file){
+                            $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                            $name= $trainingPlan->name;
+                            $newFileName=$file_name.".".$file->getClientOriginalExtension();
+                            $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $newFileName);
+                            $document = Document::create([
+                                'standard_id' => $trainingPlan->standard_id,
+                                'team_id' => $trainingPlan->team_id,
+                                'user_id' => $trainingPlan->user_id,
+                                'document_name'=> $name,
+                                'version' => 1,
+                                'file_name' => $newFileName,
+                                'doc_category' => 'training'
+                                ]);
 
-                        foreach($block['users'] as $user){
-                            $document->users()->attach($user, ['training_id' => $trainingPlan->id]);
+                            foreach($block['users'] as $user){
+                                $document->users()->attach($user, ['training_id' => $trainingPlan->id]);
+                            }
                         }
                     }
-                }
-                else{
-                    foreach($block['users'] as $user){
-                        $trainingPlan->users()->attach($user, ['document_id' => null]);
+                    else{
+                        foreach($block['users'] as $user){
+                            $trainingPlan->users()->attach($user, ['document_id' => null]);
+                        }
                     }
                 }
             }
@@ -124,17 +127,21 @@ class TrainingsController extends Controller
         if(!request()->expectsJson()){
             abort(404);
         }
-        
+
         $training = Training::with(['usersWithoutDocument', 'user', 'documents.users'])->findOrFail($id);
         $training->docArray = $training->documents->unique();
-        
+
         $training['company'] = Str::snake(Auth::user()->currentTeam->name);
         return response()->json($training);
     }
 
     public function edit($id)
     {
-        $trainingPlan = Training::with('documents')->with('users')->findOrFail($id);
+        //$trainingPlan = Training::with('documents')->with('users')->findOrFail($id);
+
+        $trainingPlan = Training::with(['usersWithoutDocument', 'user', 'documents.users'])->findOrFail($id);
+        $trainingPlan->withoutDoc = $trainingPlan->usersWithoutDocument->unique();
+        $trainingPlan->docArray = $trainingPlan->documents->unique();
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
         $this->authorize('update', $trainingPlan);
         return view('system_processes.trainings.edit', compact('trainingPlan', 'users'));
@@ -145,43 +152,134 @@ class TrainingsController extends Controller
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('update', $trainingPlan);
 
+        if($request->has('training')){
+            $oldFiles = array_column($request->training,'oldFile');
+        }
+        else{
+            $oldFiles = [];
+        }
+
+        $currentFiles = $trainingPlan->documents->pluck('id');
+        $diff = $currentFiles->diff($oldFiles)->unique()->values();
         try{
-            if(!$request->file)$request->file=[];
-            foreach($trainingPlan->documents()->pluck('id') as $id){
-                if(!in_array($id,$request->file)){
-                    $doc=Document::findOrFail($id);
+            DB::transaction(function () use($request, $trainingPlan, $diff) {
+                if(!$request->exists('training')){
+                    $trainingPlan->usersWithoutDocument()->detach();
+                }
+
+                if($request->has('training')){
+                    foreach($request->training as $key => $block){
+
+                        if(isset($block['file'])){
+                            foreach($block['file'] as $file){
+                                $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                                $name= $trainingPlan->name;
+                                $newFileName = $file_name.".".$file->getClientOriginalExtension();
+                                $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $newFileName);
+                                $document = Document::create([
+                                    'standard_id' => $trainingPlan->standard_id,
+                                    'team_id' => $trainingPlan->team_id,
+                                    'user_id' => $trainingPlan->user_id,
+                                    'document_name'=> $name,
+                                    'version' => 1,
+                                    'file_name' => $newFileName,
+                                    'doc_category' => 'training'
+                                    ]);
+
+                                foreach($block['users'] as $user){
+                                    if($key == 0){
+                                        $trainingPlan->users()->wherePivot('document_id', null)->detach($user);
+                                    }
+                                    $document->users()->attach($user, ['training_id' => $trainingPlan->id]);
+                                }
+                            }
+                        }
+
+                        if(isset($block['oldFile'])){
+                            $document = Document::findOrFail($block['oldFile']);
+                            $arr = [];
+                            foreach($block['users'] as $user){
+                                $arr[$user] = ['training_id' => $trainingPlan->id];
+                            }
+                            $document->users()->sync($arr);
+                        }
+                        elseif(isset($block['deletedFile'])){
+                                $deletedDocument = Document::findOrFail($block['deletedFile']);
+                                foreach($deletedDocument->users as $deletedDocUser){
+                                    $deletedDocUser->pivot->document_id = null;
+                                    $deletedDocUser->pivot->save();
+                                }
+                                $path = Str::snake($this::getCompanyName())."/training/".$deletedDocument->file_name;
+                                Storage::delete($path);
+                                $newDiff = $diff->flip();
+                                unset($newDiff[$deletedDocument->id]);
+                                $diff = $newDiff->flip();
+                                $deletedDocument->forceDelete();
+                        }
+                        else{
+                            if($key != 0){
+                                $arr = [];
+                                foreach($block['users'] as $user){
+                                    $arr[$user] = ['document_id' => null];
+                                }
+                                $trainingPlan->usersWithoutDocument()->sync($arr);
+                            }
+                            else{
+                                if(!isset($block['file'])){
+                                    $arr = [];
+                                    foreach($block['users'] as $user){
+                                        $arr[$user] = ['document_id' => null];
+                                    }
+                                    $trainingPlan->usersWithoutDocument()->sync($arr);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(isset($request->newTraining)){
+                    foreach($request->newTraining as $block){
+                        if(isset($block['file'])){
+                            foreach($block['file'] as $file){
+                                $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                                $name= $trainingPlan->name;
+                                $newFileName=$file_name.".".$file->getClientOriginalExtension();
+                                $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $newFileName);
+                                $document = Document::create([
+                                    'standard_id' => $trainingPlan->standard_id,
+                                    'team_id' => $trainingPlan->team_id,
+                                    'user_id' => $trainingPlan->user_id,
+                                    'document_name'=> $name,
+                                    'version' => 1,
+                                    'file_name' => $newFileName,
+                                    'doc_category' => 'training'
+                                    ]);
+
+                                foreach($block['users'] as $user){
+                                    $document->users()->attach($user, ['training_id' => $trainingPlan->id]);
+                                }
+                            }
+                        }
+                        else{
+                            foreach($block['users'] as $user){
+                                $trainingPlan->users()->attach($user, ['document_id' => null]);
+                            }
+                        }
+                    }
+                }
+
+                //Brisanje celog bloka
+                foreach($diff as $d){
+                    $doc = Document::findorFail($d);
+                    $doc->users()->sync([]);
                     $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                     Storage::delete($path);
                     $doc->forceDelete();
                 }
-            }
-            if($request->file('new_file')){
-                foreach($request->file('new_file') as $file){
-                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                    $name= $trainingPlan->name;
-                    $trainingPlan->name=$file_name.".".$file->getClientOriginalExtension();
-                    $path = $file->storeAs(Str::snake($this::getCompanyName())."/training", $trainingPlan->name);
-                    $document = Document::create([
-                        'training_id'=>$trainingPlan->id,
-                        'standard_id'=>$trainingPlan->standard_id,
-                        'team_id'=>$trainingPlan->team_id,
-                        'user_id'=>$trainingPlan->user_id,
-                        'document_name'=> $name,
-                        'version'=>1,
-                        'file_name'=>$trainingPlan->name,
-                        'doc_category'=>'training'
-                        ]);
-                }
-            }
 
-            $arrOfUsers = [];
-            if($request->users){
-                $arrOfUsers = $request->users;
-            }
+            });
 
-            $trainingPlan->users()->sync($arrOfUsers);
-
-            $trainingPlan->update($request->except('status','file','new_file','users'));
+            $trainingPlan->update($request->except('training','newTraining'));
             CustomLog::info('Obuka "'.$trainingPlan->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Obuka je uspešno izmenjena!'));
         } catch(Exception $e){
@@ -195,13 +293,17 @@ class TrainingsController extends Controller
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('delete', $trainingPlan);
+
+        $docs = $trainingPlan->documents;
+
         try{
-            foreach($trainingPlan->documents as $doc){
+            Training::destroy($id);
+
+            foreach($docs as $doc){
                 $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
                 $doc->forceDelete();
             }
-            Training::destroy($id);
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Obuka je uspešno uklonjena!'));
         } catch(Exception $e){
@@ -214,13 +316,18 @@ class TrainingsController extends Controller
     {
         $trainingPlan = Training::findOrFail($id);
         $this->authorize('delete', $trainingPlan);
+
+        $docs = $trainingPlan->documents;
+
         try{
-            foreach($trainingPlan->documents as $doc){
+            Training::destroy($id);
+
+            foreach($docs as $doc){
                 $path = Str::snake($this::getCompanyName())."/training/".$doc->file_name;
                 Storage::delete($path);
                 $doc->forceDelete();
             }
-            Training::destroy($id);
+
             CustomLog::info('Obuka "'.$trainingPlan->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return true;
         } catch(Exception $e){

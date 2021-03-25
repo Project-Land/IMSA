@@ -86,12 +86,12 @@
 				</select>
 			</div>
 
-			<div class="mb-4" id="final_num_field" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
+			<div class="mb-4" id="final_num_field" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}}">
 				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih') }} {{ __('realizovano') }}:</label>
 				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="final_num_of_employees" name="final_num_of_employees" value="{{ $trainingPlan->final_num_of_employees  }}" oninvalid="this.setCustomValidity('{{ __("Izaberite broj zaposlenih") }}')" oninput="this.setCustomValidity('')" {{ $trainingPlan->final_num_of_employees != null ? 'required' : ''}} >
 			</div>
 
-			<div class="mb-4" id="rating_field" style="{{ $trainingPlan->rating != null ? 'display: ' : 'display: none'}} ">
+			<div class="mb-4" id="rating_field" style="{{ $trainingPlan->rating != null ? 'display: ' : 'display: none'}}">
 				<label for="rating" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Ocena') }}:</label>
 				<select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="rating" id="rating" oninvalid="this.setCustomValidity('{{ __("Izaberite ocenu") }}')" oninput="this.setCustomValidity('')" {{ $trainingPlan->rating != null ? 'required' : ''}}>
 					<option value="">{{ __('Izaberi') }}...</option>
@@ -101,48 +101,86 @@
 				</select>
             </div>
 
-            <div class="mb-4" id="documents" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
-                <label for="documents" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Dokumenta') }}:</label>
-                @foreach($trainingPlan->documents as $document)
+            <div class="mb-2 flex justify-between docs" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}}">
+                <label for="name_file" class="block text-gray-700 text-sm font-bold pt-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
+                <span class="w-auto bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addGroup"><i class="fas fa-plus"></i>  {{ __('Dodaj novi unos') }}</span>
+            </div>
+
+            @foreach($trainingPlan->docArray as $document)
+                <div class="mb-4 doc_field border-2">
+                    <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
                     <div class="mb-2 flex">
-                        <label for="newFile" class="mt-2 w-50">{{ $document->file_name }}</label>
-                        <input class="bg-white" type="hidden" id="{{ $document->id }}" name="file[]" value="{{ $document->id }}" >
-                        <button type="button" class="btn btn-danger ml-5" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+                        <label for="oldFile{{ $document->id }}" class="mt-2 w-50 text-sm"><span class="font-bold">{{ __('Dokument') }}: </span><span class="italic">{{ $document->file_name }}</span></label>
+                        <input class="bg-white" type="hidden" id="{{ $document->id }}" name="training[{{ $document->id }}][oldFile]" value="{{ $document->id }}" >
+                        <button type="button" class="text-white font-bold py-1 px-2 bg-red-700 rounded-sm" onclick="parentElement.remove()"><i class="fas fa-minus-circle"></i></button>
                     </div>
-                @endforeach
-            </div>
+                    <input class="bg-white" type="hidden" id="deletedFile{{ $document->id }}" name="training[{{ $document->id }}][deletedFile]" value="{{ $document->id }}" >
 
-            <div class="mb-4 doc_field" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}} ">
-                <label for="name_file" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
+                    <div class="mb-2">
+                        <label for="name_file{{ $document->id }}" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                            <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                            <small>{{__('Izaberi fajl')}}</small>
+                        </label>
+                        <input type="file" class="form-control-file d-none" id="name_file{{ $document->id }}" name="training[{{ $document->id }}][file][]" onchange="showFileName({{ $document->id }})" multiple>
 
-                <label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                    </svg>
-                    <small>{{__('Izaberi fajl')}}</small>
-                </label>
+                        <span class="font-italic text-xs sm:text-sm ml-2" id="old_document{{ $document->id }}">{{__('Fajl nije izabran')}}</span>
+                        @error('name_file')
+                            <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                        @enderror
 
-                <input type="file" class="form-control-file d-none" id="name_file" name="new_file[]">
-                <span class="font-italic text-xs sm:text-sm ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
-                @error('file')
-                    <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
-                @enderror
+                        <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile({{ $document->id }})"><i class="fas fa-times-circle"></i></button>
+                    </div>
 
-                <span class="bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm w-full font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addMore"><i class="fas fa-plus"></i> {{ __('Dodaj još jedan dokument') }}</span>
+                    <div class="mb-4" id="users-field">
+                        <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
+                        <select class="js-example-basic-multiple" name="training[{{ $document->id }}][users][]" multiple="multiple" style="width: 100%;">
+                            @foreach($users as $user)
+                                @if($user->teams[0]->membership->role != 'super-admin')
+                                    <option value="{{ $user->id }}" {{ $document->users->contains($user->id)? "selected":"" }}>{{ $user->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            @endforeach
 
-                <div id="more_fields" class="mt-3 sm:mt-0"></div>
-            </div>
+            @if($trainingPlan->withoutDoc->count())
+                <div class="mb-4 doc_field border-2">
+                    <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
 
-            <div class="mb-4 {{ $trainingPlan->final_num_of_employees == null? 'd-none':'' }}" id="users-field">
-                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
-                <select class="js-example-basic-multiple" name="users[]" multiple="multiple" style="width: 100%;">
-                    @foreach($users as $user)
-                        @if($user->teams[0]->membership->role != 'super-admin')
-                            <option value="{{ $user->id }}" {{ $user->trainings->contains('id', $trainingPlan->id) ? 'selected':'' }}>{{ $user->name }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+                    <div class="mb-2">
+                        <label for="name_file0" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                            <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                            </svg>
+                            <small>{{__('Izaberi fajl')}}</small>
+                        </label>
+                        <input type="file" class="form-control-file d-none" id="name_file0" name="training[0][file][]" onchange="showFileName(0)" multiple>
+
+                        <span class="font-italic text-xs sm:text-sm ml-2" id="old_document0">{{__('Fajl nije izabran')}}</span>
+                        @error('file')
+                            <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                        @enderror
+
+                        <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile(0)"><i class="fas fa-times-circle"></i></button>
+                    </div>
+
+                    <div class="mb-4" id="users-field">
+                        <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
+                        <select class="js-example-basic-multiple" name="training[0][users][]" multiple="multiple" style="width: 100%;">
+                            @foreach($users as $user)
+                                @if($user->teams[0]->membership->role != 'super-admin')
+                                    <option value="{{ $user->id }}" {{ $trainingPlan->withoutDoc->contains($user->id)? "selected":"" }}>{{ $user->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            @endif
+
+            <div id="more_fields" class="mt-3 sm:mt-0"></div>
 
 			<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Izmeni') }}</button>
 		</form>
@@ -200,6 +238,7 @@
             $('.doc_field').css('display', '');
             $('#users-field').removeClass('d-none');
             $('#documents').css('display', '');
+            $('.docs').css('display', '');
 			$('#rating').attr('required', true);
 			$('#final_num_of_employees').attr('required', true);
 		}
@@ -209,6 +248,7 @@
             $('.doc_field').css('display', 'none');
             $('#users-field').addClass('d-none');
             $('#documents').css('display', 'none');
+            $('.docs').css('display', 'none');
 			$('#final_num_of_employees').val('');
 			$('#rating').val('');
 			$('#rating').attr('required', false);
@@ -217,45 +257,107 @@
 		}
 	});
 
-    $('#name_file').change( () => {
-        let file = document.getElementById('name_file').files[0];
-        if(file)
-            document.getElementById('old_document').textContent = file.name;
-    });
+    function showFileName(id){
+        let file = document.getElementById(`name_file${id}`).files;
+        document.getElementById(`old_document${id}`).textContent = "";
+        for(f of file){
+            if(f)
+                document.getElementById(`old_document${id}`).textContent += f.name + ", ";
+        }
+    }
 
-    $("#addMore").click(function(e) {
-        e.preventDefault();
-        if(sessionStorage.length == 0){
-            sessionStorage.setItem('counter', 0);
-            var counter = 0;
-        }
-        else{
-            var counter = sessionStorage.getItem('counter');
-            counter++;
-        }
-        console.log(sessionStorage.getItem('counter'));
+    function clearOldFile(id){
+        document.getElementById(`name_file${id}`).value = "";
+        document.getElementById(`old_document${id}`).textContent = "{{ __('Fajl nije izabran') }}";
+    }
+
+    let groupCounter = 1;
+
+    $("#addGroup").click(function(e) {
 
         $('#more_fields').append(`
-            <div class="flex" id="block">
-                <label for="name_file${ counter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+        <div class="border-2 my-3">
+            <div class="mb-2" id="block">
+                <label for="new_name_file${ groupCounter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                     </svg>
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
-                <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="new_file[]">
-                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
-                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+                <input type="file" class="flex-1 form-control-file d-none" id="new_name_file${ groupCounter }" name="newTraining[${ groupCounter }][file][]" multiple>
+                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="new_old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
+                <button type="button" class="text-lg flex-1 ml-11 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
+                <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
             </div>
+            <div class="mb-4" id="users-field${ groupCounter }">
+                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
+                <select class="js-example-basic-multiple" name="newTraining[${ groupCounter }][users][]" multiple="multiple" style="width: 100%;">
+                    @foreach($users as $user)
+                        @if($user->teams[0]->membership->role != 'super-admin')
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
         `);
 
-        $('#name_file'+counter).change( () => {
-            let file = document.getElementById('name_file'+counter).files[0];
-            if(file)
-                document.getElementById('old_document'+counter).textContent = file.name;
-                sessionStorage.setItem('counter', counter);
+        $('.js-example-basic-multiple').select2();
+
+        let cnt = groupCounter.toString();
+
+        $('#new_name_file'+cnt).change( () => {
+
+            let file = document.getElementById(`new_name_file${cnt}`).files;
+            document.getElementById(`new_old_document${cnt}`).textContent = "";
+            for(f of file){
+                if(f)
+                    document.getElementById(`new_old_document${cnt}`).textContent += f.name + ", ";
+                    sessionStorage.setItem('counter', cnt);
+            }
         });
+
+        groupCounter++;
+
+
+
+        // e.preventDefault();
+        // if(sessionStorage.length == 0){
+        //     sessionStorage.setItem('counter', 0);
+        //     var counter = 0;
+        // }
+        // else{
+        //     var counter = sessionStorage.getItem('counter');
+        //     counter++;
+        // }
+        // console.log(sessionStorage.getItem('counter'));
+
+        // $('#more_fields').append(`
+        //     <div class="flex" id="block">
+        //         <label for="name_file${ counter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+        //             <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        //                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+        //             </svg>
+        //             <small>{{__('Izaberi fajl')}}</small>
+        //         </label>
+        //         <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="new_file[]">
+        //         <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
+        //         <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
+        //     </div>
+        // `);
+
+        // $('#name_file'+counter).change( () => {
+        //     let file = document.getElementById('name_file'+counter).files[0];
+        //     if(file)
+        //         document.getElementById('old_document'+counter).textContent = file.name;
+        //         sessionStorage.setItem('counter', counter);
+        // });
     });
+
+    function clearFile(id){
+        document.getElementById(`new_name_file${id}`).value = "";
+        document.getElementById(`new_old_document${id}`).textContent = "{{ __('Fajl nije izabran') }}";
+    }
 
 
 </script>

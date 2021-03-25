@@ -102,26 +102,27 @@
             </div>
 
             <div class="mb-4 doc_field" style="display: none">
-                <div class="flex justify-between items-center">
-                    <label for="name_file" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
-                    <span class="w-1/3 bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addGroup"><i class="fas fa-plus"></i>  {{ __('Dodaj novi unos') }}</span>
+                <div class="mb-2 flex justify-between">
+                    <label for="name_file" class="block text-gray-700 text-sm font-bold pt-2">{{ __('Sertifikat / Diploma / Izveštaj sa obuke') }}:</label>
+                    <span class="w-auto bg-blue-500 hover:bg-blue-700 text-white text-xs sm:text-sm mt-1 sm:mt-0 font-bold py-2 px-4 focus:outline-none focus:shadow-outline cursor-pointer ml-3" id="addGroup"><i class="fas fa-plus"></i>  {{ __('Dodaj novi unos') }}</span>
                 </div>
-                
-                
-                <label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-                    <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                    </svg>
-                    <small>{{__('Izaberi fajl')}}</small>
-                </label>
-                <input type="file" class="form-control-file d-none" id="name_file" name="training[0][file][]" multiple>
 
-                <span class="font-italic text-xs sm:text-sm ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
-                @error('file')
-                    <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
-                @enderror
+                <div class="mb-2">
+                    <label for="name_file" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
+                        <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                        </svg>
+                        <small>{{__('Izaberi fajl')}}</small>
+                    </label>
+                    <input type="file" class="form-control-file d-none" id="name_file" name="training[0][file][]" multiple>
 
-                <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearFile('')"><i class="fas fa-trash"></i></button>
+                    <span class="font-italic text-xs sm:text-sm ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
+                    @error('file')
+                        <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
+                    @enderror
+
+                    <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 text-lg rounded" onclick="clearFile('')"><i class="fas fa-times-circle"></i></button>
+                </div>
 
                 <div class="mb-4 d-none" id="users-field">
                     <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
@@ -178,8 +179,8 @@
 </style>
 
 <script>
-    
-   
+
+
 	var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
     $.datetimepicker.setLocale(lang);
 
@@ -230,7 +231,7 @@
 
         $('#more_fields').append(`
         <div class="border-2 my-3">
-            <div class="flex" id="block">
+            <div class="mb-2" id="block">
                 <label for="name_file${ groupCounter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
@@ -238,9 +239,9 @@
                     <small>{{__('Izaberi fajl')}}</small>
                 </label>
                 <input type="file" class="flex-1 form-control-file d-none" id="name_file${ groupCounter }" name="training[${ groupCounter }][file][]" multiple>
-                <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
-            <button type="button" class="text-lg flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
-                <button type="button" class="text-lg bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
+                <span class="font-italic text-xs sm:text-sm ml-2" id="old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
+                <button type="button" class="text-lg flex-1 ml-11 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
+                <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
             </div>
             <div class="mb-4" id="users-field">
                 <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
@@ -261,7 +262,7 @@
         let cnt = groupCounter.toString();
 
         $('#name_file'+cnt).change( () => {
-            
+
             let file = document.getElementById(`name_file${cnt}`).files;
             document.getElementById(`old_document${cnt}`).textContent = "";
             for(f of file){
