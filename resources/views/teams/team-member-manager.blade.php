@@ -103,9 +103,9 @@
                                 <div class="flex items-center w-full sm:w-1/2 justify-end border-b sm:border-none">
                                     <!-- Manage Team Member Role -->
                                     <div class="w-full sm:w-28">
-                                        @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Korisnik")
+                                        @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Administrator" && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
                                             <button class="ml-2 text-sm text-gray-400 underline" onclick="toggleModal('{{ $user->id }}')">
-                                                {{ __('Sertifikati') }}
+                                                {{ __('Lista dozvola pristupa') }}
                                             </button>
                                         @endif
                                     </div>
@@ -266,14 +266,14 @@
                                 <div class="modal-content">
                                     <div class="modal-body">
                                         <div class="text-lg">
-                                            {{ __('Upravljaj sertifikatima') }}
+                                            {{ __('Upravljaj dozvolama pristupa') }}
                                         </div>
                                         <div class="mt-4">
                                             <div class="mt-1 border border-gray-200 rounded-lg">
                                                 ${ Object.keys(certificates).map(key => (
                                                     `<div class="px-4 py-3 border-t border-gray-200">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
-                                                            <input type="checkbox" name="certificates[]" value="${ certificates[key].id }" class="form-checkbox h-5 w-5 text-gray-600" ${ selectedCertificates.includes(certificates[key].id.toString()) ? 'checked':'' }><span class="ml-2 text-gray-700">${ certificates[key].name == "editor"? "{{ __('Interni proveravač') }}" : certificates[key].name }</span>
+                                                            <input type="checkbox" name="certificates[]" value="${ certificates[key].id }" class="form-checkbox h-5 w-5 text-gray-600" ${ selectedCertificates.includes(certificates[key].id.toString()) ? 'checked':'' }><span class="ml-2 text-gray-700">${ certificates[key].display_name }</span>
                                                         </label>
                                                     </div>`
                                                 )).join('') }

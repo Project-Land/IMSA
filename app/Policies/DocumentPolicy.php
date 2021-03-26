@@ -46,6 +46,9 @@ class DocumentPolicy
         if($role == "admin" || $role == "super-admin") {
             return true;
         }
+        elseif($user->certificates->where('name', 'upload')->count() > 0){
+            return true;
+        }
     }
 
     /**
@@ -60,6 +63,9 @@ class DocumentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $document->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'upload')->count() > 0){
                 return true;
             }
         }
@@ -77,6 +83,9 @@ class DocumentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $document->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'upload')->count() > 0){
                 return true;
             }
         }

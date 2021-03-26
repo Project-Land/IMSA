@@ -10,7 +10,7 @@ class ManagementSystemReviewPolicy
 {
     use HandlesAuthorization;
 
-   
+
     /**
      * Determine whether the user can view any models.
      *
@@ -31,7 +31,9 @@ class ManagementSystemReviewPolicy
      */
     public function view(User $user, ManagementSystemReview $managementSystemReview)
     {
-        //
+        if($user->current_team_id === $managementSystemReview->team_id){
+            return true;
+        }
     }
 
     /**
@@ -44,6 +46,9 @@ class ManagementSystemReviewPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'management-system-reviews')->count() > 0){
             return true;
         }
     }
@@ -62,6 +67,9 @@ class ManagementSystemReviewPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'management-system-reviews')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -77,6 +85,9 @@ class ManagementSystemReviewPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $managementSystemReview->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'management-system-reviews')->count() > 0){
                 return true;
             }
         }

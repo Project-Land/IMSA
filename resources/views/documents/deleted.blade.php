@@ -32,7 +32,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>{{__('Naziv dokumenta')}}</th>
-                                    @unless($route_name == 'external-documents')<th>{{__('Verzija')}}</th>@endunless
+                                    @unless($route_name == 'external-documents' || $route_name == 'other-internal-documents')<th>{{__('Verzija')}}</th>@endunless
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>{{__('Sektor')}}</th>@endif
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
@@ -41,7 +41,7 @@
                                 @foreach($documents as $document)
                                     <tr>
                                         <td class="text-center">{{ $document->document_name }}</td>
-                                        @unless($route_name == 'external-documents')<td class="text-center">{{ $document->version }}</td>@endunless
+                                        @unless($route_name == 'external-documents' || $route_name == 'other-internal-documents')<td class="text-center">{{ $document->version }}</td>@endunless
                                         @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                         <td class="text-center">
                                             @if($route_name != 'forms')

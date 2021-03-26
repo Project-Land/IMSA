@@ -10,10 +10,20 @@ class ComplaintPolicy
 {
     use HandlesAuthorization;
 
+    public function view(User $user, Complaint $complaint)
+    {
+        if($user->current_team_id === $complaint->team_id){
+            return true;
+        }
+    }
+
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'complaints')->count() > 0){
             return true;
         }
     }
@@ -25,6 +35,9 @@ class ComplaintPolicy
             if($role == "admin" || $role == "super-admin" || $role == "editor") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'complaints')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -33,6 +46,9 @@ class ComplaintPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $complaint->team_id){
             if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'complaints')->count() > 0){
                 return true;
             }
         }

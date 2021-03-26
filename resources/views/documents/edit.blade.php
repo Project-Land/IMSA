@@ -23,7 +23,7 @@
             @enderror
         </div>
 
-        @unless($doc_type == "Eksterna dokumenta")
+        @unless($doc_type == "Eksterna dokumenta" || $doc_type == "Ostala interna dokumenta")
         <div class="mb-4">
             <label for="version" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verzija')}}:</label>
             <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ $document->version }}" required oninvalid="this.setCustomValidity('{{ __("Verzija nije popunjena") }}')" oninput="this.setCustomValidity('')">

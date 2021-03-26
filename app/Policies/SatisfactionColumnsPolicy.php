@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\SatisfactionColumn;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SatisfactionColumnsPolicy
@@ -15,9 +14,12 @@ class SatisfactionColumnsPolicy
     {
         $poll = SatisfactionColumn::where('team_id', $user->current_team_id)->count();
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            if(session('standard_name') === "9001"){
-                if(!$poll){
+        if(session('standard_name') === "9001"){
+            if(!$poll){
+                if($role == "admin" || $role == "super-admin") {
+                    return true;
+                }
+                elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
                     return true;
                 }
             }
@@ -27,8 +29,11 @@ class SatisfactionColumnsPolicy
     public function update(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            if(session('standard_name') === "9001"){
+        if(session('standard_name') === "9001"){
+            if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
                 return true;
             }
         }

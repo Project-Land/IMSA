@@ -87,7 +87,7 @@
 			</div>
 
 			<div class="mb-4" id="final_num_field" style="{{ $trainingPlan->final_num_of_employees != null ? 'display: ' : 'display: none'}}">
-				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih') }} {{ __('realizovano') }}:</label>
+				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih - realizovano') }}:</label>
 				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="final_num_of_employees" name="final_num_of_employees" value="{{ $trainingPlan->final_num_of_employees  }}" oninvalid="this.setCustomValidity('{{ __("Izaberite broj zaposlenih") }}')" oninput="this.setCustomValidity('')" {{ $trainingPlan->final_num_of_employees != null ? 'required' : ''}} >
 			</div>
 
@@ -107,12 +107,12 @@
             </div>
 
             @foreach($trainingPlan->docArray as $document)
-                <div class="mb-4 doc_field border-2">
-                    <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
-                    <div class="mb-2 flex">
+                <div class="mb-4 doc_field border-2 border-dashed">
+                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni ceo unos') }}" type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.remove(); $('body>.tooltip').remove();"><i class="fas fa-trash"></i></button>
+                    <div class="mb-2 flex items-center">
                         <label for="oldFile{{ $document->id }}" class="mt-2 w-50 text-sm"><span class="font-bold">{{ __('Dokument') }}: </span><span class="italic">{{ $document->file_name }}</span></label>
                         <input class="bg-white" type="hidden" id="{{ $document->id }}" name="training[{{ $document->id }}][oldFile]" value="{{ $document->id }}" >
-                        <button type="button" class="text-white font-bold py-1 px-2 bg-red-700 rounded-sm" onclick="parentElement.remove()"><i class="fas fa-minus-circle"></i></button>
+                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Obriši dokument') }}" type="button" class="text-white font-bold py-1 px-2 bg-red-700 rounded-sm" onclick="parentElement.remove(); $('body>.tooltip').remove();"><i class="fas fa-minus-circle"></i></button>
                     </div>
                     <input class="bg-white" type="hidden" id="deletedFile{{ $document->id }}" name="training[{{ $document->id }}][deletedFile]" value="{{ $document->id }}" >
 
@@ -130,7 +130,7 @@
                             <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
 
-                        <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile({{ $document->id }})"><i class="fas fa-times-circle"></i></button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni odabrane fajlove') }}" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile({{ $document->id }});"><i class="fas fa-times-circle"></i></button>
                     </div>
 
                     <div class="mb-4" id="users-field">
@@ -147,7 +147,7 @@
             @endforeach
 
             @if($trainingPlan->withoutDoc->count())
-                <div class="mb-4 doc_field border-2">
+                <div class="mb-4 doc_field border-2 border-dashed">
                     <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
 
                     <div class="mb-2">
@@ -164,7 +164,7 @@
                             <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                         @enderror
 
-                        <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile(0)"><i class="fas fa-times-circle"></i></button>
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni odabrane fajlove') }}" type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="clearOldFile(0)"><i class="fas fa-times-circle"></i></button>
                     </div>
 
                     <div class="mb-4" id="users-field">
@@ -225,6 +225,8 @@
 
     $('.js-example-basic-multiple').select2();
 
+    $('[data-toggle="tooltip"]').tooltip();
+
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
 		dayOfWeekStart: 1,
@@ -276,7 +278,7 @@
     $("#addGroup").click(function(e) {
 
         $('#more_fields').append(`
-        <div class="border-2 my-3">
+        <div class="border-2 border-dashed my-3">
             <div class="mb-2" id="block">
                 <label for="new_name_file${ groupCounter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -287,7 +289,7 @@
                 <input type="file" class="flex-1 form-control-file d-none" id="new_name_file${ groupCounter }" name="newTraining[${ groupCounter }][file][]" multiple>
                 <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="new_old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
                 <button type="button" class="text-lg flex-1 ml-11 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
-                <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
+                <button data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni ceo unos') }}" type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove(); $('body>.tooltip').remove();"><i class="fas fa-trash"></i></button>
             </div>
             <div class="mb-4" id="users-field${ groupCounter }">
                 <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
@@ -319,39 +321,7 @@
 
         groupCounter++;
 
-
-
-        // e.preventDefault();
-        // if(sessionStorage.length == 0){
-        //     sessionStorage.setItem('counter', 0);
-        //     var counter = 0;
-        // }
-        // else{
-        //     var counter = sessionStorage.getItem('counter');
-        //     counter++;
-        // }
-        // console.log(sessionStorage.getItem('counter'));
-
-        // $('#more_fields').append(`
-        //     <div class="flex" id="block">
-        //         <label for="name_file${ counter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
-        //             <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-        //                 <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-        //             </svg>
-        //             <small>{{__('Izaberi fajl')}}</small>
-        //         </label>
-        //         <input type="file" class="flex-1 form-control-file d-none" id="name_file${ counter }" name="new_file[]">
-        //         <span class="flex-1 pt-3 font-italic text-xs sm:text-sm ml-2" id="old_document${ counter }">{{ __('Fajl nije izabran') }}</span>
-        //         <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 rounded" onclick="parentElement.remove()"><i class="fas fa-trash"></i></button>
-        //     </div>
-        // `);
-
-        // $('#name_file'+counter).change( () => {
-        //     let file = document.getElementById('name_file'+counter).files[0];
-        //     if(file)
-        //         document.getElementById('old_document'+counter).textContent = file.name;
-        //         sessionStorage.setItem('counter', counter);
-        // });
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     function clearFile(id){

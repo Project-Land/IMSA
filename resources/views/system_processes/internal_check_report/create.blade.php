@@ -104,6 +104,7 @@
             if(this.dataset.counter == 'coun'){}
             //  coun--;
             this.closest("div").remove();
+            $('body>.tooltip').remove();
             let inputs = document.querySelectorAll("[id^='newInputRecommendationDiv']");
             if(!inputs.length){
                 document.getElementById('recommendations').value = '0';

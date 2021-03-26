@@ -31,7 +31,9 @@ class RiskManagementPolicy
      */
     public function view(User $user, RiskManagement $riskManagement)
     {
-        //
+        if($user->current_team_id === $riskManagement->team_id){
+            return true;
+        }
     }
 
     /**
@@ -44,6 +46,9 @@ class RiskManagementPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'risk-management')->count() > 0){
             return true;
         }
     }
@@ -62,6 +67,9 @@ class RiskManagementPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'risk-management')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -77,6 +85,9 @@ class RiskManagementPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $riskManagement->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'risk-management')->count() > 0){
                 return true;
             }
         }

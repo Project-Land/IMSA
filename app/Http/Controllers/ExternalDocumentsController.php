@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -114,11 +113,13 @@ class ExternalDocumentsController extends Controller
     {
         $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
+        $path = Str::snake($this::getCompanyName())."/external_document/".$document->file_name;
 
         try{
             if($request->file){
                 $upload_path = Str::snake($this::getCompanyName())."/external_document";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
+                Storage::delete($path);
             }
             $document->update($request->except('file'));
             $request->session()->flash('status', array('info', 'Dokument je uspešno izmenjen'));

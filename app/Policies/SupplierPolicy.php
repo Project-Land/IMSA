@@ -16,7 +16,7 @@ class SupplierPolicy
      *
      * @return void
      */
-    
+
      /**
      * Determine whether the user can view any models.
      *
@@ -38,15 +38,18 @@ class SupplierPolicy
      */
     public function view(User $user, Supplier $supplier)
     {
-       
+        if($user->current_team_id === $supplier->team_id){
+            return true;
+        }
     }
-
-    
 
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
         if ($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'suppliers')->count() > 0){
             return true;
         }
     }
@@ -58,6 +61,9 @@ class SupplierPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'suppliers')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -66,6 +72,9 @@ class SupplierPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $supplier->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'suppliers')->count() > 0){
                 return true;
             }
         }

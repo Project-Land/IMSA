@@ -38,7 +38,9 @@ class PlanIpPolicy
      */
     public function view(User $user, PlanIp $planIp)
     {
-        //
+        if($user->current_team_id === $planIp->team_id){
+            return true;
+        }
     }
 
     /**

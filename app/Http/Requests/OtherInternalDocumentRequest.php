@@ -6,13 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExternalDocumentRequest extends FormRequest
+class OtherInternalDocumentRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
@@ -35,7 +30,7 @@ class ExternalDocumentRequest extends FormRequest
             'document_name' => Rule::unique('documents')->where( function ($query) {
                 return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
             }),
-            'file' => 'required|max:50000|mimes:pdf,doc,docx'
+            'file' => 'required|max:50000|mimes:pdf,doc,docx,xlsx,xls,csv,jpeg,jpg'
         ];
     }
 
@@ -43,10 +38,10 @@ class ExternalDocumentRequest extends FormRequest
     {
         return [
             'document_name' => 'required|max:255',
-            'document_name' => Rule::unique('documents')->ignore($this->route('external_document'))->where( function ($query) {
+            'document_name' => Rule::unique('documents')->ignore($this->route('other_internal_document'))->where( function ($query) {
                 return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
             }),
-            'file' => 'max:50000|mimes:pdf,doc,docx'
+            'file' => 'max:50000|mimes:pdf,doc,docx,xlsx,xls,csv,jpeg,jpg'
         ];
     }
 
@@ -54,7 +49,7 @@ class ExternalDocumentRequest extends FormRequest
     {
         return [
             'file.required' => 'Izaberite fajl',
-            'file.mimes' => 'Fajl mora biti u nekom od dozvoljenih formata: pdf, doc, docx',
+            'file.mimes' => 'Fajl mora biti u nekom od dozvoljenih formata: pdf, doc, docx, xlsx, xls, csv, jpeg, jpg',
             'file.max' => 'Dokument ne sme biti veći od 50mb',
             'document_name.required' => 'Unesite naziv dokumenta',
             'document_name.unique' => "Već postoji dokument sa takvim nazivom",
@@ -66,7 +61,7 @@ class ExternalDocumentRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         if($this->file){
-            $this->merge([ 'file_name' => 'external_document_'.time().'.'.$this->file->getClientOriginalExtension() ]);
+            $this->merge([ 'file_name' => 'other_internal_document_'.time().'.'.$this->file->getClientOriginalExtension() ]);
         }
 
         if($this->isMethod('post')){
@@ -76,7 +71,7 @@ class ExternalDocumentRequest extends FormRequest
                 'user_id' => Auth::user()->id,
                 'team_id' => Auth::user()->current_team_id,
                 'standard_id' => (int)$standardId,
-                'doc_category' => 'external_document'
+                'doc_category' => 'other_internal_document'
             ]);
         }
     }

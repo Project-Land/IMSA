@@ -31,7 +31,9 @@ class GoalPolicy
      */
     public function view(User $user, Goal $goal)
     {
-        //
+        if($user->current_team_id === $goal->team_id){
+            return true;
+        }
     }
 
     /**
@@ -44,6 +46,9 @@ class GoalPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'goals')->count() > 0){
             return true;
         }
     }
@@ -62,6 +67,9 @@ class GoalPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'goals')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -77,6 +85,9 @@ class GoalPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $goal->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'goals')->count() > 0){
                 return true;
             }
         }

@@ -72,7 +72,7 @@
                                     <td id='tdinternalcheck{{$check->id}}' class="text-center">{{ implode(".",array_reverse(explode("-",$check->date))) }}</td>
                                     <td class="text-center">{{ $check->user->name }}</td>
                                     <td class="text-center">{{ $check->sector->name }}</td>
-                                    <td class="text-center">{{$check->leaders}}</td>
+                                    <td class="text-center">{{ $check->leaders }}</td>
                                     <td class="text-center">{{ $check->standard->name }}</td>
                                     <td class="text-center">
                                         @if(!isset($check->planIp->checked_date))

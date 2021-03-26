@@ -27,6 +27,9 @@ class CustomerSatisfactionPolicy
                 return true;
             }
         }
+        elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
+            return true;
+        }
     }
 
     public function update(User $user, CustomerSatisfaction $cs)
@@ -37,6 +40,9 @@ class CustomerSatisfactionPolicy
                 if(session('standard_name') == "9001"){
                     return true;
                 }
+            }
+            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
+                return true;
             }
         }
     }
@@ -49,6 +55,9 @@ class CustomerSatisfactionPolicy
                 if(session('standard_name') == "9001"){
                     return true;
                 }
+            }
+            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
+                return true;
             }
         }
     }

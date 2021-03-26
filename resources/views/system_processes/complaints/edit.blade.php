@@ -131,7 +131,7 @@
 
 				<div class="mb-4 {{ $complaint->closing_date == null ? 'd-none':'' }}" id="closing_date_block">
 					<label for="closing_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Datum zatvaranja')}}:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" value="{{ $complaint->closing_date }}" disabled>
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="closing_date" name="closing_date" value="{{ date('d.m.Y', strtotime($complaint->closing_date)) }}" disabled>
 				</div>
 
 			</div>

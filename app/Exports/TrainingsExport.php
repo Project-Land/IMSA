@@ -35,7 +35,7 @@ class TrainingsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
             __('Br. zaposlenih - planirano'),
             __('Termin / Mesto'),
             __('Resursi'),
-            __('Br. zaposlenih').'-'.__('realizovano'),
+            __('Br. zaposlenih - realizovano'),
             __('Ocena efekata obuke'),
             __('Učesnici'),
             __('Standard')
@@ -75,7 +75,7 @@ class TrainingsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         return [
             'A' => 30,
             'B' => 15,
-            'C' => 55,
+            'C' => 45,
             'D' => 15,
             'E' => 30,
             'F' => 30,
