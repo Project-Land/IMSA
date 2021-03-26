@@ -204,4 +204,12 @@ class ComplaintsController extends Controller
         }
         return Excel::download(new ComplaintsExport, Str::snake(__('Reklamacije')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $complaint = Complaint::with('user','standard','sector')->findOrFail($id);
+        $this->authorize('view', $complaint);
+        return view('system_processes.complaints.print', compact('complaint'));
+
+    }
 }

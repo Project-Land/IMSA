@@ -130,4 +130,12 @@ class SuppliersController extends Controller
         }
         return Excel::download(new SuppliersExport, Str::snake(__('Odobreni isporučioci')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $supplier = Supplier::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $supplier);
+        return view('system_processes.suppliers.print', compact('supplier'));
+
+    }
 }

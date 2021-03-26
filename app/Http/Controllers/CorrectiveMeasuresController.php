@@ -157,4 +157,11 @@ class CorrectiveMeasuresController extends Controller
         }
         return Excel::download(new CorrectiveMeasuresExport, Str::snake(__('Neusaglašenosti i korektivne mere')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $cm = CorrectiveMeasure::with('user','sector','standard')->findOrFail($id);
+        $this->authorize('view', $cm);
+        return view('system_processes.corrective_measures.print', compact('cm'));
+    }
 }

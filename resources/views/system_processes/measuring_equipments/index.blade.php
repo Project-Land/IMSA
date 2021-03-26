@@ -49,6 +49,9 @@
                                     <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
                                     <td class="text-center">{{ $me->user->name }}</td>
                                     <td class="text-center">
+                                    <a 
+                                        href="{{route('measuring-equipment.print',$me->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    </a>
                                         @canany(['update', 'delete'], $me)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena merne opreme')}}" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $me->id }}" action="{{ route('measuring-equipment.destroy', $me->id) }}" method="POST">

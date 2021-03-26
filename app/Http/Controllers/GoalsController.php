@@ -174,4 +174,15 @@ class GoalsController extends Controller
         }
         return Excel::download(new GoalsExport($request->year), Str::snake(__('Ciljevi')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $goal = Goal::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $goal);
+        $goal->level=$goal->levelIs();
+        return view('system_processes.goals.print', compact('goal'));
+
+    }
+
+    
 }

@@ -103,4 +103,12 @@ class StakeholdersController extends Controller
         }
         return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $stakeholder = Stakeholder::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $stakeholder);
+        return view('system_processes.stakeholders.print', compact('stakeholder'));
+
+    }
 }

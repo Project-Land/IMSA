@@ -343,4 +343,12 @@ class TrainingsController extends Controller
         }
         return Excel::download(new TrainingsExport, Str::snake(__('Obuke')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $training = Training::with('user','users','standard','documents','usersWithoutDocument')->findOrFail($id);
+        $this->authorize('view', $training);
+        return view('system_processes.trainings.print', compact('training'));
+
+    }
 }

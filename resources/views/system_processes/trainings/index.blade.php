@@ -73,6 +73,9 @@
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-primary" onclick="showTraining({{ $tp->id }})"><i class="fas fa-eye"></i></button>
+                                        <a 
+                                            href="{{route('trainings.print',$tp->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $tp)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena obuke') }}" href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $tp->id }}" action="{{ route('trainings.destroy', $tp->id) }}" method="POST">

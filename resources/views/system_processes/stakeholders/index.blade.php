@@ -45,6 +45,9 @@
                                     <td class="text-center">{{ Str::length($s->response) < 100 ? $s->response : Str::limit($s->response, 100) }}</td>
                                     <td class="text-center">{{ $s->user->name }}</td>
                                     <td class="text-center">
+                                    <a 
+                                        href="{{route('stakeholders.print',$s->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    </a>
                                         @canany(['update', 'delete'], $s)
                                             <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zainteresovane strane')}}" href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                             <form class="inline" id="delete-form-{{ $s->id }}" action="{{ route('stakeholders.destroy', $s->id) }}" method="POST">

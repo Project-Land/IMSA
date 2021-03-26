@@ -72,6 +72,9 @@
                                     <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        <a 
+                                            href="{{route('goals.print',$goal->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $goal)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena cilja') }}" href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $goal->id }}" action="{{ route('goals.destroy', $goal->id) }}" method="POST">

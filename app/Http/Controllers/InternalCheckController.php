@@ -243,4 +243,12 @@ class InternalCheckController extends Controller
 
         return Excel::download(new InternalCheckExport($request->year), Str::snake(__('Interne provere')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $ic = InternalCheck::with('user','internalCheckReport.recommendations','internalCheckReport.correctiveMeasures','planIp','standard')->findOrFail($id);
+        $this->authorize('view', $ic);
+        return view('system_processes.internal_check.print', compact('ic'));
+
+    }
 }

@@ -47,6 +47,9 @@
                                     <td class="text-center">{{ $measure->measure_effective === 0 || $measure->measure_effective === null ? __('Otvorena') : __('Zatvorena') }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz korektivne mere') }}" class="text-primary" onclick="showMeasure({{ $measure->id }})"><i class="fas fa-eye"></i></button>
+                                        <a 
+                                            href="{{route('corrective-measures.print',$measure->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $measure)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena korektivne mere') }}" href="{{ route('corrective-measures.edit', $measure->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $measure->id }}" action="{{ route('corrective-measures.destroy', $measure->id) }}" method="POST">

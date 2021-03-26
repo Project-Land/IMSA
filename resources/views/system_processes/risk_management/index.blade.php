@@ -57,6 +57,9 @@
                                     </td>
                                     <td class="text-center">{{ $risk->user->name }}</td>
                                     <td class="text-center">
+                                    <a 
+                                        href="{{route('risk-management.print',$risk->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    </a>
                                         @canany(['update', 'delete'], $risk)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena rizika/prilike') }}" href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $risk->id }}" action="{{ route('risk-management.destroy', $risk->id) }}" method="POST">

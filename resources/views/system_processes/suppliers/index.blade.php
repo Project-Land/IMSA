@@ -48,6 +48,9 @@
                                     <td class="text-center">{{ date('d.m.Y', strtotime($s->deadline_date)) }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled isporučioca') }}" class="button text-primary" onclick="showSupplier({{ $s->id }})"><i class="fas fa-eye"></i></button>
+                                        <a 
+                                            href="{{route('suppliers.print',$s->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $s)
                                             <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena isporučioca') }}" href="{{ route('suppliers.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
                                             <form class="inline" id="delete-form-{{ $s->id }}" action="{{ route('suppliers.destroy', $s->id) }}" method="POST">

@@ -54,6 +54,9 @@
                                     <td class="text-center">{{__('Zapisnik sa preispitivanja')}} {{ $m->year }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled zapisnika')}}" class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
+                                        <a 
+                                        href="{{route('management-system-reviews.print',$m->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update'], $m)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena zapisnika')}}" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
                                         @endcanany

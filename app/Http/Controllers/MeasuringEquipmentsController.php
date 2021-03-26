@@ -132,4 +132,12 @@ class MeasuringEquipmentsController extends Controller
         }
         return Excel::download(new MeasuringEquipmentsExport(), Str::snake(__('Merna oprema')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $me = MeasuringEquipment::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $me);
+        return view('system_processes.measuring_equipments.print', compact('me'));
+
+    }
 }

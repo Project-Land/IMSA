@@ -12,7 +12,7 @@
         
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Napomena') }} -  {{$cs->comment ?? "/"}} </p></div>
         
-    <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum') }} - {{$cs->created_at}}</p></div>
+    <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum') }} - {{$cs->created_at->format('d.m.Y H:i')}}</p></div>
         
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }} - {{$cs->user->name}} </p></div>
             

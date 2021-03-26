@@ -166,4 +166,12 @@ class ManagementSystemReviewsController extends Controller
             return (new ManagementSystemReviews45001Export)->forId($id)->download(Str::snake(__('Zapisnik sa preispitivanja')).'_'.session('standard_name').'.xlsx');
         }
     }
+
+    public function print($id)
+    {
+        $msr = ManagementSystemReview::with('user','standard')->findOrFail($id);
+       // $this->authorize('view', $msr);
+        return view('system_processes.management_system_reviews_9001.print', compact('msr'));
+
+    }
 }

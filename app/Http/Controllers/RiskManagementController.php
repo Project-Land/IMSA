@@ -126,4 +126,11 @@ class RiskManagementController extends Controller
         }
         return Excel::download(new RiskManagementExport, Str::snake(__('Rizici i prilike')).'_'.session('standard_name').'.xlsx');
     }
+    public function print($id)
+    {
+        $risk = RiskManagement::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $risk);
+        return view('system_processes.risk_management.print', compact('risk'));
+
+    }
 }
