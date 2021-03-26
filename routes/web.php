@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SoaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\TeamController;
@@ -21,18 +22,17 @@ use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\SystemProcessesController;
+use App\Http\Controllers\ExternalDocumentsController;
 use App\Http\Controllers\RulesOfProceduresController;
 use App\Http\Controllers\CorrectiveMeasuresController;
 use App\Http\Controllers\InternalCheckReportController;
 use App\Http\Controllers\MeasuringEquipmentsController;
+use App\Http\Controllers\SatisfactionColumnsController;
+use App\Http\Controllers\CustomerSatisfactionController;
 use App\Http\Controllers\EnvironmentalAspectsController;
+use App\Http\Controllers\OtherInternalDocumentsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
-use App\Http\Controllers\SoaController;
-use App\Http\Controllers\ExternalDocumentsController;
-use App\Http\Controllers\CustomerSatisfactionController;
-use App\Http\Controllers\SatisfactionColumnsController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +80,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('external-documents-deleted', [ExternalDocumentsController::class, 'showDeleted'])->name('external-documents.deleted');
     Route::delete('external-documents-force-delete/{id}', [ExternalDocumentsController::class, 'forceDestroy'])->name('external-documents.force-destroy');
     Route::post('external-documents-restore/{id}', [ExternalDocumentsController::class, 'restore'])->name('external-documents.restore');
+
+    Route::resource('other-internal-documents', OtherInternalDocumentsController::class);
+    Route::get('other-internal-documents-deleted', [OtherInternalDocumentsController::class, 'showDeleted'])->name('other-internal-documents.deleted');
+    Route::delete('other-internal-documents-force-delete/{id}', [OtherInternalDocumentsController::class, 'forceDestroy'])->name('other-internal-documents.force-destroy');
+    Route::post('other-internal-documents-restore/{id}', [OtherInternalDocumentsController::class, 'restore'])->name('other-internal-documents.restore');
 
     Route::resource('sectors', SectorsController::class);
     Route::get('internal-check-export', [InternalCheckController::class, 'export'])->name('internal-check.export');
@@ -167,7 +172,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('user/{id}/certificates', [UserController::class, 'getUserCertificates']);
     Route::post('update-user-certificates/{id}', [UserController::class, 'updateUserCertificates']);
 
-   
+
     Route::get('customer-satisfaction/print/{id}', [CustomerSatisfactionController::class,'print'])->name('customer-satisfaction.print');
     Route::post('customer-satisfaction/delete-col/{id}', [CustomerSatisfactionController::class,'deleteColumn'])->name('deleteColumn');
     Route::resource('customer-satisfaction', CustomerSatisfactionController::class);

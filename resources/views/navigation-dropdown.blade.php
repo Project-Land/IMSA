@@ -32,7 +32,7 @@
 
                     <x-jet-dropdown>
                         <x-slot name="trigger">
-                            <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">{{ __('Dokumentacija') }}</button>
+                            <button type="button" class="hover:text-gray-700 text-base hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out" style="@if(request()->is(['rules-of-procedures*','manuals*','policies*','forms*','procedures*','external-documents*','other-internal-documents*'])) {{'border-bottom:3px solid gray; border-radius: 0;'}} @endif">{{ __('Dokumentacija') }}</button>
                         </x-slot>
 
                         <div class="dropdown-menu">
@@ -45,6 +45,7 @@
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
                                     <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/external-documents') }}">{{ __('Eksterna dokumenta') }}</a>
+                                    <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/other-internal-documents') }}">{{ __('Ostala interna dokumenta') }}</a>
                                 @endempty
                             </x-slot>
                         </div>
@@ -390,6 +391,7 @@
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/manuals') }}">{{ __('Uputstva') }}</a>
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/forms') }}">{{ __('Obrasci') }}</a>
                             <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/external-documents') }}">{{ __('Eksterna dokumenta') }}</a>
+                            <a class="block px-4 py-2 text-sm leading-5 hover:no-underline text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out" href="{{ asset('/other-internal-documents') }}">{{ __('Ostala interna dokumenta') }}</a>
                         @endempty
                     </div>
                 </div>

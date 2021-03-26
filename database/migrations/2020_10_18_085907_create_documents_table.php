@@ -21,7 +21,7 @@ class CreateDocumentsTable extends Migration
             $table->foreignId('sector_id')->nullable()->constrained()->onDelete('set null');
             $table->string('document_name');
             $table->string('version')->nullable();
-            $table->enum('doc_category', ['rules_procedure', 'policy', 'procedure', 'manual', 'form', 'training', 'external_document', 'complaint']);
+            $table->enum('doc_category', ['rules_procedure', 'policy', 'procedure', 'manual', 'form', 'training', 'external_document', 'complaint', 'other_internal_document']);
             $table->string('file_name');
             $table->timestamps();
         });

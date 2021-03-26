@@ -1,4 +1,9 @@
 <x-app-layout>
+    @push('scripts')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Interna provera') }} - {{ __('Kreiranje') }}
@@ -38,7 +43,7 @@
 
             <div class="mb-4">
                 <label for="leaders" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Vođe tima i proveravači') }}</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders[]" multiple required oninvalid="this.setCustomValidity('{{ __("Izaberite proveravače") }}')" oninput="this.setCustomValidity('')">
+                <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="leaders" name="leaders[]" multiple required oninvalid="this.setCustomValidity('{{ __("Izaberite proveravače") }}')" oninput="this.setCustomValidity('')">
                     @foreach($teamLeaders as $teamLeader)
                         <option value="{{ $teamLeader->name }}">{{ $teamLeader->name }}</option>
                     @endforeach
@@ -51,7 +56,7 @@
 
             <div class="mb-4">
                 <label for="standard_id" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Standard') }}</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="standard_id" name="standard_id" required oninvalid="this.setCustomValidity('{{ __("Izaberite standard") }}')" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="standard_id" name="standard_id" disabled>
                     <option value="{{ session('standard') }}">{{ session('standard_name') }}</option>
                 </select>
                 @error('standard_id')
@@ -63,6 +68,27 @@
         </form>
     </div>
 
+    <style>
+        .select2-results {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border-radius: 0;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-selection__choice {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+            border-radius: 1px;
+        }
+    </style>
+
     <script>
         var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
         jQuery.datetimepicker.setLocale(lang);
@@ -73,6 +99,8 @@
             minDate: 0,
             scrollInput: false
         });
+
+        $('.js-example-basic-multiple').select2();
 
         $('#status').change( () => {
             if($('#status').val() == 1){

@@ -24,7 +24,7 @@ class InternalCheckPolicy
         }
     }
 
-    
+
     public function viewAny(User $user)
     {
         //
@@ -37,9 +37,11 @@ class InternalCheckPolicy
      * @param  \App\Models\InternalCheck  $internalCheck
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, InternalCheck $internalCheck)
     {
-        //
+        if($user->current_team_id === $internalCheck->team_id){
+            return true;
+        }
     }
 
     /**

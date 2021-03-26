@@ -51,7 +51,7 @@
                                     <td class="text-center text-sm"><span @if($risk->measure) style="cursor: pointer; color: blue;" onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
                                             @can('update', $risk)
-                                                <a href="{{ route('risk-management.edit-plan', $risk->id) }}"><i class="fas fa-pen"></i></a>
+                                                <a href="{{ route('risk-management.edit-plan', $risk->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Izmena plana') }}"><i class="fas fa-pen fa-sm"></i></a>
                                             @endcan
                                         @endif
                                     </td>

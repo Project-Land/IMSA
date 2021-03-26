@@ -33,7 +33,7 @@
 										{{ __('Obuke') }}
 									</th>
                                     <th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-										{{ __('Interni proveravači') }}
+										{{ __('Dozvole pristupa') }}
 									</th>
 									<th class="no-sort px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Akcije') }}</th>
 								</tr>
@@ -64,12 +64,12 @@
 											<span class="cursor-pointer" onclick="toggleTrainingsModal({{ $user->id }})">{{ __('Lista obuka') }}</span>
 										</td>
                                         <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
-											@if($user->teamRole($user->currentTeam)->name != "Korisnik")
-                                                <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}')">{{ __('Lista sertifikata') }}</span>
+                                            @if(!$user->hasTeamRole($user->currentTeam, 'admin'))
+                                                <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}')">{{ __('Lista dozvola pristupa') }}</span>
                                             @else
                                                 /
                                             @endif
-										</td>
+                                            </td>
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium">
 											<form class="inline" id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST">
 												@method('DELETE')
@@ -88,20 +88,20 @@
                                                     </div>
                                                     <div class="mt-4">
                                                         <div class="mt-1 border border-gray-200 rounded-lg">
-                                                            @forelse($user->trainings as $training)
+                                                            @forelse($user->trainings->unique() as $training)
                                                                 <div class="px-4 py-3 border-t border-gray-200 flex flex-wrap justify-between">
                                                                     <div class="w-full sm:w-1/2">
-                                                                        <p class="font-bold">{{ $training->name }}</p>
+                                                                        <p class="font-bold">{{ $training->name }} ({{ $training->standard->name }})</p>
                                                                         <p class="text-sm">{{ date('d.m.Y', strtotime($training->training_date)) }} {{ __('u') }} {{ date('H:i', strtotime($training->training_date)) }}, {{ $training->place }}</p>
                                                                     </div>
                                                                     <div class="w-full sm:w-1/2">
                                                                         <p class="text-sm italic">{{ __('Dokumenti') }}:</p>
-                                                                        @foreach($training->documents as $doc)
+                                                                        @foreach($training->documents->unique() as $doc)
                                                                             <form class="inline" action="{{ route('document.preview') }}" method="POST" target="_blank">
                                                                                 @csrf
                                                                                 <input type="hidden" name="folder" value="{{ Str::snake(Auth::user()->currentTeam->name).'/'.$doc->doc_category }}">
                                                                                 <input type="hidden" name="file_name" value="{{ $doc->file_name }}">
-                                                                                <button class="button text-primary cursor-pointer text-left" type="submit">{{ $doc->file_name }}</button>
+                                                                                <button class="button text-sm text-blue-700 hover:text-blue-500 cursor-pointer text-left" type="submit">{{ $doc->file_name }}</button>
                                                                             </form><br>
                                                                         @endforeach
                                                                     </div>
@@ -203,14 +203,14 @@
                                 <div class="modal-content">
                                     <div class="modal-body">
                                         <div class="text-lg">
-                                            {{ __('Upravljaj sertifikatima') }}
+                                            {{ __('Upravljaj dozvolama pristupa') }}
                                         </div>
                                         <div class="mt-4">
                                             <div class="mt-1 border border-gray-200 rounded-lg">
                                                 @foreach($certificates as $certificate)
                                                     <div class="px-4 py-3 border-t border-gray-200">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
-                                                            <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ $certificate->name == "editor"? __('Interni proveravač') : $certificate->name }}</span>
+                                                            <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ __($certificate->display_name) }}</span>
                                                         </label>
                                                     </div>
                                                 @endforeach

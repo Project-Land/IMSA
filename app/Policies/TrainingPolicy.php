@@ -30,7 +30,9 @@ class TrainingPolicy
      */
     public function view(User $user, Training $training)
     {
-        //
+        if($user->current_team_id === $training->team_id){
+            return true;
+        }
     }
 
     /**
@@ -43,6 +45,9 @@ class TrainingPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if ($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'trainings')->count() > 0){
             return true;
         }
     }
@@ -61,6 +66,9 @@ class TrainingPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'trainings')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -76,6 +84,9 @@ class TrainingPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $training->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'trainings')->count() > 0){
                 return true;
             }
         }

@@ -37,7 +37,9 @@ class InternalCheckReportPolicy
      */
     public function view(User $user, InternalCheckReport $internalCheckReport)
     {
-        //
+        if($user->current_team_id === $internalCheckReport->team_id){
+            return true;
+        }
     }
 
     /**

@@ -25,8 +25,6 @@
                             <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-blue-500 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route($route_name.'.create') }}"><i class="fas fa-plus mr-2"></i> {{ __('Kreiraj novi dokument') }}</a>
                             <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-red-500 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-900 focus:outline-none focus:border-red-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route($route_name.'.deleted') }}"><i class="fas fa-trash mr-2"></i> {{ __('Obrisani dokumenti') }}</a>
                         </div>
-                        {{-- <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.create') }}"><i class="fas fa-plus"></i> {{__('Kreiraj novi dokument')}}</a> --}}
-                        {{-- <a class="inline-block sm:float-right text-xs md:text-base bg-red-500 hover:bg-red-700 text-white hover:no-underline rounded-sm py-2 px-3" href="{{ route($route_name.'.deleted') }}" data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obrisanih dokumenata') }}"><i class="fas fa-trash"></i> {{__('Obrisani dokumenti')}} </a> --}}
                     </div>
                 @endcan
                 <div class="card-body bg-white mt-3">
@@ -35,7 +33,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>{{__('Naziv dokumenta')}}</th>
-                                    @unless($route_name == 'external-documents')<th>{{__('Verzija')}}</th>@endunless
+                                    @unless($route_name == 'external-documents' || $route_name == 'other-internal-documents')<th>{{__('Verzija')}}</th>@endunless
                                     @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<th>{{__('Sektor')}}</th>@endif
                                     <th class="no-sort">{{__('Akcije')}}</th>
                                 </tr>
@@ -44,7 +42,7 @@
                                 @foreach($documents as $document)
                                     <tr>
                                         <td class="text-center">{{ $document->document_name }}</td>
-                                        @unless($route_name == 'external-documents')<td class="text-center">{{ $document->version }}</td>@endunless
+                                        @unless($route_name == 'external-documents' || $route_name == 'other-internal-documents')<td class="text-center">{{ $document->version }}</td>@endunless
                                         @if($route_name == 'procedures' || $route_name == 'forms' || $route_name == 'manuals')<td class="text-center">{{ $document->sector->name }}</th>@endif
                                         <td class="text-center">
                                             @if($route_name != 'forms')

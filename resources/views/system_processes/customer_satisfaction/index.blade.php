@@ -24,7 +24,7 @@
                         @if(!$poll->isNotEmpty())
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj anketu')}}</a>
                         @else
-                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.create') }}"><i class="fas fa-poll"></i> {{ __('Popuni anketu')}}</a>
+                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3 mr-2" href="{{ route('customer-satisfaction.create') }}"><i class="fas fa-poll"></i> {{ __('Popuni anketu')}}</a>
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Izmeni anketu')}}</a>
                         @endempty
                     @endcan
@@ -61,9 +61,9 @@
                                     @endif
                                     <td class="font-bold">{{ $row->average() }}</td>
                                     <td>
-                                    
+
                                         <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled ankete') }}" class="button text-primary" onclick="showPoll({{ $row->id }})"><i class="fas fa-eye"></i></button>
-                                        <a 
+                                        <a
                                         href="{{route('customer-satisfaction.print',$row->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $row)

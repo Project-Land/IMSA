@@ -117,11 +117,28 @@
 	var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
     $.datetimepicker.setLocale(lang);
 
+    var selectedYear = $('#year').val();
+
     $('#deadline').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',
-        minDate: 0,
+        minDate : 0,
 		dayOfWeekStart: 1,
-        scrollInput: false
+        scrollInput: false,
+        changeYear: true,
+        changeMonth: true,
+        yearStart: selectedYear,
 	});
+
+    $('#year').change( () => {
+        selectedYear = $('#year').val()
+        $('#deadline').datetimepicker({
+            yearStart: selectedYear,
+            format: 'd.m.Y',
+            minDate: selectedYear+'/01/01',
+            defaultDate: '01.01.'+selectedYear,
+        })
+    })
+
+
 </script>

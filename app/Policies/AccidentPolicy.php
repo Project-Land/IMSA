@@ -49,6 +49,9 @@ class AccidentPolicy
                 return true;
             }
         }
+        elseif($user->certificates->where('name', 'accidents')->count() > 0){
+            return true;
+        }
     }
 
     /**
@@ -66,6 +69,9 @@ class AccidentPolicy
                 if(session('standard_name') === "45001"){
                     return true;
                 }
+            }
+            elseif($user->certificates->where('name', 'accidents')->count() > 0){
+                return true;
             }
         }
     }
@@ -85,6 +91,9 @@ class AccidentPolicy
                 if(session('standard_name') === "45001"){
                     return true;
                 }
+            }
+            elseif($user->certificates->where('name', 'goals')->count() > 0){
+                return true;
             }
         }
     }

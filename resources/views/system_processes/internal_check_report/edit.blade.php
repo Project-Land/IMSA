@@ -98,7 +98,7 @@
                         @error('recommendations.'.$rec->id)
                             <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                         @enderror
-                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje preporuke') }}" class="deleteButton btn btn-danger mt-1 float-right"><i class="fas fa-trash"></i></button>
+                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje preporuke') }}" class="deleteButton btn btn-danger mt-1 float-right" onclick="$('body>.tooltip').remove();"><i class="fas fa-trash"></i></button>
                     </div>
                 @endforeach
             </div>
@@ -145,7 +145,7 @@
             addNewRecommendations.setAttribute('data-toggle', 'tooltip');
             addNewRecommendations.setAttribute('data-placement', 'top');
             addNewRecommendations.title = "{{ __('Brisanje preporuke') }}";
-
+            addNewRecommendations.onclick = function(){$('body>.tooltip').remove();};
             addNewRecommendations.innerHTML = '<i class="fas fa-trash"></i>';
             label.for = "newInputRecommendation"+coun;
             div.append(label);

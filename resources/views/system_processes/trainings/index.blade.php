@@ -54,7 +54,7 @@
                                     <th>{{ __('Br. zaposlenih - planirano') }}</th>
                                     <th>{{ __('Termin') }} / {{ __('Mesto') }}</th>
                                     <th>{{ __('Resursi') }}</th>
-                                    <th>{{ __('Br. zaposlenih') }} - {{ __('realizovano') }}</th>
+                                    <th>{{ __('Br. zaposlenih - realizovano') }}</th>
                                     <th>{{ __('Ocena efekata obuke') }}</th>
                                     <th class="no-sort">{{ __('Akcije') }}</th>
                                 </tr>
@@ -220,17 +220,17 @@
                         <input type="hidden" name="file_name" value="${ documents[key].file_name }">
                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;">${ documents[key].file_name }</button>
                     </form><br>`;
-                    
+
                     for(user of documents[key].users){
                         docsBlock += `<span>${ user.name }</span>, `;
                     }
 
-                    docsBlock += "<br>";
+                    docsBlock += "<hr>";
                 })
                 docsBlock+= "<hr>"
 
-                for(userWithoutDoc of  response.data.users_without_document){
-                    docsBlock += `<span>${ userWithoutDoc.name }</span>, `; 
+                for(userWithoutDoc of response.data.users_without_document){
+                    docsBlock += `<span>${ userWithoutDoc.name }</span>, `;
                 }
 
                 docsBlock += "</div>";
@@ -257,7 +257,7 @@
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ response.data.place }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Resursi') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih') }} - {{ __('realizovano') }}</p></div>
+                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih - realizovano') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.final_num_of_employees != null ? response.data.final_num_of_employees : "/" }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Ocena efekata obuke') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.rating != null ? response.data.rating : "/" }</p></div>

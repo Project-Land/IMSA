@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Sector;
 use App\Models\User;
-use App\Models\Team;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SectorPolicy
@@ -38,7 +37,7 @@ class SectorPolicy
      */
     public function view(User $user, Sector $sector)
     {
-       
+
     }
 
     /**

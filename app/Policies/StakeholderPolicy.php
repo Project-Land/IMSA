@@ -10,17 +10,20 @@ class StakeholderPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-
+    public function view(User $user, Stakeholder $stakeholder)
+    {
+        if($user->current_team_id === $stakeholder->team_id){
+            return true;
+        }
+    }
 
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
             return true;
         }
     }
@@ -32,6 +35,9 @@ class StakeholderPolicy
             if($role == "admin" || $role == "super-admin") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -40,6 +46,9 @@ class StakeholderPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $stakeholder->team_id){
             if($role == "admin" || $role == "super-admin") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
                 return true;
             }
         }

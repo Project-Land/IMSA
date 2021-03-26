@@ -141,7 +141,7 @@
                 <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">{{__('Mera efektivna')}}:</label>
                 <select oninvalid="this.setCustomValidity('{{__("Izaberite efektivnost mere") }}')"
                 oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective[${counter}]" id="measure_effective${counter}" >
-                <option value="">Izaberi...</option>
+                <option value="">{{ __('Izaberi') }}...</option>
                         <option value="1">{{__('DA')}}</option>
                         <option value="0">{{__('NE')}}</option>
                     </select>

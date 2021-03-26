@@ -31,7 +31,9 @@ class CorrectiveMeasurePolicy
      */
     public function view(User $user, CorrectiveMeasure $correctiveMeasure)
     {
-        //
+        if($user->current_team_id === $correctiveMeasure->team_id){
+            return true;
+        }
     }
 
     /**
@@ -44,6 +46,9 @@ class CorrectiveMeasurePolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($role == "admin" || $role == "super-admin" || $role == "editor") {
+            return true;
+        }
+        elseif($user->certificates->where('name', 'corrective-measures')->count() > 0){
             return true;
         }
     }
@@ -65,6 +70,9 @@ class CorrectiveMeasurePolicy
             if($role == "admin" || $role == "super-admin" || $role == "editor") {
                 return true;
             }
+            elseif($user->certificates->where('name', 'corrective-measures')->count() > 0){
+                return true;
+            }
         }
     }
 
@@ -80,6 +88,9 @@ class CorrectiveMeasurePolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $correctiveMeasure->team_id){
             if($role == "admin" || $role == "super-admin" || $role == "editor") {
+                return true;
+            }
+            elseif($user->certificates->where('name', 'corrective-measures')->count() > 0){
                 return true;
             }
         }

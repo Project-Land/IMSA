@@ -87,7 +87,7 @@
 			</div>
 
 			<div class="mb-4" id="final_num_field" style="display: none">
-				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih') }} {{ __('realizovano') }}:</label>
+				<label for="final_num_of_employees" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Broj zaposlenih - realizovano') }}:</label>
 				<input type="number" min="1" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="final_num_of_employees" name="final_num_of_employees" value="{{ old('final_num_of_employees') }}" oninvalid="this.setCustomValidity('{{ __("Izaberite broj zaposlenih") }}')" oninput="this.setCustomValidity('')">
 			</div>
 
@@ -121,7 +121,7 @@
                         <br><span class="text-red-700 italic text-sm">{{ $message }}</span>
                     @enderror
 
-                    <button type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 text-lg rounded" onclick="clearFile('')"><i class="fas fa-times-circle"></i></button>
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni odabrane fajlove') }}" type="button" class="flex-1 bg-transparent hover:bg-red-500 text-red-700 font-semibold ml-5 pb-2 text-lg rounded" onclick="clearFile('')"><i class="fas fa-times-circle"></i></button>
                 </div>
 
                 <div class="mb-4 d-none" id="users-field">
@@ -186,6 +186,8 @@
 
     $('.js-example-basic-multiple').select2();
 
+    $('[data-toggle="tooltip"]').tooltip();
+
    	$('#training_date').datetimepicker({
 		format: 'd.m.Y H:i',
 		minDate: 1,
@@ -230,7 +232,7 @@
     $("#addGroup").click(function(e) {
 
         $('#more_fields').append(`
-        <div class="border-2 my-3">
+        <div class="border-2 border-dashed my-3">
             <div class="mb-2" id="block">
                 <label for="name_file${ groupCounter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -240,8 +242,8 @@
                 </label>
                 <input type="file" class="flex-1 form-control-file d-none" id="name_file${ groupCounter }" name="training[${ groupCounter }][file][]" multiple>
                 <span class="font-italic text-xs sm:text-sm ml-2" id="old_document${ groupCounter }">{{ __('Fajl nije izabran') }}</span>
-                <button type="button" class="text-lg flex-1 ml-11 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
-                <button type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
+                <button type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni odabrane fajlove') }}" type="button" class="text-lg flex-1 ml-11 bg-transparent hover:bg-red-500 text-red-700 font-semibold pb-2 rounded" onclick="clearFile(${ groupCounter })"><i class="fas fa-times-circle"></i></button>
+                <button data-toggle="tooltip" data-placement="top" title="{{ __('Ukloni ceo unos') }}" type="button" class="text-lg flex-1 float-right py-2 bg-red-700 text-white font-semibold rounded px-4" onclick="parentElement.parentElement.remove(); $('body>.tooltip').remove();"><i class="fas fa-trash"></i></button>
             </div>
             <div class="mb-4" id="users-field">
                 <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Učesnici') }}:</label>
@@ -273,6 +275,8 @@
         });
 
         groupCounter++;
+
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     function clearFile(id){
