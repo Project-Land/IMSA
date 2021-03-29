@@ -57,7 +57,10 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="cursor-pointer text-blue-700 hover:text-blue-900" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="text-blue-700 hover:text-blue-900" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
+                                    <a
+                                        href="{{route('accidents.print',$accident->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $accident)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena izveštaja incidenta')}}" href="{{ route('accidents.edit', $accident->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $accident->id }}" action="{{ route('accidents.destroy', $accident->id) }}" method="POST">

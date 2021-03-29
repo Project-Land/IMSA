@@ -104,4 +104,12 @@ class EnvironmentalAspectsController extends Controller
         }
         return Excel::download(new EnvironmentalAspectsExport, Str::snake(__('Aspekti životne sredine')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $env = EnvironmentalAspect::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $env);
+        return view('system_processes.environmental_aspects.print', compact('env'));
+
+    }
 }

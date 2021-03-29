@@ -170,8 +170,8 @@ class ManagementSystemReviewsController extends Controller
     public function print($id)
     {
         $msr = ManagementSystemReview::with('user','standard')->findOrFail($id);
-       // $this->authorize('view', $msr);
-        return view('system_processes.management_system_reviews_9001.print', compact('msr'));
+        $this->authorize('view', $msr);
+        return view('system_processes.management_system_reviews_'.session("standard_name").'.print', compact('msr'));
 
     }
 }

@@ -252,5 +252,12 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         }
         return Excel::download(new  EvaluationOfLegalAndOtherRequirementsExport(), Str::snake(__('Vrednovanje zakonskih i drugih zahteva')).'_'.session('standard_name').'.xlsx');
     }
+    public function print($id)
+    {
+        $requirement = EvaluationOfLegalAndOtherRequirement::with('user','standard','correctiveMeasures')->findOrFail($id);
+        $this->authorize('view', $requirement);
+        return view('system_processes.evaluation_of_requirement.print', compact('requirement'));
+
+    }
 
 }

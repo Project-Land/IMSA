@@ -65,6 +65,9 @@
                                     <td class="text-center {{ $ea->estimated_impact >= 8 ? "text-red-600" : "" }}">{{ $ea->estimated_impact }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled')}}" class="text-blue-700 hover:text-blue-900" onclick="showModal({{ $ea->id }})"><i class="fas fa-eye"></i></button>
+                                        <a
+                                        href="{{route('environmental-aspects.print',$ea->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $ea)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena aspekta životne sredine')}}" href="{{ route('environmental-aspects.edit', $ea->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $ea->id }}" action="{{ route('environmental-aspects.destroy', $ea->id) }}" method="POST">

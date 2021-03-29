@@ -98,4 +98,12 @@ class AccidentController extends Controller
         }
         return Excel::download(new AccidentsExport, Str::snake(__('Istraživanje incidenata')).'_'.session('standard_name').'.xlsx');
     }
+
+    public function print($id)
+    {
+        $accident = Accident::with('user','standard')->findOrFail($id);
+        $this->authorize('view', $accident);
+        return view('system_processes.accident.print', compact('accident'));
+
+    }
 }
