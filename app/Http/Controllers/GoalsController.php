@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Goal;
+use App\Models\User;
 use App\Facades\CustomLog;
 use Illuminate\Support\Str;
 use App\Exports\GoalsExport;
@@ -62,7 +63,8 @@ class GoalsController extends Controller
             return redirect('/');
         }
         $this->authorize('create', Goal::class);
-        return view('system_processes.goals.create');
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+        return view('system_processes.goals.create', compact('users'));
     }
 
     public function store(GoalsRequest $request)
@@ -103,7 +105,9 @@ class GoalsController extends Controller
     {
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
-        return view('system_processes.goals.edit', ['goal' => $goal]);
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+        $selectedUsers = explode(', ', $goal->responsibility);
+        return view('system_processes.goals.edit', compact('goal', 'users', 'selectedUsers'));
     }
 
     public function update(GoalsRequest $request, $id)
@@ -184,5 +188,5 @@ class GoalsController extends Controller
 
     }
 
-    
+
 }

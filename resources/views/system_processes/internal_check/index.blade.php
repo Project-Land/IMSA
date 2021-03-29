@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -63,7 +69,7 @@
                                     <th>{{ __('Standard') }}</th>
                                     <th>{{ __('Br programa IP') }}</th>
                                     <th>{{ __('Izveštaji sa internih provera') }}</th>
-                                    <th class="no-sort">{{ __('Akcije') }}</th>
+                                    <th class="no-sort w-16">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -82,7 +88,7 @@
                                             @endcan
                                         @else
                                             <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled plana interne provere') }}" class="planIpshow" data-url="{{ route('plan-ip.show',$check->planIp->id) }}" style="cursor:pointer;color:blue;">{{ __('PIP') }}  {{$check->planIp->name}}</span>
-                                           
+
                                             @can('update', $check)
                                                 <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena plana interne provere') }}" href="{{ route('plan-ip.edit', $check->planIp->id) }}"><i class="fas fa-edit"></i></a>
                                             @endcan
@@ -100,8 +106,8 @@
                                                 @endcan
                                             @endif
                                         @else
-                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled izveštaja sa interne provere') }}" class="reportShow" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}" style="cursor:pointer;color:blue;"><i class="fas fa-eye"></i></span>
-                                          
+                                            <span data-toggle="tooltip" data-placement="top" title="{{ __('Pregled izveštaja sa interne provere') }}" class="reportShow cursor-pointer text-blue-700 hover:text-blue-900" data-url="{{ route('internal-check-report.show', $check->internalCheckReport->id) }}"><i class="fas fa-eye"></i></span>
+
                                             @can('update', $check)
                                                 <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena izveštaja sa interne provere') }}" href="{{ route('internal-check-report.edit', $check->internalCheckReport->id) }}"><i class="fas fa-edit"></i></a>
                                                 <!-- <form class="inline" action="{{ route('internal-check-report.destroy', $check->internalCheckReport->id) }}" method="POST">
@@ -113,8 +119,8 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                            <a 
-                                                href="{{route('internal-check.print',$check->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                            <a
+                                                href="{{route('internal-check.print',$check->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                             </a>
                                         @can('update', $check)
                                             <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena interne provere') }}" href="{{ route('internal-check.edit', $check->id) }}"><i class="fas fa-edit"></i></a>

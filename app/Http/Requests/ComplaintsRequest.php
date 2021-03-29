@@ -85,7 +85,8 @@ class ComplaintsRequest extends FormRequest
             'submission_date' => $this->submission_date != null ?  date('Y-m-d', strtotime($this->submission_date)) : null,
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'status' => $this->status != null ? $this->status : 0,
-            'closing_date' => $this->status == 0 ? date('Y-m-d') : null
+            'closing_date' => $this->status == 0 ? date('Y-m-d') : null,
+            'responsible_person' => !empty($this->responsible_person)? implode(", ", $this->responsible_person) : null
         ]);
     }
 }

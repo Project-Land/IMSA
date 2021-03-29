@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -37,7 +43,7 @@
                                     <th>{{__('Datum poslednjeg etaloniranja/baždarenja')}}</th>
                                     <th>{{__('Datum narednog etaloniranja/baždarenja')}}</th>
                                     <th>{{__('Kreirao')}}</th>
-                                    <th class="no-sort">{{__('Akcije')}}</th>
+                                    <th class="no-sort w-16">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,8 +55,8 @@
                                     <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
                                     <td class="text-center">{{ $me->user->name }}</td>
                                     <td class="text-center">
-                                    <a 
-                                        href="{{route('measuring-equipment.print',$me->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    <a
+                                        href="{{route('measuring-equipment.print',$me->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
                                         @canany(['update', 'delete'], $me)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena merne opreme')}}" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>

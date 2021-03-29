@@ -38,7 +38,7 @@
                         <input type="hidden" name="team_id" value="{{ request()->route('id') }}">
                         <div class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="role" value="{{ __('Standard') }}" class="block font-medium text-sm text-gray-700" />
-                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-3 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard" {{ $standards->isEmpty() ? "disabled" : "" }}>
+                            <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="standard" id="standard" {{ $standards->isEmpty() ? "disabled" : "" }}>
                                 @if($standards->isEmpty())
                                     <option value="0">{{ __('Nema novih standarda za dodelu') }}</option>
                                 @endif
@@ -58,7 +58,7 @@
                                     {{ __('Dodaj') }}
                                 </x-jet-button>
                             @else
-                                <a href="/teams" class="mb-4 mr-4 px-4 py-2 text-xs font-semibold tracking-widest uppercase hover:bg-blue-500 text-blue-700 hover:text-white hover:no-underline border border-blue-500 hover:border-transparent rounded"><i class="fas fa-arrow-left"></i> {{ __('Nazad') }}</a>
+                                <a href="/teams" class="ml4 mb-4 mr-4 inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 hover:no-underline transition ease-in-out duration-150">{{ __('Nazad') }}</a>
                             @endif
                         </div>
                     </div>

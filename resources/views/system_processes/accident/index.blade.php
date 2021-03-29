@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -51,7 +57,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="button text-primary cursor-pointer" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="cursor-pointer text-blue-700 hover:text-blue-900" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
                                         @canany(['update', 'delete'], $accident)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena izveštaja incidenta')}}" href="{{ route('accidents.edit', $accident->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $accident->id }}" action="{{ route('accidents.destroy', $accident->id) }}" method="POST">

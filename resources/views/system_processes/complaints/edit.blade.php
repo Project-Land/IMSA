@@ -1,4 +1,9 @@
 <x-app-layout>
+    @push('scripts')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Reklamacija') }}  - {{ __('Izmena') }}
@@ -28,8 +33,7 @@
 
 			<div class="mb-4">
 				<label for="submission_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Datum podnošenja reklamacije')}}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="xx.xx.xxxx" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
-
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission_date" name="submission_date" value="{{ date('d.m.Y', strtotime($complaint->submission_date)) }}" placeholder="xx.xx.xxxx" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')">
 				@error('submission_date')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -99,7 +103,7 @@
 
 				<div class="mb-4">
 					<label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju reklamacije')}}:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date"  value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : '' }}" autocomplete="off" placeholder="xx.xx.xxxx">
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date" value="{{ $complaint->deadline_date != null ? date('d.m.Y', strtotime($complaint->deadline_date)) : '' }}" autocomplete="off" placeholder="xx.xx.xxxx" oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
 					@error('deadline_date')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -107,15 +111,21 @@
 
 				<div class="mb-4">
 					<label for="responsible_person" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Lice odgovorno za rešavanje reklamacije')}}:</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsible_person" name="responsible_person" value="{{ $complaint->responsible_person }}" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')" {{ $complaint->accepted ? 'required':'' }}>
-					@error('responsible_person')
+                    <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="responsible_person" name="responsible_person[]" multiple oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+                        @foreach($users as $user)
+                            @if($user->teams[0]->membership->role != 'super-admin')
+                                <option value="{{ $user->name }}" {{ in_array($user->name, $selectedUsers)? "selected":"" }}>{{ $user->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('responsible_person')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
 				</div>
 
 				<div class="mb-4">
 					<label for="way_of_solving" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Način rešavanja reklamacije')}}</label>
-					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}" oninvalid="this.setCustomValidity('{{__("Popunite polje")}}')" oninput="this.setCustomValidity('')" {{ $complaint->accepted  ? 'required':'' }}>
+					<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="way_of_solving" name="way_of_solving" value="{{ $complaint->way_of_solving }}" oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
 					@error('way_of_solving')
 						<span class="text-red-700 italic text-sm">{{ $message }}</span>
 					@enderror
@@ -146,6 +156,8 @@
     var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
     $.datetimepicker.setLocale(lang);
 
+    $('.js-example-basic-multiple').select2();
+
 	$('#submission_date').datetimepicker({
 		timepicker: false,
 		format: 'd.m.Y',
@@ -166,6 +178,7 @@
 			$('#complaint_accepted').removeClass('d-none');
 			$('#responsible_person').attr('required', true);
 			$('#way_of_solving').attr('required', true);
+			$('#deadline_date').attr('required', true);
 		}
 		else{
 			$('#complaint_accepted').addClass('d-none');
@@ -174,6 +187,7 @@
 			$('#way_of_solving').val('');
 			$('#responsible_person').attr('required', false);
 			$('#way_of_solving').attr('required', false);
+            $('#deadline_date').attr('required', false);
 		}
 	})
 
@@ -207,7 +221,7 @@
         console.log(sessionStorage.getItem('counter'));
 
         $('#more_fields').append(`
-            <div class="flex" id="block">
+            <div class="flex my-2" id="block">
                 <label for="name_file${ counter }" class="btn md:w-auto sm:w-full flex flex-col items-center px-8 py-1 bg-white text-blue rounded-lg shadow tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-black">
                     <svg class="w-6 h-6 mx-auto" fill="blue" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
@@ -228,3 +242,27 @@
         });
     });
 </script>
+
+<style>
+    .select2{
+        width: 100% !important;
+    }
+    .select2-results {
+        font-size: 0.875rem;
+    }
+    .select2-container--default .select2-selection--multiple {
+        border-radius: 0;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        border: 1px solid #dee2e6 !important;
+    }
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border: 1px solid #dee2e6 !important;
+    }
+    .select2-selection__choice {
+        font-size: 0.875rem;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        border-radius: 1px;
+    }
+</style>

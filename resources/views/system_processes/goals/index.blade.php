@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -55,7 +61,7 @@
                                     <th>{{ __('Rok za realizaciju cilja') }}</th>
                                     <th>{{ __('Potrebni resursi') }}</th>
                                     <th>{{ __('Analiza ispunjenosti cilja') }}</th>
-                                    <th class="no-sort">{{ __('Akcije') }}</th>
+                                    <th class="no-sort w-20">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -71,9 +77,9 @@
                                     <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="button text-primary" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
-                                        <a 
-                                            href="{{route('goals.print',$goal->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="text-blue-700 hover:text-blue-900" onclick="showGoal({{ $goal->id }})"><i class="fas fa-eye"></i></button>
+                                        <a
+                                            href="{{route('goals.print',$goal->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $goal)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena cilja') }}" href="{{ route('goals.edit', $goal->id) }}"><i class="fas fa-edit"></i></a>
@@ -256,7 +262,8 @@
                             <td class="text-center">${ item.resources }</td>
                             <td class="text-center">${ item.analysis != null ? item.analysis.substr(0, 35) + "..." : "/" }</td>
                             <td class="text-center">
-                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="button text-primary" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled cilja') }}" class="text-blue-700 hover:text-blue-900" onclick="showGoal(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <a href="/goals/print/${ item.id }" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i></a>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena cilja') }}" href="/goals/${ item.id }/edit"><i class="fas fa-edit"></i></a>
                                     <a data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje cilja') }}" class="text-red-600 cursor-pointer hover:text-red-700" id="delete-goal" onclick="deleteGoal(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>

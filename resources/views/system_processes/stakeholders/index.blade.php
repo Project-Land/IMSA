@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -34,7 +40,7 @@
                                     <th>{{ __('Potrebe i očekivanja zainteresovane strane')}}</th>
                                     <th>{{ __('Odgovor preduzeća na potrebe i očekivanja')}}</th>
                                     <th>{{ __('Kreirao')}}</th>
-                                    <th class="no-sort">{{ __('Akcije')}}</th>
+                                    <th class="no-sort w-16">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,8 +51,8 @@
                                     <td class="text-center">{{ Str::length($s->response) < 100 ? $s->response : Str::limit($s->response, 100) }}</td>
                                     <td class="text-center">{{ $s->user->name }}</td>
                                     <td class="text-center">
-                                    <a 
-                                        href="{{route('stakeholders.print',$s->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    <a
+                                        href="{{route('stakeholders.print',$s->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
                                         @canany(['update', 'delete'], $s)
                                             <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zainteresovane strane')}}" href="{{ route('stakeholders.edit', $s->id) }}"><i class="fas fa-edit"></i></a>
@@ -84,39 +90,40 @@
         </div>
     </div>
 
-</x-app-layout>
+    @push('page-scripts')
+        <script>
+            $('.yajra-datatable').DataTable({
+                "language": {
+                    "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+                    "infoEmpty": "{{__('Nema podataka')}}",
+                    "zeroRecords": "{{__('Nema podataka')}}",
+                    "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+                    "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+                    "search": "{{__('Pretraga')}}",
+                    "paginate": {
+                        "next": "{{__('Sledeća')}}",
+                        "previous": "{{__('Prethodna')}}",
+                        "first": "{{__('Prva')}}",
+                        "last": "{{__('Poslednja')}}"
+                    }
+                },
+                "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+                }],
+            });
 
-<script>
-    $('.yajra-datatable').DataTable({
-        "language": {
-            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
-            "infoEmpty": "{{__('Nema podataka')}}",
-            "zeroRecords": "{{__('Nema podataka')}}",
-            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
-            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
-            "search": "{{__('Pretraga')}}",
-            "paginate": {
-                "next": "{{__('Sledeća')}}",
-                "previous": "{{__('Prethodna')}}",
-                "first": "{{__('Prva')}}",
-                "last": "{{__('Poslednja')}}"
+            $('[data-toggle="tooltip"]').tooltip();
+
+            function confirmDeleteModal($id){
+                let id = $id;
+                $('#confirm-delete-modal').modal();
+                $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+                    let form = $('#delete-form-'+id);
+                    form.submit();
+                });
             }
-        },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
-    });
+        </script>
+    @endpush
 
-    $('[data-toggle="tooltip"]').tooltip();
-
-    function confirmDeleteModal($id){
-        let id = $id;
-        $('#confirm-delete-modal').modal();
-        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            let form = $('#delete-form-'+id);
-            form.submit();
-        });
-    }
-
-</script>
+</x-app-layout>

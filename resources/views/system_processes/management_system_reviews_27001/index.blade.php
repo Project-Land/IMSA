@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -53,9 +59,9 @@
                                 <tr>
                                     <td class="text-center">{{__('Zapisnik sa preispitivanja')}} {{ $m->year }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled zapisnika')}}" class="button text-primary" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
-                                        <a 
-                                        href="{{route('management-system-reviews.print',$m->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled zapisnika')}}" class="text-blue-700 hover:text-blue-900" onclick="showMSR({{ $m->id }})"><i class="fas fa-eye"></i></button>
+                                        <a
+                                        href="{{route('management-system-reviews.print',$m->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update'], $m)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena zapisnika')}}" href="{{ route('management-system-reviews.edit', $m->id) }}"><i class="fas fa-edit"></i></a>
@@ -222,7 +228,8 @@
                         <tr>
                             <td class="text-center">{{__("Zapisnik sa preispitivanja")}} ${ item.year }</td>
                             <td class="text-center">
-                                <button class="button text-primary" onclick="showMSR(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <button class="text-blue-700 hover:text-blue-900" onclick="showMSR(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <a href="/management-system-reviews/print/${ item.id }" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i></a>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a href="/management-system-reviews/${ item.id }/edit"><i class="fas fa-edit"></i></a>
                                 </span>

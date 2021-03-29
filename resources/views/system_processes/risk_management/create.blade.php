@@ -60,23 +60,23 @@
 		</form>
     </div>
 
+    @push('page-scripts')
+        <script>
+            function calculate(){
+                let probability = $('#probability').val();
+                let frequency = $('#frequency').val();
+                let total = probability * frequency;
+                $('#total').val(total);
+            }
+
+            $('#probability').change( () => {
+                calculate();
+            })
+
+            $('#frequency').change(() => {
+                calculate();
+            })
+        </script>
+    @endpush
+
 </x-app-layout>
-
-<script>
-
-    function calculate(){
-        let probability = $('#probability').val();
-        let frequency = $('#frequency').val();
-        let total = probability * frequency;
-        $('#total').val(total);
-    }
-
-    $('#probability').change( () => {
-        calculate();
-    })
-
-    $('#frequency').change(() => {
-        calculate();
-    })
-
-</script>

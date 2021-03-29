@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -40,7 +46,7 @@
                                     <th>{{__('Lice odgovorno za rešavanje')}}</th>
                                    {{-- <th>{{__('Način rešavanja')}}</th> --}}
                                     <th>{{__('Status')}}</th>
-                                    <th class="no-sort">{{__('Akcije')}}</th>
+                                    <th class="no-sort w-20">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,12 +71,11 @@
                                     <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
                                     <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
-                                   {{-- <td class="text-center">{{ $c->way_of_solving ? : "/" }}</td> --}}
                                     <td class="text-center">{{ ($c->status == '1') ? __('Otvorena') : __('Zatvorena') }}</td>
                                     <td class="text-center">
-                                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled reklamacije') }}" class="button text-primary" onclick="showComplaint({{ $c->id }})"><i class="fas fa-eye"></i></button>
-                                    <a 
-                                        href="{{route('complaints.print',$c->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled reklamacije') }}" class="text-blue-700 hover:text-blue-900" onclick="showComplaint({{ $c->id }})"><i class="fas fa-eye"></i></button>
+                                    <a
+                                        href="{{route('complaints.print',$c->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
                                         @canany(['update', 'delete'], $c)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena reklamacije')}}" href="{{ route('complaints.edit', $c->id) }}"><i class="fas fa-edit"></i></a>
@@ -111,24 +116,22 @@
 </x-app-layout>
 
 <script>
- var myRe = /\bcomplaints\b/g;
+    var myRe = /\bcomplaints\b/g;
 
-if(myRe.test(window.location.href)){
-  window.addEventListener('popstate', function (event) {
-      location.reload();
-  });
-}
+    if(myRe.test(window.location.href)){
+    window.addEventListener('popstate', function (event) {
+        location.reload();
+    });
+    }
 
-let href = window.location.href;
-id = href.split('#')[1];
-if(id){
-  let e = document.getElementById('tr' + id);
-  let i = document.getElementById('td' + id);
-  i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
-  e.style = "background:#d8ffcc;";
-}
-
-
+    let href = window.location.href;
+    id = href.split('#')[1];
+    if(id){
+        let e = document.getElementById('tr' + id);
+        let i = document.getElementById('td' + id);
+        i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
+        e.style = "background:#d8ffcc;";
+    }
 
     $('.yajra-datatable').DataTable({
         "language": {

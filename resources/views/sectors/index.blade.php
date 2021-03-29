@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -75,39 +81,40 @@
         </div>
     </div>
 
-</x-app-layout>
+    @push('page-scripts')
+        <script>
+            $('.yajra-datatable').DataTable({
+                "language": {
+                    "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+                    "infoEmpty": "{{__('Nema podataka')}}",
+                    "zeroRecords": "{{__('Nema podataka')}}",
+                    "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+                    "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+                    "search": "{{__('Pretraga')}}",
+                    "paginate": {
+                        "next": "{{__('Sledeća')}}",
+                        "previous": "{{__('Prethodna')}}",
+                        "first": "{{__('Prva')}}",
+                        "last": "{{__('Poslednja')}}"
+                    }
+                },
+                "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+                }],
+            });
 
-<script>
-
-    $('.yajra-datatable').DataTable({
-        "language": {
-            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
-            "infoEmpty": "{{__('Nema podataka')}}",
-            "zeroRecords": "{{__('Nema podataka')}}",
-            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
-            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
-            "search": "{{__('Pretraga')}}",
-            "paginate": {
-                "next": "{{__('Sledeća')}}",
-                "previous": "{{__('Prethodna')}}",
-                "first": "{{__('Prva')}}",
-                "last": "{{__('Poslednja')}}"
+            function confirmDeleteModal($id){
+                let id = $id;
+                $('#confirm-delete-modal').modal();
+                $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+                    let form = $('#delete-form-'+id);
+                    form.submit();
+                });
             }
-        },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
-    });
 
-    function confirmDeleteModal($id){
-        let id = $id;
-        $('#confirm-delete-modal').modal();
-        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            let form = $('#delete-form-'+id);
-            form.submit();
-        });
-    }
+            $('[data-toggle="tooltip"]').tooltip();
+        </script>
+    @endpush
 
-    $('[data-toggle="tooltip"]').tooltip();
-</script>
+</x-app-layout>

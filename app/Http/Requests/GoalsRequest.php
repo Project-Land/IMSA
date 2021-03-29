@@ -60,7 +60,7 @@ class GoalsRequest extends FormRequest
     public function messages()
     {
         return [
-            'responsibility.required' => 'Unesite odgovornost',
+            'responsibility.required' => 'Popunite polje',
             'goal.required' => 'Unesite cilj',
             'deadline.required' => 'Unesite rok za realizaciju',
             'deadline.after' => 'Unesite budući datum',
@@ -77,7 +77,8 @@ class GoalsRequest extends FormRequest
             'team_id' => Auth::user()->current_team_id,
             'user_id' => Auth::user()->id,
             'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
-            'analysis' => $this->analysis != null ? $this->analysis : null
+            'analysis' => $this->analysis != null ? $this->analysis : null,
+            'responsibility' => !empty($this->responsibility)? implode(", ", $this->responsibility) : null
         ]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Document;
 use App\Models\Complaint;
 use App\Models\Sector;
+use App\Models\User;
 use App\Facades\CustomLog;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -47,8 +48,10 @@ class ComplaintsController extends Controller
             ['team_id', Auth::user()->current_team_id]
         ])->get();
 
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+
         $this->authorize('create', Complaint::class);
-        return view('system_processes.complaints.create', compact('sectors'));
+        return view('system_processes.complaints.create', compact('sectors', 'users'));
     }
 
     public function store(ComplaintsRequest $request)
@@ -111,7 +114,10 @@ class ComplaintsController extends Controller
         ])->get();
 
         $complaint = Complaint::findOrFail($id);
-        return view('system_processes.complaints.edit', compact('complaint', 'sectors'));
+
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+        $selectedUsers = explode(', ', $complaint->responsible_person);
+        return view('system_processes.complaints.edit', compact('complaint', 'sectors', 'users', 'selectedUsers'));
     }
 
     public function update(ComplaintsRequest $request, $id)

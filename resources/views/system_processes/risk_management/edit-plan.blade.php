@@ -1,4 +1,9 @@
 <x-app-layout>
+    @push('scripts')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Plan za postupanje sa rizikom / prilikom') }} - {{ __('Kreiranje / izmena plana') }}
@@ -40,12 +45,18 @@
 			</div>
 
             <div class="mb-4">
-				<label for="responsibility">{{ __('Odgovornost') }}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="responsibility" name="responsibility" value="{{ $risk->responsibility }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
-				@error('responsibility')
-					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-				@enderror
-			</div>
+                <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odgovornost') }}</label>
+                <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="responsibility" name="responsibility[]" multiple required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+                    @foreach($users as $user)
+                        @if($user->teams[0]->membership->role != 'super-admin')
+                            <option value="{{ $user->name }}" {{ in_array($user->name, $selectedUsers)? "selected":"" }}>{{ $user->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+                @error('responsibility')
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span><br>
+                @enderror
+            </div>
 
             <div class="mb-4">
 				<label for="deadline">{{ __('Rok za realizaciju') }}:</label>
@@ -67,17 +78,42 @@
 		</form>
     </div>
 
+    <style>
+        .select2-results {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border-radius: 0;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-selection__choice {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+            border-radius: 1px;
+        }
+    </style>
+
+    @push('page-scripts')
+        <script>
+            var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+            $.datetimepicker.setLocale(lang);
+
+            $('.js-example-basic-multiple').select2();
+
+            $('#deadline').datetimepicker({
+                timepicker: false,
+                format:'d.m.Y',
+                minDate: 0,
+                dayOfWeekStart: 1,
+                scrollInput: false
+            });
+        </script>
+    @endpush
+
 </x-app-layout>
-
-<script>
-    var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
-    $.datetimepicker.setLocale(lang);
-
-    $('#deadline').datetimepicker({
-		timepicker: false,
-		format:'d.m.Y',
-		minDate: 0,
-		dayOfWeekStart: 1,
-		scrollInput: false
-	});
-</script>

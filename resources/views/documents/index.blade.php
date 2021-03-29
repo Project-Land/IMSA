@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -50,14 +56,14 @@
                                                     @csrf
                                                     <input type="hidden" name="folder" value="{{ $folder }}">
                                                     <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                    <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;"><i class="fas fa-eye"></i></button>
+                                                    <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="text-blue-700 hover:text-blue-900" type="submit"><i class="fas fa-eye"></i></button>
                                                 </form>
                                             @endif
                                             <form class="inline" action="{{ route('document.download') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
-                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Preuzimanje dokumenta')}}" class="button" type="submit" style="cursor: pointer;"><i class="fas fa-download"></i></button>
+                                                <button data-toggle="tooltip" data-placement="top" title="{{__('Preuzimanje dokumenta')}}" class="text-gray-700 hover:text-gray-900 button" type="submit"><i class="fas fa-download"></i></button>
                                             </form>
                                             @canany(['update', 'delete'], $document)
                                                 <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena dokumenta')}}" href="{{ route($route_name.'.edit', $document->id) }}"><i class="fas fa-edit"></i></a>
@@ -95,39 +101,41 @@
         </div>
     </div>
 
-</x-app-layout>
+    @push('page-scripts')
+        <script>
+            $('.yajra-datatable').DataTable({
+                "language": {
+                    "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+                    "infoEmpty": "{{__('Nema podataka')}}",
+                    "zeroRecords": "{{__('Nema podataka')}}",
+                    "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+                    "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+                    "search": "{{__('Pretraga')}}",
+                    "paginate": {
+                        "next": "{{__('Sledeća')}}",
+                        "previous": "{{__('Prethodna')}}",
+                        "first": "{{__('Prva')}}",
+                        "last": "{{__('Poslednja')}}"
+                    }
+                },
+                "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+                }],
+            });
 
-<script>
-    $('.yajra-datatable').DataTable({
-        "language": {
-            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
-            "infoEmpty": "{{__('Nema podataka')}}",
-            "zeroRecords": "{{__('Nema podataka')}}",
-            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
-            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
-            "search": "{{__('Pretraga')}}",
-            "paginate": {
-                "next": "{{__('Sledeća')}}",
-                "previous": "{{__('Prethodna')}}",
-                "first": "{{__('Prva')}}",
-                "last": "{{__('Poslednja')}}"
+            function confirmDeleteModal($id){
+                let id = $id;
+                $('#confirm-delete-modal').modal();
+                $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+                    let form = $('#delete-form-'+id);
+                    form.submit();
+                });
             }
-        },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
-    });
 
-    function confirmDeleteModal($id){
-        let id = $id;
-        $('#confirm-delete-modal').modal();
-        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            let form = $('#delete-form-'+id);
-            form.submit();
-        });
-    }
+            $('[data-toggle="tooltip"]').tooltip();
 
-    $('[data-toggle="tooltip"]').tooltip();
+        </script>
+    @endpush
 
-</script>
+</x-app-layout>

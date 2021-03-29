@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -27,7 +33,7 @@
                         <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/environmental-aspects-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                     </div>
                 </div>
-                
+
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
                         <table class="table table-bordered yajra-datatable">
@@ -42,7 +48,7 @@
                                     <th>{{ __('Verovatnoća otkrivanja')}}</th>
                                     <th>{{ __('Ozbiljnost posledica')}}</th>
                                     <th>{{ __('Procenjeni uticaj')}}</th>
-                                    <th class="no-sort">{{__('Akcije')}}</th>
+                                    <th class="no-sort w-16">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,7 +64,7 @@
                                     <td class="text-center">{{ $ea->severity_of_consequences }}</td>
                                     <td class="text-center {{ $ea->estimated_impact >= 8 ? "text-red-600" : "" }}">{{ $ea->estimated_impact }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled')}}" class="button text-primary" onclick="showModal({{ $ea->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled')}}" class="text-blue-700 hover:text-blue-900" onclick="showModal({{ $ea->id }})"><i class="fas fa-eye"></i></button>
                                         @canany(['update', 'delete'], $ea)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena aspekta životne sredine')}}" href="{{ route('environmental-aspects.edit', $ea->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $ea->id }}" action="{{ route('environmental-aspects.destroy', $ea->id) }}" method="POST">

@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -62,9 +68,9 @@
                                     <td class="font-bold">{{ $row->average() }}</td>
                                     <td>
 
-                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled ankete') }}" class="button text-primary" onclick="showPoll({{ $row->id }})"><i class="fas fa-eye"></i></button>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled ankete') }}" class="text-blue-700 hover:text-blue-900" onclick="showPoll({{ $row->id }})"><i class="fas fa-eye"></i></button>
                                         <a
-                                        href="{{route('customer-satisfaction.print',$row->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        href="{{route('customer-satisfaction.print',$row->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $row)
                                         <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena ankete')}}" href="{{ route('customer-satisfaction.edit', $row->id) }}"><i class="fas fa-edit"></i></a>

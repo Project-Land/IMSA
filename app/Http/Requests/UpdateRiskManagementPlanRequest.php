@@ -45,7 +45,8 @@ class UpdateRiskManagementPlanRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null
+            'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
+            'responsibility' => implode(", ", $this->responsibility)
         ]);
     }
 }

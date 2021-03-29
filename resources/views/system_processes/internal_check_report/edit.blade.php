@@ -110,281 +110,280 @@
 
     </div>
 
-    <script>
+    @push('page-scripts')
+        <script>
+            let counter = 1;
+            let coun = 1;
 
-        let counter = 1;
-        let coun = 1;
-
-        function removeInput(){
-            if(this.dataset.counter == 'counter'){}
-            // counter--;
-            if(this.dataset.counter == 'coun'){}
-            // coun--;
-            this.closest("div").remove();
-        }
-
-        const form = document.getElementById('internal_check_report_edit_form');
-        const recommendations = document.getElementById('addRecommendations');
-        const recommendationsDiv = document.getElementById('recommendationsDiv');
-
-        const addInputRecommedation = function() {
-
-            if(document.getElementById("newInputRecommendation" + (coun-1)) != null){
-                if(document.getElementById("newInputRecommendation" + (coun-1)).value === "")
-                    return;
+            function removeInput(){
+                if(this.dataset.counter == 'counter'){}
+                if(this.dataset.counter == 'coun'){}
+                this.closest("div").remove();
             }
 
-            const newInput = document.createElement('textarea');
-            const div = document.createElement('div');
-            const label = document.createElement('label');
-            const addNewRecommendations = document.createElement('button');
+            const form = document.getElementById('internal_check_report_edit_form');
+            const recommendations = document.getElementById('addRecommendations');
+            const recommendationsDiv = document.getElementById('recommendationsDiv');
 
-            addNewRecommendations.classList = "btn btn-danger mt-1 float-right";
-            addNewRecommendations.setAttribute("data-counter", "coun");
-            addNewRecommendations.id = "buttonRecommedations" + coun;
-            addNewRecommendations.setAttribute('data-toggle', 'tooltip');
-            addNewRecommendations.setAttribute('data-placement', 'top');
-            addNewRecommendations.title = "{{ __('Brisanje preporuke') }}";
-            addNewRecommendations.onclick = function(){$('body>.tooltip').remove();};
-            addNewRecommendations.innerHTML = '<i class="fas fa-trash"></i>';
-            label.for = "newInputRecommendation"+coun;
-            div.append(label);
-            label.textContent = "{{ __('Preporuka') }}";
-            label.classList = "mt-3 block text-gray-700 text-sm font-bold mb-2";
-            newInput.id = 'newInputRecommendation' + coun;
-            newInput.name = 'newInputRecommendation' + coun;
-            newInput.type = 'text';
-            newInput.style = "background:#dbffe5;"
-            newInput.required = true;
-            newInput.classList = "appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-            addNewRecommendations.addEventListener('click', removeInput);
-            div.append(newInput);
-            div.classList = "form-group col-6";
-            div.id = "newInputRecommendationDiv" + coun;
-            recommendations.after(div);
-            div.append(addNewRecommendations);
-            recommendationsDiv.append(div);
-            newInput.focus();
-            coun++;
-            $('[data-toggle="tooltip"]').tooltip();
-        }
+            const addInputRecommedation = function() {
 
-        recommendations.addEventListener('click', addInputRecommedation);
+                if(document.getElementById("newInputRecommendation" + (coun-1)) != null){
+                    if(document.getElementById("newInputRecommendation" + (coun-1)).value === "")
+                        return;
+                }
 
-        document.querySelectorAll('.deleteButton').forEach( button => {
-            button.addEventListener('click', removeInput);
-        });
+                const newInput = document.createElement('textarea');
+                const div = document.createElement('div');
+                const label = document.createElement('label');
+                const addNewRecommendations = document.createElement('button');
 
-        let modal =`
-            <div class="modal" id="kkm-1" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded" role="document">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header">
-                            <h5 class="modal-title font-weight-bold">{{ __('Karton Korektivne Mere') }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off" action="{{ route('corrective-measures.store-from-icr') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                                @csrf
-
-                                <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
-                                <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
-
-                                <input type="hidden" name="correctiveMeasureable_id" value="{{ $internalCheckReport->id }}">
-                                <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
-
-                                <div class="mb-4">
-                                    <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Izvor informacije o neusaglašenostima') }}:</label>
-                                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source"
-                                    required oninvalid="this.setCustomValidity('__("Izvor informacije o neusaglašenostima nije izabran")')"
-                                    oninput="this.setCustomValidity('')">
-                                        <option value="Interna provera" selected>{{ __('Interna provera') }}</option>
-                                    </select>
-                                    @error('noncompliance_source')
-                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis neusaglašenosti') }}:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('{{ __("Opis neusaglašenosti nije popunjen") }}')"
-                                    oninput="this.setCustomValidity('')">{{ old('noncompliance_description') }}</textarea>
-                                    @error('noncompliance_description')
-                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Uzrok neusaglašenosti') }}:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('{{ __("Uzrok neusaglašenosti nije popunjen") }}')"
-                                    oninput="this.setCustomValidity('')">{{ old('noncompliance_cause') }}</textarea>
-                                    @error('noncompliance_cause')
-                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera za otklanjanje neusaglašenosti') }}:</label>
-                                    <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('{{ __("Mera za otklanjanje neusaglašenosti nije popunjena") }}')"
-                                    oninput="this.setCustomValidity('')">{{ old('measure') }}</textarea>
-                                    @error('measure')
-                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje mere') }}:</label>
-                                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
-                                        <option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
-                                        <option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju korektivne mere') }}:</label>
-                                    <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
-                                    @error('deadline_date')
-                                        <span class="text-red-700 italic text-sm">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4" id="measure_reason_field" style="display: none">
-                                    <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2" >{{ __('Razlog neodobravanja mere') }}</label>
-                                    <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja mere')"
-                                    oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="measure_approval_reason" id="measure_approval_reason" >
-                                    @error('measure_approval_reason')
-                                        <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Status mere') }}:</label>
-                                    <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
-                                        <option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
-                                        <option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4" id="measure_effective_field" style="display: none">
-                                    <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera efektivna') }}:</label>
-                                    <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
-                                    oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
-                                        <option value="">{{ __('Izaberi') }}...</option>
-                                        <option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
-                                        <option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
-                                    </select>
-                                </div>
-
-                                <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
-                                <button type="button" class="w-1/4 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline rounded-0" data-dismiss="modal">{{ __('Odustani') }}</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        $('body').append(modal);
-
-        $('#addInc').click( () => {
-            $('#kkm-1').modal();
-            $('#noncompliance_description').focus();
-        });
-
-            var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
-        $.datetimepicker.setLocale(lang);
-
-        $('#deadline_date').datetimepicker({
-            timepicker: false,
-            format: 'd.m.Y',
-            minDate: 0,
-            dayOfWeekStart: 1,
-            scrollInput: false
-        });
-
-        $('#measure_approval').change( () => {
-            if($('#measure_approval').val() == 0){
-                $('#measure_reason_field').css('display', '');
-                $('#measure_approval_reason').attr('required', true);
+                addNewRecommendations.classList = "btn btn-danger mt-1 float-right";
+                addNewRecommendations.setAttribute("data-counter", "coun");
+                addNewRecommendations.id = "buttonRecommedations" + coun;
+                addNewRecommendations.setAttribute('data-toggle', 'tooltip');
+                addNewRecommendations.setAttribute('data-placement', 'top');
+                addNewRecommendations.title = "{{ __('Brisanje preporuke') }}";
+                addNewRecommendations.onclick = function(){$('body>.tooltip').remove();};
+                addNewRecommendations.innerHTML = '<i class="fas fa-trash"></i>';
+                label.for = "newInputRecommendation"+coun;
+                div.append(label);
+                label.textContent = "{{ __('Preporuka') }}";
+                label.classList = "mt-3 block text-gray-700 text-sm font-bold mb-2";
+                newInput.id = 'newInputRecommendation' + coun;
+                newInput.name = 'newInputRecommendation' + coun;
+                newInput.type = 'text';
+                newInput.style = "background:#dbffe5;"
+                newInput.required = true;
+                newInput.classList = "appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+                addNewRecommendations.addEventListener('click', removeInput);
+                div.append(newInput);
+                div.classList = "form-group col-6";
+                div.id = "newInputRecommendationDiv" + coun;
+                recommendations.after(div);
+                div.append(addNewRecommendations);
+                recommendationsDiv.append(div);
+                newInput.focus();
+                coun++;
+                $('[data-toggle="tooltip"]').tooltip();
             }
-            else{
-                $('#measure_reason_field').css('display', 'none');
-                $('#measure_reason').val('');
-                $('#measure_approval_reason').attr('required', false);
-            }
-        })
 
-        $('#measure_status').change( () => {
-            if($('#measure_status').val() == 1){
-                $('#measure_effective_field').css('display', '');
-                $('#measure_effective').attr('required', true);
-            }
-            else{
-                $('#measure_effective_field').css('display', 'none');
-                $('#measure_effective').attr('required', false);
-            }
-        })
+            recommendations.addEventListener('click', addInputRecommedation);
 
-        function showMeasure(id){
-            axios.get('/corrective-measures/'+id)
-            .then((response) => {
-                let modal = `
-                    <div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header text-center">
-                                    <h5 class="modal-title font-weight-bold">${ response.data.name }</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body text-sm">
-                                    <div class="row">
-                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Datum kreiranja') }}</p></div>
-                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Sistem menadžment') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.standard.name }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Izvor neusaglašenosti') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>{{ __('${ response.data.noncompliance_source }') }}</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Organizaciona celina') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.sector.name }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opis neusaglašenosti') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_description }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Uzrok neusaglašenosti') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_cause }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za otklanjanje neusaglašenosti') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju korektivne mere') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline_date != null ? new Date(response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera odobrena') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval == 1 ? "{{ __('Odobrena') }}" : "{{ __('Neodobrena') }}" }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Razlog neodobravanja mere') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_reason == null ? "/" : response.data.measure_approval_reason }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum odobravanja mere') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_date != null ? new Date(response.data.measure_approval_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera efektivna') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "{{ __('Efektivna') }}" : "{{ __('Neefektivna') }}" : "/" }</p></div>
+            document.querySelectorAll('.deleteButton').forEach( button => {
+                button.addEventListener('click', removeInput);
+            });
+
+            let modal =`
+                <div class="modal" id="kkm-1" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-lg mx-auto md:w-4/5 mt-1 md:p-10 sm:p-2 rounded" role="document">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-header">
+                                <h5 class="modal-title font-weight-bold">{{ __('Karton Korektivne Mere') }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off" action="{{ route('corrective-measures.store-from-icr') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                                    @csrf
+
+                                    <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
+                                    <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
+
+                                    <input type="hidden" name="correctiveMeasureable_id" value="{{ $internalCheckReport->id }}">
+                                    <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
+
+                                    <div class="mb-4">
+                                        <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Izvor informacije o neusaglašenostima') }}:</label>
+                                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="noncompliance_source" id="noncompliance_source"
+                                        required oninvalid="this.setCustomValidity('__("Izvor informacije o neusaglašenostima nije izabran")')"
+                                        oninput="this.setCustomValidity('')">
+                                            <option value="Interna provera" selected>{{ __('Interna provera') }}</option>
+                                        </select>
+                                        @error('noncompliance_source')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
                                     </div>
-                                </div>
-                                <div class="px-6 py-4 bg-gray-100 text-right">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
-                                </div>
+
+                                    <div class="mb-4">
+                                        <label for="noncompliance_description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis neusaglašenosti') }}:</label>
+                                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_description" name="noncompliance_description" required oninvalid="this.setCustomValidity('{{ __("Opis neusaglašenosti nije popunjen") }}')"
+                                        oninput="this.setCustomValidity('')">{{ old('noncompliance_description') }}</textarea>
+                                        @error('noncompliance_description')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="noncompliance_cause" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Uzrok neusaglašenosti') }}:</label>
+                                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="noncompliance_cause" name="noncompliance_cause" required oninvalid="this.setCustomValidity('{{ __("Uzrok neusaglašenosti nije popunjen") }}')"
+                                        oninput="this.setCustomValidity('')">{{ old('noncompliance_cause') }}</textarea>
+                                        @error('noncompliance_cause')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="measure" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera za otklanjanje neusaglašenosti') }}:</label>
+                                        <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="measure" name="measure" required oninvalid="this.setCustomValidity('{{ __("Mera za otklanjanje neusaglašenosti nije popunjena") }}')"
+                                        oninput="this.setCustomValidity('')">{{ old('measure') }}</textarea>
+                                        @error('measure')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="measure_approval" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odobravanje mere') }}:</label>
+                                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_approval" id="measure_approval">
+                                            <option value="1" {{ old('measure_approval') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
+                                            <option value="0" {{ old('measure_approval') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="deadline_date" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Rok za realizaciju korektivne mere') }}:</label>
+                                        <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="deadline_date" name="deadline_date" value="{{ old('deadline_date') }}" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
+                                        @error('deadline_date')
+                                            <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4" id="measure_reason_field" style="display: none">
+                                        <label for="measure_approval_reason" class="block text-gray-700 text-sm font-bold mb-2" >{{ __('Razlog neodobravanja mere') }}</label>
+                                        <input oninvalid="this.setCustomValidity('Popunite razlog neodobravanja mere')"
+                                        oninput="this.setCustomValidity('')" type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="measure_approval_reason" id="measure_approval_reason" >
+                                        @error('measure_approval_reason')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Status mere') }}:</label>
+                                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
+                                            <option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
+                                            <option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4" id="measure_effective_field" style="display: none">
+                                        <label for="measure_effective" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Mera efektivna') }}:</label>
+                                        <select oninvalid="this.setCustomValidity('Izaberite efektivnost mere')"
+                                        oninput="this.setCustomValidity('')" class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_effective" id="measure_effective" >
+                                            <option value="">{{ __('Izaberi') }}...</option>
+                                            <option value="1" {{ old('measure_effective') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
+                                            <option value="0" {{ old('measure_effective') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Kreiraj') }}</button>
+                                    <button type="button" class="w-1/4 float-right bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline rounded-0" data-dismiss="modal">{{ __('Odustani') }}</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                `;
-                $("body").append(modal);
-                $('#showData-'+id).modal();
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
+                </div>
+            `;
 
-        $('[data-toggle="tooltip"]').tooltip();
+            $('body').append(modal);
 
-    </script>
+            $('#addInc').click( () => {
+                $('#kkm-1').modal();
+                $('#noncompliance_description').focus();
+            });
+
+                var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+            $.datetimepicker.setLocale(lang);
+
+            $('#deadline_date').datetimepicker({
+                timepicker: false,
+                format: 'd.m.Y',
+                minDate: 0,
+                dayOfWeekStart: 1,
+                scrollInput: false
+            });
+
+            $('#measure_approval').change( () => {
+                if($('#measure_approval').val() == 0){
+                    $('#measure_reason_field').css('display', '');
+                    $('#measure_approval_reason').attr('required', true);
+                }
+                else{
+                    $('#measure_reason_field').css('display', 'none');
+                    $('#measure_reason').val('');
+                    $('#measure_approval_reason').attr('required', false);
+                }
+            })
+
+            $('#measure_status').change( () => {
+                if($('#measure_status').val() == 1){
+                    $('#measure_effective_field').css('display', '');
+                    $('#measure_effective').attr('required', true);
+                }
+                else{
+                    $('#measure_effective_field').css('display', 'none');
+                    $('#measure_effective').attr('required', false);
+                }
+            })
+
+            function showMeasure(id){
+                axios.get('/corrective-measures/'+id)
+                .then((response) => {
+                    let modal = `
+                        <div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center">
+                                        <h5 class="modal-title font-weight-bold">${ response.data.name }</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-sm">
+                                        <div class="row">
+                                            <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Datum kreiranja') }}</p></div>
+                                            <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Sistem menadžment') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.standard.name }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Izvor neusaglašenosti') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>{{ __('${ response.data.noncompliance_source }') }}</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Organizaciona celina') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.sector.name }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opis neusaglašenosti') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_description }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Uzrok neusaglašenosti') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.noncompliance_cause }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za otklanjanje neusaglašenosti') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju korektivne mere') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline_date != null ? new Date(response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera odobrena') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval == 1 ? "{{ __('Odobrena') }}" : "{{ __('Neodobrena') }}" }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Razlog neodobravanja mere') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_reason == null ? "/" : response.data.measure_approval_reason }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum odobravanja mere') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_date != null ? new Date(response.data.measure_approval_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera efektivna') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "{{ __('Efektivna') }}" : "{{ __('Neefektivna') }}" : "/" }</p></div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 py-4 bg-gray-100 text-right">
+                                        <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $("body").append(modal);
+                    $('#showData-'+id).modal();
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+            }
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+        </script>
+    @endpush
 
 </x-app-layout>

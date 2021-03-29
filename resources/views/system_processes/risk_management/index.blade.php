@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -37,7 +43,7 @@
                                     <th>{{ __('Prihvatljivo') }}</th>
                                     <th>{{ __('Mera') }}</th>
                                     <th>{{ __('Kreirao') }}</th>
-                                    <th class="no-sort">{{ __('Akcije') }}</th>
+                                    <th class="no-sort w-16">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,8 +63,8 @@
                                     </td>
                                     <td class="text-center">{{ $risk->user->name }}</td>
                                     <td class="text-center">
-                                    <a 
-                                        href="{{route('risk-management.print',$risk->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    <a
+                                        href="{{route('risk-management.print',$risk->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
                                         @canany(['update', 'delete'], $risk)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena rizika/prilike') }}" href="{{ route('risk-management.edit', $risk->id) }}"><i class="fas fa-edit"></i></a>
@@ -96,81 +102,83 @@
         </div>
     </div>
 
-</x-app-layout>
+    @push('page-scripts')
+        <script>
+            $('.yajra-datatable').DataTable({
+                "language": {
+                    "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
+                    "infoEmpty": "{{__('Nema podataka')}}",
+                    "zeroRecords": "{{__('Nema podataka')}}",
+                    "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
+                    "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
+                    "search": "{{__('Pretraga')}}",
+                    "paginate": {
+                        "next": "{{__('Sledeća')}}",
+                        "previous": "{{__('Prethodna')}}",
+                        "first": "{{__('Prva')}}",
+                        "last": "{{__('Poslednja')}}"
+                    }
+                },
+                "columnDefs": [{
+                "targets": 'no-sort',
+                "orderable": false,
+                }],
+            });
 
-<script>
-    $('.yajra-datatable').DataTable({
-        "language": {
-            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
-            "infoEmpty": "{{__('Nema podataka')}}",
-            "zeroRecords": "{{__('Nema podataka')}}",
-            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
-            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
-            "search": "{{__('Pretraga')}}",
-            "paginate": {
-                "next": "{{__('Sledeća')}}",
-                "previous": "{{__('Prethodna')}}",
-                "first": "{{__('Prva')}}",
-                "last": "{{__('Poslednja')}}"
-            }
-        },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
-    });
-
-    function showMeasure(id){
-        axios.get('/risk-management/'+id)
-            .then((response) => {
-                let modal = `<div class="modal fade" id="showMeasure-${ id }" tabindex="-1" role="dialog">
-                                <div class="modal-dialog" style="max-width: 600px !important;" role="document">
-                                    <div class="modal-content rounded-lg shadow-xl">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title font-weight-bold">${ response.data.measure }</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row text-sm">
-                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Opis rizika / prilike') }}</p></div>
-                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Uzrok') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause != null ? response.data.cause : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za smanjenje rizika/ korišćenje prilike') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility != null ? response.data.responsibility : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline != null ? new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 0 ? "{{ __('Zatvorena') }}" : "{{ __('Otvorena') }}" }</p></div>
+            function showMeasure(id){
+                axios.get('/risk-management/'+id)
+                    .then((response) => {
+                        let modal = `<div class="modal fade" id="showMeasure-${ id }" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" style="max-width: 600px !important;" role="document">
+                                            <div class="modal-content rounded-lg shadow-xl">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title font-weight-bold">${ response.data.measure }</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row text-sm">
+                                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Opis rizika / prilike') }}</p></div>
+                                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Uzrok') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.cause != null ? response.data.cause : "/" }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za smanjenje rizika/ korišćenje prilike') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility != null ? response.data.responsibility : "/" }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline != null ? new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.status == 0 ? "{{ __('Zatvorena') }}" : "{{ __('Otvorena') }}" }</p></div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="px-6 py-4 bg-gray-100 text-right">
-                                            <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-                $("body").append(modal);
-                $('#showMeasure-'+id).modal();
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
+                                    </div>`;
+                        $("body").append(modal);
+                        $('#showMeasure-'+id).modal();
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
 
-    function confirmDeleteModal($id){
-        let id = $id;
-        $('#confirm-delete-modal').modal();
-        $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
-            let form = $('#delete-form-'+id);
-            form.submit();
-        });
-    }
+            function confirmDeleteModal($id){
+                let id = $id;
+                $('#confirm-delete-modal').modal();
+                $('#confirm-delete-modal').on('click', '.btn-ok', function(e) {
+                    let form = $('#delete-form-'+id);
+                    form.submit();
+                });
+            }
 
-    $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
 
-</script>
+        </script>
+    @endpush
+
+</x-app-layout>

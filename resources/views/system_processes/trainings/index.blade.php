@@ -1,4 +1,10 @@
 <x-app-layout>
+    @push('scripts')
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    @endpush
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
@@ -56,7 +62,7 @@
                                     <th>{{ __('Resursi') }}</th>
                                     <th>{{ __('Br. zaposlenih - realizovano') }}</th>
                                     <th>{{ __('Ocena efekata obuke') }}</th>
-                                    <th class="no-sort">{{ __('Akcije') }}</th>
+                                    <th class="no-sort w-20">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -72,9 +78,9 @@
                                     <td class="text-center">{{ $tp->final_num_of_employees? : '/' }}</td>
                                     <td class="text-center">{{ $tp->rating? : '/' }}</td>
                                     <td class="text-center">
-                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-primary" onclick="showTraining({{ $tp->id }})"><i class="fas fa-eye"></i></button>
-                                        <a 
-                                            href="{{route('trainings.print',$tp->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-blue-700 hover:text-blue-900" onclick="showTraining({{ $tp->id }})"><i class="fas fa-eye"></i></button>
+                                        <a
+                                            href="{{route('trainings.print',$tp->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $tp)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena obuke') }}" href="{{ route('trainings.edit', $tp->id) }}"><i class="fas fa-edit"></i></a>
@@ -189,7 +195,8 @@
                             <td class="text-center">${ item.final_num_of_employees != null ? item.final_num_of_employees : "/" }</td>
                             <td class="text-center">${ item.rating != null ? item.rating : "/" }</td>
                             <td class="text-center">
-                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-primary" onclick="showTraining(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz obuke') }}" class="text-blue-700 hover:text-blue-900" onclick="showTraining(${ item.id })"><i class="fas fa-eye"></i></button>
+                                <a href="/trainings/print/${ item.id }" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}"><i class="fas fa-print"></i></a>
                                 <span class="${ item.isAdmin === false ? 'd-none' : '' }">
                                     <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena obuke') }}" href="/trainings/${ item.id }/edit"><i class="fas fa-edit"></i></a>
                                     <a class="text-red-600 cursor-pointer hover:text-red-700" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje obuke') }}" id="delete-training" onclick="deleteTraining(${ item.id })" data-id="${ item.id }"><i class="fas fa-trash"></i></a>

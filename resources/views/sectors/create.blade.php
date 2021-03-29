@@ -1,4 +1,8 @@
 <x-app-layout>
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ __('Sektori') }} - {{ __('Kreiranje') }}
@@ -11,13 +15,12 @@
      	</div>
     </div>
 
-    <form action="{{ route('sectors.store') }}" method="POST" class="bg-white mx-auto md:w-3/5 mt-2 md:mt-1 shadow-md rounded px-8 pt-6 pb-4 mb-4">
+    <form id="sector-create" action="{{ route('sectors.store') }}" method="POST" class="bg-white mx-auto md:w-3/5 mt-2 md:mt-1 shadow-md rounded px-8 pt-6 pb-4 mb-4">
         @csrf
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Naziv sektora') }}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus required oninvalid="this.setCustomValidity('{{ __('Naziv nije popunjen') }}')"
-            oninput="this.setCustomValidity('')">
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus>
             @error('name')
                 <span class="text-red-700 italic text-sm mt-1">{{ __($message) }}</span>
             @enderror
@@ -27,5 +30,26 @@
             <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">{{ __('Kreiraj') }}</button>
         </div>
     </form>
+
+    <style>
+        label.error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+
+    @push('page-scripts')
+        <script>
+            $("#sector-create").validate({
+                rules: {
+                    name: "required",
+                },
+                messages: {
+                    name: "{{ __('Popunite polje') }}",
+                }
+            });
+        </script>
+    @endpush
 
 </x-app-layout>

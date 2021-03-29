@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\User;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
 use App\Facades\CustomLog;
@@ -10,7 +12,6 @@ use App\Http\Requests\UpdateRiskManagementPlanRequest;
 use App\Http\Requests\RiskManagementRequest;
 use App\Exports\RiskManagementExport;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 
 class RiskManagementController extends Controller
 {
@@ -100,7 +101,9 @@ class RiskManagementController extends Controller
     public function editPlan($id)
     {
         $risk = RiskManagement::findOrFail($id);
-        return view('system_processes.risk_management.edit-plan', compact('risk'));
+        $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
+        $selectedUsers = explode(', ', $risk->responsibility);
+        return view('system_processes.risk_management.edit-plan', compact('risk', 'users', 'selectedUsers'));
     }
 
     public function updatePlan(UpdateRiskManagementPlanRequest $request, $id)
