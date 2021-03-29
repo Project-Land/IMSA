@@ -55,6 +55,9 @@
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
                                     <td class="text-center">{{ $requirement->user->name }}</td>
                                     <td class="text-center">
+                                    <a 
+                                        href="{{route('evaluation-of-requirements.print',$requirement->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $requirement)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zakona/zahteva')}}" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
                                         <form class="inline" id="delete-form-{{ $requirement->id }}" action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}" method="POST">

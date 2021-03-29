@@ -146,6 +146,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('measuring-equipment-export', [MeasuringEquipmentsController::class, 'export'])->name('measuring-equipment.export');
     Route::resource('measuring-equipment', MeasuringEquipmentsController::class);
 
+    Route::get('environmental-aspects/print/{id}', [ EnvironmentalAspectsController::class,'print'])->name('environmental-aspects.print');
     Route::get('environmental-aspects-export', [EnvironmentalAspectsController::class, 'export'])->name('environmental-aspects.export');
     Route::resource('environmental-aspects', EnvironmentalAspectsController::class);
 
@@ -169,12 +170,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('files', [HomeController::class, 'document_download'])->name('document.download');
     Route::post('file-preview', [HomeController::class, 'document_preview'])->name('document.preview');
 
+    Route::get('evaluation-of-requirements/print/{id}', [ EvaluationOfLegalAndOtherRequirementController::class,'print'])->name('evaluation-of-requirements.print');
     Route::get('evaluation-of-requirements-export', [EvaluationOfLegalAndOtherRequirementController::class, 'export'])->name('evaluation-of-requirements.export');
     Route::resource('evaluation-of-requirements', EvaluationOfLegalAndOtherRequirementController::class);
 
+    Route::get('accidents/print/{id}', [ AccidentController::class,'print'])->name('accidents.print');
     Route::resource('accidents', AccidentController::class);
     Route::get('accidents-export', [AccidentController::class, 'export'])->name('accidents.export');
 
+    Route::get('statement-of-applicability/print', [ SoaController::class,'print'])->name('statement-of-applicability.print');
     Route::get('statement-of-applicability-export', [SoaController::class, 'export'])->name('statement-of-applicability.export');
     Route::resource('statement-of-applicability', SoaController::class);
 

@@ -150,5 +150,16 @@ class SoaController extends Controller
         }
         return Excel::download(new SoasExport, Str::snake(__('Izjava o primenjivosti')).'_'.session('standard_name').'.xlsx');
     }
+    public function print()
+    {
+        $soas = Soa::where([
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->with('soaField', 'documents', 'user','standard')->get();
+        $groups = SoaFieldGroup::all();
+        $this->authorize('view', $soas[0]);
+        return view('system_processes.statement_of_applicability.print', compact('soas','groups'));
+
+    }
 
 }
