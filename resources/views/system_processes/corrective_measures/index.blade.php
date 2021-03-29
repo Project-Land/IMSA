@@ -151,7 +151,7 @@ if(id){
                                         <div class="modal-body">
                                             <div class="row text-sm">
                                                 <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Datum kreiranja') }}</p></div>
-                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Sistem menadžment') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.standard.name }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Izvor neusaglašenosti') }}</p></div>

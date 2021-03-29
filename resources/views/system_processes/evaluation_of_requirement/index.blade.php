@@ -48,7 +48,7 @@
                                     <th>{{ __('Datum poslednjeg ažuriranja')}}</th>
                                     <th>{{ __('Napomena')}}</th>
                                     <th>{{ __('Kreirao')}}</th>
-                                    <th class="no-sort">{{ __('Akcije')}}</th>
+                                    <th class="no-sort w-16">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody id="table-body">
@@ -61,8 +61,8 @@
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
                                     <td class="text-center">{{ $requirement->user->name }}</td>
                                     <td class="text-center">
-                                    <a 
-                                        href="{{route('evaluation-of-requirements.print',$requirement->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                    <a
+                                        href="{{route('evaluation-of-requirements.print',$requirement->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $requirement)
                                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zakona/zahteva')}}" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>

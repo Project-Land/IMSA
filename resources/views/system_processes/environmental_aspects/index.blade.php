@@ -48,7 +48,7 @@
                                     <th>{{ __('Verovatnoća otkrivanja')}}</th>
                                     <th>{{ __('Ozbiljnost posledica')}}</th>
                                     <th>{{ __('Procenjeni uticaj')}}</th>
-                                    <th class="no-sort w-16">{{__('Akcije')}}</th>
+                                    <th class="no-sort w-20">{{__('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>

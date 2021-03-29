@@ -57,7 +57,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="text-blue-700 hover:text-blue-900" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="{{__('Pregled izveštaja')}}" class="text-blue-700 hover:text-blue-900 cursor-pointer" onclick="showAccident({{ $accident->id }})"><i class="fas fa-eye"></i></a>
                                     <a
                                         href="{{route('accidents.print',$accident->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                         </a>
@@ -152,7 +152,7 @@
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Poslovi i zadaci koje obavlјa') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.jobs_and_tasks_he_performs }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum i vreme povrede') }}/{{ __('incidenta') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.injury_datetime != null ? new Date(response.data.injury_datetime).toLocaleString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.injury_datetime).toLocaleDateString('sr-SR', { timeZone: 'CET' })+' {{ __("u") }} ' + new Date(response.data.injury_datetime).toLocaleString('sr-SR', { timeZone: 'CET', timeStyle: 'short' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Uzrok povrede') }}/{{ __('incidenta') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.injury_cause }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{!! __('KRATAK OPIS POVREDE/INCIDENTA <br>(kako je došlo do povrede/incidenta - u fazama)') !!}</p></div>
@@ -174,7 +174,7 @@
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{!! __('Podaci o neposrednom rukovodiocu povređenog/aktera incidenta<br>- Ime, prezime i radno mesto') !!}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.supervisor }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum i vreme prijave povrede/incidenta') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.injury_report_datetime).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.injury_report_datetime).toLocaleDateString('sr-SR', { timeZone: 'CET' })+' {{ __("u") }} ' + new Date(response.data.injury_report_datetime).toLocaleString('sr-SR', { timeZone: 'CET', timeStyle: 'short' }) }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Zapažanje/komentar') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment ?? '/' }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>

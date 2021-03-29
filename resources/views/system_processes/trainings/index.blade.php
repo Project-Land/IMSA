@@ -255,8 +255,8 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="row text-sm">
-                                                <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Naziv') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.name }</p></div>
+                                                <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Naziv') }}</p></div>
+                                                <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.name }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Vrsta') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>{{ __('${ response.data.type }') }}</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Opis') }}</p></div>
@@ -264,7 +264,7 @@
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih - planirano') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.num_of_employees }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Termin') }} / {{ __('Mesto') }}</p></div>
-                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.training_date).toLocaleString('sr-SR', { timeZone: 'CET' }) }, ${ response.data.place }</p></div>
+                                                <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.training_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } {{ __('u') }} ${ new Date(response.data.training_date).toLocaleTimeString('sr-SR', { timeZone: 'CET', timeStyle: 'short' }) }, ${ response.data.place }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Resursi') }}</p></div>
                                                 <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
                                                 <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Broj zaposlenih - realizovano') }}</p></div>
