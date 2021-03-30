@@ -154,6 +154,16 @@ class CustomerSatisfactionController extends Controller
         $cs->columns = $poll;
         $cs->average = round($cs->average(), 1);
         return view('system_processes.customer_satisfaction.print', compact('cs'));
+    }
 
+    public function printAll()
+    {
+        $cs = CustomerSatisfaction::where([
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->get();
+        $poll = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
+        $this->authorize('view', $cs[0]);
+        return view('system_processes.customer_satisfaction.print-all', compact('cs', 'poll'));
     }
 }

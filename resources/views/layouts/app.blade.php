@@ -50,6 +50,7 @@
             }
             .pagination {
                 font-size: 14px;
+                padding-top: 0.5rem;
             }
 
             @media (max-width: 640px) {

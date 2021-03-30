@@ -22,12 +22,12 @@
                     <label for="requirement_level" class="block text-gray-700 text-sm font-bold mb-2">{{__('Nivo sa kojeg zahtev potiče')}}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="requirement_level" name="requirement_level" required oninvalid="this.setCustomValidity('{{__("Izaberite nivo")}}')" oninput="this.setCustomValidity('')">
                         <option value="">{{ __('Izaberite')}}...</option>
-                        <option value="{{ __('Evropska Unija')}}" @if($requirement->requirement_level ==  __('Evropska Unija')){{ "selected" }}@endif>{{ __('Evropska Unija')}}</option>
-                        <option value="{{ __('Država')}}" @if($requirement->requirement_level ==  __('Država')){{ "selected" }}@endif>{{ __('Država')}}</option>
-                        <option value="{{ __('Grad')}}" @if($requirement->requirement_level ==  __('Grad')){{ "selected" }}@endif>{{ __('Grad')}}</option>
-                        <option value="{{ __('Lokalna samouprava')}}" @if($requirement->requirement_level ==  __('Lokalna samouprava')){{ "selected" }}@endif>{{ __('Lokalna samouprava')}}</option>
-                        <option value="{{ __('Partner')}}" @if($requirement->requirement_level ==  __('Partner')){{ "selected" }}@endif>{{ __('Partner (kupac, dobavljač...)')}}</option>
-                        <option value="{{ __('Ostalo')}}" @if($requirement->requirement_level == __('Ostalo')){{ "selected" }}@endif>{{ __('Ostalo')}}</option>
+                        <option value="Evropska Unija" @if($requirement->requirement_level == 'Evropska Unija'){{ "selected" }}@endif>{{ __('Evropska Unija')}}</option>
+                        <option value="Država" @if($requirement->requirement_level == 'Država'){{ "selected" }}@endif>{{ __('Država')}}</option>
+                        <option value="Grad" @if($requirement->requirement_level == 'Grad'){{ "selected" }}@endif>{{ __('Grad')}}</option>
+                        <option value="Lokalna samouprava" @if($requirement->requirement_level == 'Lokalna samouprava'){{ "selected" }}@endif>{{ __('Lokalna samouprava')}}</option>
+                        <option value="Partner" @if($requirement->requirement_level == 'Partner'){{ "selected" }}@endif>{{ __('Partner (kupac, dobavljač...)')}}</option>
+                        <option value="Ostalo" @if($requirement->requirement_level == 'Ostalo'){{ "selected" }}@endif>{{ __('Ostalo')}}</option>
                     </select>
                 </div>
 

@@ -70,34 +70,15 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
             'team_id' => $request->team_id]);
 
             if( isset($correctiveMeasureData['noncompliance_description'])){
-            foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
-                $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
-                ->where([
-                    ['standard_id', session('standard')],
-                    ['team_id', Auth::user()->current_team_id]
-                ])
-                ->count() + 1;
+                foreach( $correctiveMeasureData['noncompliance_description'] as $inc => $v){
+                    $counter = CorrectiveMeasure::whereYear('created_at', '=', Carbon::now()->year)
+                    ->where([
+                        ['standard_id', session('standard')],
+                        ['team_id', Auth::user()->current_team_id]
+                    ])
+                    ->count() + 1;
 
-                $correctiveMeasure=CorrectiveMeasure::create([
-                    'noncompliance_source' => $correctiveMeasureData['noncompliance_source'][$inc],
-                    'noncompliance_description' => $correctiveMeasureData['noncompliance_description'][$inc],
-                    'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'][$inc],
-                    'measure' => $correctiveMeasureData['measure'][$inc],
-                    'measure_approval_reason' => $correctiveMeasureData['measure_approval_reason'][$inc],
-                    'measure_approval' => $correctiveMeasureData['measure_approval'][$inc],
-                    'measure_status' => $correctiveMeasureData['measure_status'][$inc],
-                    'measure_effective' => $correctiveMeasureData['measure_effective'][$inc],
-                    'team_id' => Auth::user()->current_team_id,
-                    'user_id' => Auth::user()->id,
-                    'standard_id' => session('standard'),
-                    'sector_id' => 1,
-                    'name' => "EMS KKM ".Carbon::now()->year." / ".$counter,
-                    'noncompliance_cause_date' => Carbon::now(),
-                    'measure_date' => Carbon::now(),
-                    'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
-                ]);
-
-                    /*$correctiveMeasure=CorrectiveMeasure::create([
+                    $correctiveMeasure=CorrectiveMeasure::create([
                         'noncompliance_source' => $correctiveMeasureData['noncompliance_source'][$inc],
                         'noncompliance_description' => $correctiveMeasureData['noncompliance_description'][$inc],
                         'noncompliance_cause' => $correctiveMeasureData['noncompliance_cause'][$inc],
@@ -110,13 +91,13 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                         'user_id' => Auth::user()->id,
                         'standard_id' => session('standard'),
                         'sector_id' => 1,
-                        'name' => "KKM ".Carbon::now()->year." / ".$counter,
+                        'name' => "EMS KKM ".Carbon::now()->year." / ".$counter,
                         'noncompliance_cause_date' => Carbon::now(),
                         'measure_date' => Carbon::now(),
                         'measure_approval_date' => $correctiveMeasureData['measure_approval'][$inc] == '1' ? Carbon::now() : null
-                    ]);*/
+                    ]);
 
-                    $requirement->correctiveMeasures()->save($correctiveMeasure);
+                $requirement->correctiveMeasures()->save($correctiveMeasure);
                 }
             }
 
@@ -166,7 +147,8 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                 'requirement_level' => $request->requirement_level,
                 'document_name' => $request->document_name,
                 'compliance' => $request->compliance,
-                'note' => $request->note
+                'note' => $request->note,
+                'updated_at' => Carbon::now()
             ]);
 
             if( isset($correctiveMeasureData['noncompliance_description'])){
@@ -189,9 +171,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                             'measure_approval' => $correctiveMeasureData['measure_approval'],
                             'measure_status' => $correctiveMeasureData['measure_status'],
                             'measure_effective' => $correctiveMeasureData['measure_effective'],
-                           // 'noncompliance_cause_date' => Carbon::now(),
-                           // 'measure_date' => Carbon::now(),
-                           // 'measure_approval_date' => $correctiveMeasureData['measure_approval'] == '1' ? Carbon::now() : null
                         ]);
                         if( !$correctiveMeasure->measure_status)$correctiveMeasure->measure_effective=null;
                     }else{
@@ -233,7 +212,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
     {
         $requirement = EvaluationOfLegalAndOtherRequirement::findOrFail($id);
         $this->authorize('delete', $requirement);
-
         try{
             $requirement->correctiveMeasures()->delete();
             EvaluationOfLegalAndOtherRequirement::destroy($id);
@@ -257,7 +235,6 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
         $requirement = EvaluationOfLegalAndOtherRequirement::with('user','standard','correctiveMeasures')->findOrFail($id);
         $this->authorize('view', $requirement);
         return view('system_processes.evaluation_of_requirement.print', compact('requirement'));
-
     }
 
 }

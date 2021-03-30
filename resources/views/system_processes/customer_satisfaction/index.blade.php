@@ -34,7 +34,8 @@
                             <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction-poll.edit', \Auth::user()->currentTeam->id) }}"><i class="fas fa-edit"></i> {{ __('Izmeni anketu')}}</a>
                         @endempty
                     @endcan
-                    <a class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                    <a href="{{ route('customer-satisfaction.print-all') }}" target="_blank" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3"><i class="fas fa-print"></i> {{ __('Odštampaj') }}</a>
+                    <a class="inline-block float-right text-xs mx-2 md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('customer-satisfaction.export') }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
                 </div>
                 <div class="card-body bg-white mt-3">
                     <div class="table-responsive-sm">
@@ -50,7 +51,7 @@
                                         <th>{{ __('Datum') }}</th>
                                     @endif
                                     <th>{{ __('Prosek') }}</th>
-                                    <th class="no-sort">{{ __('Akcije')}}</th>
+                                    <th class="no-sort w-20">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +64,7 @@
 
                                     @if($poll->count() <= 4)
                                         <td>{{ $row->comment ?? "/" }}</td>
-                                        <td>{{ date('d.m.Y', strtotime($row->created_at)) }}</td>
+                                        <td>{{ $row->created_at->format('d.m.Y') }}</td>
                                     @endif
                                     <td class="font-bold">{{ $row->average() }}</td>
                                     <td>
@@ -187,7 +188,7 @@
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Napomena') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment ?? "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.created_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>

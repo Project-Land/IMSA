@@ -57,7 +57,7 @@
                                     <td class="text-center">{{ __($requirement->requirement_level) }}</td>
                                     <td class="text-center">{{ $requirement->document_name }}</td>
                                     <td class="text-center">{{ $requirement->compliance ? __('Usaglašen') : __('Neusaglašen') }}</td>
-                                    <td class="text-center">{{ date('d.m.Y H:i', strtotime($requirement->updated_at)) }}</td>
+                                    <td class="text-center">{{ $requirement->updated_at->format('d.m.Y') }} {{ __('u') }} {{ $requirement->updated_at->format('H:i') }}</td>
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
                                     <td class="text-center">{{ $requirement->user->name }}</td>
                                     <td class="text-center">

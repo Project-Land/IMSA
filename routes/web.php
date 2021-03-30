@@ -188,6 +188,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
     Route::get('customer-satisfaction/print/{id}', [CustomerSatisfactionController::class,'print'])->name('customer-satisfaction.print');
+    Route::get('customer-satisfaction/print-all', [CustomerSatisfactionController::class,'printAll'])->name('customer-satisfaction.print-all');
     Route::post('customer-satisfaction/delete-col/{id}', [CustomerSatisfactionController::class,'deleteColumn'])->name('deleteColumn');
     Route::resource('customer-satisfaction', CustomerSatisfactionController::class);
     Route::get('customer-satisfaction-export', [CustomerSatisfactionController::class, 'export'])->name('customer-satisfaction.export');

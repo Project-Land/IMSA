@@ -21,12 +21,12 @@
                     <label for="year" class="block text-gray-700 text-sm font-bold mb-2">{{__('Nivo sa kojeg zahtev potiče')}}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="requirement_level" name="requirement_level" required oninvalid="this.setCustomValidity('{{__("Izaberite nivo") }}')" oninput="this.setCustomValidity('')">
                         <option value="">{{__('Izaberite')}}...</option>
-                        <option value="{{__('Evropska Unija')}}">{{__('Evropska Unija')}}</option>
-                        <option value="{{__('Država')}}">{{__('Država')}}</option>
-                        <option value="{{__('Grad')}}">{{__('Grad')}}</option>
-                        <option value="{{__('Lokalna samouprava')}}">{{__('Lokalna samouprava')}}</option>
-                        <option value="{{__('Partner')}}">{{__('Partner (kupac, dobavljač...)')}}</option>
-                        <option value="{{__('Ostalo')}}">{{__('Ostalo')}}</option>
+                        <option value="Evropska Unija">{{__('Evropska Unija')}}</option>
+                        <option value="Država">{{__('Država')}}</option>
+                        <option value="Grad">{{__('Grad')}}</option>
+                        <option value="Lokalna samouprava">{{__('Lokalna samouprava')}}</option>
+                        <option value="Partner">{{__('Partner (kupac, dobavljač...)')}}</option>
+                        <option value="Ostalo">{{__('Ostalo')}}</option>
                     </select>
                 </div>
 
