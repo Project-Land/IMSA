@@ -2,6 +2,7 @@
     @push('scripts')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
     @endpush
 
     <x-slot name="header">
@@ -24,13 +25,13 @@
             </div>
         </div>
 
-		<form action="{{ route('risk-management.update-plan', $risk->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form id="edit-plan" action="{{ route('risk-management.update-plan', $risk->id) }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
 			@method('PUT')
 
 			<div class="mb-4">
 				<label for="cause">{{ __('Uzrok') }}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cause" name="cause" value="{{ $risk->cause }}" autofocus required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cause" name="cause" value="{{ $risk->cause }}" autofocus required>
 				@error('cause')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
@@ -38,7 +39,7 @@
 
             <div class="mb-4">
 				<label for="risk_lowering_measure">{{ __('Mera za smanjenje rizika/ korišćenje prilike') }}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="risk_lowering_measure" name="risk_lowering_measure" value="{{ $risk->risk_lowering_measure }}" required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="risk_lowering_measure" name="risk_lowering_measure" value="{{ $risk->risk_lowering_measure }}" required>
 				@error('risk_lowering_measure')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
@@ -46,7 +47,7 @@
 
             <div class="mb-4">
                 <label for="responsibility" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Odgovornost') }}</label>
-                <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="responsibility" name="responsibility[]" multiple required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+                <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="responsibility" name="responsibility[]" multiple required>
                     @foreach($users as $user)
                         @if($user->teams[0]->membership->role != 'super-admin')
                             <option value="{{ $user->name }}" {{ in_array($user->name, $selectedUsers)? "selected":"" }}>{{ $user->name }}</option>
@@ -101,6 +102,14 @@
 
     @push('page-scripts')
         <script>
+            $("#edit-plan").validate({
+                messages: {
+                    cause: "{{ __('Popunite polje') }}",
+                    risk_lowering_measure: "{{ __('Popunite polje') }}",
+                    responsibility: "{{ __('Popunite polje') }}",
+                }
+            });
+
             var lang = document.getElementsByTagName('html')[0].getAttribute('lang');
             $.datetimepicker.setLocale(lang);
 

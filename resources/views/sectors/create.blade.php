@@ -20,7 +20,7 @@
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Naziv sektora') }}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus>
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" value="{{ old('name') }}" autofocus required>
             @error('name')
                 <span class="text-red-700 italic text-sm mt-1">{{ __($message) }}</span>
             @enderror
@@ -31,20 +31,9 @@
         </div>
     </form>
 
-    <style>
-        label.error {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
-
     @push('page-scripts')
         <script>
             $("#sector-create").validate({
-                rules: {
-                    name: "required",
-                },
                 messages: {
                     name: "{{ __('Popunite polje') }}",
                 }

@@ -232,10 +232,10 @@
                                     <p>${ new Date(data.checked_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
                                     <p>${ data.checked_sector}</p>
                                     <p>${ data.team_for_internal_check}</p>
-                                    <p>${ new Date(data.check_start).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
-                                    <p>${ new Date(data.check_end).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p>${ new Date(data.check_start).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } {{ __('u') }} ${ new Date(data.check_start).toLocaleTimeString('sr-SR', { timeZone: 'CET' , timeStyle: 'short'}) }</p>
+                                    <p>${ new Date(data.check_end).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } {{ __('u') }} ${ new Date(data.check_end).toLocaleTimeString('sr-SR', { timeZone: 'CET', timeStyle: 'short' }) }</p>
                                     <p>${new Date(data.report_deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p>
-                                    <p class="font-italic text-xs">${ new Date(data.updated_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p>
+                                    <p class="font-italic text-xs">${ new Date(data.updated_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) } {{ __('u') }} ${ new Date(data.updated_at).toLocaleTimeString('sr-SR', { timeZone: 'CET' }) }</p>
                                 </div>
                             </div>
 						</div>
@@ -270,27 +270,25 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title">{{ __('Izveštaj sa interne provere') }}</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori">
-							<span aria-hidden="true">&times;</span>
-							</button>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Zatvori"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body">
-							<p><h5 class="text-lg">{{ __('Specifikacija') }} </h5>${ data.specification }</p>`;
+							<p><h5 class="text-base">{{ __('Specifikacija') }} </h5><span class="text-sm">${ data.specification }</span></p>`;
 							let num=1;
 							for( let inc of data.corrective_measures){
-								modal += `<p class="border-top"><h5 class="text-lg">{{ __('Neusaglašenost') }} ${ num } </h5>${ inc.noncompliance_description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-base">{{ __('Neusaglašenost') }} ${ num } </h5><span class="text-sm">${ inc.noncompliance_description }</span></p>`;
 								num++;
 							}
-
 								num=1;
 							for( let rec of data.recommendations){
-								modal += `<p class="border-top"><h5 class="text-lg">{{ __('Preporuka') }} ${ num } </h5>${ rec.description }</p>`;
+								modal += `<p class="border-top"><h5 class="text-base">{{ __('Preporuka') }} ${ num } </h5><span class="text-sm">${ rec.description }</span></p>`;
 								num++;
 							}
 							modal+=`
-							<small> <b>{{ __('Kreirano') }}:</b> <i>${ new Date(data.created_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small><br>
-                            <small> <b>{{ __('Poslednja izmena') }}:</b> <i>${ new Date(data.updated_at).toLocaleString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
-						</div>
+                            <hr>
+							<small> <b>{{ __('Kreirano') }}:</b> <i>${ new Date(data.created_at).toLocaleDateString('sr-SR',{ timeZone: 'CET' }) } {{ __('u') }} ${ new Date(data.created_at).toLocaleTimeString('sr-SR',{ timeZone: 'CET' }) }</i></small><br>
+                            <small> <b>{{ __('Poslednja izmena') }}:</b> <i>${ new Date(data.updated_at).toLocaleDateString('sr-SR',{ timeZone: 'CET' }) } {{ __('u') }} ${ new Date(data.updated_at).toLocaleTimeString('sr-SR',{ timeZone: 'CET' }) }</i> </small>
+                        </div>
 						<div class="px-6 py-4 bg-gray-100 text-right">
 							<button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
 						</div>

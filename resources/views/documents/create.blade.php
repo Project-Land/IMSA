@@ -20,7 +20,7 @@
 
         <div class="mb-4">
             <label for="document_name" class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv dokumenta')}}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="document_name" name="document_name" value="{{ old('document_name') }}" autofocus>
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="document_name" name="document_name" value="{{ old('document_name') }}" autofocus required>
             @error('document_name')
                 <span class="text-red-700 italic text-sm">{{ $message }}</span>
             @enderror
@@ -29,7 +29,7 @@
         @unless($doc_type == "Eksterna dokumenta" || $doc_type == "Ostala interna dokumenta")
         <div class="mb-4">
             <label for="version" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verzija')}}:</label>
-            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ old('version') }}">
+            <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="version" name="version" value="{{ old('version') }}" required>
             @error('version')
                 <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
             @enderror
@@ -39,7 +39,7 @@
         @if(isset($category) && ($category == 'procedures' || $category == 'forms' || $category == 'manuals'))
             <div class="mb-4">
                 <label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">{{__('Izaberi sektor')}}</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id" required>
                     <option value="">{{ __('Izaberi') }}...</option>
                     @foreach($sectors as $sector)
                         <option value="{{ $sector->id }}" {{ old('sector_id') == $sector->id ? "selected" : "" }} >{{ $sector->name }}</option>
@@ -58,7 +58,7 @@
                 </svg>
                 <small>{{__('Izaberi fajl')}}</small>
             </label>
-            <input type="file" class="form-control-file d-none" id="file" name="file">
+            <input type="file" class="form-control-file d-none" id="file" name="file" required>
             <span class="font-italic text-s ml-2" id="old_document">{{__('Fajl nije izabran')}}</span>
             @error('file')
                 <br><span class="text-red-700 italic text-sm">{{ __($message) }}</span>
@@ -70,14 +70,6 @@
         </div>
     </form>
 
-    <style>
-        label.error {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
-
     @push('page-scripts')
         <script>
             document.getElementById("file").addEventListener("change", function(e){
@@ -87,12 +79,6 @@
             });
 
             $("#document-create").validate({
-                rules: {
-                    document_name: "required",
-                    version: "required",
-                    file: "required",
-                    sector_id: "required"
-                },
                 messages: {
                     document_name: "{{ __('Popunite polje') }}",
                     version: "{{ __('Popunite polje') }}",

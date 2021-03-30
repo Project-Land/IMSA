@@ -22,7 +22,7 @@
 
 			<div class="mb-4">
 				<label for="name" class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv / Ime')}}:</label>
-				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" autofocus value="{{ $stakeholder->name }}">
+				<input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" autofocus required value="{{ $stakeholder->name }}">
 				@error('name')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -30,7 +30,7 @@
 
 			<div class="mb-4">
 				<label for="expectation" class="block text-gray-700 text-sm font-bold mb-2">{{__('Potrebe i očekivanja zainteresovane strane')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="expectation" name="expectation">{{ $stakeholder->expectation }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="expectation" name="expectation" required>{{ $stakeholder->expectation }}</textarea>
 				@error('expectation')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -38,7 +38,7 @@
 
 			<div class="mb-4">
 				<label for="response" class="block text-gray-700 text-sm font-bold mb-2">{{__('Odgovor preduzeća na potrebe i očekivanja')}}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="response" name="response">{{ $stakeholder->response }}</textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="response" name="response" required>{{ $stakeholder->response }}</textarea>
 				@error('response')
 					<span class="text-red-700 italic text-sm">{{ $message }}</span>
 				@enderror
@@ -48,22 +48,9 @@
 		</form>
 	</div>
 
-    <style>
-        label.error {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
-
     @push('page-scripts')
         <script>
             $("#stakeholders-edit").validate({
-                rules: {
-                    name: "required",
-                    expectation: "required",
-                    response: "required",
-                },
                 messages: {
                     name: "{{ __('Popunite polje') }}",
                     expectation: "{{ __('Popunite polje') }}",

@@ -161,7 +161,7 @@ class InternalCheckReportController extends Controller
         $recommendationsData = $request->validate([
             'recommendations.*' => 'string',
         ], ['recommendations.*.required' => 'Preporuka nije popunjena (popunite ili obrišite polje)']);if(!$recommendationsData) $recommendationsData['recommendations']=[];
-        
+
 
         $recInputs=[]; $recMsg=[];
         for($i = 1; $i <= 10; $i++){

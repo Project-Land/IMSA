@@ -70,12 +70,12 @@
                 </div>
             </div>
 
-            <div class="form-group mt-2" style="border-bottom:solid 2px gray;">
+            <div class="form-group mt-2">
                 <span class="btn btn-primary mb-2" id="addInc"><i class="fas fa-plus"></i> {{ __('Dodaj neusaglašenost') }}</span>
-                <span id="addRecommendations" class="btn btn-primary mb-2"><i class="fas fa-plus"></i> {{ __('Dodaj preporuku') }}</span>
+                <span id="addRecommendations" class="btn btn-primary mb-2 mx-2"><i class="fas fa-plus"></i> {{ __('Dodaj preporuku') }}</span>
             </div>
 
-            <div id="inconsistenciesDiv" style="background-color:#ebffe6;" class="row border-top mt-2 mb-2" style="background:#eeffe6;border-bottom:solid 2px gray;">
+            <div id="inconsistenciesDiv" class="row border-t-2 border-b-2 border-gray-500 my-2 mx-0" style="background:#eeffe6;">
                 @foreach($internalCheckReport->correctiveMeasures as $inc)
                     <div class="form-group col-6 mt-3">
                         <label for="inconsistencies" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Neusaglašenost') }}</label>
@@ -84,13 +84,13 @@
                             <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                         @enderror
                     <span data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz korektivne mere') }}" class="text-blue-700 cursor-pointer hover:text-blue-500" onclick="showMeasure({{ $inc->id }})">{{ $inc->name }}</span>
-                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje korektivne mere') }}" class="deleteButton btn btn-danger float-right ml-2 mt-2"><i class="fas fa-trash"></i></button>
+                        <button data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje korektivne mere') }}" class="deleteButton btn btn-danger float-right ml-2 mt-2" onclick="$('body>.tooltip').remove();"><i class="fas fa-trash"></i></button>
                         <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena korektivne mere') }}" class="btn btn-primary float-right ml-2 mt-2" href="{{ route('corrective-measures.edit', $inc->id) }}" ><i class="fas fa-edit"></i></a>
                     </div>
                 @endforeach
             </div>
 
-            <div id="recommendationsDiv"  class="row border-top mt-2">
+            <div id="recommendationsDiv" class="row mt-2">
                 @foreach($internalCheckReport->recommendations as $rec)
                     <div class="form-group col-6 mt-3" id="recommendations[{{ $rec->id }}]">
                         <label for="recommendations" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Preporuka') }}</label>
@@ -258,7 +258,7 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Status mere') }}:</label>
+                                        <label for="measure_status" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Da li je mera sprovedena?') }}:</label>
                                         <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="measure_status" id="measure_status">
                                             <option value="0" {{ old('measure_status') == '0' ? "selected" : "" }} >{{ __('Ne') }}</option>
                                             <option value="1" {{ old('measure_status') == '1' ? "selected" : "" }} >{{ __('Da') }}</option>
@@ -341,7 +341,7 @@
                                     <div class="modal-body text-sm">
                                         <div class="row">
                                             <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Datum kreiranja') }}</p></div>
-                                            <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                            <div class="col-sm-7 mt-1 border-bottom"><p>${ new Date(response.data.created_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                             <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Sistem menadžment') }}</p></div>
                                             <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.standard.name }</p></div>
                                             <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Izvor neusaglašenosti') }}</p></div>
@@ -364,6 +364,8 @@
                                             <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_approval_date != null ? new Date(response.data.measure_approval_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
                                             <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera efektivna') }}</p></div>
                                             <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.measure_effective != null ? response.data.measure_effective == 1 ? "{{ __('Efektivna') }}" : "{{ __('Neefektivna') }}" : "/" }</p></div>
+                                            <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                            <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                         </div>
                                     </div>
                                     <div class="px-6 py-4 bg-gray-100 text-right">

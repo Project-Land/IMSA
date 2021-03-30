@@ -1,4 +1,8 @@
 <x-app-layout>
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Upravljanje rizicima') }} - {{ __('Kreiranje') }}
@@ -13,12 +17,12 @@
 
     <div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 
-		<form action="{{ route('risk-management.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+		<form id="risk-management-create" action="{{ route('risk-management.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             @csrf
 
 			<div class="mb-4">
 				<label for="description" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Opis') }}:</label>
-				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')"></textarea>
+				<textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" autofocus required></textarea>
 				@error('description')
 					<span class="text-red-700 italic text-sm">{{ __($message) }}</span>
 				@enderror
@@ -62,6 +66,12 @@
 
     @push('page-scripts')
         <script>
+            $("#risk-management-create").validate({
+                messages: {
+                    description: "{{ __('Popunite polje') }}",
+                }
+            });
+
             function calculate(){
                 let probability = $('#probability').val();
                 let frequency = $('#frequency').val();

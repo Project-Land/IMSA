@@ -58,6 +58,11 @@
                     font-size: 12px;
                 }
             }
+            label.error {
+                color: #dc3545;
+                font-size: 14px;
+                margin-top: 5px;
+            }
         </style>
     </head>
     <body class="font-sans antialiased">

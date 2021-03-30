@@ -15,7 +15,7 @@ class CreateInternalCheckReportsTable extends Migration
     {
         Schema::create('internal_check_reports', function (Blueprint $table) {
             $table->id();
-            $table->string('specification',500);
+            $table->string('specification', 512);
             $table->timestamps();
         });
     }
