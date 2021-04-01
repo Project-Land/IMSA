@@ -94,6 +94,7 @@
                 <x-slot name="content">
                     <div class="space-y-6">
                         @foreach ($team->users->sortBy('name') as $user)
+                            @if($user->hasTeamRole($user->currentTeam, 'super-admin')) @continue @endif
                             <div class="flex items-center flex-col sm:flex-row">
                                 <div class="flex items-center w-full sm:w-1/2">
                                     <img class="w-8 h-8 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">

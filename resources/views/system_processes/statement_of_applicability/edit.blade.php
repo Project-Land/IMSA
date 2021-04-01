@@ -40,7 +40,7 @@
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
-                                <select class="text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]" data-id="{{ $field->id }}" onChange="showDocument(this)" required oninvalid="this.setCustomValidity('{{__("Izaberite status")}}')" oninput="this.setCustomValidity('')">
+                                <select class="appearance-none w-full sm:w-2/3 text-xs sm:text-sm mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="{{ $field->id }}[status]" data-id="{{ $field->id }}" onChange="showDocument(this)" required oninvalid="this.setCustomValidity('{{__("Izaberite status")}}')" oninput="this.setCustomValidity('')">
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option value="Prihvaćeno" {{ $field->status == 'Prihvaćeno' ? 'selected':'' }}>{{ __('Prihvaćeno') }}</option>
                                     <option value="Neprihvaćeno" {{ $field->status == 'Neprihvaćeno' ? 'selected':'' }}>{{ __('Neprihvaćeno') }}</option>

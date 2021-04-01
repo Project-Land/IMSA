@@ -55,4 +55,9 @@ class Goal extends Model
         }
        return $lvl;
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User');
+    }
 }

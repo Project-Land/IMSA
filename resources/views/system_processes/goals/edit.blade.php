@@ -47,7 +47,7 @@
                     <select class="js-example-basic-multiple block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="responsibility" name="responsibility[]" multiple required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                         @foreach($users as $user)
                             @if($user->teams[0]->membership->role != 'super-admin')
-                                <option value="{{ $user->name }}" {{ in_array($user->name, $selectedUsers)? "selected":"" }}>{{ $user->name }}</option>
+                                <option value="{{ $user->id }}" {{ $goal->users->contains($user->id)? "selected":"" }}>{{ $user->name }}</option>
                             @endif
                         @endforeach
                     </select>

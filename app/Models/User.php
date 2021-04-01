@@ -131,4 +131,24 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Document', 'training_user')->withPivot('training_id')->withTimestamps();
     }
 
+    public function complaint()
+    {
+        return $this->belongsToMany('App\Models\Complaint');
+    }
+
+    public function riskManagements()
+    {
+        return $this->belongsToMany('App\Models\RiskManagement');
+    }
+
+    public function goal()
+    {
+        return $this->belongsToMany('App\Models\Goal');
+    }
+
+    public function instant_notification()
+    {
+        return $this->belongsToMany('App\Notifications\InstantNotification', 'instant_notification_user');
+    }
+
 }

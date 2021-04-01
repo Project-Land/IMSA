@@ -146,7 +146,11 @@
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Mera za smanjenje rizika/ korišćenje prilike') }}</p></div>
                                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost') }}</p></div>
-                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility != null ? response.data.responsibility : "/" }</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>`;
+                                                            for(let user of response.data.users){
+                                                                modal+=user.name+", ";
+                                                            }
+                                                        modal+=`</p></div>
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
                                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline != null ? new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>

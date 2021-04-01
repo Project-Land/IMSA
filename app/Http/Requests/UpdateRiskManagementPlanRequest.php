@@ -46,7 +46,6 @@ class UpdateRiskManagementPlanRequest extends FormRequest
     {
         $this->merge([
             'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
-            'responsibility' => implode(", ", $this->responsibility)
         ]);
     }
 }

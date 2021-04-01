@@ -28,7 +28,11 @@ class AppServiceProvider extends ServiceProvider
             else if($user->allTeams()->first()->membership->role === 'super-admin' || $user->allTeams()->first()->membership->role === 'admin')
             return Notification::active()->orderBy('checkTime')->get();
             else
-                return [];
+                return Notification::userNots()->orderBy('checkTime')->get();
+        });
+
+        $this->app->bind('InstantNotifications', function ($app) {
+            return Auth::user()->instant_notification ?? [];
         });
 
         $this->app->bind('standards', function ($app) {

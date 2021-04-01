@@ -34,8 +34,9 @@
                         </div>
                         <div class="col-sm-4">
                             <form class="form-inline">
-                                <label for="goals-year" class="mr-3 text-xs md:text-base mt-2 sm:mt-0">{{ __('Godina') }}</label>
-                                <select name="goals-year" id="goals-year" onchange="excelYear()" class="w-2/3 sm:w-2/4 text-xs sm:text-base mt-2 sm:mt-0 mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <label for="goals-year" class="mr-3 text-xs md:text-base">{{ __('Godina') }}</label>
+                                <select name="goals-year" id="goals-year" onchange="excelYear()" class="appearance-none w-2/3 sm:w-2/4 text-xs sm:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <option value="all">{{ __('Sve godine') }}</option>
                                     @foreach(range(2020, date("Y")+10) as $year))
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
                                     @endforeach
@@ -173,7 +174,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body text-sm">
                                     <div class="row">
                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Godina') }}</p></div>
                                         <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.year }</p></div>
@@ -242,6 +243,7 @@
     $('#goals-year').change( () => {
         let year = $('#goals-year').val();
         const data = {'year': year}
+
         axios.post('/goals/get-data', { data })
         .then((response) => {
             if(response.data.length == 0){

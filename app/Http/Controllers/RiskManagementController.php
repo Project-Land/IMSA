@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
+use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use App\Models\RiskManagement;
 use Illuminate\Support\Facades\Auth;
-use App\Facades\CustomLog;
-use App\Http\Requests\UpdateRiskManagementPlanRequest;
-use App\Http\Requests\RiskManagementRequest;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RiskManagementExport;
-use Illuminate\Support\Str;
+use App\Notifications\InstantNotification;
+use App\Http\Requests\RiskManagementRequest;
+use App\Notifications\RiskInstantNotification;
+use App\Http\Requests\UpdateRiskManagementPlanRequest;
 
 class RiskManagementController extends Controller
 {
@@ -55,7 +57,7 @@ class RiskManagementController extends Controller
 
     public function show($id)
     {
-        $risk = RiskManagement::findOrFail($id);
+        $risk = RiskManagement::with('users')->findOrFail($id);
         return response()->json($risk);
     }
 
@@ -73,6 +75,7 @@ class RiskManagementController extends Controller
 
         try{
             $risk->update($request->all());
+
             CustomLog::info('Rizik "'.$risk->description.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
         } catch(Exception $e){
@@ -102,8 +105,7 @@ class RiskManagementController extends Controller
     {
         $risk = RiskManagement::findOrFail($id);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        $selectedUsers = explode(', ', $risk->responsibility);
-        return view('system_processes.risk_management.edit-plan', compact('risk', 'users', 'selectedUsers'));
+        return view('system_processes.risk_management.edit-plan', compact('risk', 'users'));
     }
 
     public function updatePlan(UpdateRiskManagementPlanRequest $request, $id)
@@ -112,7 +114,19 @@ class RiskManagementController extends Controller
         $risk = RiskManagement::findOrFail($id);
 
         try{
-            $risk->update($request->all());
+            $risk->update($request->except('responsibility'));
+            $risk->users()->sync($request->responsibility);
+
+            $oldNot = InstantNotification::where('notifiable_id', $risk->id)->where('notifiable_type', 'App\Models\RiskManagement')->get();
+            if($oldNot->count()){
+                $oldNot[0]->user()->sync($request->responsibility);
+            }
+            else{
+                $not = new RiskInstantNotification($risk);
+                $not->save();
+                $not->user()->sync($request->responsibility);
+            }
+
             CustomLog::info('Plan za postupanje sa rizikom "'.$risk->description.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Plan je uspešno izmenjen!'));
         } catch(Exception $e){

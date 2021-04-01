@@ -35,7 +35,7 @@
                         <div class="w-full sm:flex-1">
                             <form class="form-inline">
                                 <label for="year" class="mr-3 text-xs md:text-base">{{ __('Godina') }}</label>
-                                <select name="year" id="trainings-year" class="w-1/3 sm:w-2/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select name="year" id="trainings-year" class="appearance-none w-1/3 sm:w-2/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     <option value="all">{{ __('Sve godine') }}</option>
                                     @foreach(range(2020, date('Y')+10) as $year)
                                         <option value="{{ $year }}" {{ date('Y') == $year ? "selected" : "" }} >{{ $year }}</option>
@@ -228,7 +228,7 @@
                         @csrf
                         <input type="hidden" name="folder" value="${ response.data.company }/training">
                         <input type="hidden" name="file_name" value="${ documents[key].file_name }">
-                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="button text-primary" type="submit" style="cursor: pointer;">${ documents[key].file_name }</button>
+                        <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="text-blue-500 hover:text-blue-700 curosr-pointer" type="submit">${ documents[key].file_name }</button>
                     </form><br>`;
 
                     for(user of documents[key].users){
@@ -237,7 +237,6 @@
 
                     docsBlock += "<hr>";
                 })
-                docsBlock+= "<hr>"
 
                 for(userWithoutDoc of response.data.users_without_document){
                     docsBlock += `<span>${ userWithoutDoc.name }</span>, `;

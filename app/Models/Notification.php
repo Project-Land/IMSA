@@ -49,6 +49,30 @@ class Notification extends Model
         });
     }
 
+    public function scopeUserNots($query)
+    {
+        $instantNots = Auth::user()->instant_notification;
+
+        if(!$instantNots->count()){
+            return $query->where('id', '-1');
+        }
+
+        $query->where([
+            ['checkTime', '<', Carbon::now()->addDays(7)],
+            ['checkTime', '>', Carbon::now()],
+            ['team_id', Auth::user()->current_team_id]
+        ]);
+
+        foreach($instantNots as $inst){
+            $query->where('notifiable_type', $inst->notifiable_type)->where('notifiable_id', $inst->notifiable_id)
+            ->whereHasMorph('notifiable',  [$inst->notifiable_type], function ($q){
+                $q->where('standard_id', session('standard'));
+            });;
+        }
+
+        return $query;
+    }
+
     public function notifiable()
     {
         return $this->morphTo();

@@ -130,20 +130,22 @@
                 <!-- Notifications menu -->
                 @inject('Notifications', 'Notifications')
 
+                @inject('InstantNotifications', 'InstantNotifications')
+
                 <div class="inline-flex items-center justify-end ml-4">
                     <x-jet-dropdown width="48">
 
                         <x-slot name="trigger">
-                            @can('viewAny', App\Models\Notification::class)
-                                <button class=" {{ $Notifications->count() ? 'bg-red-700 rounded-md p-2 text-xs md:text-sm text-white' : '' }} flex items-center text-sm sm:text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-red-300 transition duration-150 ease-in-out">
-                                    <div>{{ $Notifications->count() }}</div>
+                            {{-- @can('viewAny', App\Models\Notification::class) --}}
+                                <button class=" {{ $Notifications->count() + $InstantNotifications->count() ? 'bg-red-700 rounded-md p-2 text-xs md:text-sm text-white' : '' }} flex items-center text-sm sm:text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-red-300 transition duration-150 ease-in-out">
+                                    <div>{{ $Notifications->count() + $InstantNotifications->count() }}</div>
                                     <div class="md:ml-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
                                 </button>
-                            @endcan
+                            {{-- @endcan --}}
                         </x-slot>
 
                         <x-slot name="content">
@@ -153,7 +155,7 @@
                             </div>
 
                             @forelse($Notifications as $not)
-                                @can('view', $not)
+                                {{-- @can('view', $not) --}}
                                     @if ($not->notifiable_type === 'App\Models\InternalCheck')
                                         <x-jet-dropdown-link href="{{ asset('/internal-check#internalcheck'.$not->notifiable_id) }}" >
                                             {{ __($not->message) }}
@@ -179,8 +181,16 @@
                                             {{ __($not->message) }}
                                         </x-jet-dropdown-link>
                                     @endif
-                                @endcan
+                                {{-- @endcan --}}
                                 @empty
+                            @endforelse
+
+                            @forelse($InstantNotifications as $inst)
+                                <x-jet-dropdown-link href="{{ $inst->data }}" >
+                                    {{ __($inst->message) }}
+                                </x-jet-dropdown-link>
+                                <a href="" class="text-xs">Mark as read</a>
+                            @empty
                             @endforelse
                         </x-slot>
 

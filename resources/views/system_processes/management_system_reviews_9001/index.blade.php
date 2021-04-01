@@ -35,7 +35,7 @@
                         <div class="col-sm-8">
                             <form class="form-inline">
                                 <label for="year" class="mr-3 text-xs md:text-base">{{__('Godina')}}</label>
-                                <select name="year" id="reviews-year" class="w-1/3 sm:w-1/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                <select name="year" id="reviews-year" class="appearance-none w-1/3 sm:w-1/4 text-xs md:text-base mr-2 block border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                     <option value="all">{{ __('Sve godine') }}</option>
                                     @foreach(range(2020, date('Y')+10) as $year)
                                         <option value="{{ $year }}">{{ $year }}</option>

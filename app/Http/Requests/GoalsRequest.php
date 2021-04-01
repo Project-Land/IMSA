@@ -78,7 +78,6 @@ class GoalsRequest extends FormRequest
             'user_id' => Auth::user()->id,
             'deadline' => $this->deadline != null ? date('Y-m-d', strtotime($this->deadline)) : null,
             'analysis' => $this->analysis != null ? $this->analysis : null,
-            'responsibility' => !empty($this->responsibility)? implode(", ", $this->responsibility) : null
         ]);
     }
 }

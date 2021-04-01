@@ -41,4 +41,14 @@ class RiskManagement extends Model
     {
         return $this->belongsTo('App\Models\Standard');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User');
+    }
+
+    public function notification()
+    {
+        return $this->morphOne('App\Models\InstantNotification', 'notifiable');
+    }
 }

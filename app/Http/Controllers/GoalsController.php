@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\GoalsRequest;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Notifications\InstantNotification;
+use App\Notifications\GoalInstantNotification;
 
 class GoalsController extends Controller
 {
@@ -30,6 +32,7 @@ class GoalsController extends Controller
 
         $goals = Goal::where([
                 ['standard_id', session('standard')],
+                ['year', date('Y')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
 
@@ -38,11 +41,19 @@ class GoalsController extends Controller
 
     public function getData(Request $request)
     {
-        $goals = Goal::where([
+        if($request->data['year'] == 'all'){
+            $goals = Goal::where([
+                ['standard_id', session('standard')],
+                ['team_id', Auth::user()->current_team_id]
+            ])->get();
+        }
+        else{
+            $goals = Goal::where([
                 ['standard_id', session('standard')],
                 ['year', $request->data['year']],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
+        }
 
         $isAdmin = Auth::user()->allTeams()->first()->membership->role == "admin" || Auth::user()->allTeams()->first()->membership->role == "super-admin" ? true : false;
 
@@ -72,7 +83,8 @@ class GoalsController extends Controller
         $this->authorize('create', Goal::class);
 
         try{
-            $goal = Goal::create($request->all());
+            $goal = Goal::create($request->except('responsibility'));
+            $goal->users()->sync($request->responsibility);
 
             $notification = Notification::create([
                     'message'=>__('Analiza cilja za ').date('d.m.Y', strtotime($goal->deadline)),
@@ -80,6 +92,10 @@ class GoalsController extends Controller
                     'checkTime' => $goal->deadline
                 ]);
             $goal->notification()->save($notification);
+
+            $not = new GoalInstantNotification($goal);
+            $not->save();
+            $not->user()->sync($request->responsibility);
 
             CustomLog::info('Cilj id: "'.$goal->id.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Cilj je uspešno sačuvan!'));
@@ -106,8 +122,7 @@ class GoalsController extends Controller
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        $selectedUsers = explode(', ', $goal->responsibility);
-        return view('system_processes.goals.edit', compact('goal', 'users', 'selectedUsers'));
+        return view('system_processes.goals.edit', compact('goal', 'users'));
     }
 
     public function update(GoalsRequest $request, $id)
@@ -115,9 +130,10 @@ class GoalsController extends Controller
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
 
-
         try{
-            $goal->update($request->all());
+            $goal->update($request->except('responsibility'));
+            $goal->users()->sync($request->responsibility);
+
             $notification = $goal->notification;
             if(!$notification){
                 $notification=new Notification();
@@ -126,6 +142,16 @@ class GoalsController extends Controller
             $notification->message = __('Analiza cilja za ').date('d.m.Y', strtotime($request->deadline));
             $notification->checkTime = $goal->deadline;
             $goal->notification()->save($notification);
+
+            $oldNot = InstantNotification::where('notifiable_id', $goal->id)->where('notifiable_type', 'App\Models\Goal')->get();
+            if($oldNot->count()){
+                $oldNot[0]->user()->sync($request->responsibility);
+            }
+            else{
+                $not = new GoalInstantNotification($goal);
+                $not->save();
+                $not->user()->sync($request->responsibility);
+            }
 
             CustomLog::info('Cilj id: "'.$goal->id.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Cilj je uspešno izmenjen!'));
