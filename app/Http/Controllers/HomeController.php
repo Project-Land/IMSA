@@ -98,4 +98,16 @@ class HomeController extends Controller
         return back();
     }
 
+    public function markAsRead($id){
+        $not = Auth::user()->instant_notification()->where('instant_notification_id', $id)->first();
+        $not->pivot->is_read = 1;
+        $not->pivot->save();
+        return back();
+    }
+
+    public function deleteNotification($id){
+        Auth::user()->instant_notification()->where('instant_notification_id', $id)->delete();
+        return back();
+    }
+
 }

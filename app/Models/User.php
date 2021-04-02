@@ -148,7 +148,7 @@ class User extends Authenticatable
 
     public function instant_notification()
     {
-        return $this->belongsToMany('App\Notifications\InstantNotification', 'instant_notification_user');
+        return $this->belongsToMany('App\Notifications\InstantNotification', 'instant_notification_user')->withPivot('is_read')->withTimestamps();
     }
 
 }

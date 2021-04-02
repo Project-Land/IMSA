@@ -22,7 +22,7 @@ class CreateGoalsTable extends Migration
             $table->string('goal',255);
             $table->string('kpi');
             $table->string('activities',500);
-            $table->string('responsibility');
+            $table->string('responsibility')->nullable();
             $table->date('deadline');
             $table->string('resources',255);
             $table->text('analysis')->nullable();

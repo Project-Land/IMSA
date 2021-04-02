@@ -132,13 +132,16 @@
 
                 @inject('InstantNotifications', 'InstantNotifications')
 
+                @inject('CountInstantNotifications', 'CountInstantNotifications')
+
                 <div class="inline-flex items-center justify-end ml-4">
-                    <x-jet-dropdown width="48">
+                    <x-jet-dropdown class="w-56">
 
                         <x-slot name="trigger">
                             {{-- @can('viewAny', App\Models\Notification::class) --}}
-                                <button class=" {{ $Notifications->count() + $InstantNotifications->count() ? 'bg-red-700 rounded-md p-2 text-xs md:text-sm text-white' : '' }} flex items-center text-sm sm:text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-red-300 transition duration-150 ease-in-out">
-                                    <div>{{ $Notifications->count() + $InstantNotifications->count() }}</div>
+                                {{-- @dd($InstantNotifications) --}}
+                                <button class=" {{ $Notifications->count() + $CountInstantNotifications ? 'bg-red-700 rounded-md p-2 text-xs md:text-sm text-white' : '' }} flex items-center text-sm sm:text-md font-medium text-red-500 hover:text-red-700 hover:border-red-300 focus:outline-none focus:text-red-700 focus:border-red-300 transition duration-150 ease-in-out">
+                                    <div>{{ $Notifications->count() + $CountInstantNotifications }}</div>
                                     <div class="md:ml-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -186,11 +189,20 @@
                             @endforelse
 
                             @forelse($InstantNotifications as $inst)
-                                <x-jet-dropdown-link href="{{ $inst->data }}" >
-                                    {{ __($inst->message) }}
-                                </x-jet-dropdown-link>
-                                <a href="" class="text-xs">Mark as read</a>
-                            @empty
+                                <div class="{{ $inst->pivot->is_read == 0 ? 'bg-red-100':'' }}">
+                                    <x-jet-dropdown-link href="{{ $inst->data }}" >
+                                        {{ __($inst->message) }}
+                                    </x-jet-dropdown-link>
+                                    <div class="flex justify-end px-2 py-2 leading-5 text-xs">
+                                        {{-- <p class="px-2">{{ date('d.m.Y H:i', strtotime($inst->pivot->created_at)) }}</p> --}}
+                                        @if($inst->pivot->is_read == 0)
+                                        <a href="{{ route('mark-as-read', $inst->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Označi kao pročitano') }}" class="block px-2 text-gray-700 hover:text-green-500 hover:no-underline focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"><i class="fas fa-check"></i></a>
+                                        @endif
+                                        <a href="{{ route('delete-notification', $inst->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Obriši obaveštenje') }}" class="block px-2 text-gray-700 hover:text-red-500 hover:no-underline focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                <hr class="py-0 my-0">
+                                @empty
                             @endforelse
                         </x-slot>
 
@@ -561,3 +573,13 @@
     </div>
 
 </nav>
+
+<script>
+    let element = document.getElementsByClassName('w-48');
+    element[5].style.overflow="auto";
+    element[5].style.maxHeight="90vh";
+    element[5].classList.add('w-64');
+    element[5].classList.add('md:w-80');
+
+    $('[data-toggle="tooltip"]').tooltip();
+</script>

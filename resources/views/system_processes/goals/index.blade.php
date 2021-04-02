@@ -73,7 +73,7 @@
                                     <td class="text-center">{{ Str::length($goal->goal) < 35 ? $goal->goal : Str::limit($goal->goal, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->kpi) < 35 ? $goal->kpi : Str::limit($goal->kpi, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
-                                    <td class="text-center">{{ $goal->responsibility }}</td>
+                                    <td class="text-center">@foreach($goal->users as $user) {{ $user->name }}{{ $loop->last? "":", " }}@endforeach</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
                                     <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
@@ -183,7 +183,14 @@
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju cilja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsibility }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>`;
+                                        $.each(response.data.users, function (j, user){
+                                            modal += user.name;
+                                            if(j != response.data.users.length-1){
+                                                modal += ", ";
+                                            }
+                                        });
+                                        modal += `</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Resursi') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.resources }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('KPI') }}</p></div>
@@ -259,7 +266,14 @@
                             <td class="text-center">${ item.goal.length < 35 ? item.goal : item.goal.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.kpi.length < 35 ? item.kpi : item.kpi.substr(0, 35) + "..."}</td>
                             <td class="text-center">${ item.activities.length < 35 ? item.activities : item.activities.substr(0, 35) + "..."}</td>
-                            <td class="text-center">${ item.responsibility }</td>
+                            <td class="text-center">`;
+                            $.each(item.users, function (j, user){
+                                row += user.name;
+                                if(j != item.users.length-1){
+                                    row += ", ";
+                                }
+                            });
+                            row += `</td>
                             <td class="text-center">${ new Date(item.deadline).getUTCDate() + '.' + new Date(item.deadline).getUTCMonth() + '.' + new Date(item.deadline).getUTCFullYear() }</td>
                             <td class="text-center">${ item.resources }</td>
                             <td class="text-center">${ item.analysis != null ? item.analysis.substr(0, 35) + "..." : "/" }</td>

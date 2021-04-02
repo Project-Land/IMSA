@@ -89,6 +89,7 @@ class RiskManagementController extends Controller
     {
         $this->authorize('delete', RiskManagement::find($id));
         $risk = RiskManagement::findOrFail($id);
+        InstantNotification::where('notifiable_id', $id)->where('notifiable_type', 'App\Models\RiskManagement')->delete();
 
         try{
             RiskManagement::destroy($id);

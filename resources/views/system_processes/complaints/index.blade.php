@@ -169,6 +169,7 @@
     function showComplaint(id){
         axios.get('/complaints/'+id)
             .then((response) => {
+
                 let modal = `
                     <div class="modal fade" id="showData-${ id }" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
@@ -194,7 +195,14 @@
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${response.data.deadline_date ? new Date (response.data.deadline_date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : '/' }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Lice odgovorno za rešavanje') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.responsible_person ? response.data.responsible_person : '/' }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>`;
+                                        $.each(response.data.users, function (j, person){
+                                            modal += person.name;
+                                            if(j != response.data.users.length-1){
+                                                modal += ", ";
+                                            }
+                                        });
+                                        modal += `</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Način rešavanja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.way_of_solving ? response.data.way_of_solving :'/' }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Status') }}</p></div>

@@ -13,6 +13,6 @@ class InstantNotification extends Model
 
     public function user()
     {
-        return $this->belongsToMany('App\Models\User', 'instant_notification_user', 'instant_notification_id');
+        return $this->belongsToMany('App\Models\User', 'instant_notification_user', 'instant_notification_id')->withTimestamps();
     }
 }

@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\Sector;
 use App\Models\Document;
 use App\Models\Complaint;
-use App\Models\Sector;
-use App\Models\User;
 use App\Facades\CustomLog;
+use Illuminate\Support\Str;
 use App\Models\Notification;
+use App\Exports\ComplaintsExport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ComplaintsRequest;
-use App\Exports\ComplaintsExport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Notifications\InstantNotification;
+use App\Notifications\ComplaintInstantNotification;
 
 class ComplaintsController extends Controller
 {
@@ -59,32 +61,37 @@ class ComplaintsController extends Controller
         $this->authorize('create', Complaint::class);
 
         try{
-            $complaint = Complaint::create($request->except(['file']));
+            $complaint = Complaint::create($request->except(['file', 'responsible_person']));
+            $complaint->users()->sync($request->responsible_person);
+
             if($request->deadline_date){
-            $notification = Notification::create([
-                'message'=>__('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($complaint->deadline_date)),
-                'team_id'=>Auth::user()->current_team_id,
-                'checkTime' => $complaint->deadline_date
-            ]);
-            $complaint->notification()->save($notification);
+                $notification = Notification::create([
+                    'message' => __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($complaint->deadline_date)),
+                    'team_id' => Auth::user()->current_team_id,
+                    'checkTime' => $complaint->deadline_date
+                ]);
+                $complaint->notification()->save($notification);
+
+                $not = new ComplaintInstantNotification($complaint);
+                $not->save();
+                $not->user()->sync($request->responsible_person);
             }
 
             if($request->file('file')){
                 foreach($request->file('file') as $file){
-                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                    $name= $complaint->name;
-                    $file_name=$file_name.".".$file->getClientOriginalExtension();
+                    $file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                    $name = $complaint->name;
+                    $file_name = $file_name.".".$file->getClientOriginalExtension();
                     $path = $file->storeAs(Str::snake($this::getCompanyName())."/complaint",  $file_name);
                     $document = Document::create([
-
-                        'standard_id'=>$complaint->standard_id,
-                        'team_id'=>$complaint->team_id,
-                        'user_id'=>$complaint->user_id,
-                        'document_name'=> $name,
-                        'version'=>1,
-                        'file_name'=>$file_name,
-                        'doc_category'=>'complaint'
-                        ]);
+                        'standard_id' => $complaint->standard_id,
+                        'team_id' => $complaint->team_id,
+                        'user_id' => $complaint->user_id,
+                        'document_name' => $name,
+                        'version' => 1,
+                        'file_name' => $file_name,
+                        'doc_category' => 'complaint'
+                    ]);
                     $complaint->documents()->save($document);
                 }
             }
@@ -101,7 +108,7 @@ class ComplaintsController extends Controller
 
     public function show($id)
     {
-        $complaint = Complaint::with('user', 'sector')->findOrFail($id);
+        $complaint = Complaint::with('user', 'sector', 'users')->findOrFail($id);
         return $complaint;
     }
 
@@ -116,8 +123,7 @@ class ComplaintsController extends Controller
         $complaint = Complaint::findOrFail($id);
 
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        $selectedUsers = explode(', ', $complaint->responsible_person);
-        return view('system_processes.complaints.edit', compact('complaint', 'sectors', 'users', 'selectedUsers'));
+        return view('system_processes.complaints.edit', compact('complaint', 'sectors', 'users'));
     }
 
     public function update(ComplaintsRequest $request, $id)
@@ -128,46 +134,57 @@ class ComplaintsController extends Controller
 
         try{
 
-            $files= $request->file ?? [];
+            $files = $request->file ?? [];
             foreach($complaint->documents()->pluck('document_id')->diff($files) as $docId){
-                $doc=Document::find($docId);
+                $doc = Document::find($docId);
                 Storage::delete(Str::snake($this->getCompanyName()).'/complaint/'.$doc->file_name);
-                $complaint->documents()->wherePivot('document_id',$docId)->detach();
+                $complaint->documents()->wherePivot('document_id', $docId)->detach();
                 $doc->forceDelete();
             }
 
-            $complaint->update($request->except(['file','new_file']));
+            $complaint->update($request->except(['file', 'new_file', 'responsible_person']));
+            $complaint->users()->sync($request->responsible_person);
+
             if($request->deadline_date){
                 $notification = $complaint->notification;
                 if(!$notification){
-                    $notification=new Notification();
-                    $notification->team_id=Auth::user()->current_team_id;
+                    $notification = new Notification();
+                    $notification->team_id = Auth::user()->current_team_id;
                 }
                 $notification->message = __('Rok za realizaciju reklamacije ').date('d.m.Y', strtotime($request->deadline_date));
                 $notification->checkTime = $complaint->deadline_date;
                 $complaint->notification()->save($notification);
-            }else{
-                if( $complaint->notification){
+
+                $oldNot = InstantNotification::where('notifiable_id', $complaint->id)->where('notifiable_type', 'App\Models\Complaint')->get();
+                if($oldNot->count()){
+                    $oldNot[0]->user()->sync($request->responsible_person);
+                }
+                else{
+                    $not = new ComplaintInstantNotification($complaint);
+                    $not->save();
+                    $not->user()->sync($request->responsible_person);
+                }
+            } else{
+                if($complaint->notification){
                     $complaint->notification->delete();
                 }
             }
 
             if($request->file('new_file')){
                 foreach($request->file('new_file') as $file){
-                    $file_name=pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
-                    $name= $complaint->name;
-                    $file_name=$file_name.".".$file->getClientOriginalExtension();
+                    $file_name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).time();
+                    $name = $complaint->name;
+                    $file_name = $file_name.".".$file->getClientOriginalExtension();
                     $path = $file->storeAs(Str::snake($this::getCompanyName())."/complaint",  $file_name);
                     $document = Document::create([
-
-                        'standard_id'=>$complaint->standard_id,
-                        'team_id'=>$complaint->team_id,
-                        'user_id'=>$complaint->user_id,
-                        'document_name'=> $name,
-                        'version'=>1,
-                        'file_name'=>$file_name,
-                        'doc_category'=>'complaint'
-                        ]);
+                        'standard_id' => $complaint->standard_id,
+                        'team_id' => $complaint->team_id,
+                        'user_id' => $complaint->user_id,
+                        'document_name' => $name,
+                        'version' => 1,
+                        'file_name' => $file_name,
+                        'doc_category' => 'complaint'
+                    ]);
                     $complaint->documents()->save($document);
                 }
             }
@@ -194,6 +211,8 @@ class ComplaintsController extends Controller
                 $doc->forceDelete();
             }
             $complaint->notification()->delete();
+            InstantNotification::where('notifiable_id', $complaint->id)->where('notifiable_type', 'App\Models\Complaint')->delete();
+
             Complaint::destroy($id);
             CustomLog::info('Reklamacija "'.$complaint->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Reklamacija je uspešno obrisana')));

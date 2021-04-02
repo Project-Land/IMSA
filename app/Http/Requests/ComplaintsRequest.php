@@ -54,7 +54,7 @@ class ComplaintsRequest extends FormRequest
             'description' => 'required',
             'submission_date' => 'required',
             'sector_id' => 'required',
-            'responsible_person' => 'nullable|max:190',
+            'responsible_person' => 'nullable',
             'way_of_solving' => 'nullable|max:190',
             'deadline_date' => 'nullable|after:submission_date',
             'file[]'=>'nullable',
@@ -70,7 +70,6 @@ class ComplaintsRequest extends FormRequest
             'desription.required' => __('Polje je obavezno'),
             'submission_date.required' => __('Polje je obavezno'),
             'sector_id.required' => __('Polje je obavezno'),
-            'responsible_person.max' => __('Polje može sadržati najviše 190 karaktera'),
             'way_of_solving.max' => __('Polje može sadržati najviše 190 karaktera'),
             'deadline_date.after' => __('Unesite datum noviji od datuma podnošenja reklamacije')
         ];
@@ -86,7 +85,6 @@ class ComplaintsRequest extends FormRequest
             'deadline_date' => $this->deadline_date != null ? date('Y-m-d', strtotime($this->deadline_date)) : null,
             'status' => $this->status != null ? $this->status : 0,
             'closing_date' => $this->status == 0 ? date('Y-m-d') : null,
-            'responsible_person' => !empty($this->responsible_person)? implode(", ", $this->responsible_person) : null
         ]);
     }
 }

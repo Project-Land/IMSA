@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
             return Auth::user()->instant_notification ?? [];
         });
 
+        $this->app->bind('CountInstantNotifications', function ($app) {
+            return Auth::user()->instant_notification()->where('is_read', 0)->count() ?? 0;
+        });
+
         $this->app->bind('standards', function ($app) {
             $teamId = Auth::user()->current_team_id;
             $standards = Standard::whereHas('teams', function($q) use ($teamId) {

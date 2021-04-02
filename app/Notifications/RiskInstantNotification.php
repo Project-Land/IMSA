@@ -13,7 +13,7 @@ class RiskInstantNotification extends InstantNotification
     {
         $this->attributes['notifiable_id'] = $riskManagement->id;
         $this->attributes['notifiable_type'] = "App\Models\RiskManagement";
-        $this->attributes['message'] = "Dodata odgovornost za: ".$riskManagement->measure;
+        $this->attributes['message'] = __('Dodati ste kao lice odgovorno za').': '.$riskManagement->measure;
         $this->attributes['data'] = "/risk-management#riskmanagement".$riskManagement->id;
     }
 }

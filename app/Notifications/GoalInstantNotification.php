@@ -13,7 +13,7 @@ class GoalInstantNotification extends InstantNotification
     {
         $this->attributes['notifiable_id'] = $goal->id;
         $this->attributes['notifiable_type'] = "App\Models\Goal";
-        $this->attributes['message'] = "Dodata odgovornost za: ".$goal->goal;
+        $this->attributes['message'] = __('Dodati ste kao lice odgovorno za praćenje i realizaciju cilja').': '.$goal->goal;
         $this->attributes['data'] = "/goals#goal".$goal->id;
     }
 }

@@ -48,8 +48,8 @@
                             </thead>
                             <tbody>
                                 @foreach($riskManagements as $risk)
-                                <tr>
-                                    <td class="text-center">{{ Str::length($risk->description) < 60 ? $risk->description : Str::limit($risk->description, 60) }}</td>
+                                <tr id='trriskmanagement{{$risk->id}}'><a id='riskmanagement{{$risk->id}}'></a>
+                                    <td id='tdriskmanagement{{$risk->id}}' class="text-center">{{ Str::length($risk->description) < 60 ? $risk->description : Str::limit($risk->description, 60) }}</td>
                                     <td class="text-center">{{ $risk->probability }}</td>
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
@@ -104,6 +104,24 @@
 
     @push('page-scripts')
         <script>
+
+            var myRe = /\brisk-management\b/g;
+
+            if(myRe.test(window.location.href)){
+                window.addEventListener('popstate', function (event) {
+                    location.reload();
+                });
+            }
+
+            let href = window.location.href;
+            id = href.split('#')[1];
+            if(id){
+                let e = document.getElementById('tr' + id);
+                let i = document.getElementById('td' + id);
+                i.innerHTML = '<i class="fas fa-hand-point-right"></i> ' +  i.innerHTML;
+                e.style = "background:#d8ffcc;";
+            }
+
             $('.yajra-datatable').DataTable({
                 "language": {
                     "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
@@ -147,9 +165,12 @@
                                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.risk_lowering_measure != null ? response.data.risk_lowering_measure : "/" }</p></div>
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovornost') }}</p></div>
                                                         <div class="col-sm-7 mt-3 border-bottom"><p>`;
-                                                            for(let user of response.data.users){
-                                                                modal+=user.name+", ";
-                                                            }
+                                                            $.each(response.data.users, function (j, person){
+                                                                modal += person.name;
+                                                                if(j != response.data.users.length-1){
+                                                                    modal += ", ";
+                                                                }
+                                                            });
                                                         modal+=`</p></div>
                                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Rok za realizaciju') }}</p></div>
                                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.deadline != null ? new Date(response.data.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) : "/" }</p></div>

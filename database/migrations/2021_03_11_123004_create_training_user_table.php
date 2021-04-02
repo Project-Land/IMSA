@@ -17,6 +17,7 @@ class CreateTrainingUserTable extends Migration
             $table->id();
             $table->foreignId('training_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('document_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

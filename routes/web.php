@@ -186,13 +186,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('user/{id}/certificates', [UserController::class, 'getUserCertificates']);
     Route::post('update-user-certificates/{id}', [UserController::class, 'updateUserCertificates']);
 
-
     Route::get('customer-satisfaction/print/{id}', [CustomerSatisfactionController::class,'print'])->name('customer-satisfaction.print');
     Route::get('customer-satisfaction/print-all', [CustomerSatisfactionController::class,'printAll'])->name('customer-satisfaction.print-all');
     Route::post('customer-satisfaction/delete-col/{id}', [CustomerSatisfactionController::class,'deleteColumn'])->name('deleteColumn');
     Route::resource('customer-satisfaction', CustomerSatisfactionController::class);
     Route::get('customer-satisfaction-export', [CustomerSatisfactionController::class, 'export'])->name('customer-satisfaction.export');
     Route::resource('customer-satisfaction-poll', SatisfactionColumnsController::class);
+
+    Route::get('mark-as-read/{id}', [HomeController::class, 'markAsRead'])->name('mark-as-read');
+    Route::get('delete-notification/{id}', [HomeController::class, 'deleteNotification'])->name('delete-notification');
 });
 
 Route::get('about', [HomeController::class, 'about'])->name('about');

@@ -30,7 +30,7 @@ class GoalsController extends Controller
             return redirect('/')->with('status', array('secondary', 'Izaberite standard!'));
         }
 
-        $goals = Goal::where([
+        $goals = Goal::with('users')->where([
                 ['standard_id', session('standard')],
                 ['year', date('Y')],
                 ['team_id', Auth::user()->current_team_id]
@@ -42,13 +42,13 @@ class GoalsController extends Controller
     public function getData(Request $request)
     {
         if($request->data['year'] == 'all'){
-            $goals = Goal::where([
+            $goals = Goal::with('users')->where([
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->get();
         }
         else{
-            $goals = Goal::where([
+            $goals = Goal::with('users')->where([
                 ['standard_id', session('standard')],
                 ['year', $request->data['year']],
                 ['team_id', Auth::user()->current_team_id]
@@ -112,7 +112,7 @@ class GoalsController extends Controller
             abort(404);
         }
 
-        $goal = Goal::with('user')->findOrFail($id);
+        $goal = Goal::with('user', 'users')->findOrFail($id);
         $goal->level=$goal->levelIs();
 ;        return response()->json($goal);
     }
@@ -170,6 +170,8 @@ class GoalsController extends Controller
         try{
             $goal->notification()->delete();
             Goal::destroy($id);
+            InstantNotification::where('notifiable_id', $goal->id)->where('notifiable_type', 'App\Models\Goal')->delete();
+
             CustomLog::info('Cilj id: "'.$goal->id.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Cilj je uspešno uklonjen'));
         } catch (Exception $e){
@@ -186,6 +188,8 @@ class GoalsController extends Controller
         try{
             $goal->notification()->delete();
             Goal::destroy($id);
+            InstantNotification::where('notifiable_id', $goal->id)->where('notifiable_type', 'App\Models\Goal')->delete();
+
             CustomLog::info('Cilj id: "'.$goal->id.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return true;
         } catch(Exception $e){
