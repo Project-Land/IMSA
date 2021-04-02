@@ -91,7 +91,7 @@ class RiskManagementExport implements FromCollection, WithHeadings, ShouldAutoSi
         return RiskManagement::where([
             ['standard_id', session('standard')],
             ['team_id',Auth::user()->current_team_id],
-        ])->with('standard')->get();
+        ])->with('standard', 'users')->get();
     }
 
     public function map($risk): array
@@ -105,7 +105,7 @@ class RiskManagementExport implements FromCollection, WithHeadings, ShouldAutoSi
             $risk->measure != null ? $risk->measure : "/",
             $risk->cause != null ? $risk->cause : "/",
             $risk->risk_lowering_measure != null ? $risk->risk_lowering_measure : "/",
-            $risk->responsibility != null ? $risk->responsibility : "/",
+            isset($risk->users) ?$risk->users()->pluck('name')->implode(', ') : '/',
             $risk->deadline != null ? date('d.m.Y', strtotime($risk->deadline)) : "/",
             $risk->status == 1 ? __('Otvorena') : __('Zatvorena'),
             $risk->standard->name

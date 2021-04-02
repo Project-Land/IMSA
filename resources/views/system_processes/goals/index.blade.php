@@ -73,7 +73,7 @@
                                     <td class="text-center">{{ Str::length($goal->goal) < 35 ? $goal->goal : Str::limit($goal->goal, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->kpi) < 35 ? $goal->kpi : Str::limit($goal->kpi, 35) }}</td>
                                     <td class="text-center">{{ Str::length($goal->activities) < 35 ? $goal->activities : Str::limit($goal->activities, 35) }}</td>
-                                    <td class="text-center">@foreach($goal->users as $user) {{ $user->name }}{{ $loop->last? "":", " }}@endforeach</td>
+                                    <td class="text-center">{{ $goal->users ? $goal->users()->pluck('name')->implode(', ') : '/', }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
                                     <td class="text-center">{{ $goal->resources }}</td>
                                     <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>

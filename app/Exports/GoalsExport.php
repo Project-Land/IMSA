@@ -100,7 +100,7 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id],
             ['year', $this->year]
-        ])->with(['user','standard'])->get();
+        ])->with(['user', 'standard', 'users'])->get();
     }
 
     public function map($goal): array
@@ -115,7 +115,7 @@ class GoalsExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             $goal->standard->name,
             $level,
             $goal->deadline,
-            $goal->responsibility ?? '/',
+            isset($goal->users) ?$goal->users()->pluck('name')->implode(', ') : '/',
             $goal->resources ?? '/',
             $goal->kpi ?? '/',
             $goal->activities ?? '/',

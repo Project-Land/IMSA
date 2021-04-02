@@ -70,7 +70,7 @@
                                     <td class="text-center">{{ $c->sector->name }}</td>
                                     <td class="text-center">{{ $c->accepted == 1 ? __("DA") : __("NE") }}</td>
                                     <td class="text-center">{{ $c->deadline_date != null ? date('d.m.Y', strtotime($c->deadline_date)) : "/" }}</td>
-                                    <td class="text-center">{{ $c->responsible_person ? : "/" }}</td>
+                                    <td class="text-center">{{ $c->users ? $c->users()->pluck('name')->implode(', ') : '/', }}</td>
                                     <td class="text-center">{{ ($c->status == '1') ? __('Otvorena') : __('Zatvorena') }}</td>
                                     <td class="text-center">
                                     <button data-toggle="tooltip" data-placement="top" title="{{ __('Pregled reklamacije') }}" class="text-blue-700 hover:text-blue-900" onclick="showComplaint({{ $c->id }})"><i class="fas fa-eye"></i></button>
