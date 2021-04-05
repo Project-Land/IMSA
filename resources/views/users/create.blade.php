@@ -61,7 +61,7 @@
                             <x-jet-label for="role" value="{{ __('Uloga') }}" class="block font-medium text-sm text-gray-700" />
                             <select class="block mt-1 appearance-none w-full border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" name="role" id="role">
                                 <option value="user" {{ old('role') == "user" ? "selected":"" }}>{{ __('Korisnik') }}</option>
-                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>{{ __('Interni proveravač') }}</option>
+                                <option value="editor" {{ old('role') == "editor" ? "selected":"" }}>{{ __('Menadžer') }}</option>
                                 <option value="admin" {{ old('role') == "admin" ? "selected":"" }}>{{ __('Administrator') }}</option>
                             </select>
                             @error('role')
@@ -69,7 +69,7 @@
                             @enderror
                         </div>
 
-                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6">
+                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6 d-none">
                             <x-jet-label for="certificates" value="{{ __('Dozvole pristupa') }}" class="block font-medium text-sm text-gray-700" />
 
                             @foreach($certificates as $certificate)
@@ -119,7 +119,7 @@
 
 <script>
     $('#role').change(() => {
-        if($('#role').val() == 'admin'){
+        if($('#role').val() == 'user'){
             $('input[name="certificates[]"]').each(function() {
                 this.checked = false;
             });

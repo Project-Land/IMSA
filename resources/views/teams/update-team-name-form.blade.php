@@ -35,7 +35,6 @@
 
             <x-jet-input-error for="name" class="mt-2" />
         </div>
-
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="lang" value="{{ __('Primarni jezik') }}" class="block font-medium text-sm text-gray-700" />
             <select class="block mt-1 appearance-none w-40 border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" wire:model.defer="state.lang" id="lang">
