@@ -71,12 +71,12 @@
 											<span class="cursor-pointer" onclick="toggleTrainingsModal({{ $user->id }})">{{ __('Lista obuka') }}</span>
 										</td>
                                         <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                            {{-- @if(!$user->hasTeamRole($user->currentTeam, 'admin')) --}}
+                                            @if(!$user->hasTeamRole($user->currentTeam, 'user'))
                                                 <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}')">{{ __('Lista dozvola pristupa') }}</span>
-                                            {{-- @else
+                                            @else
                                                 /
-                                            @endif --}}
-                                            </td>
+                                            @endif
+                                        </td>
 										<td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 font-medium">
 											<form class="inline" id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST">
 												@method('DELETE')

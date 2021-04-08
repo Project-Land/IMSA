@@ -94,7 +94,7 @@
                 <x-slot name="content">
                     <div class="space-y-6">
                         @foreach ($team->users->sortBy('name') as $user)
-                            @if($user->hasTeamRole($user->currentTeam, 'super-admin')) @continue @endif
+                            @if($user->membership->role == "super-admin") @continue @endif
                             <div class="flex items-center flex-col sm:flex-row">
                                 <div class="flex items-center w-full sm:w-1/2">
                                     <img class="w-8 h-8 rounded-full" src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}">
@@ -104,7 +104,7 @@
                                 <div class="flex items-center w-full sm:w-1/2 justify-end border-b sm:border-none">
                                     <!-- Manage Team Member Role -->
                                     <div class="w-full sm:w-28">
-                                        @if(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Administrator" && Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name != "Super Admin")
+                                        @if($user->membership->role != "user")
                                             <button class="ml-2 text-sm text-gray-400 underline" onclick="toggleModal('{{ $user->id }}')">
                                                 {{ __('Lista dozvola pristupa') }}
                                             </button>
