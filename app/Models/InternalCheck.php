@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Sector;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InternalCheck extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts= [
+        'sectors' => 'array',
+    ];
+    
 
     public function standard()
     {
@@ -44,5 +50,11 @@ class InternalCheck extends Model
     public function sector()
     {
         return $this->belongsTo('App\Models\Sector');
+    }
+    public function sectorNames()
+    {
+        $sec= Sector::find($this->sectors)->pluck('name');
+        $sec=$sec->implode(', ');
+        return $sec;
     }
 }

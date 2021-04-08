@@ -8,7 +8,7 @@
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{__('Vođe tima i proveravači')}} - {{$ic->leaders ?? "/" }}</p></div>
    
 
-    <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Područje provere') }} - {{ $ic->sector->name }}</p></div>
+    <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Područje provere') }} - {{ $ic->sectorNames() }}</p></div>
         
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Standard') }} -  {{$ic->standard->name}} </p></div>
 
@@ -38,7 +38,7 @@
     @endforelse
     @endif
 
-    @if($ic->internalCheckReport->recommendations)
+    @if(isset($ic->internalCheckReport->recommendations))
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><h4>{{ __('Preporuka') }}  </h4></div>
     @foreach($ic->internalCheckReport->recommendations as $rec)
     <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ $rec->description }}  </p></div>

@@ -32,12 +32,12 @@
 
             <div class="mb-4">
                 <label for="sector" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Područje provere') }}</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector" name="sector_id" required oninvalid="this.setCustomValidity('{{ __("Izaberite sektor") }}')" oninput="this.setCustomValidity('')">
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="sector" name="sectors[]" multiple required oninvalid="this.setCustomValidity('{{ __("Izaberite sektor") }}')" oninput="this.setCustomValidity('')">
                     @foreach($sectors as $sector)
-                        <option value="{{$sector->id}}">{{$sector->name}}</option>
+                        <option value="{{$sector->id}}" @if(collect($internalCheck->sectors)->contains($sector->id)){{'selected'}} @endif>{{$sector->name}}</option>
                     @endforeach
                 </select>
-                @error('sector_id')
+                @error('sectors')
                     <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
                 @enderror
             </div>

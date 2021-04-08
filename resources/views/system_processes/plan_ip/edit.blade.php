@@ -26,7 +26,7 @@
 
             <div class="mb-4">
                 <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Sektor') }}</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="{{$planIp->internalCheck->sector->name}}" readonly>
+                <input type="text" class="appearance-none border w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="@foreach(collect($planIp->internalCheck->sectors) as $sector_id){{\App\Models\Sector::find($sector_id)->name.', '}} @endforeach" readonly>
             </div>
 
             <div class="mb-4">

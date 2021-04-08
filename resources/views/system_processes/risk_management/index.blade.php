@@ -63,6 +63,7 @@
                                     </td>
                                     <td class="text-center">{{ $risk->user->name }}</td>
                                     <td class="text-center">
+                                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz rizika / prilike') }}" class="text-blue-700 hover:text-blue-900" onclick="showRisk({{ $risk->id }})"><i class="fas fa-eye"></i></button>
                                     <a
                                         href="{{route('risk-management.print',$risk->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
@@ -186,6 +187,45 @@
                                     </div>`;
                         $("body").append(modal);
                         $('#showMeasure-'+id).modal();
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+
+
+            function showRisk(id){
+                axios.get('/risk-management/'+id)
+                    .then((response) => {
+                        let modal = `<div class="modal fade" id="showRisk-${ id }" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" style="max-width: 600px !important;" role="document">
+                                            <div class="modal-content rounded-lg shadow-xl">
+                                                
+                                                <div class="modal-body">
+                                                    <div class="row text-sm">
+                                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Opis rizika / prilike') }}</p></div>
+                                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.description }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Verovatnoća') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.probability }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Posledice') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.frequency }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Ukupno') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${
+                                                        response.data.total}</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Prihvatljivo') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.acceptable }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $("body").append(modal);
+                        $('#showRisk-'+id).modal();
                     })
                     .catch((error) => {
                         console.log(error)
