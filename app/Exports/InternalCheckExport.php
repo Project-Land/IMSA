@@ -101,14 +101,14 @@ class InternalCheckExport implements FromCollection, WithHeadings, ShouldAutoSiz
         return InternalCheck::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->whereYear('created_at', $this->year)->with(['standard','sector','user','planIp','internalCheckReport.recommendations','internalCheckReport.correctiveMeasures'])->get();
+        ])->whereYear('created_at', $this->year)->with(['standard','user','planIp','internalCheckReport.recommendations','internalCheckReport.correctiveMeasures'])->get();
     }
 
     public function map($internalCheck): array
     {
         return [
             $internalCheck->date,
-            $internalCheck->sector->name,
+            $internalCheck->sectorNames(),
             str_replace(',',' - ',$internalCheck->leaders),
             $internalCheck->standard->name,
             $internalCheck->created_at,

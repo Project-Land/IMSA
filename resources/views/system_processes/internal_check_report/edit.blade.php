@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="form-group col" >
                     <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Proveravano područje') }}</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="{{ $internalCheckReport->internalCheck->sector->name }}" readonly>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="@foreach(collect($internalCheckReport->internalCheck->sectors) as $sector_id){{\App\Models\Sector::find($sector_id)->name.', '}} @endforeach" readonly>
                 </div>
 
                 <div class="form-group col">
@@ -187,11 +187,24 @@
                                 <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" autocomplete="off" action="{{ route('corrective-measures.store-from-icr') }}" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                                     @csrf
 
-                                    <input type="hidden" name="sector_id" value="{{ $internalCheckReport->internalCheck->sector->id }}">
                                     <input type="hidden" name="standard_id" value="{{ $internalCheckReport->internalCheck->standard->id }}">
 
                                     <input type="hidden" name="correctiveMeasureable_id" value="{{ $internalCheckReport->id }}">
                                     <input type="hidden" name="correctiveMeasureable_type" value="{{ 'App\\\Models\\\InternalCheckReport' }}">
+
+                                    <div class="mb-4">
+                                        <label for="sector_id" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Organizaciona celina u kojoj je utvrđena neusaglašenost') }}:</label>
+                                        <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="sector_id" id="sector_id" required oninvalid="this.setCustomValidity('{{ __("Organizaciona celina u kojoj je utvrđena neusaglašenost nije izabrana") }}')"
+                                        oninput="this.setCustomValidity('')">
+                                            <option value="">{{ __('Izaberi') }}...</option>
+                                            @foreach(\App\Models\Sector::find($internalCheckReport->internalCheck->sectors) as $sector)
+                                                <option value="{{ $sector->id }}">{{ $sector->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('sector_id')
+                                            <span class="text-red-700 italic text-sm">{{ __($message) }}</span>
+                                        @enderror
+                                    </div>
 
                                     <div class="mb-4">
                                         <label for="noncompliance_source" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Izvor informacije o neusaglašenostima') }}:</label>

@@ -25,7 +25,7 @@ class StoreInternalCheckRequest extends FormRequest
     {
         return [
             'date' => 'required|after:yesterday',
-            'sector_id' => 'required',
+            'sectors' => 'required',
             'leaders' => 'required'
         ];
     }
@@ -35,7 +35,7 @@ class StoreInternalCheckRequest extends FormRequest
         return [
             'date.required' => 'Unesite termin provere',
             'date.after' => 'Unesite budući datum',
-            'sector_id.required' => 'Izaberite područje provere',
+            'sectors.required' => 'Izaberite područje provere',
             'leaders.required'=> 'Izaberite proveravače'
         ];
     }

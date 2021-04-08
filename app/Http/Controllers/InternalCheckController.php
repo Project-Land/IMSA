@@ -39,7 +39,6 @@ class InternalCheckController extends Controller
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp','user'])->orderBy('date', 'desc')->get();
-
         return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
     }
 
@@ -85,6 +84,8 @@ class InternalCheckController extends Controller
         $validatedData = $request->validated();
         $validatedLeaders = $request->validate([ 'leaders' => 'required']);
         $leaders = implode(",", $validatedLeaders['leaders']);
+        //$sectors = implode(",", $request->sectors);
+        
 
         //Calculate planIp name
         $c = DB::table('plan_ips')
@@ -109,6 +110,7 @@ class InternalCheckController extends Controller
             }
         }
 
+       // $validatedData['sectors'] = $sectors;
         $validatedData['leaders'] = $leaders;
         $validatedData['team_id'] = Auth::user()->current_team_id;
         $validatedData['user_id'] = Auth::user()->id;
@@ -150,7 +152,7 @@ class InternalCheckController extends Controller
 
     public function edit($id)
     {
-        $internal_check = InternalCheck::with(['sector','standard','planIp'])->findOrfail($id);
+        $internal_check = InternalCheck::with(['standard','planIp'])->findOrfail($id);
         $this->authorize('update', $internal_check);
 
         $team = Team::findOrFail(Auth::user()->current_team_id);
@@ -161,6 +163,7 @@ class InternalCheckController extends Controller
             return ($value->allTeams()->first()->membership->role === 'editor' || $value->allTeams()->first()->membership->role === 'admin') && $value->certificates->pluck('name')->contains('editor');
         });
         $leaders_names=explode(',',$internal_check->leaders);
+     
         return view('system_processes.internal_check.edit',
             [
                 'internalCheck' => $internal_check,
@@ -168,6 +171,7 @@ class InternalCheckController extends Controller
                 'teamLeaders' => $leaders,
                 'leaders_names' => $leaders_names            ]
         );
+        
     }
 
     public function update(UpdateInternalCheckRequest $request, $id)
@@ -180,6 +184,7 @@ class InternalCheckController extends Controller
         $validatedData =  $request->validated();
         $validatedData['date'] = date('Y-m-d', strtotime($request->date));
         $validatedData['leaders'] = $leaders;
+        
 
         try{
             $internal_check->update($validatedData);

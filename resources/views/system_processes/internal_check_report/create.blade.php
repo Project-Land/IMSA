@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="form-group col">
                     <label for="checked_sector" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Proveravano područje') }}</label>
-                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="{{$internalCheck->sector->name}}" readonly>
+                    <input type="text" class="bg-gray-200 appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="checked_sector" name="checked_sector" value="@foreach(collect($internalCheck->sectors) as $sector_id){{\App\Models\Sector::find($sector_id)->name.', '}} @endforeach" readonly>
                 </div>
 
                 <div class="form-group col">
