@@ -45,10 +45,7 @@ class CorrectiveMeasurePolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            return true;
-        }
-        elseif($user->certificates->where('name', 'corrective-measures')->count() > 0 || $user->certificates->pluck('name')->contains('editor')){
+        if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('editor') || $user->certificates->pluck('name')->contains('corrective-measures')) {
             return true;
         }
     }
@@ -67,10 +64,7 @@ class CorrectiveMeasurePolicy
         }*/
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $correctiveMeasure->team->id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'corrective-measures')->count() > 0 || $user->certificates->pluck('name')->contains('editor')){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('editor') || $user->certificates->pluck('name')->contains('corrective-measures')) {
                 return true;
             }
         }
@@ -87,10 +81,7 @@ class CorrectiveMeasurePolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $correctiveMeasure->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'corrective-measures')->count() > 0 || $user->certificates->pluck('name')->contains('editor')){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('editor') || $user->certificates->pluck('name')->contains('corrective-measures')) {
                 return true;
             }
         }

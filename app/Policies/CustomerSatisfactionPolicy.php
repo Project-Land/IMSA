@@ -22,13 +22,10 @@ class CustomerSatisfactionPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            if(session('standard_name') === "9001"){
+        if(session('standard_name') === "9001"){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('customer-satisfaction')) {
                 return true;
             }
-        }
-        elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
-            return true;
         }
     }
 
@@ -36,13 +33,10 @@ class CustomerSatisfactionPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $cs->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                if(session('standard_name') == "9001"){
+            if(session('standard_name') === "9001"){
+                if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('customer-satisfaction')) {
                     return true;
                 }
-            }
-            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
-                return true;
             }
         }
     }
@@ -51,13 +45,10 @@ class CustomerSatisfactionPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $cs->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                if(session('standard_name') == "9001"){
+            if(session('standard_name') === "9001"){
+                if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('customer-satisfaction')) {
                     return true;
                 }
-            }
-            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
-                return true;
             }
         }
     }

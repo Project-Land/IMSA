@@ -44,8 +44,8 @@
                                     <th>{{ __('Aspekt')}}</th>
                                     <th>{{ __('Uticaj')}}</th>
                                     <th>{{ __('Karakter otpada')}}</th>
-                                    <th>{{ __('Verovatnoća pojavljivanja')}}</th>
                                     <th>{{ __('Verovatnoća otkrivanja')}}</th>
+                                    <th>{{ __('Verovatnoća pojavljivanja')}}</th>
                                     <th>{{ __('Ozbiljnost posledica')}}</th>
                                     <th>{{ __('Procenjeni uticaj')}}</th>
                                     <th class="no-sort w-20">{{__('Akcije')}}</th>
@@ -59,10 +59,10 @@
                                     <td class="text-center">{{ $ea->aspect }}</td>
                                     <td class="text-center">{{ $ea->influence }}</td>
                                     <td class="text-center">{{ $ea->waste_type === 1 ? __('Opasan') : __('Neopasan') }}</td>
-                                    <td class="text-center">{{ $ea->probability_of_appearance }}</td>
                                     <td class="text-center">{{ $ea->probability_of_discovery }}</td>
+                                    <td class="text-center">{{ $ea->probability_of_appearance }}</td>
                                     <td class="text-center">{{ $ea->severity_of_consequences }}</td>
-                                    <td class="text-center {{ $ea->estimated_impact >= 8 ? "text-red-600" : "" }}">{{ $ea->estimated_impact }}</td>
+                                    <td class="text-center {{ $ea->estimated_impact > 10 ? "text-red-600" : "" }} {{ $ea->estimated_impact > 4 && $ea->estimated_impact < 11 ? "text-yellow-400" : "" }}">{{ $ea->estimated_impact }}</td>
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled')}}" class="text-blue-700 hover:text-blue-900" onclick="showModal({{ $ea->id }})"><i class="fas fa-eye"></i></button>
                                         <a
@@ -162,14 +162,14 @@
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.influence }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Karakter otpada') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.waste_type == 1 ? "{{ __('Opasan') }}" : "{{ __('Neopasan') }}" }</p></div>
-                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Verovatnoća pojavljivanja') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.probability_of_appearance }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Verovatnoća otkrivanja') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.probability_of_discovery }</p></div>
+                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Verovatnoća pojavljivanja') }}</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.probability_of_appearance }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Ozbiljnost posledica') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.severity_of_consequences }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Procenjeni uticaj') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p ${ response.data.estimated_impact >=9 ? "class='text-red-600'":"" }>${ response.data.estimated_impact }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p ${ response.data.estimated_impact > 10 ? "class='text-red-700'":"" } ${ response.data.estimated_impact > 4 && response.data.estimated_impact < 11 ? "class='text-yellow-400'":"" }>${ response.data.estimated_impact }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold text-sm"><p>{{ __('Kreirao') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>

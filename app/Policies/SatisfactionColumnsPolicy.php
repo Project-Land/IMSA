@@ -16,10 +16,7 @@ class SatisfactionColumnsPolicy
         $role = $user->allTeams()->first()->membership->role;
         if(session('standard_name') === "9001"){
             if(!$poll){
-                if($role == "admin" || $role == "super-admin") {
-                    return true;
-                }
-                elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
+                if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('customer-satisfaction')) {
                     return true;
                 }
             }
@@ -30,10 +27,7 @@ class SatisfactionColumnsPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if(session('standard_name') === "9001"){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'customer-satisfaction')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('customer-satisfaction')) {
                 return true;
             }
         }

@@ -10,7 +10,6 @@ class NotificationPolicy
 {
     use HandlesAuthorization;
 
-
     /**
      * Determine whether the user can view any models.
      *
@@ -20,7 +19,7 @@ class NotificationPolicy
     public function viewAny(User $user)
     {
         if($user->allTeams()->first()->membership->role==='editor' || $user->allTeams()->first()->membership->role==='admin' || $user->allTeams()->first()->membership->role==='super-admin')
-        return true;
+            return true;
     }
 
     /**

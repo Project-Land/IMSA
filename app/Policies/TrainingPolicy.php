@@ -44,10 +44,7 @@ class TrainingPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if ($role == "admin" || $role == "super-admin") {
-            return true;
-        }
-        elseif($user->certificates->where('name', 'trainings')->count() > 0){
+        if ($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('trainings')) {
             return true;
         }
     }
@@ -63,10 +60,7 @@ class TrainingPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $training->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'trainings')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('trainings')) {
                 return true;
             }
         }
@@ -83,10 +77,7 @@ class TrainingPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $training->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'trainings')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('trainings')) {
                 return true;
             }
         }

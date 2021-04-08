@@ -37,8 +37,8 @@ class EnvironmentalAspectsExport implements FromCollection, WithHeadings, Should
             __('Aspekt'),
             __('Uticaj'),
             __('Karakter otpada'),
-            __('Verovatnoća pojavljivanja'),
             __('Verovatnoća otkrivanja'),
+            __('Verovatnoća pojavljivanja'),
             __('Ozbiljnost posledica'),
             __('Procenjeni uticaj'),
             __('Standard'),
@@ -67,10 +67,15 @@ class EnvironmentalAspectsExport implements FromCollection, WithHeadings, Should
         ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
         ->getStartColor()->setARGB('FFFFFFED');
         foreach(range(1,$count) as $c){
-            if($sheet->getCell('I'.$c)->getValue() >8){
-            $sheet->getStyle('I'.$c)->getFill()
-            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-            ->getStartColor()->setARGB('FFFF3333');
+            if($sheet->getCell('I'.$c)->getValue() > 3 && $sheet->getCell('I'.$c)->getValue() < 11){
+                $sheet->getStyle('I'.$c)->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setARGB('FFFFFF55');
+            }
+            if($sheet->getCell('I'.$c)->getValue() > 11){
+                $sheet->getStyle('I'.$c)->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setARGB('FFFF3333');
             }
         }
     }
@@ -108,8 +113,8 @@ class EnvironmentalAspectsExport implements FromCollection, WithHeadings, Should
             $requirement->aspect,
             $requirement->influence,
             $requirement->waste_type == 1 ? __('Opasan') : __('Neopasan'),
-            $requirement->probability_of_appearance,
             $requirement->probability_of_discovery,
+            $requirement->probability_of_appearance,
             $requirement->severity_of_consequences,
             $requirement->estimated_impact,
             $requirement->standard->name,

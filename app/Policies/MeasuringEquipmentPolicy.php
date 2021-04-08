@@ -21,10 +21,7 @@ class MeasuringEquipmentPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if(session('standard_name') === "9001"){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'measuring-equipment')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('measuring-equipment')) {
                 return true;
             }
         }
@@ -36,10 +33,7 @@ class MeasuringEquipmentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $measuring_equipment->team_id){
             if(session('standard_name') === "9001"){
-                if($role == "admin" || $role == "super-admin") {
-                    return true;
-                }
-                elseif($user->certificates->where('name', 'measuring-equipment')->count() > 0){
+                if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('measuring-equipment')) {
                     return true;
                 }
             }
@@ -51,10 +45,7 @@ class MeasuringEquipmentPolicy
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $measuring_equipment->team_id){
             if(session('standard_name') === "9001"){
-                if($role == "admin" || $role == "super-admin") {
-                    return true;
-                }
-                elseif($user->certificates->where('name', 'measuring-equipment')->count() > 0){
+                if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('measuring-equipment')) {
                     return true;
                 }
             }

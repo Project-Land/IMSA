@@ -20,10 +20,7 @@ class ComplaintPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin" || $role == "editor") {
-            return true;
-        }
-        elseif($user->certificates->where('name', 'complaints')->count() > 0){
+        if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('complaints') || $user->certificates->pluck('name')->contains('editor')) {
             return true;
         }
     }
@@ -32,10 +29,7 @@ class ComplaintPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $complaint->team_id){
-            if($role == "admin" || $role == "super-admin" || $role == "editor") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'complaints')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('complaints') || $user->certificates->pluck('name')->contains('editor')) {
                 return true;
             }
         }
@@ -45,10 +39,7 @@ class ComplaintPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $complaint->team_id){
-            if($role == "admin" || $role == "super-admin" || $role == "editor") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'complaints')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('complaints') || $user->certificates->pluck('name')->contains('editor')) {
                 return true;
             }
         }

@@ -56,18 +56,18 @@
                 </select>
             </div>
 
-			<div class="mb-4">
-				<label for="probability_of_appearance" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća pojavljivanja')}}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_appearance" id="probability_of_appearance" required>
+            <div class="mb-4">
+				<label for="probability_of_discovery" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća otkrivanja')}}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_discovery" id="probability_of_discovery" required>
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                 </select>
             </div>
 
-            <div class="mb-4">
-				<label for="probability_of_discovery" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća otkrivanja')}}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_discovery" id="probability_of_discovery" required>
+			<div class="mb-4">
+				<label for="probability_of_appearance" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća pojavljivanja')}}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_appearance" id="probability_of_appearance" required>
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
@@ -100,13 +100,19 @@
         let poa = $('#probability_of_appearance').val();
         let pod = $('#probability_of_discovery').val();
         let soc = $('#severity_of_consequences').val();
-        let total = parseInt(poa) +parseInt(pod) + parseInt(soc);
+        let total = parseInt(pod) + 2*(parseInt(poa) + parseInt(soc));
         $('#estimated_impact').val(total);
-        if(total >= 8){
+        if(total > 10){
             $('#estimated_impact').addClass('text-red-700');
+            $('#estimated_impact').removeClass('text-yellow-400');
+        }
+        else if(total > 4 && total < 11){
+            $('#estimated_impact').addClass('text-yellow-400');
+            $('#estimated_impact').removeClass('text-red-700');
         }
         else{
             $('#estimated_impact').removeClass('text-red-700');
+            $('#estimated_impact').removeClass('text-yellow-400');
         }
 
     }

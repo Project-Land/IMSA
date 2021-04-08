@@ -25,10 +25,7 @@ class SoaPolicy
 
         $soas = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField', 'documents')->get();
         if($soas->count() == 0 && session('standard_name') === "27001"){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'statement-of-applicability')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('statement-of-applicability')) {
                 return true;
             }
         }
@@ -40,10 +37,7 @@ class SoaPolicy
         $role = $user->allTeams()->first()->membership->role;
         $soas = Soa::where('team_id', Auth::user()->current_team_id)->with('soaField', 'documents')->get();
         if($soas->count() != 0 && session('standard_name') === "27001"){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'statement-of-applicability')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('statement-of-applicability')) {
                 return true;
             }
         }

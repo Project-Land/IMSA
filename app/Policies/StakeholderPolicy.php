@@ -20,10 +20,7 @@ class StakeholderPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            return true;
-        }
-        elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
+        if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('stakeholders')) {
             return true;
         }
     }
@@ -32,10 +29,7 @@ class StakeholderPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $stakeholder->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('stakeholders')) {
                 return true;
             }
         }
@@ -45,10 +39,7 @@ class StakeholderPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $stakeholder->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'stakeholders')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('stakeholders')) {
                 return true;
             }
         }

@@ -38,7 +38,11 @@ class RulesOfProcedureRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'document_name' => Rule::unique('documents')->where( function ($query) {
-                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+                return $query->where([
+                    ['team_id', Auth::user()->current_team_id],
+                    ['standard_id', session('standard')],
+                    ['doc_category', 'rules_procedure']
+                ])->whereNull('deleted_at');
             }),
             'version' => 'required',
             'file' => 'required|max:50000|mimes:pdf'
@@ -50,7 +54,11 @@ class RulesOfProcedureRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'document_name' => Rule::unique('documents')->ignore($this->route('rules_of_procedure'))->where( function ($query) {
-                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+                return $query->where([
+                    ['team_id', Auth::user()->current_team_id],
+                    ['standard_id', session('standard')],
+                    ['doc_category', 'rules_procedure']
+                ])->whereNull('deleted_at');
             }),
             'version' => 'required',
             'file' => 'max:50000|mimes:pdf'

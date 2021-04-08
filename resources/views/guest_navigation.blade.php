@@ -40,7 +40,7 @@
 
                         <x-slot name="content">
                             @if(session('locale') != "sr")
-                                <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'sr']) }}">
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang' => 'sr']) }}">
                                     <div class="inline-flex items-center justify-end mt-1">
                                         <div><img src="{{ asset('images/sr.png') }}" alt="sr"></div>
                                         <div class="ml-3">{{ __('Srpski') }}</div>
@@ -49,7 +49,7 @@
                             @endif
 
                             @if(session('locale') != "en")
-                                <x-jet-dropdown-link href="{{ route('lang',['lang'=>'en']) }}">
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang' => 'en']) }}">
                                     <div class="inline-flex items-center justify-end mt-1">
                                         <div><img src="{{ asset('images/en.png') }}" alt="en"></div>
                                         <div class="ml-3">{{ __('English') }}</div>

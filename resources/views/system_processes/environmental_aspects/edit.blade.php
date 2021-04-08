@@ -57,20 +57,20 @@
                 </select>
             </div>
 
-			<div class="mb-4">
-				<label for="probability_of_appearance" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća pojavljivanja')}}:</label>
-                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_appearance" id="probability_of_appearance" required>
-                    @for($i = 1; $i <= 5; $i++)
-                        <option value="{{ $i }}" {{ $environmental_aspect->probability_of_appearance === $i ? "selected" : "" }}>{{ $i }}</option>
-                    @endfor
-                </select>
-            </div>
-
             <div class="mb-4">
 				<label for="probability_of_discovery" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća otkrivanja')}}:</label>
                 <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_discovery" id="probability_of_discovery" required>
                     @for($i = 1; $i <= 5; $i++)
                         <option value="{{ $i }}" {{ $environmental_aspect->probability_of_discovery === $i ? "selected" : "" }}>{{ $i }}</option>
+                    @endfor
+                </select>
+            </div>
+
+			<div class="mb-4">
+				<label for="probability_of_appearance" class="block text-gray-700 text-sm font-bold mb-2">{{__('Verovatnoća pojavljivanja')}}:</label>
+                <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="probability_of_appearance" id="probability_of_appearance" required>
+                    @for($i = 1; $i <= 5; $i++)
+                        <option value="{{ $i }}" {{ $environmental_aspect->probability_of_appearance === $i ? "selected" : "" }}>{{ $i }}</option>
                     @endfor
                 </select>
             </div>
@@ -86,7 +86,7 @@
 
             <div class="mb-4">
 				<label for="estimated_impact" class="block text-gray-700 text-sm font-bold mb-2">{{__('Procenjeni uticaj')}}:</label>
-				<input class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline {{ $environmental_aspect->estimated_impact >= 8 ? "text-red-700" : "" }}" type="text" name="estimated_impact" id="estimated_impact" value="{{ $environmental_aspect->estimated_impact }}" disabled>
+				<input class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline {{ $environmental_aspect->estimated_impact > 10 ? "text-red-700" : "" }} {{ $environmental_aspect->estimated_impact > 4 && $environmental_aspect->estimated_impact < 11 ? "text-yellow-400" : "" }}" type="text" name="estimated_impact" id="estimated_impact" value="{{ $environmental_aspect->estimated_impact }}" disabled>
             </div>
 
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{__('Izmeni')}}</button>
@@ -101,13 +101,19 @@
         let poa = $('#probability_of_appearance').val();
         let pod = $('#probability_of_discovery').val();
         let soc = $('#severity_of_consequences').val();
-        let total = parseInt(poa) +parseInt(pod) + parseInt(soc);
+        let total = parseInt(pod) + 2*(parseInt(poa) + parseInt(soc));
         $('#estimated_impact').val(total);
-        if(total >= 8){
+        if(total > 10){
             $('#estimated_impact').addClass('text-red-700');
+            $('#estimated_impact').removeClass('text-yellow-400');
+        }
+        else if(total > 4 && total < 11){
+            $('#estimated_impact').addClass('text-yellow-400');
+            $('#estimated_impact').removeClass('text-red-700');
         }
         else{
             $('#estimated_impact').removeClass('text-red-700');
+            $('#estimated_impact').removeClass('text-yellow-400');
         }
     }
 

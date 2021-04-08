@@ -46,7 +46,7 @@ class EnvironmentalAspectsRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $total = $this->probability_of_appearance + $this->probability_of_discovery + $this->severity_of_consequences;
+        $total = $this->probability_of_discovery + 2*($this->probability_of_appearance + $this->severity_of_consequences);
 
         $this->merge([
             'user_id' => Auth::user()->id,

@@ -28,7 +28,11 @@ class OtherInternalDocumentRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'document_name' => Rule::unique('documents')->where( function ($query) {
-                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+                return $query->where([
+                    ['team_id', Auth::user()->current_team_id],
+                    ['standard_id', session('standard')],
+                    ['doc_category', 'other_internal_document']
+                ])->whereNull('deleted_at');
             }),
             'file' => 'required|max:50000|mimes:pdf,doc,docx,xlsx,xls,csv,jpeg,jpg'
         ];
@@ -39,7 +43,11 @@ class OtherInternalDocumentRequest extends FormRequest
         return [
             'document_name' => 'required|max:255',
             'document_name' => Rule::unique('documents')->ignore($this->route('other_internal_document'))->where( function ($query) {
-                return $query->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->whereNull('deleted_at');
+                return $query->where([
+                    ['team_id', Auth::user()->current_team_id],
+                    ['standard_id', session('standard')],
+                    ['doc_category', 'other_internal_document']
+                ])->whereNull('deleted_at');
             }),
             'file' => 'max:50000|mimes:pdf,doc,docx,xlsx,xls,csv,jpeg,jpg'
         ];

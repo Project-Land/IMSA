@@ -45,10 +45,7 @@ class GoalPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if($role == "admin" || $role == "super-admin") {
-            return true;
-        }
-        elseif($user->certificates->where('name', 'goals')->count() > 0){
+        if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('goals')) {
             return true;
         }
     }
@@ -64,10 +61,7 @@ class GoalPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $goal->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'goals')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('goals')) {
                 return true;
             }
         }
@@ -84,10 +78,7 @@ class GoalPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $goal->team_id){
-            if($role == "admin" || $role == "super-admin") {
-                return true;
-            }
-            elseif($user->certificates->where('name', 'goals')->count() > 0){
+            if($role == "admin" || $role == "super-admin" || $user->certificates->pluck('name')->contains('goals')) {
                 return true;
             }
         }
