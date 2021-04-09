@@ -54,7 +54,7 @@
                                     <td class="text-center">{{ $risk->frequency }}</td>
                                     <td class="text-center">{{ $risk->total }}</td>
                                     <td class="text-center">{{ $risk->acceptable }}</td>
-                                    <td class="text-center text-sm"><span @if($risk->measure) style="cursor: pointer; color: blue;" onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
+                                    <td class="text-center text-sm"><span @if($risk->measure) class="cursor-pointer text-blue-500 hover:text-blue-700" onclick="showMeasure({{ $risk->id }})" @endif >{{ ($risk->measure) ? : '/' }}</span>
                                         @if($risk->measure)
                                             @can('update', $risk)
                                                 <a href="{{ route('risk-management.edit-plan', $risk->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('Izmena plana') }}"><i class="fas fa-pen fa-sm"></i></a>
@@ -62,7 +62,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">{{ $risk->user->name }}</td>
-                                    <td class="text-center">
+                                    <td class="text-center w-20">
                                     <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz rizika / prilike') }}" class="text-blue-700 hover:text-blue-900" onclick="showRisk({{ $risk->id }})"><i class="fas fa-eye"></i></button>
                                     <a
                                         href="{{route('risk-management.print',$risk->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
@@ -200,7 +200,7 @@
                         let modal = `<div class="modal fade" id="showRisk-${ id }" tabindex="-1" role="dialog">
                                         <div class="modal-dialog" style="max-width: 600px !important;" role="document">
                                             <div class="modal-content rounded-lg shadow-xl">
-                                                
+
                                                 <div class="modal-body">
                                                     <div class="row text-sm">
                                                         <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Opis rizika / prilike') }}</p></div>
