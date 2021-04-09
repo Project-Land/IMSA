@@ -58,13 +58,14 @@ class RiskManagementController extends Controller
     public function show($id)
     {
         $risk = RiskManagement::with('users','user')->findOrFail($id);
+        $this->authorize('view', $risk);
         return response()->json($risk);
     }
 
     public function edit($id)
     {
-        $this->authorize('update', RiskManagement::find($id));
         $risk = RiskManagement::findOrFail($id);
+        $this->authorize('update', $risk);
         return view('system_processes.risk_management.edit', compact('risk'));
     }
 
