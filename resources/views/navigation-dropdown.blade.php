@@ -122,6 +122,15 @@
                                     </div>
                                 </x-jet-dropdown-link>
                             @endif
+
+                            @if(session('locale') != "hr")
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'hr']) }}">
+                                    <div class="inline-flex items-center justify-end mt-1">
+                                        <div><img src="{{ asset('images/hr.png') }}" alt="hr"></div>
+                                        <div class="ml-3">{{ __('Hrvatski') }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
                         </x-slot>
 
                     </x-jet-dropdown>
