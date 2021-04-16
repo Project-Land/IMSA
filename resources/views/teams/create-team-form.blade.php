@@ -33,7 +33,8 @@
             <select class="block mt-1 appearance-none w-40 border border-gray-700 font-small text-sm text-gray-700 py-2 px-2 pr-8 rounded-md shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" wire:model.defer="state.lang" id="lang">
                 <option value="0">{{ __('Izaberi') }}...</option>
                 <option value="sr" selected>{{ __('Srpski') }}</option>
-                <option value="en">{{ __('Engleski') }}</option>
+                <option value="en">{{ __('English') }}</option>
+                <option value="hr">{{ __('Hrvatski') }}</option>
             </select>
             <x-jet-input-error for="lang" class="mt-2" />
         </div>
