@@ -41,6 +41,7 @@
                 <option value="0">{{ __('Izaberi') }}...</option>
                 <option value="sr" {{ $team->lang == "sr" ? "selected" : "" }}>{{ __('Srpski') }}</option>
                 <option value="en" {{ $team->lang == "en" ? "selected" : "" }}>{{ __('Engleski') }}</option>
+                <option value="hr" {{ $team->lang == "hr" ? "selected" : "" }}>{{ __('Hrvatski') }}</option>
             </select>
             <x-jet-input-error for="lang" class="mt-2" />
         </div>
