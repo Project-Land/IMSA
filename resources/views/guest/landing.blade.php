@@ -24,15 +24,16 @@
         </div>
     </header>
 
-    <div class="row mt-1">
-        <div class="col">
-            @if(Session::has('message'))
-                <x-alert :type="Session::get('message')" :message="Session::get('message')"/>
-            @endif
-        </div>
-    </div>
-
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
+
+        @if(Session::has('message'))
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 mb-6 rounded relative alert" role="alert">
+                <span class="block sm:inline">{{ Session::get('message') }}</span>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 focus:outline-none">
+                    <span class="text-2xl close">&times;</span>
+                </button>
+            </div>
+        @endif
 
         <div class="flex flex-wrap">
 
@@ -47,30 +48,32 @@
             </div>
     
             <div class="w-full sm:w-2/5">
+                <!-- <h3 class="uppercase text-3xl mb-6">{{ __('Zakažite sastanak') }}</h3> -->
+
                 <form action="{{route('contactme')}}" method="get" id="contact-form" class="w-full max-w-lg">
                     @csrf
                     <div class="flex flex-wrap -mx-3 mb-6">
-                        <div class="w-full md:w-1/2 px-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">{{ __('Ime i prezime') }}</label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="name" name="name" type="text" required>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="name" name="name" type="text" autocomplete="off" required>
                         </div>
                         <div class="w-full md:w-1/2 px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="company">{{ __('Firma') }}</label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="company" name="company" type="text" required>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="company" name="company" type="text" autocomplete="off" required>
                         </div>
                     </div>
         
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">{{ __('Email') }}</label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" name="email" type="email" required>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" name="email" type="email" autocomplete="off" required>
                         </div>
                     </div>
 
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="date">{{ __('Željeni termin') }}</label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="date" id="date" type="text" placeholder="xx.xx.xxxx" required>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="date" id="date" type="text" autocomplete="off" placeholder="xx.xx.xxxx" required>
                         </div>
                     </div>
 
@@ -110,6 +113,14 @@
             minDate: 0,
             dayOfWeekStart: 1,
             scrollInput: false
+        });
+
+        $(".alert").fadeTo(5000, 500).slideUp(500, function(){
+            $(".alert").slideUp(500);
+        });
+
+        $(".close").click( () => {
+            $(".alert").hide();
         });
     </script>
 

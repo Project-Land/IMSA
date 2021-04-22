@@ -782,5 +782,6 @@
     "Prikaz rizika / prilike" : "Risk / opportunity preview",
     "Ime i prezime" : "Full Name",
     "Željeni termin" : "Appointment date",
-    "Pošalji" : "Send"
+    "Pošalji" : "Send",
+    "Zahtev je uspešno prosleđen" : "Request sent"
 }
