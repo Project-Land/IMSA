@@ -201,5 +201,6 @@ Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('manual', [HomeController::class, 'manual'])->name('manual');
 Route::get('lang/{lang}', [HomeController::class, 'lang'])->name('lang');
+Route::get('contactme', [HomeController::class, 'contactWithEmail'])->name('contactme');
 
 

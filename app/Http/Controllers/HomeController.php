@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Mail\Contact;
 use App\Models\Standard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -108,6 +110,13 @@ class HomeController extends Controller
     public function deleteNotification($id){
         Auth::user()->instant_notification()->where('instant_notification_id', $id)->delete();
         return back();
+    }
+
+    public function contactWithEmail( Request $request){
+  
+        Mail::to('amarkovic@projectland.rs')->send(new Contact('aca'));
+    
+        return redirect('/');
     }
 
 }
