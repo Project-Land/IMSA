@@ -66,12 +66,12 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap -mx-3 mb-6">
+                    <!-- <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="message">{{ __('Poruka') }}</label>
                             <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" id="message" cols="30" rows="6"></textarea>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="flex flex-wrap justify-end -mx-3 mb-6 float-right">
                         <div class="w-full px-3">
@@ -86,10 +86,10 @@
     <script>
         $("#contact-form").validate({
             messages: {
-                name: "{{ __('Unesite vaše ime i prezime') }}",
-                company: "{{ __('Unesite naziv vaše kompanije') }}",
-                email: "{{ __('Unesite vašu email adresu') }}",
-                date: "{{ __('Unesite željeni termin') }}",
+                name: "{{ __('Polje je obavezno') }}",
+                company: "{{ __('Polje je obavezno') }}",
+                email: "{{ __('Polje je obavezno') }}",
+                date: "{{ __('Polje je obavezno') }}",
             }
         });
 
