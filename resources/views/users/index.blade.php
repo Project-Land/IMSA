@@ -72,7 +72,7 @@
 										</td>
                                         <td class="px-6 py-2 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                             @if(!$user->hasTeamRole($user->currentTeam, 'user'))
-                                                <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}')">{{ __('Lista dozvola pristupa') }}</span>
+                                                <span class="cursor-pointer" onclick="toggleCertsModal('{{ $user->id }}', '{{ $user->certificates }}', '{{ $user->teams[0]->membership->role }}')">{{ __('Lista dozvola pristupa') }}</span>
                                             @else
                                                 /
                                             @endif
@@ -198,7 +198,7 @@
         $('#trainings-modal-'+id).modal();
     }
 
-    function toggleCertsModal(id, certs){
+    function toggleCertsModal(id, certs, role){
         let userCerts = JSON.parse(certs);
         let arrayOfCerts = [];
         $.each(userCerts, function(i, item){
@@ -215,7 +215,7 @@
                                         <div class="mt-4">
                                             <div class="mt-1 border border-gray-200 rounded-lg">
                                                 @foreach($certificates as $certificate)
-                                                    <div class="px-4 py-3 border-t border-gray-200">
+                                                    <div class="px-4 py-3 border-t border-gray-200 {{ $certificate->name != "editor"? 'certificate':'' }}">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
                                                             <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ __($certificate->display_name) }}</span>
                                                         </label>
@@ -233,6 +233,14 @@
                         </div>`;
 
             $("body").append(modal);
+            
+            if(role == 'admin'){
+                $('.certificate').css('display', 'none')
+            }
+            else{
+                $('.certificate').css('display', 'block')
+            }
+            
             $('#certificates-'+id).modal();
     }
 

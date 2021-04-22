@@ -69,7 +69,7 @@
                             @enderror
                         </div>
 
-                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6">
+                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6 d-none">
                             <x-jet-label for="certificates" value="{{ __('Dozvole pristupa') }}" class="block font-medium text-sm text-gray-700" />
 
                             @foreach($certificates as $certificate)
@@ -126,9 +126,10 @@
             $('#certificates-block').addClass('d-none')
         }
         if($('#role').val() == 'admin'){
+            $('#certificates-block').removeClass('d-none')
             $('.certificate').addClass('d-none')
         }
-        else{
+        if($('#role').val() == 'editor'){
             $('#certificates-block').removeClass('d-none')
             $('.certificate').removeClass('d-none')
         }
