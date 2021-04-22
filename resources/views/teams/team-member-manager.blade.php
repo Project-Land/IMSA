@@ -37,7 +37,7 @@
                                         <td class="px-3 py-2 whitespace-no-wrap">
                                             <div class="w-full sm:w-28">
                                                 @if($user->membership->role != "user")
-                                                    <span class="cursor-pointer ml-2 text-sm text-gray-400" onclick="toggleModal('{{ $user->id }}')">
+                                                    <span class="cursor-pointer ml-2 text-sm text-gray-400" onclick="toggleModal('{{ $user->id }}', '{{ $user->membership->role }}')">
                                                         {{ __('Lista dozvola pristupa') }}
                                                     </span>
                                                 @endif
@@ -104,7 +104,7 @@
                 {{ __('Odustani') }}
             </x-jet-secondary-button>
 
-            <x-jet-button class="ml-2" wire:click="updateRole" wire:loading.attr="disabled" onclick="location.reload()">
+            <x-jet-button class="ml-2" wire:click="updateRole" onclick="location.reload()">
                 {{ __('Sačuvaj') }}
             </x-jet-button>
         </x-slot>
@@ -198,7 +198,10 @@
         console.log(error)
     });
 
-    function toggleModal(modalID){
+    function toggleModal(modalID, role){
+        if(role == 'admin'){
+            certificates = certificates.filter(cert => cert.name == 'editor')
+        }
         axios.get('/user/'+modalID+'/certificates')
         .then((response) => {
             sessionStorage.setItem('selectedCertificates', response.data)

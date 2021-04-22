@@ -80,18 +80,24 @@ class HomeController extends Controller
         }
     }
 
-    public function about(){
+    public function about()
+    {
         return redirect('/images/imsa.pdf');
     }
 
-    public function contact(){
-
+    public function contact()
+    {
         return view('guest.contact');
     }
 
     public function manual()
     {
         return view('manual');
+    }
+
+    public function landing()
+    {
+        return view('guest.landing');
     }
 
     public function lang($lang)

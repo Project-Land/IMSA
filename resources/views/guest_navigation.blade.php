@@ -19,6 +19,7 @@
                 <!-- Menu -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Login') }}</a>
+                    <a href="{{ route('landing') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('IMSA') }}</a>
                     <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
                     <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('O aplikaciji') }}</a>
                     <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Kontakt') }}</a>
@@ -89,6 +90,10 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}
+        </x-jet-responsive-nav-link>
+
+        <x-jet-responsive-nav-link href="{{ route('landing') }}" :active="request()->routeIs('landing')">
+            {{ __('IMSA') }}
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="#" :active="request()->routeIs('manual')">

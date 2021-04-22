@@ -69,11 +69,11 @@
                             @enderror
                         </div>
 
-                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6 d-none">
+                        <div id="certificates-block" class="px-4 py-3 bg-white sm:p-6">
                             <x-jet-label for="certificates" value="{{ __('Dozvole pristupa') }}" class="block font-medium text-sm text-gray-700" />
 
                             @foreach($certificates as $certificate)
-                                <label class="inline-flex items-center mt-3 cursor-pointer mr-2">
+                                <label class="inline-flex items-center mt-3 cursor-pointer mr-2 {{ $certificate->name != 'editor'? 'certificate':'' }}">
                                     <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600"><span class="ml-2 text-gray-700 text-sm">{{ __($certificate->display_name) }}</span>
                                 </label>
                             @endforeach
@@ -125,30 +125,12 @@
             });
             $('#certificates-block').addClass('d-none')
         }
+        if($('#role').val() == 'admin'){
+            $('.certificate').addClass('d-none')
+        }
         else{
             $('#certificates-block').removeClass('d-none')
+            $('.certificate').removeClass('d-none')
         }
-    });
-
-    $('.yajra-datatable').DataTable({
-        "language": {
-            "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
-            "infoEmpty": "{{__('Nema podataka')}}",
-            "zeroRecords": "{{__('Nema podataka')}}",
-            "infoFiltered": "({{__('od')}} _MAX_ {{__('ukupno rezultata')}})",
-            "lengthMenu": "{{__('Prikaži')}} _MENU_ {{__('redova po stranici')}}",
-            "search": "{{__('Pretraga')}}",
-            "paginate": {
-                "next": "{{__('Sledeća')}}",
-                "previous": "{{__('Prethodna')}}",
-                "first": "{{__('Prva')}}",
-                "last": "{{__('Poslednja')}}"
-            }
-        },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
-        "order": [[ 0, "desc" ]]
     });
 </script>
