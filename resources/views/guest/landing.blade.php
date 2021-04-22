@@ -24,6 +24,14 @@
         </div>
     </header>
 
+    <div class="row mt-1">
+        <div class="col">
+            @if(Session::has('message'))
+                <x-alert :type="Session::get('message')" :message="Session::get('message')"/>
+            @endif
+        </div>
+    </div>
+
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
 
         <div class="flex flex-wrap">
@@ -39,7 +47,7 @@
             </div>
     
             <div class="w-full sm:w-2/5">
-                <form action="" method="POST" id="contact-form" class="w-full max-w-lg">
+                <form action="{{route('contactme')}}" method="get" id="contact-form" class="w-full max-w-lg">
                     @csrf
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full md:w-1/2 px-3 mb-6">

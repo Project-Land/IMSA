@@ -23,11 +23,11 @@ class Contact extends Mailable
      */
     public function __construct($request)
     {
-        $this->name=$request;//$request->name;
-        $this->company='Google';//$request->company;
-        $this->email='dadsa@fd.com';//$request->email;
-        $this->date='12.10.2021. 14:00';//$request->date;
-        $this->message='poruka';//$request->message;
+        $this->name=$request->name;
+        $this->company=$request->company;
+        $this->email=$request->email;
+        $this->date=$request->date;
+        $this->message=$request->message ?? '';
     }
 
     /**

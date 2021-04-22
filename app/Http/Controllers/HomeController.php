@@ -120,9 +120,9 @@ class HomeController extends Controller
 
     public function contactWithEmail( Request $request){
   
-        Mail::to('amarkovic@projectland.rs')->send(new Contact('aca'));
+        Mail::to('nstamenkovski@projectland.rs')->send(new Contact($request));
     
-        return redirect('/');
+        return back()->with(['message'=>__('Zahtev je uspešno prosleđen')]);
     }
 
 }
