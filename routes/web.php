@@ -200,6 +200,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('manual', [HomeController::class, 'manual'])->name('manual');
+Route::get('landing', [HomeController::class, 'landing'])->name('landing');
 Route::get('lang/{lang}', [HomeController::class, 'lang'])->name('lang');
 
 
