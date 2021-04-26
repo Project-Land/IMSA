@@ -80,7 +80,7 @@
                     <div class="">
                     <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 9001</div>
                     <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 14001</div>
-                    <div class=""><i class="fas fa-star text-yellow-400"></i> 27001</div>
+                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 27001</div>
                     <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 45001</div>
                     </div>
                     
