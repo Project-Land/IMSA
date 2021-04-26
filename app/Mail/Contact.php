@@ -26,8 +26,8 @@ class Contact extends Mailable
         $this->name=$request->name;
         $this->company=$request->company;
         $this->email=$request->email;
-        $this->date=$request->date;
-        $this->message=$request->message ?? '';
+        $this->date=$request->date ?? '/';
+        $this->message=$request->message ?? '/';
     }
 
     /**

@@ -783,5 +783,10 @@
     "Ime i prezime" : "Full Name",
     "Željeni termin" : "Appointment date",
     "Pošalji" : "Send",
-    "Zahtev je uspešno prosleđen" : "Request sent"
+    "Zahtev je uspešno prosleđen" : "Request sent",
+    "Kontaktirajte nas":"Contact Us",
+    "Kontaktirajte nas ili zakažite besplatnu prezentaciju":"Contact Us or schedule a free presentation",
+    "Popunjavate ukoliko zakazujete prezentaciju":"Choose a date only if you schedule a presentation",
+    "Poruka nije obavezna":"The message is optional",
+    "Poruka je uspešno prosleđena, odgovorićemo vam u najkraćem roku":"The message was successfully forwarded, we will reply to you as soon as possible"
 }

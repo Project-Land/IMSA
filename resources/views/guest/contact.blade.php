@@ -1,5 +1,22 @@
 <x-guest-layout>
 
+@push('scripts')
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    @endpush
+
+    @push('styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" />
+        <style>
+            label.error{
+                font-style: italic;
+                color: red;
+                font-size: .75rem;
+            }
+        </style>
+    @endpush
+
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -7,6 +24,124 @@
             </h2>
         </div>
     </header>
+
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
+
+        @if(Session::has('message'))
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 mb-6 rounded relative alert" role="alert">
+                <span class="block sm:inline">{{ Session::get('message') }}</span>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 focus:outline-none">
+                    <span class="text-2xl close">&times;</span>
+                </button>
+            </div>
+        @endif
+
+        <div class="flex flex-wrap">
+
+            <div class="w-full sm:w-3/5">
+                <div class="sm:text-lg sm:mr-4 tracking-wide">
+
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mb-3">
+                    <h2 class="font-semibold text-xl text-gray-800 leading-tight border-b-8 border-red-500 text-center">
+                    <span class="text-red-500 font-bold text-2xl">{{ __('IMSA').' ' }}</span><span class="text-yellow-300 font-bold text-2xl">{{__('aplikacija')}}</span>
+                    </h2>
+                    <h3 class="text-center text-2xl">{{__('digitalni alat za unapređenje biznisa')}}</h3>
+                </div>
+
+                    <p>
+                    {{__('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.')}}
+                    </p>
+
+                    <h2 class="sm:text-xl font-bold my-3"> {{__('Kome je namenjena?')}}</h2>
+
+                    <ul>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Svima koji žele da unaprede svoj sistem menadžmenta.')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje imaju implementirane ISO standarde.')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje treba da uvedu ISO standard - IMSA omogućava da proces implementacije sprovedu brzo, lako i bez angažovanja konsultantskih kuća.')}}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3">{{__('Benefiti primene aplikacije su:')}}</h2>
+
+                    <ul>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('sistemsko upravljanje rizicima')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('jasno i pregledno praćenje potreba i zahteva zainteresovanih strana')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('olakšano praćenje performansi i ocenjivanje isporučilaca')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('značajno ubrzan i pojednostavljen proces preispitivanja od strane rukovodstva')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('unapređen proces upravljanja reklamacijama')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('modernizovano planiranje i organizovanje internih provera')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('ažurnost korišćene dokumentacije')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('smanjen rizik od gubljenja/suspenzije sertifikata')}}</li>
+                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('pristup 24/7 s bilo kog računara, laptopa, tablet, smart telefona uz internet konekciju.')}}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3">{{__('Standardi')}}:</h2>
+                    <div class="">
+                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 9001</div>
+                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 14001</div>
+                    <div class=""><i class="fas fa-star text-yellow-400"></i> 27001</div>
+                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 45001</div>
+                    </div>
+                    
+
+                    <p class="my-5 ">{!!'<b>'.__('NAPOMENA').':</b>'!!} {{__('Prema zahtevu, IMSA može biti kreirana za standard koji Vam je potreban.')}}</p>
+
+                </div>
+            </div>
+    
+            <div class="w-full sm:w-2/5 mt-5">
+                <!-- <h3 class="uppercase text-3xl mb-6">{{ __('Zakažite sastanak') }}</h3> -->
+                <h1 class="text-2xl mb-5 font-bold">{{__('Kontaktirajte nas ili zakažite besplatnu prezentaciju')}}</h1>
+                <form action="{{route('contactme')}}" method="get" id="contact-form" class="w-full max-w-lg">
+                    @csrf
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">{{ __('Ime i prezime') }}</label>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="name" name="name" type="text" autocomplete="off" required>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="company">{{ __('Firma') }}</label>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="company" name="company" type="text" autocomplete="off" required>
+                        </div>
+                    </div>
+        
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">{{ __('Email') }}</label>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" name="email" type="email" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="date">{{ __('Željeni termin') }}</label>
+                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="date" id="date" type="text" autocomplete="off" placeholder="xx.xx.xxxx">
+                            <span class="text-sm">({{__('Popunjavate ukoliko zakazujete prezentaciju')}})</span>
+                        </div>
+                    </div>
+
+                     <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full px-3 mb-3">
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="message">{{ __('Poruka') }}</label>
+                            <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" id="message" cols="30" rows="6"></textarea>
+                            <span class="text-sm">({{__('Poruka nije obavezna')}})</span>
+                        </div>
+                    </div> 
+
+                    <div class="flex flex-wrap justify-end -mx-3 mb-6 float-right">
+                        <div class="w-full px-3">
+                            <button type="submit" class="shadow uppercase tracking-wide text-xs bg-gray-800 hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded" type="button">{{ __('Pošalji') }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <div class="max-w-7xl min-h-screen mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
         <div class="flex flex-row justify-between flex-wrap sm:mt-10">
@@ -20,7 +155,7 @@
             <div class="p-4 w-full sm:w-1/3">
                 <div class="flex flex-wrap flex-col bg-gray-100 bg-opacity-75 px-8 py-14 rounded-lg overflow-hidden text-center relative">
                     <i class="w-full fas fa-phone-alt fa-2x sm:fa-3x text-red-700"></i>
-                    <a class="text-center text-lg sm:text-3xl mt-4" href="tel:+38163237284">+38163/237-284</a>
+                    <a class="text-center text-lg sm:text-3xl mt-4" href="tel:+38162237204">+38162/237-204</a>
                 </div>
             </div>
 
@@ -33,4 +168,34 @@
         </div>
     </div>
 
+
+    <script>
+        $("#contact-form").validate({
+            messages: {
+                name: "{{ __('Polje je obavezno') }}",
+                company: "{{ __('Polje je obavezno') }}",
+                email: "{{ __('Polje je obavezno') }}",
+               // date: "{{ __('Polje je obavezno') }}",
+            }
+        });
+
+        let lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+        $.datetimepicker.setLocale(lang);
+
+        $('#date').datetimepicker({
+            timepicker: true,
+            format: 'd.m.Y H:i',
+            minDate: 0,
+            dayOfWeekStart: 1,
+            scrollInput: false
+        });
+
+        $(".alert").fadeTo(5000, 500).slideUp(500, function(){
+            $(".alert").slideUp(500);
+        });
+
+        $(".close").click( () => {
+            $(".alert").hide();
+        });
+    </script>
 </x-guest-layout>
