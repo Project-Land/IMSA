@@ -95,10 +95,6 @@ class HomeController extends Controller
         return view('manual');
     }
 
-    public function landing()
-    {
-        return view('guest.landing');
-    }
 
     public function lang($lang)
     {
