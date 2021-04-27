@@ -100,7 +100,7 @@
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
-            {{ __('Kontakt') }}
+            {{ __('Kontaktirajte nas') }}
         </x-jet-responsive-nav-link>
     </div>
 
