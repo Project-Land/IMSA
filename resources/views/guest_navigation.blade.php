@@ -91,10 +91,6 @@
             {{ __('Login') }}
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="{{ route('landing') }}" :active="request()->routeIs('landing')">
-            {{ __('IMSA') }}
-        </x-jet-responsive-nav-link>
-
         <x-jet-responsive-nav-link href="#" :active="request()->routeIs('manual')">
             {{ __('Uputstvo za korišćenje') }}
         </x-jet-responsive-nav-link>
@@ -104,7 +100,7 @@
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('contact') }}" :active="request()->routeIs('contact')">
-            {{ __('Kontakt') }}
+            {{ __('Kontaktirajte nas') }}
         </x-jet-responsive-nav-link>
     </div>
 
