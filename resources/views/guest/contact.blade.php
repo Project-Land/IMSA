@@ -116,7 +116,7 @@
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="date">{{ __('Željeni termin') }}</label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="date" id="date" type="text" autocomplete="off" placeholder="xx.xx.xxxx">
+                            <input readonly class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="date" id="date" type="text" autocomplete="off" placeholder="xx.xx.xxxx">
                             <span class="text-sm">({{__('Popunjavate ukoliko zakazujete prezentaciju')}})</span>
                         </div>
                     </div>
@@ -187,7 +187,10 @@
             format: 'd.m.Y H:i',
             minDate: 0,
             dayOfWeekStart: 1,
-            scrollInput: false
+            scrollInput: false,
+            step:30,
+            minTime:"08:00",
+            maxTime:"17:00"
         });
 
         $(".alert").fadeTo(5000, 500).slideUp(500, function(){
