@@ -19,7 +19,7 @@
                 <!-- Menu -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Login') }}</a>
-                    <a href="#" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
+                    <a href="{{ route('manual') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
                     <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('O aplikaciji') }}</a>
                     <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Kontaktirajte nas') }}</a>
                 </div>
@@ -91,7 +91,7 @@
             {{ __('Login') }}
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="#" :active="request()->routeIs('manual')">
+        <x-jet-responsive-nav-link href="{{ route('manual') }}" :active="request()->routeIs('manual')">
             {{ __('Uputstvo za korišćenje') }}
         </x-jet-responsive-nav-link>
 

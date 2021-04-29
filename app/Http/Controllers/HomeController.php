@@ -92,7 +92,8 @@ class HomeController extends Controller
 
     public function manual()
     {
-        return view('manual');
+        return redirect('/images/manual.pdf');
+       
     }
 
 
@@ -116,7 +117,7 @@ class HomeController extends Controller
 
     public function contactWithEmail( Request $request){
   
-        
+       // return new Contact($request);
         Mail::to('msretic@projectland.rs')->send(new Contact($request));
     
         return back()->with(['message'=>__('Poruka je uspešno prosleđena, odgovorićemo vam u najkraćem roku')]);

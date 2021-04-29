@@ -190,7 +190,14 @@
             scrollInput: false,
             step:30,
             minTime:"08:00",
-            maxTime:"17:00"
+            maxTime:"17:00",
+            beforeShowDay: function (date) {
+                if (date.getDay() > 0 && date.getDay() < 6) {
+                    return [true, ''];
+                } else {
+                    return [false, ''];
+                }
+            } 
         });
 
         $(".alert").fadeTo(5000, 500).slideUp(500, function(){
@@ -200,5 +207,7 @@
         $(".close").click( () => {
             $(".alert").hide();
         });
+
+
     </script>
 </x-guest-layout>
