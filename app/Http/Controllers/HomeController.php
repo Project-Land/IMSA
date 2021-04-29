@@ -92,7 +92,7 @@ class HomeController extends Controller
 
     public function manual()
     {
-        return redirect('/images/manual.pdf');
+        return redirect('/images/uputstvo_za_korišćenje.pdf');
        
     }
 
