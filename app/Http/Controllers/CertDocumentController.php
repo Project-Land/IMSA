@@ -85,7 +85,7 @@ class CertDocumentController extends Controller
     {
         $document = CertDocument::findOrFail($id);
         $this->authorize('update', $document);
-        return view('certification_documents.edit',
+        return view('certificate_documents.edit',
             [
                 'document' => $document,
             ]
