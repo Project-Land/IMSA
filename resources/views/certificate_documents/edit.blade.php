@@ -83,7 +83,7 @@
             $.datetimepicker.setLocale(lang);
 
             $('#start_date').datetimepicker({
-                timepicker: true,
+                timepicker: false,
                 format: 'd.m.Y',
                 minDate: 0,
                 dayOfWeekStart: 1,
@@ -91,7 +91,7 @@
             });
 
             $('#end_date').datetimepicker({
-                timepicker: true,
+                timepicker: false,
                 format: 'd.m.Y',
                 minDate: 0,
                 dayOfWeekStart: 1,

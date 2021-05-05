@@ -18,6 +18,7 @@ use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\ProceduresController;
+use App\Http\Controllers\CertDocumentController;
 use App\Http\Controllers\StakeholdersController;
 use App\Http\Controllers\InternalCheckController;
 use App\Http\Controllers\RiskManagementController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\EnvironmentalAspectsController;
 use App\Http\Controllers\OtherInternalDocumentsController;
 use App\Http\Controllers\ManagementSystemReviewsController;
 use App\Http\Controllers\EvaluationOfLegalAndOtherRequirementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -197,6 +199,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('delete-notification/{id}', [HomeController::class, 'deleteNotification'])->name('delete-notification');
 
     Route::resource('certification-documents', CertDocumentController::class);
+    Route::get('certification-documents-deleted', [CertDocumentController::class, 'showDeleted'])->name('certification-documents.deleted');
+    Route::delete('certification-documents-force-delete/{id}', [CertDocumentController::class, 'forceDestroy'])->name('certification-documents.force-destroy');
+    Route::post('certification-documents-restore/{id}', [CertDocumentController::class, 'restore'])->name('certification-documents.restore');
 });
 
 Route::get('about', [HomeController::class, 'about'])->name('about');
