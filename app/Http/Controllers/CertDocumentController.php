@@ -141,7 +141,7 @@ class CertDocumentController extends Controller
             ['team_id', Auth::user()->current_team_id],
         ])->get();
 
-        return view('certification-documents.deleted',
+        return view('certificate_documents.deleted',
             [
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/certification_documents',
