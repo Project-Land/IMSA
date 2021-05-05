@@ -9,6 +9,7 @@ use App\Models\CertDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CertDocumentRequest;
 
 class CertDocumentController extends Controller
 {
@@ -40,7 +41,7 @@ class CertDocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CertDocumentRequest $request)
     {
         $this->authorize('create', CertDocument::class);
         $document = new CertDocument();
@@ -93,7 +94,7 @@ class CertDocumentController extends Controller
      * @param  \App\Models\CertDocument  $certDocument
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CertDocument $certDocument)
+    public function update(CertDocumentRequest $request, CertDocument $certDocument)
     {
         $this->authorize('update', $certDocument);
         $document = $certDocument;
