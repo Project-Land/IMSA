@@ -21,7 +21,12 @@ class CertDocumentController extends Controller
     public function index()
     {
         $documents=CertDocument::where('team_id', Auth::user()->current_team_id)->get();
-        return view('certificate_documents.index',['documents'=>$documents]);
+        return view('certificate_documents.index',
+            [
+                'documents' => $documents,
+                'folder' => Str::snake($this::getCompanyName()).'/certification_documents',
+            ]
+        );
     }
 
     /**
@@ -46,7 +51,7 @@ class CertDocumentController extends Controller
         $this->authorize('create', CertDocument::class);
         $document = new CertDocument();
         $upload_path = Str::snake($this::getCompanyName())."/certification_documents";
-      
+
         try{
             $document = CertDocument::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);

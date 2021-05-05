@@ -48,16 +48,18 @@
                                 @foreach($documents as $document)
                                     <tr>
                                         <td class="text-center">{{ $document->name }}</td>
+                                        <td class="text-center">{{ date('d.m.Y', strtotime($document->start_date)) }}</td>
+                                        <td class="text-center">{{ date('d.m.Y', strtotime($document->end_date)) }}</td>
                                         <td class="text-center">
                                             <form class="inline" action="{{ route('document.preview') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="folder" value="certification_documents">
+                                                <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
                                                 <button data-toggle="tooltip" data-placement="top" title="{{__('Pregled dokumenta')}}" class="text-blue-700 hover:text-blue-900" type="submit"><i class="fas fa-eye"></i></button>
                                             </form>
-                                            <form class="inline" action="{{ route('certification-documents.download') }}" method="POST">
+                                            <form class="inline" action="{{ route('document.download') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="folder" value="certification_documents">
+                                                <input type="hidden" name="folder" value="{{ $folder }}">
                                                 <input type="hidden" name="file_name" value="{{ $document->file_name }}">
                                                 <button data-toggle="tooltip" data-placement="top" title="{{__('Preuzimanje dokumenta')}}" class="text-gray-700 hover:text-gray-900 button" type="submit"><i class="fas fa-download"></i></button>
                                             </form>
