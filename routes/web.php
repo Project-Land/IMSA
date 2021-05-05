@@ -195,6 +195,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('mark-as-read/{id}', [HomeController::class, 'markAsRead'])->name('mark-as-read');
     Route::get('delete-notification/{id}', [HomeController::class, 'deleteNotification'])->name('delete-notification');
+
+    Route::resource('certification-documents', CertDocumentController::class);
 });
 
 Route::get('about', [HomeController::class, 'about'])->name('about');

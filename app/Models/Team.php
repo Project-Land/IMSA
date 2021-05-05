@@ -125,4 +125,9 @@ class Team extends JetstreamTeam
         return $this->hasMany('App\Models\CustomerSatisfaction');
     }
 
+    public function certDocuments()
+    {
+        return $this->hasMany('App\Models\CertDocument');
+    }
+
 }
