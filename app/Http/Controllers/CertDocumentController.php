@@ -103,11 +103,15 @@ class CertDocumentController extends Controller
     {
         $document = CertDocument::findOrFail($id);
         $this->authorize('update', $document);
-        
+
         try{
             if($request->file){
-                $upload_path = Str::snake($this::getCompanyName())."/certification-documents";
+                $path = Str::snake($this::getCompanyName())."/certification_documents/".$document->file_name;
+                Storage::delete($path);
+
+                $upload_path = Str::snake($this::getCompanyName())."/certification_documents";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
+                $document->file_name = $request->file_name;
             }
             $document->update($request->except('file'));
             $request->session()->flash('status', array('info', __('Dokument je uspešno izmenjen')));

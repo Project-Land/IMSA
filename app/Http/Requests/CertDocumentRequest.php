@@ -45,7 +45,7 @@ class CertDocumentRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'name' => Rule::unique('cert_documents')->ignore($this->route('certification-documents'))->where( function ($query) {
+            'name' => Rule::unique('cert_documents')->ignore($this->route('certification_document'))->where( function ($query) {
                 return $query->where([
                     ['team_id', Auth::user()->current_team_id]
                 ])->whereNull('deleted_at');
