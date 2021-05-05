@@ -808,5 +808,8 @@
     "pristup 24/7 s bilo kog računara, laptopa, tablet, smart telefona uz internet konekciju.":"24/7 access from any computer, laptop, tablet, smart phone with an Internet connection",
     "NAPOMENA":"NOTE",
     "Prema zahtevu, IMSA može biti kreirana za standard koji Vam je potreban.":"According to the request, IMSA may be created for ISO standard you need.",
-    "aplikacija":"application"
+    "aplikacija":"application",
+    "Naziv sertifikata" : "Certificate name",
+    "Datum sticanja sertifikata" : "Certificate acquisition date",
+    "Datum isteka sertifikata" : "Certificate expiration date "
 }

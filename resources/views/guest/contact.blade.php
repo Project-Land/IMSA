@@ -1,6 +1,22 @@
 <x-guest-layout>
 
-@push('scripts')
+    @push('meta')
+        <meta name="description" content="IMSA aplikacija za unapređenje biznisa, kontaktirajte nas">
+        <meta name="keywords" content="imsa, kontakt, kontaktirajte, nas, digitalni, alat, za, unapređenje, biznisa">
+        <meta name="author" content="Project Land Serbia">
+
+        <meta property="og:title" content="" />
+        <meta property="og:description" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:alt" content="" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="sr_RS" />
+    @endpush
+
+    @push('scripts')
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
@@ -19,9 +35,15 @@
 
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Kontaktirajte nas') }}
-            </h2>
+            <div class="flex justify-between">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Kontaktirajte nas') }}
+                </h2>
+                <div class="space-x-2">
+                    <a href="https://www.facebook.com/IMSAaplikacija/" target="_blank"><i class="fab fa-facebook-square fa-2x" style="color: #4267B2"></i></a>
+                    <a href="https://rs.linkedin.com/in/projectland-serbia-03112a209" target="_blank"><i class="fab fa-linkedin fa-2x" style="color: #2867B2"></i></a>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -83,13 +105,13 @@
                     <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 27001</div>
                     <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 45001</div>
                     </div>
-                    
+
 
                     <p class="my-5 ">{!!'<b>'.__('NAPOMENA').':</b>'!!} {{__('Prema zahtevu, IMSA može biti kreirana za standard koji Vam je potreban.')}}</p>
 
                 </div>
             </div>
-    
+
             <div class="w-full sm:w-2/5 mt-5">
                 <!-- <h3 class="uppercase text-3xl mb-6">{{ __('Zakažite sastanak') }}</h3> -->
                 <h1 class="text-2xl mb-5 font-bold">{{__('Kontaktirajte nas ili zakažite besplatnu prezentaciju')}}</h1>
@@ -105,7 +127,7 @@
                             <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="company" name="company" type="text" autocomplete="off" required>
                         </div>
                     </div>
-        
+
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">{{ __('Email') }}</label>
@@ -127,7 +149,7 @@
                             <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4  leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="message" id="message" cols="30" rows="6"></textarea>
                             <span class="text-sm">({{__('Poruka nije obavezna')}})</span>
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="flex flex-wrap justify-end -mx-3 mb-6 float-right">
                         <div class="w-full px-3">
@@ -175,7 +197,6 @@
                 name: "{{ __('Polje je obavezno') }}",
                 company: "{{ __('Polje je obavezno') }}",
                 email: "{{ __('Polje je obavezno') }}",
-               // date: "{{ __('Polje je obavezno') }}",
             }
         });
 
@@ -197,7 +218,7 @@
                 } else {
                     return [false, ''];
                 }
-            } 
+            }
         });
 
         $(".alert").fadeTo(5000, 500).slideUp(500, function(){
