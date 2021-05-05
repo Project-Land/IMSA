@@ -75,7 +75,9 @@ class CertDocumentRequest extends FormRequest
         if($this->isMethod('post')){
             $this->merge([
                 'user_id' => Auth::user()->id,
-                'team_id' => Auth::user()->current_team_id
+                'team_id' => Auth::user()->current_team_id,
+                'start_date' => date('Y-m-d', strtotime($this->start_date)),
+                'end_date' => date('Y-m-d', strtotime($this->end_date)),
             ]);
         }
     }
