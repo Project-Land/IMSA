@@ -76,10 +76,10 @@ class CertDocumentController extends Controller
      * @param  \App\Models\CertDocument  $certDocument
      * @return \Illuminate\Http\Response
      */
-    public function edit(CertDocument $certDocument)
+    public function edit($id)
     {
-        $this->authorize('update', $certDocument);
-        $document = $certDocument;
+        $document = CertDocument::findOrFail($id);
+        $this->authorize('update', $document);
         return view('certification_documents.edit',
             [
                 'document' => $document,
@@ -94,11 +94,11 @@ class CertDocumentController extends Controller
      * @param  \App\Models\CertDocument  $certDocument
      * @return \Illuminate\Http\Response
      */
-    public function update(CertDocumentRequest $request, CertDocument $certDocument)
+    public function update(CertDocumentRequest $request, $id)
     {
-        $this->authorize('update', $certDocument);
-        $document = $certDocument;
-
+        $document = CertDocument::findOrFail($id);
+        $this->authorize('update', $document);
+        
         try{
             if($request->file){
                 $upload_path = Str::snake($this::getCompanyName())."/certification-documents";
@@ -120,13 +120,14 @@ class CertDocumentController extends Controller
      * @param  \App\Models\CertDocument  $certDocument
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CertDocument $certDocument)
+    public function destroy( $id)
     {
-        $this->authorize('delete',$certDocument );
-        $doc_name = $certDocument->document_name;
+        $document = CertDocument::findOrFail($id);
+        $this->authorize('delete',$document );
+        $doc_name = $document->document_name;
 
         try{
-            $certDocument->delete();
+            $document->delete();
             CustomLog::info('Dokument Sertifikat "'.$doc_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Dokument je uspešno uklonjen')));
         } catch(Exception $e){
