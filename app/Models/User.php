@@ -151,4 +151,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Notifications\InstantNotification', 'instant_notification_user')->withPivot('is_read')->withTimestamps();
     }
 
+    public function certDocuments()
+    {
+        return $this->hasMany('App\Models\CertDocument');
+    }
+
 }
