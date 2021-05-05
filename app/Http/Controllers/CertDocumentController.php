@@ -45,7 +45,7 @@ class CertDocumentController extends Controller
         $this->authorize('create', CertDocument::class);
         $document = new CertDocument();
         $upload_path = Str::snake($this::getCompanyName())."/certification_documents";
-
+      
         try{
             $document = CertDocument::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
