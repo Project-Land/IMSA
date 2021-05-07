@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ManagementSystemReview extends Model
 {
     protected $table = "management_system_reviews";
 
     use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = [];
 
