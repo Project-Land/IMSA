@@ -17,7 +17,7 @@ class AccidentController extends Controller
     public function index(){
 
         if(session('standard') == null || session('standard_name') != "45001"){
-            return redirect('/');
+            return redirect('/'); 
         }
 
         $accidents = Accident::where([
