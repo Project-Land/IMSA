@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Training extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = [];
 
