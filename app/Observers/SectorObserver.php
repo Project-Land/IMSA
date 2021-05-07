@@ -27,8 +27,7 @@ class SectorObserver
      */
 
     public function creating(Sector $sector){
-        $sector->team_id = Auth::user()->current_team_id;
-        $sector->user_id = Auth::user()->id;
+        //
     }
 
     public function updated(Sector $sector)

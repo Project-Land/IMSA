@@ -811,5 +811,6 @@
     "aplikacija":"application",
     "Naziv sertifikata" : "Certificate name",
     "Datum sticanja sertifikata" : "Certificate acquisition date",
-    "Datum isteka sertifikata" : "Certificate expiration date "
+    "Datum isteka sertifikata" : "Certificate expiration date",
+    "Aplikacija" : "Application"
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SectorRequest extends FormRequest
@@ -34,5 +35,15 @@ class SectorRequest extends FormRequest
             'name.required' => 'Unesite naziv sektora',
             'name.max' => 'Naziv sektora ne sme biti duži od 190 karaktera'
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if($this->isMethod('post')){
+            $this->merge([
+                'user_id' => Auth::user()->id,
+                'team_id' => Auth::user()->current_team_id
+            ]);
+        }
     }
 }

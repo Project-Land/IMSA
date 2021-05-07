@@ -8,7 +8,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center pb-2">
                     <a href="{{ route('login') }}">
-                        <img src="{{ asset('images/logo.jpg') }}" alt="imsa-logo" class="w-15 h-15">
+                        <img src="{{ asset('images/logo.jpg') }}" style="width:4rem; height:4rem;" alt="imsa-logo">
                     </a>
                 </div>
 
@@ -18,7 +18,11 @@
 
                 <!-- Menu -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    @auth
+                    <a href="{{ route('dashboard') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Aplikacija') }}</a>
+                    @else
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Login') }}</a>
+                    @endauth
                     <a href="{{ route('manual') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
                     <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('O aplikaciji') }}</a>
                     <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Kontaktirajte nas') }}</a>
@@ -58,10 +62,19 @@
                             @endif
 
                             @if(session('locale') != "hr")
-                                <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'hr']) }}">
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang' => 'hr']) }}">
                                     <div class="inline-flex items-center justify-end mt-1">
                                         <div><img src="{{ asset('images/hr.png') }}" alt="hr"></div>
                                         <div class="ml-3">{{ 'Hrvatski' }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
+
+                            @if(session('locale') != "it")
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang' => 'it']) }}">
+                                    <div class="inline-flex items-center justify-end mt-1">
+                                        <div><img src="{{ asset('images/it.png') }}" alt="it"></div>
+                                        <div class="ml-3">{{ 'Italiano' }}</div>
                                     </div>
                                 </x-jet-dropdown-link>
                             @endif
@@ -87,9 +100,15 @@
 
     <!-- Responsive menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        @auth
+        <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+            {{ __('Aplikacija') }}
+        </x-jet-responsive-nav-link>
+        @else
         <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
             {{ __('Login') }}
         </x-jet-responsive-nav-link>
+        @endauth
 
         <x-jet-responsive-nav-link href="{{ route('manual') }}" :active="request()->routeIs('manual')">
             {{ __('Uputstvo za korišćenje') }}

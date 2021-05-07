@@ -2,13 +2,15 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Events\TeamMemberAdded;
-use Laravel\Jetstream\Jetstream;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class CreateTeam implements CreatesTeams
 {
@@ -24,6 +26,9 @@ class CreateTeam implements CreatesTeams
     public function create($user, array $input)
     {
         Gate::forUser($user)->authorize('create', Jetstream::newTeamModel());
+
+        //drugi admin
+        $otherAdmin = Auth::user()->id == 1 ? User::find(2) : User::find(1);
 
         $messages = [
             'name.required' => 'Unesite ime firme',
@@ -59,11 +64,24 @@ class CreateTeam implements CreatesTeams
             $newTeamMember = $user,
             ['role' => 'super-admin']
         );
+        TeamMemberAdded::dispatch($team, $newTeamMember);
+
+        //Drugi admin
+        $team->users()->attach(
+            $newTeamMember = $otherAdmin,
+            ['role' => 'super-admin']
+        );
+        TeamMemberAdded::dispatch($team, $newTeamMember);
 
         $standard = \App\Models\Standard::where('name', 9001)->get();
         $team->standards()->attach($standard);
 
-        TeamMemberAdded::dispatch($team, $newTeamMember);
+        \App\Models\Sector::create([
+            'team_id' => $team->id,
+            'user_id' => Auth::user()->id,
+            'name' => 'Sistem menadžmenta',
+            'is_global' => '1'
+        ]);
 
         return $team;
     }

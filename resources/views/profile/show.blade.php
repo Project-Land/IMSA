@@ -31,13 +31,13 @@
                 @livewire('profile.logout-other-browser-sessions-form')
             </div>
 
-            @if ($user->hasTeamRole($user->currentTeam, 'super-admin'))
+            <!-- @if($user->hasTeamRole($user->currentTeam, 'super-admin'))
                 <x-jet-section-border />
 
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.delete-user-form')
                 </div>
-            @endif
+            @endif -->
 
         </div>
     </div>

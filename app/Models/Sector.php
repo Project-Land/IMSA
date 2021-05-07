@@ -9,7 +9,7 @@ class Sector extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'team_id', 'user_id'];
+    protected $fillable = ['name', 'team_id', 'user_id', 'is_global'];
 
     public function correctiveMeasure()
     {

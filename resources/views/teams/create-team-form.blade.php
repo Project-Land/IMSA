@@ -35,6 +35,7 @@
                 <option value="sr" selected>{{ __('Srpski') }}</option>
                 <option value="en">{{ __('English') }}</option>
                 <option value="hr">{{ __('Hrvatski') }}</option>
+                <option value="it">{{ __('Italiano') }}</option>
             </select>
             <x-jet-input-error for="lang" class="mt-2" />
         </div>

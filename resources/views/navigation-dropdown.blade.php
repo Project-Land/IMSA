@@ -132,6 +132,15 @@
                                     </div>
                                 </x-jet-dropdown-link>
                             @endif
+
+                            @if(session('locale') != "it")
+                                <x-jet-dropdown-link href="{{ route('lang', ['lang'=>'it']) }}">
+                                    <div class="inline-flex items-center justify-end mt-1">
+                                        <div><img src="{{ asset('images/it.png') }}" alt="it"></div>
+                                        <div class="ml-3">{{ 'Italiano' }}</div>
+                                    </div>
+                                </x-jet-dropdown-link>
+                            @endif
                         </x-slot>
 
                     </x-jet-dropdown>
