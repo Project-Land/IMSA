@@ -15,29 +15,28 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if(!session()->has('locale')){
+        if (!session()->has('locale')) {
             session(['locale' => 'sr']);
         }
 
         $standard = session('standard') ?? 1;
-        return redirect('/standards/'.$standard);
+        return redirect('/standards/' . $standard);
     }
 
     public function standard($id)
     {
         session()->forget('standard');
         session()->forget('standard_name');
-        try{
+        try {
             $teamId = Auth::user()->current_team_id;
-            $standard = Standard::whereHas('teams', function($q) use ($teamId) {
+            $standard = Standard::whereHas('teams', function ($q) use ($teamId) {
                 $q->where('team_id', $teamId);
             })->findOrFail($id);
 
             session(['standard' => $id]);
             session(['standard_name' => $standard->name]);
             return view('standard', compact('standard'));
-        }
-        catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
     }
@@ -45,7 +44,7 @@ class HomeController extends Controller
     public function analytics()
     {
         $role = Auth::user()->allTeams()->first()->membership->role;
-        if($role == "super-admin") {
+        if ($role == "super-admin") {
             return file_get_contents(storage_path('log.html'));
         } else abort(404);
     }
@@ -55,12 +54,11 @@ class HomeController extends Controller
         $folder = $request->folder;
         $file_name = $request->file_name;
 
-        $path = storage_path().'/'.'app'.'/'.$folder.'/'.$file_name;
+        $path = storage_path() . '/' . 'app' . '/' . $folder . '/' . $file_name;
 
         if (file_exists($path)) {
             return Response::download($path);
-        }
-        else {
+        } else {
             return back()->with('status', array('danger', __('Fajl nije pronađen')));
         }
     }
@@ -70,12 +68,11 @@ class HomeController extends Controller
         $folder = $request->folder;
         $file_name = $request->file_name;
 
-        $path = storage_path().'/'.'app'.'/'.$folder.'/'.$file_name;
+        $path = storage_path() . '/' . 'app' . '/' . $folder . '/' . $file_name;
 
         if (file_exists($path)) {
             return Response::file($path);
-        }
-        else {
+        } else {
             return back()->with('status', array('danger', __('Fajl nije pronađen')));
         }
     }
@@ -93,7 +90,6 @@ class HomeController extends Controller
     public function manual()
     {
         return redirect('/images/uputstvo_za_korišćenje.pdf');
-       
     }
 
 
@@ -103,24 +99,26 @@ class HomeController extends Controller
         return back();
     }
 
-    public function markAsRead($id){
+    public function markAsRead($id)
+    {
         $not = Auth::user()->instant_notification()->where('instant_notification_id', $id)->first();
         $not->pivot->is_read = 1;
         $not->pivot->save();
         return back();
     }
 
-    public function deleteNotification($id){
+    public function deleteNotification($id)
+    {
         Auth::user()->instant_notification()->where('instant_notification_id', $id)->delete();
         return back();
     }
 
-    public function contactWithEmail( Request $request){
-  
-       // return new Contact($request);
-        Mail::to('msretic@projectland.rs')->send(new Contact($request));
-    
-        return back()->with(['message'=>__('Poruka je uspešno prosleđena, odgovorićemo vam u najkraćem roku')]);
-    }
+    public function contactWithEmail(Request $request)
+    {
 
+        // return new Contact($request);
+        Mail::to('msretic@projectland.rs')->send(new Contact($request));
+
+        return back()->with(['message' => __('Poruka je uspešno prosleđena, odgovorićemo vam u najkraćem roku')]);
+    }
 }
