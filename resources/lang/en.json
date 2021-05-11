@@ -812,5 +812,22 @@
     "Naziv sertifikata" : "Certificate name",
     "Datum sticanja sertifikata" : "Certificate acquisition date",
     "Datum isteka sertifikata" : "Certificate expiration date",
-    "Aplikacija" : "Application"
+    "Aplikacija" : "Application",
+    "Postoji 199 aplikacija. Zašto baš IMSA?":"There are 199 applications. Why IMSA?",
+    "Objedinjeni su svi sistemski procesi i zahtevi ISO standarda. Primenjiva je na nivou čitave organizacije bez obzira na privrednu delatnost.":"Because all of ISO standards’ system processes and requests are included. It can be applied to the entire organization  regardless of the economic activity.",
+    "Zašto digitalizovati poslovanje?":"Why digitilize your business?",
+    "Nema više registratora, troškova nabavke papira, štampača, tonera.":"There are no more files, costs such as  procurement of paper, printers and toners.",
+    "Bezbednost dokumentacije (ako se poplavi magacin ili izbije požar i izgube podaci...)":"Documentation safety (in case of warehouse floods, fires or data loss)",
+    "Ekološka odgovornost.":"Environmental responsibility",
+    "Koliko vremena provedete u obuci zaposlenih?":"How much time do you spend in employees’ education?",
+    "IMSA je kreirana da uštedi vreme zaposlenima jer su jasno definisani dokumentacija, sistemski procesi, kao i notifikacije u skladu s rokovima - stižu i na mejl i predstavljaju pomoć menadžerima procesa u efektivnom izvršavanju zaduženja - bez propusta i kašnjenja.":"IMSA is created to save employees’ time because documentation, system processes, and notifications are clearly defined according to deadlines  - they are also received  by e-mail and they  are helpful to process managers to perform their tasks in an efficient way – with no errors and delays.",
+    "Da li su mi pored IMSA aplikacije potrebne i consulting usluge?":"If I have IMSA application, do I need some consulting services?",
+    "Uz korišćenje IMSA aplikacije troškovi consultinga značajno se umanjuju ili u nekim slučajevima eliminišu jer IMSA aplikacija obezbeđuje redovno ažuriranje i prilagođavanje sa izlaskom novih verzija ISO standarda.":"By using IMSA application, costs of consulting are significantly lower, or in some cases they are eliminated, because IMSA application provides regular updates and adjustments according to new versions of ISO standards.",
+    "Zašto je bolje iznajmiti nego kupiti IMSU?":"Why is it better to subscribe to IMSA instead of buying it?",
+    "Možete odustati u svakom trenutku":"You can cancel it at any moment",
+    "ušteda u IT podršci – redovno ažuriranje i apdejtovanje aplikacije su uračunate u cenu - dakle, nema dodatnih troškova kasnije.":"Savings in IT support -  regular updates and adjustments  are included in the price – so, there are no additional costs later.",
+    "Da li su moje informacije bezbedne?":"Is my information safe?",
+    "DA. Jedini vlasnici podataka ste vi, naša IT podrška isključivo pokriva segmente aplikacije ali ne i sadržaj.":"YES. The only owner of data is you. Our IT support only covers application segments, not the content.",
+    "Ima li IMSA manu?":"Does IMSA have a flaw?",
+    "Ima. Mnogo će vam olakšati poslovanje, pa će vas malo ⹂razmaziti”.":"YES. It will make your business much easier, so it will “spoil“ you slightly."
 }
