@@ -40,7 +40,7 @@
                                     <th>{{ __('Potrebe i očekivanja zainteresovane strane')}}</th>
                                     <th>{{ __('Odgovor preduzeća na potrebe i očekivanja')}}</th>
                                     <th>{{ __('Kreirao')}}</th>
-                                    <th class="no-sort w-16">{{ __('Akcije')}}</th>
+                                    <th class="no-sort w-20">{{ __('Akcije')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +51,7 @@
                                     <td class="text-center">{{ Str::length($s->response) < 100 ? $s->response : Str::limit($s->response, 100) }}</td>
                                     <td class="text-center">{{ $s->user->name }}</td>
                                     <td class="text-center">
+                                    <button data-toggle="tooltip" data-placement="top" title="{{ __('Prikaz zainteresovane strane') }}" class="text-blue-700 hover:text-blue-900" onclick="showStakeholder({{ $s->id }})"><i class="fas fa-eye"></i></button>
                                     <a
                                         href="{{route('stakeholders.print',$s->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
                                     </a>
@@ -114,6 +115,38 @@
             });
 
             $('[data-toggle="tooltip"]').tooltip();
+
+            function showStakeholder(id){
+                axios.get('/stakeholders/'+id)
+                    .then((response) => {
+                        let modal = `<div class="modal fade" id="showStakeholder-${ id }" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" style="max-width: 600px !important;" role="document">
+                                            <div class="modal-content rounded-lg shadow-xl">
+                                                <div class="modal-body">
+                                                    <div class="row text-sm mt-6">
+                                                        <div class="col-sm-5 mt-1 border-bottom font-weight-bold"><p>{{ __('Zainteresovana strana') }}</p></div>
+                                                        <div class="col-sm-7 mt-1 border-bottom"><p>${ response.data.name }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Potrebe i očekivanja zainteresovane strane') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.expectation }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Odgovor preduzeća na potrebe i očekivanja') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.response }</p></div>
+                                                        <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
+                                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
+                                                    </div>
+                                                </div>
+                                                <div class="px-6 py-4 bg-gray-100 text-right">
+                                                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Zatvori') }}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $("body").append(modal);
+                        $('#showStakeholder-'+id).modal();
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
 
             function confirmDeleteModal($id){
                 let id = $id;

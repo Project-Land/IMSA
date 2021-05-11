@@ -133,7 +133,7 @@ if(id){
             "targets": 'no-sort',
             "orderable": false,
         }],
-        "order": [[ 1, "desc" ]]
+        "aaSorting": []
     });
 
     function showMeasure(id){

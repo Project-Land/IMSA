@@ -16,21 +16,21 @@ class StakeholdersController extends Controller
 
     public function index()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
         $stakeholders = Stakeholder::where([
-                ['standard_id', session('standard')],
-                ['team_id', Auth::user()->current_team_id]
-            ])->with(['user'])->get();
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->with(['user'])->get();
 
         return view('system_processes.stakeholders.index', compact('stakeholders'));
     }
 
     public function create()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/');
         }
         $this->authorize('create', Stakeholder::class);
@@ -41,12 +41,12 @@ class StakeholdersController extends Controller
     {
         $this->authorize('create', Stakeholder::class);
 
-        try{
+        try {
             $stakeholder = Stakeholder::create($request->all());
-            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" kreirana, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "' . $stakeholder->name . '" kreirana, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Zainteresovana strana je uspešno sačuvana!')));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja zainteresovane strane, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj kreiranja zainteresovane strane, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/stakeholders');
@@ -54,8 +54,9 @@ class StakeholdersController extends Controller
 
     public function show($id)
     {
-        $stakeholder = Stakeholder::findOrFail($id);
-        abort(404);
+        $stakeholder = Stakeholder::with('user')->findOrFail($id);
+        $this->authorize('view', $stakeholder);
+        return response()->json($stakeholder);
     }
 
     public function edit($id)
@@ -70,12 +71,12 @@ class StakeholdersController extends Controller
         $stakeholder = Stakeholder::findOrFail($id);
         $this->authorize('update', $stakeholder);
 
-        try{
+        try {
             $stakeholder->update($request->all());
-            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" izmenjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "' . $stakeholder->name . '" izmenjena, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Zainteresovana strana je uspešno izmenjena!')));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene zainteresovane strane '.$stakeholder->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj izmene zainteresovane strane ' . $stakeholder->name . ', ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/stakeholders');
@@ -86,29 +87,28 @@ class StakeholdersController extends Controller
         $this->authorize('delete', Stakeholder::find($id));
         $stakeholder = Stakeholder::findOrFail($id);
 
-        try{
+        try {
             Stakeholder::destroy($id);
-            CustomLog::info('Zainteresovana strana "'.$stakeholder->name.'" uklonjena, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Zainteresovana strana "' . $stakeholder->name . '" uklonjena, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Zainteresovana strana je uspešno uklonjena')));
-        } catch (Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja zainteresovane strane '.$stakeholder->name.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj brisanja zainteresovane strane ' . $stakeholder->name . ', ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške! Pokušajte ponovo.')));
         }
     }
 
     public function export()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/');
         }
-        return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')).'_'.session('standard_name').'.xlsx');
+        return Excel::download(new StakeholdersExport, Str::snake(__('Zainteresovane strane')) . '_' . session('standard_name') . '.xlsx');
     }
 
     public function print($id)
     {
-        $stakeholder = Stakeholder::with('user','standard')->findOrFail($id);
+        $stakeholder = Stakeholder::with('user', 'standard')->findOrFail($id);
         $this->authorize('view', $stakeholder);
         return view('system_processes.stakeholders.print', compact('stakeholder'));
-
     }
 }

@@ -1,16 +1,16 @@
 <x-guest-layout>
 
     @push('meta')
-        <meta name="description" content="IMSA aplikacija za unapređenje biznisa, kontaktirajte nas">
-        <meta name="keywords" content="imsa, kontakt, kontaktirajte, nas, digitalni, alat, za, unapređenje, biznisa">
+        <meta name="description" content="IMSA aplikacija za unapređenje biznisa, iso, standardi, kontaktirajte nas">
+        <meta name="keywords" content="imsa, kontakt, kontaktirajte, nas, digitalni, alat, za, unapređenje, biznisa, iso, standardi">
         <meta name="author" content="Project Land Serbia">
 
-        <meta property="og:title" content="" />
-        <meta property="og:description" content="" />
-        <meta property="og:url" content="" />
-        <meta property="og:image" content="" />
+        <meta property="og:title" content="IMSA {{ __('aplikacija') }}, {{ __('digitalni alat za unapređenje biznisa') }}" />
+        <meta property="og:description" content="{{ __('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.') }}" />
+        <meta property="og:url" content="http://quality4.me/contact" />
+        <meta property="og:image" content="{{ asset('/images/imsa_logo_og.jpg') }}" />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:alt" content="" />
+        <meta property="og:image:alt" content="IMSA {{ __('aplikacija') }}" />
 
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="sr_RS" />
@@ -47,7 +47,6 @@
         </div>
     </header>
 
-
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
 
         @if(Session::has('message'))
@@ -61,51 +60,90 @@
 
         <div class="flex flex-wrap">
 
-            <div class="w-full sm:w-3/5">
+            <div class="w-full sm:w-3/5" x-data="{open1: true, open2: true}">
                 <div class="sm:text-lg sm:mr-4 tracking-wide">
 
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mb-3">
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight border-b-8 border-red-500 text-center">
-                    <span class="text-red-500 font-bold text-2xl">{{ __('IMSA').' ' }}</span><span class="text-yellow-300 font-bold text-2xl">{{__('aplikacija')}}</span>
-                    </h2>
-                    <h3 class="text-center text-2xl">{{__('digitalni alat za unapređenje biznisa')}}</h3>
-                </div>
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mb-3">
+                        <h1 class="font-semibold text-xl text-gray-800 leading-tight border-b-8 border-red-500 text-center">
+                        <span class="text-red-500 font-bold text-2xl">{{ __('IMSA').' ' }}</span><span class="text-yellow-300 font-bold text-2xl">{{__('aplikacija')}}</span>
+                        </h1>
+                        <h3 class="text-center text-2xl">{{__('digitalni alat za unapređenje biznisa')}}</h3>
+                    </div>
 
                     <p>
-                    {{__('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.')}}
+                        {{__('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.')}}
                     </p>
 
-                    <h2 class="sm:text-xl font-bold my-3"> {{__('Kome je namenjena?')}}</h2>
-
-                    <ul>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Svima koji žele da unaprede svoj sistem menadžmenta.')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje imaju implementirane ISO standarde.')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje treba da uvedu ISO standard - IMSA omogućava da proces implementacije sprovedu brzo, lako i bez angažovanja konsultantskih kuća.')}}</li>
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-mobile-alt mr-2 text-red-600"></i>{{__('Postoji 199 aplikacija. Zašto baš IMSA?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('Objedinjeni su svi sistemski procesi i zahtevi ISO standarda. Primenjiva je na nivou čitave organizacije bez obzira na privrednu delatnost.') }}</li>
                     </ul>
 
-                    <h2 class="sm:text-xl font-bold my-3">{{__('Benefiti primene aplikacije su:')}}</h2>
-
-                    <ul>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('sistemsko upravljanje rizicima')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('jasno i pregledno praćenje potreba i zahteva zainteresovanih strana')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('olakšano praćenje performansi i ocenjivanje isporučilaca')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('značajno ubrzan i pojednostavljen proces preispitivanja od strane rukovodstva')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('unapređen proces upravljanja reklamacijama')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('modernizovano planiranje i organizovanje internih provera')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('ažurnost korišćene dokumentacije')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('smanjen rizik od gubljenja/suspenzije sertifikata')}}</li>
-                    <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('pristup 24/7 s bilo kog računara, laptopa, tablet, smart telefona uz internet konekciju.')}}</li>
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-laptop mr-2 text-red-600"></i>{{__('Zašto digitalizovati poslovanje?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('Nema više registratora, troškova nabavke papira, štampača, tonera.') }}</li>
+                        <li>{{ __('Bezbednost dokumentacije (ako se poplavi magacin ili izbije požar i izgube podaci...)') }}</li>
+                        <li>{{ __('Ekološka odgovornost.') }}</li>
                     </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3"><i class="far fa-clock mr-2 text-red-600"></i>{{__('Koliko vremena provedete u obuci zaposlenih?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('IMSA je kreirana da uštedi vreme zaposlenima jer su jasno definisani dokumentacija, sistemski procesi, kao i notifikacije u skladu s rokovima - stižu i na mejl i predstavljaju pomoć menadžerima procesa u efektivnom izvršavanju zaduženja - bez propusta i kašnjenja') }}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-cut mr-2 text-red-600"></i>{{__('Da li su mi pored IMSA aplikacije potrebne i consulting usluge?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('Uz korišćenje IMSA aplikacije troškovi consultinga značajno se umanjuju ili u nekim slučajevima eliminišu jer IMSA aplikacija obezbeđuje redovno ažuriranje i prilagođavanje sa izlaskom novih verzija ISO standarda.') }}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-balance-scale-right mr-2 text-red-600"></i>{{__('Zašto je bolje iznajmiti nego kupiti IMSU?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('Možete odustati u svakom trenutku') }}</li>
+                        <li>{{ __('Ušteda u IT podršci – redovno ažuriranje i apdejtovanje aplikacije su uračunate u cenu - dakle, nema dodatnih troškova kasnije.') }}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-lock mr-2 text-red-600"></i>{{__('Da li su moje informacije bezbedne?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('DA. Jedini vlasnici podataka ste vi, naša IT podrška isključivo pokriva segmente aplikacije ali ne i sadržaj.') }}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-exclamation-triangle mr-2 text-red-600"></i></i>{{__('Ima li IMSA manu?')}}</h2>
+                    <ul class="list-disc pl-4">
+                        <li>{{ __('Ima. Mnogo će vam olakšati poslovanje, pa će vas malo ⹂razmaziti”.') }}</li>
+                    </ul>
+
+                    <h2 class="sm:text-xl font-bold my-3 cursor-pointer" @click="open1 = ! open1">{{__('Kome je namenjena?')}} <i class="ml-2 fas" :class="{'fa-chevron-up': open1, 'fa-chevron-down': ! open1 }"></i></h2>
+                    <div :class="{'': open1, 'hidden': ! open1 }">
+                        <ul>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Svima koji žele da unaprede svoj sistem menadžmenta.')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje imaju implementirane ISO standarde.')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i> {{__('Organizacijama koje treba da uvedu ISO standard - IMSA omogućava da proces implementacije sprovedu brzo, lako i bez angažovanja konsultantskih kuća.')}}</li>
+                        </ul>
+                    </div>
+
+                    <h2 class="sm:text-xl font-bold my-3 cursor-pointer" @click="open2 = ! open2">{{__('Benefiti primene aplikacije su:')}} <i class="ml-2 fas" :class="{'fa-chevron-up': open2, 'fa-chevron-down': ! open2 }"></i></h2>
+                    <div :class="{'': open2, 'hidden': ! open2 }">
+                        <ul>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('sistemsko upravljanje rizicima')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('centralizovano i sistemsko praćenje ciljeva, kao i stepena njihove realizacije')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('jasno i pregledno praćenje potreba i zahteva zainteresovanih strana')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('olakšano praćenje performansi i ocenjivanje isporučilaca')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('značajno ubrzan i pojednostavljen proces preispitivanja od strane rukovodstva')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('unapređen proces upravljanja reklamacijama')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('modernizovano planiranje i organizovanje internih provera')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('ažurnost korišćene dokumentacije')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('smanjen rizik od gubljenja/suspenzije sertifikata')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('pristup 24/7 s bilo kog računara, laptopa, tablet, smart telefona uz internet konekciju.')}}</li>
+                        </ul>
+                    </div>
 
                     <h2 class="sm:text-xl font-bold my-3">{{__('Standardi')}}:</h2>
                     <div class="">
-                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 9001</div>
-                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 14001</div>
-                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 27001</div>
-                    <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 45001</div>
+                        <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 9001</div>
+                        <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 14001</div>
+                        <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 27001</div>
+                        <div class=""><i class="fas fa-star text-yellow-400"></i> ISO 45001</div>
                     </div>
-
 
                     <p class="my-5 ">{!!'<b>'.__('NAPOMENA').':</b>'!!} {{__('Prema zahtevu, IMSA može biti kreirana za standard koji Vam je potreban.')}}</p>
 
@@ -113,8 +151,7 @@
             </div>
 
             <div class="w-full sm:w-2/5 mt-5">
-                <!-- <h3 class="uppercase text-3xl mb-6">{{ __('Zakažite sastanak') }}</h3> -->
-                <h1 class="text-2xl mb-5 font-bold">{{__('Kontaktirajte nas ili zakažite besplatnu prezentaciju')}}</h1>
+                <h2 class="text-2xl mb-5 font-bold">{{__('Kontaktirajte nas ili zakažite besplatnu prezentaciju')}}</h2>
                 <form action="{{route('contactme')}}" method="get" id="contact-form" class="w-full max-w-lg">
                     @csrf
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -161,10 +198,6 @@
         </div>
     </div>
 
-
-
-
-
     <div class="max-w-7xl min-h-screen mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-3">
         <div class="flex flex-row justify-between flex-wrap sm:mt-10">
             <div class="p-4 w-full sm:w-1/3">
@@ -189,7 +222,6 @@
             </div>
         </div>
     </div>
-
 
     <script>
         $("#contact-form").validate({
@@ -228,7 +260,6 @@
         $(".close").click( () => {
             $(".alert").hide();
         });
-
 
     </script>
 </x-guest-layout>

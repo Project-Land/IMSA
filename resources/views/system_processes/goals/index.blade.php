@@ -158,7 +158,7 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 6, "asc" ]]
+        "aaSorting": []
     });
 
     function showGoal(id){
@@ -274,7 +274,7 @@
                                 }
                             });
                             row += `</td>
-                            <td class="text-center">${ new Date(item.deadline).getUTCDate() + '.' + new Date(item.deadline).getUTCMonth() + '.' + new Date(item.deadline).getUTCFullYear() }</td>
+                            <td class="text-center">${ new Date(item.deadline).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</td>
                             <td class="text-center">${ item.resources }</td>
                             <td class="text-center">${ item.analysis != null ? item.analysis.substr(0, 35) + "..." : "/" }</td>
                             <td class="text-center">
