@@ -88,7 +88,7 @@
 
                     <h2 class="sm:text-xl font-bold my-3"><i class="far fa-clock mr-2 text-red-600"></i>{{__('Koliko vremena provedete u obuci zaposlenih?')}}</h2>
                     <ul class="list-disc pl-4">
-                        <li>{{ __('IMSA je kreirana da uštedi vreme zaposlenima jer su jasno definisani dokumentacija, sistemski procesi, kao i notifikacije u skladu s rokovima - stižu i na mejl i predstavljaju pomoć menadžerima procesa u efektivnom izvršavanju zaduženja - bez propusta i kašnjenja') }}</li>
+                        <li>{{ __('IMSA je kreirana da uštedi vreme zaposlenima jer su jasno definisani dokumentacija, sistemski procesi, kao i notifikacije u skladu s rokovima - stižu i na mejl i predstavljaju pomoć menadžerima procesa u efektivnom izvršavanju zaduženja - bez propusta i kašnjenja.') }}</li>
                     </ul>
 
                     <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-cut mr-2 text-red-600"></i>{{__('Da li su mi pored IMSA aplikacije potrebne i consulting usluge?')}}</h2>
