@@ -51,7 +51,7 @@ class InternalCheckReportPolicy
     public function create(User $user)
     {
         $role = $user->allTeams()->first()->membership->role;
-        if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor')) {
+        if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor_'.session('standard_name'))) {
             return true;
         }
     }
@@ -67,7 +67,7 @@ class InternalCheckReportPolicy
     {
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $internalCheckReport->internalCheck->team_id){
-            if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor')) {
+            if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor_'.session('standard_name'))) {
                 return true;
             }
         }
@@ -86,7 +86,7 @@ class InternalCheckReportPolicy
         //    return true;
         $role = $user->allTeams()->first()->membership->role;
         if($user->current_team_id === $internalCheckReport->internalCheck->team_id){
-            if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor')) {
+            if(($role == "super-admin") || $user->certificates->pluck('name')->contains('editor_'.session('standard_name'))) {
                 return true;
             }
         }

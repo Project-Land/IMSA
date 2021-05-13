@@ -73,7 +73,7 @@
                             <x-jet-label for="certificates" value="{{ __('Dozvole pristupa') }}" class="block font-medium text-sm text-gray-700" />
 
                             @foreach($certificates as $certificate)
-                                <label class="inline-flex items-center mt-3 cursor-pointer mr-2 {{ $certificate->name != 'editor'? 'certificate':'' }}">
+                                <label class="inline-flex items-center mt-3 cursor-pointer mr-2 {{ strpos($certificate->name, 'editor') !== 0 ? 'certificate':'' }}">
                                     <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600"><span class="ml-2 text-gray-700 text-sm">{{ __($certificate->display_name) }}</span>
                                 </label>
                             @endforeach

@@ -215,7 +215,7 @@
                                         <div class="mt-4">
                                             <div class="mt-1 border border-gray-200 rounded-lg">
                                                 @foreach($certificates as $certificate)
-                                                    <div class="px-4 py-3 border-t border-gray-200 {{ $certificate->name != "editor"? 'certificate':'' }}">
+                                                    <div class="px-4 py-3 border-t border-gray-200 {{ strpos($certificate->name, 'editor') !== 0 ? 'certificate':'' }}">
                                                         <label class="inline-flex items-center mt-3 cursor-pointer">
                                                             <input type="checkbox" name="certificates[]" value="{{ $certificate->id }}" class="form-checkbox h-5 w-5 text-gray-600" ${ arrayOfCerts.includes('{{ $certificate->id }}')? "checked":"" }><span class="ml-2 text-gray-700">{{ __($certificate->display_name) }}</span>
                                                         </label>

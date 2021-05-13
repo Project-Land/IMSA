@@ -65,7 +65,7 @@ class InternalCheckController extends Controller
         $teamLeaders = $team->users;
 
         $leaders = $teamLeaders->filter(function ($value) {
-            return ($value->allTeams()->first()->membership->role === 'editor'|| $value->allTeams()->first()->membership->role === 'admin') && $value->certificates->pluck('name')->contains('editor');
+            return ($value->allTeams()->first()->membership->role === 'editor'|| $value->allTeams()->first()->membership->role === 'admin') && $value->certificates->pluck('name')->contains('editor_'.session('standard_name'));
         });
 
         return view('system_processes.internal_check.create',
@@ -160,7 +160,7 @@ class InternalCheckController extends Controller
         $teamLeaders = $team->users;
 
         $leaders = $teamLeaders->filter(function ($value) {
-            return ($value->allTeams()->first()->membership->role === 'editor' || $value->allTeams()->first()->membership->role === 'admin') && $value->certificates->pluck('name')->contains('editor');
+            return ($value->allTeams()->first()->membership->role === 'editor' || $value->allTeams()->first()->membership->role === 'admin') && $value->certificates->pluck('name')->contains('editor_'.session('standard_name'));
         });
         $leaders_names=explode(',',$internal_check->leaders);
      
