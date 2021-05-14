@@ -3,7 +3,7 @@
     @push('meta')
         <meta name="description" content="IMSA aplikacija za unapređenje biznisa, iso, standardi, kontaktirajte nas">
         <meta name="keywords" content="imsa, kontakt, kontaktirajte, nas, digitalni, alat, za, unapređenje, biznisa, iso, standardi">
-        <meta name="author" content="Project Land Serbia">
+        <meta name="author" content="Projectland Serbia">
 
         <meta property="og:title" content="IMSA {{ __('aplikacija') }}, {{ __('digitalni alat za unapređenje biznisa') }}" />
         <meta property="og:description" content="{{ __('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.') }}" />
@@ -42,6 +42,7 @@
                 <div class="space-x-2">
                     <a href="https://www.facebook.com/IMSAaplikacija/" target="_blank"><i class="fab fa-facebook-square fa-2x" style="color: #4267B2"></i></a>
                     <a href="https://rs.linkedin.com/in/projectland-serbia-03112a209" target="_blank"><i class="fab fa-linkedin fa-2x" style="color: #2867B2"></i></a>
+                    <a href="https://www.youtube.com/channel/UClipICMNZjQ2tznqhVBbt-w" target="_blank"><i class="fab fa-youtube fa-2x" style="color: #FF0000"></i></a>
                 </div>
             </div>
         </div>
