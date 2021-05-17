@@ -1,10 +1,10 @@
 <x-guest-layout>
+
     <x-jet-authentication-card>
+
         <x-slot name="logo">
             <img src="{{ asset('/images/logo.jpg') }}" class="w-3/5 ml-1/5" alt="imsa-logo">
         </x-slot>
-        
-  
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Zaboravili ste lozinku? Unesite vašu email adresu i poslaćemo vam link za resetovanje lozinke preko koga ćete moći da izaberete novu lozinku za vaš nalog.') }}
