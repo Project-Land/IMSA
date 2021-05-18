@@ -7,13 +7,13 @@
 
         <meta property="og:title" content="IMSA {{ __('aplikacija') }}, {{ __('digitalni alat za unapređenje biznisa') }}" />
         <meta property="og:description" content="{{ __('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.') }}" />
-        <meta property="og:url" content="http://quality4.me/contact" />
+        <meta property="og:url" content="https://quality4.me/contact?lang={{ session('locale') }}" />
         <meta property="og:image" content="{{ asset('/images/imsa_logo_og.jpg') }}" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:alt" content="IMSA {{ __('aplikacija') }}" />
 
         <meta property="og:type" content="website" />
-        <meta property="og:locale" content="sr_RS" />
+        <meta property="og:locale" content="{{ __('sr_RS') }}" />
     @endpush
 
     @push('scripts')
@@ -73,7 +73,7 @@
 
                     <p class="font-semibold">
                         {{__('IMSA aplikacija omogućava upravljanje dokumentacijom i procesima koje zahtevaju ISO standardi.')}}
-                       
+
                     </p>
 
                     <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-mobile-alt mr-2 text-red-600"></i>{{__('Postoji 199 aplikacija. Zašto baš IMSA?')}}</h2>
