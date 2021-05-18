@@ -71,8 +71,9 @@
                         <h3 class="text-center text-2xl">{{__('digitalni alat za unapređenje biznisa')}}</h3>
                     </div>
 
-                    <p>
-                        {{__('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.')}}
+                    <p class="font-semibold">
+                        {{__('IMSA aplikacija omogućava upravljanje dokumentacijom i procesima koje zahtevaju ISO standardi.')}}
+                       
                     </p>
 
                     <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-mobile-alt mr-2 text-red-600"></i>{{__('Postoji 199 aplikacija. Zašto baš IMSA?')}}</h2>
@@ -112,7 +113,9 @@
                     <ul class="list-disc pl-4">
                         <li>{{ __('Ima. Mnogo će vam olakšati poslovanje, pa će vas malo ⹂razmaziti”.') }}</li>
                     </ul>
-
+                    <p class="mt-5 font-semibold">
+                         {{__('IMSA aplikacija je kreirana u saradnji sa konsultantskim ekspertima u oblasti implementacije i sertifikacije ISO standarda, tako da je dizajnirana po svetskim standardima.')}}
+                    </p>
                     <h2 class="sm:text-xl font-bold my-3 cursor-pointer" @click="open1 = ! open1">{{__('Kome je namenjena?')}} <i class="ml-2 fas" :class="{'fa-chevron-up': open1, 'fa-chevron-down': ! open1 }"></i></h2>
                     <div :class="{'': open1, 'hidden': ! open1 }">
                         <ul>

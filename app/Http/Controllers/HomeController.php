@@ -96,7 +96,15 @@ class HomeController extends Controller
     public function lang($lang)
     {
         session(['locale' => $lang]);
-        return back();
+        $a=url()->previous();
+        if(!strpos($a, "contact")){
+            return back();
+        }
+        $pos=strpos($a, "?") ? strpos($a, "?"):50;
+        $a= substr($a, 0, $pos);
+        $a=$a.'?lang='.$lang;
+    
+        return redirect($a);//back();
     }
 
     public function markAsRead($id)
