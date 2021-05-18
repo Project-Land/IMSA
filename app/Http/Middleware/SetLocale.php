@@ -21,6 +21,9 @@ class SetLocale
             if(!$request->lang){
                 return redirect(url()->current().'?lang='.session('locale'));
             }
+            else{
+                session(['locale'=>$request->lang]);
+            }
         }
         App::setLocale(session('locale'));
         return $next($request);
