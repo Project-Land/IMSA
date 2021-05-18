@@ -11,6 +11,10 @@ class PlanIp extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'check_users' => 'array',
+    ];
+
     public function internalCheck()
     {
         return $this->hasOne('App\Models\InternalCheck');
@@ -18,21 +22,20 @@ class PlanIp extends Model
 
     public static function getStats($teamId, $standardId, $year)
     {
-        
-        $cr_total = PlanIp::whereHas('internalCheck', function ($q) use ($teamId){
+
+        $cr_total = PlanIp::whereHas('internalCheck', function ($q) use ($teamId) {
             $q->where('team_id', $teamId);
         })->where('standard_id', $standardId)->whereYear('check_start', $year)->count();
 
-        $cr_finished = PlanIp::whereHas('internalCheck', function ($q) use ($teamId){
+        $cr_finished = PlanIp::whereHas('internalCheck', function ($q) use ($teamId) {
             $q->where('team_id', $teamId);
         })->where('standard_id', $standardId)->whereYear('check_end', $year)->count();
 
-        if($cr_total == 0){
+        if ($cr_total == 0) {
             $cr_percentage = 0;
-        }
-        else{
+        } else {
             $cr_percentage = ($cr_finished / $cr_total) * 100;
         }
-        return __("Realizovano je")." ".$cr_finished." ".__("provera od ukupno")." ".$cr_total." ".__("planiranih, što čini")." ".round($cr_percentage)."%";
+        return __("Realizovano je") . " " . $cr_finished . " " . __("provera od ukupno") . " " . $cr_total . " " . __("planiranih, što čini") . " " . round($cr_percentage) . "%";
     }
 }

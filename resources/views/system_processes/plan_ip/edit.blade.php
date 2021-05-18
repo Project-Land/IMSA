@@ -1,4 +1,9 @@
 <x-app-layout>
+    @push('scripts')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Plan IP') }} - {{ __('Kreiranje / Izmena') }}
@@ -31,7 +36,7 @@
 
             <div class="mb-4">
                 <label for="team_for_internal_check" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Tim za proveru') }}</label>
-                <input type="text" class="appearance-none border w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" name="team_for_internal_check" value=" {{$planIp->internalCheck->leaders}}" readonly>
+                <input type="text" class="appearance-none border w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="team_for_internal_check" name="team_for_internal_check" value="{{$planIp->internalCheck->leaders}}" readonly>
             </div>
 
             <div class="mb-4">
@@ -58,9 +63,42 @@
                 @enderror
             </div>
 
+            <div class="mb-4">
+                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Korisnici') }}</label>
+                <select class="users block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="check_users" name="check_users[]" multiple required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}" @if(collect($planIp->check_users)->contains($user->id)) {{ 'selected' }} @endif>{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                @error('users')
+                    <span class="text-red-700 italic text-sm">{{ __($message) }}</span><br>
+                @enderror
+            </div>
+
             <button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{ __('Sačuvaj') }}</button>
         </form>
     </div>
+
+    <style>
+        .select2-results {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple {
+            border-radius: 0;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #dee2e6 !important;
+        }
+        .select2-selection__choice {
+            font-size: 0.875rem;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+            border-radius: 1px;
+        }
+    </style>
 
     <script>
 
@@ -106,6 +144,8 @@
                 minDate: start_date
             })
         })
+
+        $('.users').select2();
 
         $('#status').change( () => {
             if($('#status').val() == 1){
