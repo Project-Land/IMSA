@@ -338,19 +338,6 @@
                                 <div class="border-t border-gray-100"></div>
                             @endif
 
-                            <!-- Server management -->
-                            @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && auth()->user()->allTeams()->first()->membership->role == "super-admin")
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Server info') }}
-                                </div>
-
-                                <x-jet-dropdown-link href="{{ route('analytics') }}">
-                                    {{ __('Server log') }}
-                                </x-jet-dropdown-link>
-
-                                <div class="border-t border-gray-100"></div>
-                            @endif
-
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

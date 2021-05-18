@@ -25,10 +25,9 @@ class ManagementSystemReviewRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post')){
+        if ($this->isMethod('post')) {
             return $this->createRules();
-        }
-        elseif($this->isMethod('put')){
+        } elseif ($this->isMethod('put')) {
             return $this->updateRules();
         }
     }
@@ -37,10 +36,12 @@ class ManagementSystemReviewRequest extends FormRequest
     {
         return [
             'year' => [
-                Rule::unique('management_system_reviews')->where(function ($query) {
-                    return $query->where('year', $this->year)->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'));
-                }
-            )],
+                Rule::unique('management_system_reviews')->where(
+                    function ($query) {
+                        return $query->where('year', $this->year)->where('team_id', Auth::user()->current_team_id)->where('standard_id', session('standard'))->where('deleted_at', NULL);
+                    }
+                )
+            ],
             //'participants' => 'required',
             //'measures_status' => 'required',
             //'internal_external_changes' => 'required',
@@ -82,20 +83,20 @@ class ManagementSystemReviewRequest extends FormRequest
     {
         $standardId = session('standard');
 
-        if(session('standard_name') == 9001){
+        if (session('standard_name') == 9001) {
             $this->merge([
                 'external_suppliers_performance' => \App\Models\Supplier::getStats(Auth::user()->current_team_id, $standardId, $this->year),
             ]);
         }
 
-        if(session('standard_name') == 14001){
+        if (session('standard_name') == 14001) {
             $this->merge([
                 'environmental_aspects' => \App\Models\EnvironmentalAspect::getStats(Auth::user()->current_team_id, $standardId, $this->year),
                 'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year)
             ]);
         }
 
-        if(session('standard_name') == 45001){
+        if (session('standard_name') == 45001) {
             $this->merge([
                 'fulfillment_of_obligations' => \App\Models\EvaluationOfLegalAndOtherRequirement::getStats(Auth::user()->current_team_id, $standardId, $this->year),
                 'incidents' => \App\Models\Accident::getStats(Auth::user()->current_team_id, $standardId, $this->year)
