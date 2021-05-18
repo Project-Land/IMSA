@@ -17,6 +17,11 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
+        if($request->routeIs('contact')){
+            if(!$request->lang){
+                return redirect(url()->current().'?lang='.session('locale'));
+            }
+        }
         App::setLocale(session('locale'));
         return $next($request);
     }

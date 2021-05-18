@@ -830,5 +830,10 @@
     "DA. Jedini vlasnici podataka ste vi, naša IT podrška isključivo pokriva segmente aplikacije ali ne i sadržaj.":"YES. The only owner of data is you. Our IT support only covers application segments, not the content.",
     "Ima li IMSA manu?":"Does IMSA have a flaw?",
     "Ima. Mnogo će vam olakšati poslovanje, pa će vas malo ⹂razmaziti”.":"YES. It will make your business much easier, so it will “spoil“ you slightly.",
-    "Prikaz zainteresovane strane" : "Stakeholder preview"
+    "Prikaz zainteresovane strane" : "Stakeholder preview",
+    "Interni proveravač 9001":"Internal auditor 9001",
+    "Interni proveravač 14001":"Internal auditor 14001",
+    "Interni proveravač 27001":"Internal auditor 27001",
+    "Interni proveravač 45001":"Internal auditor 45001",
+    "IMSA aplikacija omogućava upravljanje dokumentacijom i procesima koje zahtevaju ISO standardi.":"IMSA application enables managing documentation and processes requested by ISO standards."
 }
