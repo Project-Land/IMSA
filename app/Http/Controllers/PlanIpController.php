@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Team;
 use App\Models\PlanIp;
 use App\Facades\CustomLog;
-use App\Http\Requests\UpdatePlanIpRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdatePlanIpRequest;
 
 class PlanIpController extends Controller
 {
@@ -37,7 +38,17 @@ class PlanIpController extends Controller
     {
         $plan_ip = PlanIp::findOrFail($id);
         $this->authorize('update', $plan_ip);
-        return view('system_processes.plan_ip.edit', ['planIp' => $plan_ip]);
+        $team = Team::findOrFail(Auth::user()->current_team_id);
+        $users = $team->users->filter(function ($value) {
+            return ($value->allTeams()->first()->membership->role != 'super-admin');
+        });
+        return view(
+            'system_processes.plan_ip.edit',
+            [
+                'planIp' => $plan_ip,
+                'users' => $users
+            ]
+        );
     }
 
     public function update(UpdatePlanIpRequest $request, $id)
@@ -51,13 +62,18 @@ class PlanIpController extends Controller
         $planIp->checked_date = date('Y-m-d', strtotime($request->checked_date));
         $planIp->checked_sector = $request->checked_sector;
         $planIp->team_for_internal_check = $request->team_for_internal_check;
+        $planIp->check_users = $request->check_users;
 
-        try{
+        /*foreach ($request->check_users as $user) {
+
+        }*/
+
+        try {
             $planIp->save();
-            CustomLog::info('Plan IP id: "'.$planIp->id.'" je sačuvan, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Plan IP id: "' . $planIp->id . '" je sačuvan, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', 'Plan IP je uspešno izmenjen'));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene plana IP id: '.$planIp->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj izmene plana IP id: ' . $planIp->id . ', ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
 
@@ -69,12 +85,12 @@ class PlanIpController extends Controller
         $plan_ip = PlanIp::findOrFail($id);
         $this->authorize('delete', $plan_ip);
 
-        try{
+        try {
             PlanIp::destroy($id);
-            CustomLog::info('Plan IP id: '.$plan_ip->id.' je uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Plan IP id: ' . $plan_ip->id . ' je uklonjen, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', 'Plan IP je uspešno uklonjen'));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja plana IP id: '.$plan_ip->id.', '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj brisanja plana IP id: ' . $plan_ip->id . ', ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', 'Došlo je do greške, pokušajte ponovo!'));
         }
     }
