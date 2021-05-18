@@ -9,6 +9,8 @@ use App\Facades\CustomLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdatePlanIpRequest;
+use App\Notifications\InstantNotification;
+use App\Notifications\PlanIpInstantNotification;
 
 class PlanIpController extends Controller
 {
@@ -64,9 +66,11 @@ class PlanIpController extends Controller
         $planIp->team_for_internal_check = $request->team_for_internal_check;
         $planIp->check_users = $request->check_users;
 
-        /*foreach ($request->check_users as $user) {
+        $not = new PlanIpInstantNotification($planIp);
+        $not->save();
+        $not->user()->sync($request->check_users);
 
-        }*/
+        //send mail to user
 
         try {
             $planIp->save();
