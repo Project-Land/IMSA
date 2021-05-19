@@ -200,7 +200,7 @@
 
     function toggleModal(modalID, role){
         if(role == 'admin'){
-            certificates = certificates.filter(cert => cert.name == 'editor')
+            certificates = certificates.filter(cert => cert.name.startsWith('editor'))
         }
         axios.get('/user/'+modalID+'/certificates')
         .then((response) => {

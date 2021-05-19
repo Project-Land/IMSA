@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Team;
+use App\Models\User;
 use App\Models\PlanIp;
 use App\Facades\CustomLog;
+use App\Mail\PlanIpCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UpdatePlanIpRequest;
-use App\Notifications\InstantNotification;
 use App\Notifications\PlanIpInstantNotification;
 
 class PlanIpController extends Controller
@@ -70,7 +72,14 @@ class PlanIpController extends Controller
         $not->save();
         $not->user()->sync($request->check_users);
 
-        //send mail to user
+        foreach ($request->check_users as $u) {
+            $user = User::findOrFail($u);
+            if ($user->email != null) {
+                $standard_name = session('standard_name');
+                $url = 'https://quality4.me/internal-check?standard=' . $planIp->standard_id . '?internal-check#internalcheck"' . $planIp->internalCheck->id;
+                Mail::to($user->email)->send(new PlanIpCreated($planIp, $url, $standard_name));
+            }
+        }
 
         try {
             $planIp->save();
