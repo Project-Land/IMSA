@@ -13,6 +13,11 @@ use App\Facades\CustomLog;
 
 class ProceduresController extends Controller
 {
+    private  $help_video_sr="pFNUWztmJfM";
+    private  $help_video_en="sIEwXPU1EGM";
+    private  $help_video_hr="pFNUWztmJfM";
+    private  $help_video_it="sIEwXPU1EGM";
+
     public function index($id = null)
     {
         if(empty(session('standard'))){
@@ -40,7 +45,9 @@ class ProceduresController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/procedure',
                 'route_name' => 'procedures',
-                'doc_type' => 'Procedure'
+                'doc_type' => 'Procedure',
+                'help_video' => $this->{'help_video_'.session('locale')},
+                
             ]
         );
     }

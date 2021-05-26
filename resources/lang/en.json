@@ -836,5 +836,16 @@
     "Interni proveravač 27001":"Internal auditor 27001",
     "Interni proveravač 45001":"Internal auditor 45001",
     "IMSA aplikacija omogućava upravljanje dokumentacijom i procesima koje zahtevaju ISO standardi.":"IMSA application enables managing documentation and processes requested by ISO standards.",
-    "sr_RS":"en_GB"
+    "sr_RS":"en_GB",
+    "Prijavite se na naš newsletter":"Sign up for the newsletter",
+    "prijavi se":"subscribe",
+    "Email adresa nije validna":"Email address is invalid",
+    "Uspešno ste se prijavili na naš newsletter!":"You have successfully subscribed to the newsletter!",
+    "Došlo je do greške, Molimo Vas pokušajte kasnije":"An error has occurred. Please try again later",
+    "Hvala što ste se prijavili na naš newsletter":"Thank you for subscribing to the newsletter",
+    "Možete se odjaviti u bilo kom trenutku klikom na dugme ispod":"You can unsubscribe at any time by clicking the button below",
+    "Odjavite se":"Unsubscribe",
+    "Hvala":"Thank you",
+    "Uspešno ste se odjavili!":"You have successfully unsubscribed!"
+
 }
