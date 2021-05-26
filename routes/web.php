@@ -209,3 +209,7 @@ Route::get('contact/', [HomeController::class, 'contact'])->name('contact');
 Route::get('manual', [HomeController::class, 'manual'])->name('manual');
 Route::get('lang/{lang}', [HomeController::class, 'lang'])->name('lang');
 Route::get('contactme', [HomeController::class, 'contactWithEmail'])->name('contactme');
+Route::post('subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
+//Route::get('subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
+Route::get('unsubscribe', [HomeController::class, 'unsubscribe'])->name('unsubscribe');
+

@@ -23,8 +23,10 @@
                     @else
                     <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Login') }}</a>
                     @endauth
+                    @if(session('locale') !== "it")
                     <a href="{{ route('manual') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{  __('Uputstvo za korišćenje') }}</a>
                     <a href="{{ route('about') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('O aplikaciji') }}</a>
+                    @endif
                     <a href="{{ route('contact') }}" class="text-sm text-gray-700 hover:text-gray-900 no-underline mx-2">{{ __('Kontaktirajte nas') }}</a>
                 </div>
 

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Mail\Contact;
+use App\Mail\Subscriber as MailSubscriber;
 use App\Models\Standard;
+use App\Models\Subscriber;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -105,7 +108,7 @@ class HomeController extends Controller
         $a= substr($a, 0, $pos);
         $a=$a.'?lang='.$lang;
     
-        return redirect($a);//back();
+        return redirect($a);
     }
 
     public function markAsRead($id)
@@ -129,5 +132,29 @@ class HomeController extends Controller
         Mail::to('msretic@projectland.rs')->send(new Contact($request));
 
         return back()->with(['message' => __('Poruka je uspešno prosleđena, odgovorićemo vam u najkraćem roku')]);
+    }
+
+    public function subscribe(Request $request)
+    {
+        $token=Str::random(50);
+       // return new MailSubscriber('dsdsdsdsd');
+        $subscriber=Subscriber::withTrashed()->firstOrCreate(['email'=>$request->email],['lang'=>$request->lang,'token'=>$token,'deleted_at'=>null]);
+        $subscriber->deleted_at=null;
+        $subscriber->token=$token;
+        $subscriber->lang=$request->lang;
+        $subscriber->save();
+        Mail::to($request->email)->send(new MailSubscriber($token));
+        return ['msg'=>'success'];
+       
+    }
+
+    public function unsubscribe(Request $request)
+    {
+        
+        if($unsub=Subscriber::where('token',$request->token)->first()){
+            $unsub->delete();
+        }
+        return '<h1>'.__('Uspešno ste se odjavili!').'</h1>';
+       
     }
 }

@@ -20,6 +20,9 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        
     @endpush
 
     @push('styles')
@@ -30,6 +33,19 @@
                 color: red;
                 font-size: .75rem;
             }
+
+            .newsletter{
+                position:fixed;
+                background-color:#8021a3;
+                color:whitesmoke;
+                bottom:5px;
+                right:3px;
+                height:25vh;
+            }
+
+
+            
+            
         </style>
     @endpush
 
@@ -191,6 +207,7 @@
                             <span class="text-sm">({{__('Poruka nije obavezna')}})</span>
                         </div>
                     </div>
+                    
 
                     <div class="flex flex-wrap justify-end -mx-3 mb-6 float-right">
                         <div class="w-full px-3">
@@ -198,6 +215,27 @@
                         </div>
                     </div>
                 </form>
+
+                <section class="container newsletter rounded sm:w-full md:w-1/3 lg:w-1/5" id="newsletter">
+                        <section class="one">
+                        <div class="relative h-10 w-full">
+                        <i id="fa-times" class="fas fa-times text-xl absolute top-3 cursor-pointer right-0 h-8 w-8"></i>
+                        </div>
+                        <div class="logo">
+                        <div class="text-center"><i class="fas fa-bell text-yellow-100 text-3xl"></i><div>
+                        </div>
+                        <h2 class="heading">
+                           {{__('Prijavite se na naš newsletter')}}
+                        </h2>
+                       
+                        <form class="my-3 newsletterForm" id="newsletterForm">
+                            <input id="newsletterEmail" data-lang={{session('locale')}} type='text' placeholder=" Email" class="text-black p-1 rounded"><br/>
+                            <button class="btn bg-yellow-400 mt-3 p-2 rounded text-black" role="button" >
+                            {{__('prijavi se')}}
+                            </button>
+                        </form>
+                    </section>
+                </section>
             </div>
         </div>
     </div>
@@ -226,6 +264,9 @@
             </div>
         </div>
     </div>
+
+
+   
 
     <script>
         $("#contact-form").validate({
@@ -263,6 +304,54 @@
 
         $(".close").click( () => {
             $(".alert").hide();
+        });
+
+
+        function subscribe(event){
+            event.preventDefault();
+            let input=document.getElementById('newsletterEmail');
+            let email= input.value;
+            let lang=input.dataset.lang;
+            let err='{{ __("Email adresa nije validna!") }}';
+            if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
+            {
+                alert( err );
+                return (false);
+            }
+            
+               
+            axios.post('/subscribe', {
+                email: email,
+                lang: lang
+            })
+            .then(function (response) {
+                
+                document.getElementById('newsletterForm').remove();
+                document.getElementById('newsletter').innerHTML="<h1 class='text-center text-2xl mt-14 mx-auto h-4'>{{__('Uspešno ste se prijavili na naš newsletter!')}}</h1>";
+
+            })
+            .catch(function (error) {
+                document.getElementById('newsletterForm').remove();
+                document.getElementById('newsletter').innerHTML="<h1 class='text-center text-2xl mt-14 mx-auto h-4'>{{__('Došlo je do greške, Molimo Vas pokušajte kasnije')}}</h1>";
+            })
+            .finally(function (error) {
+                setTimeout(()=>{document.getElementById('newsletter').remove();},4000);
+               document.getElementById("newsletter").animate([
+                { opacity: 1 },
+                { opacity: 0 },
+                ], {
+                // timing options
+                duration: 4000,
+                // save state
+                fill:'forwards'
+                });
+                
+            });
+           
+        }
+        document.getElementById('newsletterForm').addEventListener('submit',subscribe);
+        document.getElementById('fa-times').addEventListener('click',()=>{
+            document.getElementById('newsletter').remove();
         });
 
     </script>

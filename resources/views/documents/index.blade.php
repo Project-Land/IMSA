@@ -7,11 +7,15 @@
     @endpush
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
+    <div class="row">
+        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight col-10">
             {{ Session::get('standard_name') }} - {{ __($doc_type) }}
         </h2>
+        <div><i class="fas fa-video cursor-pointer text-2xl col-2 text-green-400" id="on" data-toggle="tooltip" data-placement="top" title="{{__('Video pomoć')}}" ></i></div>
+        <iframe id="youtube" class="w-full h-1/3 md:w-1/2 md:h-2/5 lg:w-1/3" style="position:fixed;top:0px;right:0px;z-index:1000;display:none;"  src="{{'https://www.youtube-nocookie.com/embed/'.$help_video.'?rel=0'}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><button id="off" style="position:fixed;top:0px;right:5px;background:red;z-index:1001;font-size:40px;font-weight:900;display:none;border:2px solid black;">&nbsp;X&nbsp;</button>
+    </div>
     </x-slot>
-
+    
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
@@ -135,6 +139,20 @@
 
             $('[data-toggle="tooltip"]').tooltip();
 
+
+            document.getElementById('off').addEventListener('click',()=>{
+                let src=document.getElementById('youtube').src;
+                document.getElementById('youtube').src=src;
+                document.getElementById('youtube').style.display='none';
+                document.getElementById('off').style.display='none';
+            });
+
+            document.getElementById('on').addEventListener('click',()=>{
+                document.getElementById('youtube').style.display='block';
+                document.getElementById('off').style.display='block';
+            });
+
+           
         </script>
     @endpush
 
