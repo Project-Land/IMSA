@@ -424,7 +424,7 @@
     "Prilike za stalna poboljšanja": "Opportunità di miglioramento continuo",
     "Polje nije obavezno": "Campo non obbligatorio",
     "Performanse životne sredine": "Prestazione ambientale",
-"Izlazne tačke preispitivanja": "Risultati della revisione",
+    "Izlazne tačke preispitivanja": "Risultati della revisione",
     "Popunite polje": "Compila il campo",
     "Izaberite godinu": "Seleziona anno",
     "Kreiraj mernu opremu": "Creare equipaggiamento per le misurazioni",
@@ -810,6 +810,7 @@
     "digitalni alat za unapređenje biznisa":"strumento digitale per il miglioramento del business",
     "Popunjavate ukoliko zakazujete prezentaciju":"Da compilare se pianifichi una presentazione",
     "sr_RS":"it_IT",
-    "Kreiran je novi plan interne provere":"É stato creato un nuovo piano dell’audit interno"
+    "Kreiran je novi plan interne provere":"É stato creato un nuovo piano dell’audit interno",
+    "Korisnici koje treba obavestiti":"Utenti che devono essere avvisati"
 
 }

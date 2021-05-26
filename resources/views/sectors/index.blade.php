@@ -27,7 +27,6 @@
             <div class="card">
                 @can('create', App\Models\Sector::class)
                 <div class="card-header">
-                    <!-- <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('sectors.create') }}"><i class="fas fa-plus"></i> Dodaj sektor</a> -->
                     <a class="inline-flex hover:no-underline items-center px-4 py-2 bg-blue-500 border border-transparent rounded font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150"  href="{{ route('sectors.create') }}"><i class="fas fa-plus mr-2"></i> {{ __('Dodaj sektor') }}</a>
                 </div>
                 @endcan

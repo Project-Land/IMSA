@@ -64,7 +64,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Korisnici') }}</label>
+                <label for="users" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Korisnici koje treba obavestiti') }}</label>
                 <select class="users block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="check_users" name="check_users[]" multiple required oninvalid="this.setCustomValidity('{{ __("Popunite polje") }}')" oninput="this.setCustomValidity('')">
                     @foreach($users as $user)
                         <option value="{{ $user->id }}" @if(collect($planIp->check_users)->contains($user->id)) {{ 'selected' }} @endif>{{ $user->name }}</option>
