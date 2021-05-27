@@ -8,3 +8,4 @@
     </div>
     <iframe id="youtube" class="w-full h-full" src="{{'https://www.youtube-nocookie.com/embed/'.$help_video.'?rel=0'}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" allowfullscreen></iframe>
 </div>
+

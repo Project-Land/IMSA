@@ -33,7 +33,7 @@
                 <div class="form-group col-md-3">
                     <label for="level" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Nivo važnosti') }}</label>
                     <select class="block appearance-none w-full border border-gray-200 text-gray-700 py-2 px-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="level" name="level" required oninvalid="this.setCustomValidity('{{ __("Izaberite nivo") }}')" oninput="this.setCustomValidity('')">
-                        <option value="">{{ __('Izaberite nivo...') }}</option>
+                        <option value="">{{ __('Izaberite nivo') }}...</option>
                         <option value="1" {{ old('level') == "1" ? "selected" : "" }} >{{ __('Mali') }}</option>
                         <option value="2" {{ old('level') == "2" ? "selected" : "" }} >{{ __('Srednji') }}</option>
                         <option value="3" {{ old('level') == "3" ? "selected" : "" }}>{{ __('Veliki') }}</option>
