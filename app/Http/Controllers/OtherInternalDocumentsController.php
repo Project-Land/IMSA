@@ -12,6 +12,11 @@ use App\Facades\CustomLog;
 
 class OtherInternalDocumentsController extends Controller
 {
+    private  $help_video_sr="pFNUWztmJfM";
+    private  $help_video_en="pFNUWztmJfM";
+    private  $help_video_hr="pFNUWztmJfM";
+    private  $help_video_it="pFNUWztmJfM";
+
     public function index()
     {
         $documents = Document::where([
@@ -25,7 +30,8 @@ class OtherInternalDocumentsController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName())."/other_internal_document",
                 'route_name' => 'other-internal-documents',
-                'doc_type' => 'Ostala interna dokumenta'
+                'doc_type' => 'Ostala interna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -44,7 +50,8 @@ class OtherInternalDocumentsController extends Controller
                 'folder' => Str::snake($this::getCompanyName())."/other_internal_document",
                 'route_name' => 'other-internal-documents',
                 'doc_type' => 'Ostala interna dokumenta',
-                'back' => route('other-internal-documents.index')
+                'back' => route('other-internal-documents.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -56,7 +63,8 @@ class OtherInternalDocumentsController extends Controller
             [
                 'url' => route('other-internal-documents.store'),
                 'back' => route('other-internal-documents.index'),
-                'doc_type' => 'Ostala interna dokumenta'
+                'doc_type' => 'Ostala interna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -96,7 +104,8 @@ class OtherInternalDocumentsController extends Controller
                 'url' => route('other-internal-documents.update', $document->id),
                 'folder' => 'other_internal_document',
                 'back' => route('other-internal-documents.index'),
-                'doc_type' => 'Ostala interna dokumenta'
+                'doc_type' => 'Ostala interna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

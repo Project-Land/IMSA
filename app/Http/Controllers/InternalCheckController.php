@@ -23,6 +23,10 @@ use App\Http\Requests\UpdateInternalCheckRequest;
 
 class InternalCheckController extends Controller
 {
+    private  $help_video_sr="OaY9i8D5_as";
+    private  $help_video_en="OaY9i8D5_as";
+    private  $help_video_hr="OaY9i8D5_as";
+    private  $help_video_it="OaY9i8D5_as";
 
     public function index()
     {
@@ -39,7 +43,7 @@ class InternalCheckController extends Controller
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->whereYear('date', '=', date('Y'))->with(['sector','standard','planIp','user'])->orderBy('date', 'desc')->get();
-        return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks]);
+        return view('system_processes.internal_check.index', ['internal_checks' => $internal_checks,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function getData(Request $request, $year)
@@ -50,7 +54,7 @@ class InternalCheckController extends Controller
         ])->whereYear('date', '=', $year)->with(['sector','standard','planIp'])->orderBy('date', 'desc')->get();
 
         $request->session()->flash('year', $year);
-        return view('system_processes.internal_check.index', compact('internal_checks'));
+        return view('system_processes.internal_check.index', ['internal_checks'=>$internal_checks,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()
@@ -71,7 +75,8 @@ class InternalCheckController extends Controller
         return view('system_processes.internal_check.create',
             [
                 'sectors' => $sectors,
-                'teamLeaders' => $leaders
+                'teamLeaders' => $leaders,
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -169,7 +174,9 @@ class InternalCheckController extends Controller
                 'internalCheck' => $internal_check,
                 'sectors'=> $sectors,
                 'teamLeaders' => $leaders,
-                'leaders_names' => $leaders_names            ]
+                'leaders_names' => $leaders_names,
+                'help_video' => $this->{'help_video_'.session('locale')}
+            ]
         );
         
     }

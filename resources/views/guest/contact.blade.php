@@ -38,9 +38,11 @@
                 position:fixed;
                 background-color:#8021a3;
                 color:whitesmoke;
-                bottom:5px;
-                right:3px;
+                bottom:10px;
+                right:10px;
                 height:25vh;
+                border-radius: 20px;
+                opacity: 0.95;
             }
 
 
@@ -216,7 +218,7 @@
                     </div>
                 </form>
 
-                <section class="container newsletter rounded sm:w-full md:w-1/3 lg:w-1/5" id="newsletter">
+                <section class="container newsletter sm:w-full md:w-1/3 lg:w-1/5" id="newsletter">
                         <section class="one">
                         <div class="relative h-10 w-full">
                         <i id="fa-times" class="fas fa-times text-xl absolute top-3 cursor-pointer right-0 h-8 w-8"></i>

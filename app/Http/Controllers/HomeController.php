@@ -137,7 +137,7 @@ class HomeController extends Controller
     public function subscribe(Request $request)
     {
         $token=Str::random(50);
-       // return new MailSubscriber('dsdsdsdsd');
+        //return new MailSubscriber($token);
         $subscriber=Subscriber::withTrashed()->firstOrCreate(['email'=>$request->email],['lang'=>$request->lang,'token'=>$token,'deleted_at'=>null]);
         $subscriber->deleted_at=null;
         $subscriber->token=$token;

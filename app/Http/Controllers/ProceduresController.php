@@ -13,10 +13,10 @@ use App\Facades\CustomLog;
 
 class ProceduresController extends Controller
 {
-    private  $help_video_sr="pFNUWztmJfM";
-    private  $help_video_en="sIEwXPU1EGM";
-    private  $help_video_hr="pFNUWztmJfM";
-    private  $help_video_it="sIEwXPU1EGM";
+    private  $help_video_sr="7IvFTpQmCI4";
+    private  $help_video_en="7IvFTpQmCI4";
+    private  $help_video_hr="7IvFTpQmCI4";
+    private  $help_video_it="7IvFTpQmCI4";
 
     public function index($id = null)
     {
@@ -46,7 +46,7 @@ class ProceduresController extends Controller
                 'folder' => Str::snake($this::getCompanyName()).'/procedure',
                 'route_name' => 'procedures',
                 'doc_type' => 'Procedure',
-                'help_video' => $this->{'help_video_'.session('locale')},
+                'help_video' => $this->{'help_video_'.session('locale')}
                 
             ]
         );
@@ -70,7 +70,8 @@ class ProceduresController extends Controller
                 'folder' => Str::snake($this::getCompanyName()).'/procedure',
                 'route_name' => 'procedures',
                 'doc_type' => 'Procedure',
-                'back' => route('procedures.index')
+                'back' => route('procedures.index'),
+                'help_video' => $this->{'help_video_'.session('locale')},
             ]
         );
     }
@@ -88,7 +89,8 @@ class ProceduresController extends Controller
                 'back' => route('procedures.index'),
                 'category' => 'procedures',
                 'sectors' => $sectors,
-                'doc_type'=>'Procedure'
+                'doc_type'=>'Procedure',
+                'help_video' => $this->{'help_video_'.session('locale')},
             ]
         );
     }
@@ -128,7 +130,8 @@ class ProceduresController extends Controller
                 'back' => route('procedures.index'),
                 'category' => 'procedures',
                 'sectors' => $sectors,
-                'doc_type'=>'Procedure'
+                'doc_type'=>'Procedure',
+                'help_video' => $this->{'help_video_'.session('locale')},
             ]
         );
     }

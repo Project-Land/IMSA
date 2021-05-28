@@ -12,6 +12,11 @@ use App\Facades\CustomLog;
 
 class PoliciesController extends Controller
 {
+    private  $help_video_sr="owMDsxR96Zs";
+    private  $help_video_en="owMDsxR96Zs";
+    private  $help_video_hr="owMDsxR96Zs";
+    private  $help_video_it="owMDsxR96Zs";
+
     public function index()
     {
         if(empty(session('standard'))){
@@ -29,7 +34,8 @@ class PoliciesController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName())."/policy",
                 'route_name' => 'policies',
-                'doc_type' => 'Politike'
+                'doc_type' => 'Politike',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -52,7 +58,8 @@ class PoliciesController extends Controller
                 'folder' => Str::snake($this::getCompanyName())."/policy",
                 'route_name' => 'policies',
                 'doc_type' => 'Politike',
-                'back' => route('policies.index')
+                'back' => route('policies.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -67,7 +74,8 @@ class PoliciesController extends Controller
             [
                 'url' => route('policies.store'),
                 'back' => route('policies.index'),
-                'doc_type'=>'Politike'
+                'doc_type'=>'Politike',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -107,7 +115,8 @@ class PoliciesController extends Controller
                 'url' => route('policies.update', $document->id),
                 'folder' => 'policy',
                 'back' => route('policies.index'),
-                'doc_type'=>'Politike'
+                'doc_type'=>'Politike',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

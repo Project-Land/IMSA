@@ -12,6 +12,11 @@ use App\Http\Requests\RulesOfProcedureRequest;
 
 class RulesOfProceduresController extends Controller
 {
+    private  $help_video_sr="hxq6f8T4CTw";
+    private  $help_video_en="hxq6f8T4CTw";
+    private  $help_video_hr="hxq6f8T4CTw";
+    private  $help_video_it="hxq6f8T4CTw";
+
     public function index()
     {
         if(empty(session('standard'))){
@@ -29,7 +34,8 @@ class RulesOfProceduresController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName())."/rules_of_procedure",
                 'route_name' => 'rules-of-procedures',
-                'doc_type' => 'Poslovnik'
+                'doc_type' => 'Poslovnik',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -52,7 +58,8 @@ class RulesOfProceduresController extends Controller
                 'folder' => Str::snake($this::getCompanyName())."/rules_of_procedure",
                 'route_name' => 'rules-of-procedures',
                 'doc_type' => 'Poslovnik',
-                'back' => route('rules-of-procedures.index')
+                'back' => route('rules-of-procedures.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -67,7 +74,8 @@ class RulesOfProceduresController extends Controller
             [
                 'url' => route('rules-of-procedures.store'),
                 'back' => route('rules-of-procedures.index'),
-                'doc_type'=>'Poslovnici'
+                'doc_type'=>'Poslovnici',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -106,7 +114,8 @@ class RulesOfProceduresController extends Controller
                 'url' => route('rules-of-procedures.update', $document->id),
                 'folder' => 'rules_of_procedure',
                 'back' => route('rules-of-procedures.index'),
-                'doc_type'=>'Poslovnici'
+                'doc_type'=>'Poslovnici',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

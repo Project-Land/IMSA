@@ -12,6 +12,11 @@ use App\Facades\CustomLog;
 
 class ExternalDocumentsController extends Controller
 {
+    private  $help_video_sr="xEuNHYg07cc";
+    private  $help_video_en="xEuNHYg07cc";
+    private  $help_video_hr="xEuNHYg07cc";
+    private  $help_video_it="xEuNHYg07cc";
+
     public function index()
     {
         if(session('standard') == null){
@@ -29,7 +34,8 @@ class ExternalDocumentsController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName())."/external_document",
                 'route_name' => 'external-documents',
-                'doc_type' => 'Eksterna dokumenta'
+                'doc_type' => 'Eksterna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -52,7 +58,8 @@ class ExternalDocumentsController extends Controller
                 'folder' => Str::snake($this::getCompanyName())."/external_document",
                 'route_name' => 'external-documents',
                 'doc_type' => 'Eksterna dokumenta',
-                'back' => route('external-documents.index')
+                'back' => route('external-documents.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -64,7 +71,8 @@ class ExternalDocumentsController extends Controller
             [
                 'url' => route('external-documents.store'),
                 'back' => route('external-documents.index'),
-                'doc_type' => 'Eksterna dokumenta'
+                'doc_type' => 'Eksterna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -104,7 +112,8 @@ class ExternalDocumentsController extends Controller
                 'url' => route('external-documents.update', $document->id),
                 'folder' => 'external_document',
                 'back' => route('external-documents.index'),
-                'doc_type' => 'Eksterna dokumenta'
+                'doc_type' => 'Eksterna dokumenta',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

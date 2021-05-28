@@ -20,7 +20,6 @@ class Subscriber extends Mailable
 
     public function __construct($token)
     {
-       // $this->url='https://quality4.me/unsubscribe?token='.$token;
        $this->url='https://quality4.me/unsubscribe?token='.$token;
     }
 

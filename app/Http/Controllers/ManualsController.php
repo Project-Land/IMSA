@@ -13,6 +13,10 @@ use App\Http\Requests\ManualRequest;
 
 class ManualsController extends Controller
 {
+    private  $help_video_sr="egpLkXv-bFE";
+    private  $help_video_en="egpLkXv-bFE";
+    private  $help_video_hr="egpLkXv-bFE";
+    private  $help_video_it="egpLkXv-bFE";
 
     public function index()
     {
@@ -37,7 +41,8 @@ class ManualsController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/manuals',
                 'route_name' => 'manuals',
-                'doc_type' => 'Uputstva'
+                'doc_type' => 'Uputstva',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -60,7 +65,8 @@ class ManualsController extends Controller
                 'folder' => Str::snake($this::getCompanyName()).'/manuals',
                 'route_name' => 'manuals',
                 'doc_type' => 'Uputstva',
-                'back' => route('manuals.index')
+                'back' => route('manuals.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -79,7 +85,8 @@ class ManualsController extends Controller
                 'back' => route('manuals.index'),
                 'doc_type'=>'Uputstva',
                 'sectors' => $sectors,
-                'category' => 'manuals'
+                'category' => 'manuals',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -121,7 +128,8 @@ class ManualsController extends Controller
                 'back' => route('manuals.index'),
                 'doc_type' => 'Uputstva',
                 'sectors' => $sectors,
-                'category' => 'manuals'
+                'category' => 'manuals',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

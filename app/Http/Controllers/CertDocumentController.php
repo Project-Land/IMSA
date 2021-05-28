@@ -13,6 +13,10 @@ use App\Http\Requests\CertDocumentRequest;
 
 class CertDocumentController extends Controller
 {
+    private  $help_video_sr="IcTCivOqD4s";
+    private  $help_video_en="IcTCivOqD4s";
+    private  $help_video_hr="IcTCivOqD4s";
+    private  $help_video_it="IcTCivOqD4s";
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +29,7 @@ class CertDocumentController extends Controller
             [
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/certification_documents',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -37,7 +42,7 @@ class CertDocumentController extends Controller
     public function create()
     {
         $this->authorize('create', CertDocument::class);
-        return view('certificate_documents.create');
+        return view('certificate_documents.create',['help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     /**
@@ -88,6 +93,7 @@ class CertDocumentController extends Controller
         return view('certificate_documents.edit',
             [
                 'document' => $document,
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -156,6 +162,7 @@ class CertDocumentController extends Controller
             [
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/certification_documents',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

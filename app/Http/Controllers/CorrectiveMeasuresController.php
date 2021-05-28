@@ -16,6 +16,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CorrectiveMeasuresController extends Controller
 {
+    private  $help_video_sr="DVp6EcVJhmY";
+    private  $help_video_en="DVp6EcVJhmY";
+    private  $help_video_hr="DVp6EcVJhmY";
+    private  $help_video_it="DVp6EcVJhmY";
 
     public function index()
     {
@@ -31,7 +35,7 @@ class CorrectiveMeasuresController extends Controller
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
         ])->with(['standard'])->orderBy('created_at', 'desc')->get();
-        return view('system_processes.corrective_measures.index', compact('measures'));
+        return view('system_processes.corrective_measures.index', ['measures'=>$measures,  'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()
@@ -43,7 +47,7 @@ class CorrectiveMeasuresController extends Controller
         $team = Team::findOrFail(Auth::user()->current_team_id);
         $standards = $team->standards->where('id', session('standard'));
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.corrective_measures.create', compact('standards', 'sectors'));
+        return view('system_processes.corrective_measures.create', ['standards'=>$standards, 'sectors'=>$sectors,  'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function store(CorrectiveMeasuresRequest $request)
@@ -103,7 +107,8 @@ class CorrectiveMeasuresController extends Controller
         $team = Team::findOrFail(Auth::user()->current_team_id);
         $standards = $team->standards->where('id', session('standard'));
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.corrective_measures.edit', compact('corrective_measure', 'standards', 'sectors'));
+        $help_video = $this->{'help_video_'.session('locale')};
+        return view('system_processes.corrective_measures.edit', compact('corrective_measure', 'standards', 'sectors','help_video'));
     }
 
     public function update(CorrectiveMeasuresRequest $request, $id)

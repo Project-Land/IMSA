@@ -17,6 +17,10 @@ use App\Http\Requests\UpdateRiskManagementPlanRequest;
 
 class RiskManagementController extends Controller
 {
+    private  $help_video_sr="zZDlMAKsREM";
+    private  $help_video_en="zZDlMAKsREM";
+    private  $help_video_hr="zZDlMAKsREM";
+    private  $help_video_it="zZDlMAKsREM";
 
     public function index()
     {
@@ -29,7 +33,7 @@ class RiskManagementController extends Controller
                 ['team_id',Auth::user()->current_team_id],
             ])->with('user')->get();
 
-        return view('system_processes.risk_management.index', compact('riskManagements'));
+        return view('system_processes.risk_management.index',['riskManagements'=>$riskManagements,  'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()
@@ -38,7 +42,7 @@ class RiskManagementController extends Controller
             return redirect('/');
         }
         $this->authorize('create', RiskManagement::class);
-        return view('system_processes.risk_management.create');
+        return view('system_processes.risk_management.create',['help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function store(RiskManagementRequest $request)
@@ -66,7 +70,7 @@ class RiskManagementController extends Controller
     {
         $risk = RiskManagement::findOrFail($id);
         $this->authorize('update', $risk);
-        return view('system_processes.risk_management.edit', compact('risk'));
+        return view('system_processes.risk_management.edit',['risk'=>$risk,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function update(RiskManagementRequest $request, $id)
@@ -107,7 +111,8 @@ class RiskManagementController extends Controller
     {
         $risk = RiskManagement::findOrFail($id);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.risk_management.edit-plan', compact('risk', 'users'));
+        $help_video = $this->{'help_video_'.session('locale')};
+        return view('system_processes.risk_management.edit-plan', compact('risk', 'users','help_video'));
     }
 
     public function updatePlan(UpdateRiskManagementPlanRequest $request, $id)

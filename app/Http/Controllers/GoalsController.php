@@ -18,6 +18,11 @@ use App\Notifications\GoalInstantNotification;
 
 class GoalsController extends Controller
 {
+    private  $help_video_sr="2PPN_UlFnjM";
+    private  $help_video_en="2PPN_UlFnjM";
+    private  $help_video_hr="2PPN_UlFnjM";
+    private  $help_video_it="2PPN_UlFnjM";
+
 
     public function index()
     {
@@ -36,7 +41,7 @@ class GoalsController extends Controller
             ['team_id', Auth::user()->current_team_id]
         ])->orderBy('deadline', 'desc')->get();
 
-        return view('system_processes.goals.index', ['goals' => $goals]);
+        return view('system_processes.goals.index', ['goals' => $goals,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function getData(Request $request)
@@ -74,7 +79,7 @@ class GoalsController extends Controller
         }
         $this->authorize('create', Goal::class);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.goals.create', compact('users'));
+        return view('system_processes.goals.create', ['users'=>$users,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function store(GoalsRequest $request)
@@ -121,7 +126,7 @@ class GoalsController extends Controller
         $goal = Goal::findOrFail($id);
         $this->authorize('update', $goal);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.goals.edit', compact('goal', 'users'));
+        return view('system_processes.goals.edit', ['goal'=>$goal, 'users'=>$users,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function update(GoalsRequest $request, $id)

@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Storage;
 
 class TrainingsController extends Controller
 {
+    private  $help_video_sr="sIEwXPU1EGM";
+    private  $help_video_en="sIEwXPU1EGM";
+    private  $help_video_hr="sIEwXPU1EGM";
+    private  $help_video_it="sIEwXPU1EGM";
 
     public function index()
     {
@@ -32,7 +36,7 @@ class TrainingsController extends Controller
                 ['team_id',Auth::user()->current_team_id]
             ])->orderBy('training_date', 'desc')->get();
 
-        return view('system_processes.trainings.index', compact('trainingPlans'));
+        return view('system_processes.trainings.index', ['trainingPlans'=>$trainingPlans,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function getData(Request $request) {
@@ -71,7 +75,7 @@ class TrainingsController extends Controller
         }
         $this->authorize('create', Training::class);
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
-        return view('system_processes.trainings.create', compact('users'));
+        return view('system_processes.trainings.create', ['users'=>$users,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function store(TrainingRequest $request)
@@ -144,7 +148,7 @@ class TrainingsController extends Controller
         $trainingPlan->docArray = $trainingPlan->documents->unique();
         $users = User::with('teams')->where('current_team_id', Auth::user()->current_team_id)->get();
         $this->authorize('update', $trainingPlan);
-        return view('system_processes.trainings.edit', compact('trainingPlan', 'users'));
+        return view('system_processes.trainings.edit',['trainingPlan'=>$trainingPlan, 'users'=>$users,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function update(TrainingRequest $request, $id)

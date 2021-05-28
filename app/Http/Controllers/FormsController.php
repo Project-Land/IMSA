@@ -13,6 +13,10 @@ use App\Facades\CustomLog;
 
 class FormsController extends Controller
 {
+    private  $help_video_sr="U4fv1mY9LlY";
+    private  $help_video_en="U4fv1mY9LlY";
+    private  $help_video_hr="U4fv1mY9LlY";
+    private  $help_video_it="U4fv1mY9LlY";
 
     public function index()
     {
@@ -36,7 +40,8 @@ class FormsController extends Controller
                 'documents' => $documents,
                 'folder' => Str::snake($this::getCompanyName()).'/form',
                 'route_name' => 'forms',
-                'doc_type' => 'Obrasci'
+                'doc_type' => 'Obrasci',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
 
@@ -60,7 +65,8 @@ class FormsController extends Controller
                 'folder' => Str::snake($this::getCompanyName()).'/form',
                 'route_name' => 'forms',
                 'doc_type' => 'Obrasci',
-                'back' => route('forms.index')
+                'back' => route('forms.index'),
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -79,7 +85,8 @@ class FormsController extends Controller
                 'back' => route('forms.index'),
                 'sectors' => $sectors,
                 'doc_type' => 'Obrasci',
-                'category' => 'forms'
+                'category' => 'forms',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }
@@ -124,7 +131,8 @@ class FormsController extends Controller
                 'back' => route('forms.index'),
                 'doc_type' => 'Obrasci',
                 'sectors' => $sectors,
-                'category' => 'forms'
+                'category' => 'forms',
+                'help_video' => $this->{'help_video_'.session('locale')}
             ]
         );
     }

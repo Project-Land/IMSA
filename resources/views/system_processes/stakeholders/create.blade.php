@@ -4,9 +4,12 @@
     @endpush
 
     <x-slot name="header">
+	<div class="flex flex-row justify-between">
         <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
             {{ session('standard_name') }} - {{ __('Zainteresovane strane')}} - {{__('Kreiranje') }}
         </h2>
+		@include('includes.video')
+    </div>
     </x-slot>
 
     <div class="row">

@@ -13,6 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class StakeholdersController extends Controller
 {
+    private  $help_video_sr="6Gltq0MSaHA";
+    private  $help_video_en="6Gltq0MSaHA";
+    private  $help_video_hr="6Gltq0MSaHA";
+    private  $help_video_it="6Gltq0MSaHA";
 
     public function index()
     {
@@ -25,7 +29,7 @@ class StakeholdersController extends Controller
             ['team_id', Auth::user()->current_team_id]
         ])->with(['user'])->get();
 
-        return view('system_processes.stakeholders.index', compact('stakeholders'));
+        return view('system_processes.stakeholders.index', ['stakeholders'=>$stakeholders, 'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()
@@ -34,7 +38,7 @@ class StakeholdersController extends Controller
             return redirect('/');
         }
         $this->authorize('create', Stakeholder::class);
-        return view('system_processes.stakeholders.create');
+        return view('system_processes.stakeholders.create', ['help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function store(StakeholdersRequest $request)
@@ -63,7 +67,7 @@ class StakeholdersController extends Controller
     {
         $stakeholder = Stakeholder::findOrFail($id);
         $this->authorize('update', $stakeholder);
-        return view('system_processes.stakeholders.edit', compact('stakeholder'));
+        return view('system_processes.stakeholders.edit', ['stakeholder'=>$stakeholder, 'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function update(StakeholdersRequest $request, $id)

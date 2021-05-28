@@ -8,3 +8,25 @@
     </div>
     <iframe id="youtube" class="w-full h-full" src="{{'https://www.youtube-nocookie.com/embed/'.$help_video.'?rel=0'}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" allowfullscreen></iframe>
 </div>
+
+@push('page-scripts')
+<script>
+
+    document.getElementById('off').addEventListener('click',()=>{
+        let src=document.getElementById('youtube').src;
+        document.getElementById('youtube').src=src;
+        document.getElementById('video').classList.add('d-none');
+        document.getElementById('off').style.display='none';
+    });
+
+    document.getElementById('on').addEventListener('click',()=>{
+        document.getElementById('off').style.display='block';
+        document.getElementById('video').classList.remove('d-none');
+    });
+
+    $("#video").draggable({
+        handle: ".video-header"
+    });
+
+</script>
+@endpush
