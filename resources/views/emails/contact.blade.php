@@ -9,6 +9,5 @@ Poruka: {{$message}} <br>
 
 
 
-
 {{ config('app.name') }}
 @endcomponent
