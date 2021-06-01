@@ -99,7 +99,7 @@ class CustomerSatisfactionExport implements FromCollection, WithHeadings, Should
 
         array_push($res, $cs->average());
         array_push($res, $cs->comment ?? "/");
-        array_push($res, $cs->created_at);
+        array_push($res, $cs->date);
         array_push($res, $cs->standard->name);
 
         return [

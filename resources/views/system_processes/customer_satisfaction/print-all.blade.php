@@ -25,7 +25,7 @@
 
                 @if($poll->count() <= 4)
                     <td style="padding: 5px;">{{ $row->comment ?? "/" }}</td>
-                    <td style="padding: 5px; text-align: center;">{{ $row->created_at->format('d.m.Y') }}</td>
+                    <td style="padding: 5px; text-align: center;">{{ $row->date ? date('d.m.Y', strtotime($row->date)) : $row->created_at->format('d.m.Y') }}</td>
                 @endif
                 <td style="padding: 5px; font-weight: bold; text-align: center;">{{ $row->average() }}</td>
             </tr>
