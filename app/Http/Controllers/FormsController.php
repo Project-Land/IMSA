@@ -13,43 +13,43 @@ use App\Facades\CustomLog;
 
 class FormsController extends Controller
 {
-    private  $help_video_sr="U4fv1mY9LlY";
-    private  $help_video_en="U4fv1mY9LlY";
-    private  $help_video_hr="U4fv1mY9LlY";
-    private  $help_video_it="U4fv1mY9LlY";
+    private  $help_video_sr = "U4fv1mY9LlY";
+    private  $help_video_en = "U4fv1mY9LlY";
+    private  $help_video_hr = "U4fv1mY9LlY";
+    private  $help_video_it = "U4fv1mY9LlY";
 
     public function index()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/')->with('status', array('secondary', __('Izaberite standard')));
         }
-        $sector = Sector::where('is_global', 1)->get()->first()->id;
+        $sector = Sector::where('is_global', 1)->where('team_id', Auth::user()->current_team_id)->get()->first()->id;
 
         $documents = Document::where([
-                ['doc_category', 'form'],
-                ['standard_id', session('standard')],
-                ['team_id', Auth::user()->current_team_id]
-            ])->orWhere([
-                ['sector_id', $sector],
-                ['doc_category', 'form'],
-                ['team_id', Auth::user()->current_team_id]
-            ])->with(['sector'])->get();
+            ['doc_category', 'form'],
+            ['standard_id', session('standard')],
+            ['team_id', Auth::user()->current_team_id]
+        ])->orWhere([
+            ['sector_id', $sector],
+            ['doc_category', 'form'],
+            ['team_id', Auth::user()->current_team_id]
+        ])->with(['sector'])->get();
 
-        return view('documents.index',
+        return view(
+            'documents.index',
             [
                 'documents' => $documents,
-                'folder' => Str::snake($this::getCompanyName()).'/form',
+                'folder' => Str::snake($this::getCompanyName()) . '/form',
                 'route_name' => 'forms',
                 'doc_type' => 'Obrasci',
-                'help_video' => $this->{'help_video_'.session('locale')}
+                'help_video' => $this->{'help_video_' . session('locale')}
             ]
         );
-
     }
 
     public function showDeleted()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/')->with('status', array('secondary', __('Izaberite standard!')));
         }
 
@@ -59,54 +59,56 @@ class FormsController extends Controller
             ['team_id', Auth::user()->current_team_id],
         ])->get();
 
-        return view('documents.deleted',
+        return view(
+            'documents.deleted',
             [
                 'documents' => $documents,
-                'folder' => Str::snake($this::getCompanyName()).'/form',
+                'folder' => Str::snake($this::getCompanyName()) . '/form',
                 'route_name' => 'forms',
                 'doc_type' => 'Obrasci',
                 'back' => route('forms.index'),
-                'help_video' => $this->{'help_video_'.session('locale')}
+                'help_video' => $this->{'help_video_' . session('locale')}
             ]
         );
     }
 
     public function create()
     {
-        if(empty(session('standard'))){
+        if (empty(session('standard'))) {
             return redirect('/');
         }
 
         $this->authorize('create', Document::class);
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
-        return view('documents.create',
+        return view(
+            'documents.create',
             [
                 'url' => route('forms.store'),
                 'back' => route('forms.index'),
                 'sectors' => $sectors,
                 'doc_type' => 'Obrasci',
                 'category' => 'forms',
-                'help_video' => $this->{'help_video_'.session('locale')}
+                'help_video' => $this->{'help_video_' . session('locale')}
             ]
         );
     }
 
     public function store(FormsRequest $request)
     {
-        if(session('standard') == null){
+        if (session('standard') == null) {
             return redirect('/');
         }
         $this->authorize('create', Document::class);
         $document = new Document();
-        $upload_path = Str::snake($this::getCompanyName())."/form";
+        $upload_path = Str::snake($this::getCompanyName()) . "/form";
 
-        try{
+        try {
             $document = Document::create($request->except('file'));
             Storage::putFileAs($upload_path, $request->file, $request->file_name);
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" kreiran, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "' . $document->document_name . '" kreiran, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('info', __('Dokument je uspešno sačuvan')));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj kreiranja dokumenta Obrazac, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška- ' . $e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/forms');
@@ -123,7 +125,8 @@ class FormsController extends Controller
         $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
         $sectors = Sector::where('team_id', Auth::user()->current_team_id)->get();
-        return view('documents.edit',
+        return view(
+            'documents.edit',
             [
                 'document' => $document,
                 'url' => route('forms.update', $document->id),
@@ -132,7 +135,7 @@ class FormsController extends Controller
                 'doc_type' => 'Obrasci',
                 'sectors' => $sectors,
                 'category' => 'forms',
-                'help_video' => $this->{'help_video_'.session('locale')}
+                'help_video' => $this->{'help_video_' . session('locale')}
             ]
         );
     }
@@ -142,16 +145,16 @@ class FormsController extends Controller
         $this->authorize('update', Document::find($id));
         $document = Document::findOrFail($id);
 
-        try{
-            if($request->file){
-                $upload_path = Str::snake($this::getCompanyName())."/form";
+        try {
+            if ($request->file) {
+                $upload_path = Str::snake($this::getCompanyName()) . "/form";
                 Storage::putFileAs($upload_path, $request->file, $request->file_name);
             }
             $document->update($request->except('file'));
             $request->session()->flash('status', array('info', __('Dokument je uspešno izmenjen')));
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" izmenjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "' . $document->document_name . '" izmenjen, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj izmene dokumenta Obrazac "' . $document->document_name . '", ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška- ' . $e->getMessage(), Auth::user()->currentTeam->name);
             $request->session()->flash('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
         return redirect('/forms');
@@ -162,12 +165,12 @@ class FormsController extends Controller
         $this->authorize('delete', Document::find($id));
         $doc_name = Document::find($id)->document_name;
 
-        try{
+        try {
             Document::destroy($id);
-            CustomLog::info('Dokument Obrazac "'.$doc_name.'" uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "' . $doc_name . '" uklonjen, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Dokument je uspešno uklonjen')));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Obrazac "'.$doc_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška- '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj brisanja dokumenta Obrazac "' . $doc_name . '", ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška- ' . $e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
@@ -177,15 +180,15 @@ class FormsController extends Controller
         $document = Document::withTrashed()->findOrFail($id);
         $this->authorize('delete', $document);
 
-        $path = Str::snake($this::getCompanyName())."/forms/".$document->file_name;
+        $path = Str::snake($this::getCompanyName()) . "/forms/" . $document->file_name;
 
-        try{
+        try {
             Storage::delete($path);
             $document->forceDelete();
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" trajno uklonjen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "' . $document->document_name . '" trajno uklonjen, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Dokument je trajno uklonjen')));
-        } catch(Exception $e) {
-            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj trajnog brisanja dokumenta Obrazac "' . $document->document_name . '", ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }
@@ -195,12 +198,12 @@ class FormsController extends Controller
         $document = Document::withTrashed()->findOrFail($id);
         $this->authorize('update', $document);
 
-        try{
+        try {
             $document->restore();
-            CustomLog::info('Dokument Obrazac "'.$document->document_name.'" vraćen, '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
+            CustomLog::info('Dokument Obrazac "' . $document->document_name . '" vraćen, ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s'), Auth::user()->currentTeam->name);
             return back()->with('status', array('info', __('Dokument je uspešno vraćen')));
-        } catch(Exception $e){
-            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Obrazac "'.$document->document_name.'", '.Auth::user()->name.', '.Auth::user()->username.', '.date('d.m.Y H:i:s').', Greška: '.$e->getMessage(), Auth::user()->currentTeam->name);
+        } catch (Exception $e) {
+            CustomLog::warning('Neuspeli pokušaj vraćanja dokumenta Obrazac "' . $document->document_name . '", ' . Auth::user()->name . ', ' . Auth::user()->username . ', ' . date('d.m.Y H:i:s') . ', Greška: ' . $e->getMessage(), Auth::user()->currentTeam->name);
             return back()->with('status', array('danger', __('Došlo je do greške, pokušajte ponovo!')));
         }
     }

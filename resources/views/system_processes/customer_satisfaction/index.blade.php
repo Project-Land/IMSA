@@ -64,7 +64,7 @@
 
                                     @if($poll->count() <= 4)
                                         <td>{{ $row->comment ?? "/" }}</td>
-                                        <td>{{ $row->created_at->format('d.m.Y') }}</td>
+                                        <td>{{ $row->date? date('d.m.Y', strtotime($row->date)) : $row->created_at->format('d.m.Y') }}</td>
                                     @endif
                                     <td class="font-bold">{{ $row->average() }}</td>
                                     <td>
@@ -85,7 +85,7 @@
                                 </tr>
                                 @endforeach
                                 @if($cs->count())
-                                <tr class="font-bold text-center">
+                                <tr class="font-bold text-center sorting_disabled">
                                     <td class="bg-green-200">{{__('Prosek')}}</td>
                                     @foreach($poll as $po)
                                         <td class="bg-green-200">@if($cs->count()) {{ ($cs->sum($po->column_name)/$cs[0]->columnCount($po->column_name)) == 0 ? "/" : round($cs->sum($po->column_name)/$cs[0]->columnCount($po->column_name), 1) }} @endif</td>
@@ -126,6 +126,10 @@
 </x-app-layout>
 
 <script>
+    let $tr = $('tr.sorting_disabled')
+    let fixedRow = $tr.prop('outerHTML')
+    $tr.remove()
+
     $('.yajra-datatable').DataTable({
         "language": {
             "info": "{{__('Prikaz strane')}} _PAGE_ {{__('od')}} _PAGES_",
@@ -145,7 +149,10 @@
           "targets": 'no-sort',
           "orderable": false,
         }],
-        "order": [[ 6, "desc" ]]
+        "order": [[ 6, "desc" ]],
+        "fnDrawCallback": function(){
+            $('tbody').append(fixedRow)
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip();
@@ -188,7 +195,7 @@
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Napomena') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.comment ?? "/" }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Datum') }}</p></div>
-                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.created_at).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
+                                        <div class="col-sm-7 mt-3 border-bottom"><p>${ new Date(response.data.date).toLocaleDateString('sr-SR', { timeZone: 'CET' }) }</p></div>
                                         <div class="col-sm-5 mt-3 border-bottom font-weight-bold"><p>{{ __('Kreirao') }}</p></div>
                                         <div class="col-sm-7 mt-3 border-bottom"><p>${ response.data.user.name }</p></div>
                                     </div>
