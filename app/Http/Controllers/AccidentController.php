@@ -13,6 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AccidentController extends Controller
 {
+    private  $help_video_sr="M4e1cDRJGXo";
+    private  $help_video_en="M4e1cDRJGXo";
+    private  $help_video_hr="M4e1cDRJGXo";
+    private  $help_video_it="M4e1cDRJGXo";
 
     public function index()
     {
@@ -26,7 +30,7 @@ class AccidentController extends Controller
             ['team_id', Auth::user()->current_team_id]
         ])->get();
 
-        return view('system_processes.accident.index', ['accidents' => $accidents]);
+        return view('system_processes.accident.index', ['accidents' => $accidents,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function show($id)
