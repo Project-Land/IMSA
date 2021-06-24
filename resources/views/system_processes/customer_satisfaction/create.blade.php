@@ -11,7 +11,6 @@
      	</div>
 	</div>
 
-
 	<div class="mx-auto md:w-3/5 mt-1 md:p-10 sm:p-2 rounded">
 		<form action="{{ route('customer-satisfaction.store') }}" method="POST" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 			@csrf
@@ -39,6 +38,14 @@
             @endforeach
 
             <div class="mb-4">
+                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">{{__('Datum')}}:</label>
+                <input type="text" class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" name="date" value="{{ old('date') }}" required oninvalid="this.setCustomValidity('{{__("Izaberite datum")}}')" oninput="this.setCustomValidity('')" onchange="this.setCustomValidity('')" placeholder="xx.xx.xxxx">
+                @error('date')
+                    <span class="text-red-700 italic text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
                 <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">{{__('Napomena')}}:</label>
                 <textarea class="appearance-none border w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" name="comment">{{ old('comment') }}</textarea>
                 @error('comment')
@@ -49,5 +56,17 @@
 			<button type="submit" class="w-full md:w-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 focus:outline-none focus:shadow-outline">{{__('Kreiraj')}}</button>
 		</form>
 	</div>
+
+    <script>
+        let lang = document.getElementsByTagName('html')[0].getAttribute('lang');
+        $.datetimepicker.setLocale(lang);
+
+        $('#date').datetimepicker({
+            timepicker: false,
+            format: 'd.m.Y',
+            dayOfWeekStart: 1,
+            scrollInput: false
+        });
+    </script>
 
 </x-app-layout>
