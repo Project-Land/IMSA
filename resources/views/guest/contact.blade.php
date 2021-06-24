@@ -22,7 +22,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        
+
     @endpush
 
     @push('styles')
@@ -40,14 +40,10 @@
                 color:whitesmoke;
                 bottom:10px;
                 right:10px;
-                height:25vh;
+                //height:40vh;
                 border-radius: 20px;
                 opacity: 0.95;
             }
-
-
-            
-            
         </style>
     @endpush
 
@@ -209,7 +205,7 @@
                             <span class="text-sm">({{__('Poruka nije obavezna')}})</span>
                         </div>
                     </div>
-                    
+
 
                     <div class="flex flex-wrap justify-end -mx-3 mb-6 float-right">
                         <div class="w-full px-3">
@@ -218,10 +214,10 @@
                     </div>
                 </form>
 
-                <section class="container newsletter sm:w-full md:w-1/3 lg:w-1/5" id="newsletter">
+                <section class="container newsletter sm:px-0 left-0 sm:left-auto sm:w-full md:w-1/3 lg:w-1/5 z-50 pb-10" id="newsletter">
                         <section class="one">
                         <div class="relative h-10 w-full">
-                        <i id="fa-times" class="fas fa-times text-xl absolute top-3 cursor-pointer right-0 h-8 w-8"></i>
+                            <i id="fa-times" class="fas fa-times text-xl absolute top-3 cursor-pointer right-0 h-8 w-8"></i>
                         </div>
                         <div class="logo">
                         <div class="text-center"><i class="fas fa-bell text-yellow-100 text-3xl"></i><div>
@@ -229,7 +225,7 @@
                         <h2 class="heading">
                            {{__('Prijavite se na naš newsletter')}}
                         </h2>
-                       
+
                         <form class="my-3 newsletterForm" id="newsletterForm">
                             <input id="newsletterEmail" data-lang={{session('locale')}} type='text' placeholder=" Email" class="text-black p-1 rounded"><br/>
                             <button class="btn bg-yellow-400 mt-3 p-2 rounded text-black" role="button" >
@@ -268,7 +264,7 @@
     </div>
 
 
-   
+
 
     <script>
         $("#contact-form").validate({
@@ -312,7 +308,7 @@
         function subscribe(event){
             event.preventDefault();
             let input=document.getElementById('newsletterEmail');
-            let email= input.value;
+            let email= input.value.trim();
             let lang=input.dataset.lang;
             let err='{{ __("Email adresa nije validna!") }}';
             if (! /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))
@@ -320,14 +316,14 @@
                 alert( err );
                 return (false);
             }
-            
-               
+
+
             axios.post('/subscribe', {
                 email: email,
                 lang: lang
             })
             .then(function (response) {
-                
+
                 document.getElementById('newsletterForm').remove();
                 document.getElementById('newsletter').innerHTML="<h1 class='text-center text-2xl mt-14 mx-auto h-4'>{{__('Uspešno ste se prijavili na naš newsletter!')}}</h1>";
 
@@ -347,9 +343,9 @@
                 // save state
                 fill:'forwards'
                 });
-                
+
             });
-           
+
         }
         document.getElementById('newsletterForm').addEventListener('submit',subscribe);
         document.getElementById('fa-times').addEventListener('click',()=>{
