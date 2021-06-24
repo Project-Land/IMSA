@@ -14,6 +14,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerSatisfactionController extends Controller
 {
+    private  $help_video_sr="vg5IDNpacqI";
+    private  $help_video_en="vg5IDNpacqI";
+    private  $help_video_hr="vg5IDNpacqI";
+    private  $help_video_it="vg5IDNpacqI";
+
     public function index()
     {
         if(session('standard') == null || session('standard_name') != "9001"){
@@ -26,7 +31,8 @@ class CustomerSatisfactionController extends Controller
         ])->get();
 
         $poll = SatisfactionColumn::where('team_id', Auth::user()->current_team_id)->whereNotNull('name')->get();
-        return view('system_processes.customer_satisfaction.index', compact('cs', 'poll'));
+        $help_video = $this->{'help_video_'.session('locale')};
+        return view('system_processes.customer_satisfaction.index', compact('cs', 'poll','help_video'));
     }
 
     public function create()

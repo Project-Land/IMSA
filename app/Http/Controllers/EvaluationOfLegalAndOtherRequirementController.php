@@ -15,6 +15,12 @@ use App\Exports\EvaluationOfLegalAndOtherRequirementsExport;
 
 class EvaluationOfLegalAndOtherRequirementController extends Controller
 {
+    private  $help_video_sr="u8SeYcnSTcc";
+    private  $help_video_en="u8SeYcnSTcc";
+    private  $help_video_hr="u8SeYcnSTcc";
+    private  $help_video_it="u8SeYcnSTcc";
+
+
     public function index(){
 
         if(session('standard') == null || (! (session('standard_name') == "45001" || session('standard_name') == "14001"))){
@@ -26,7 +32,7 @@ class EvaluationOfLegalAndOtherRequirementController extends Controller
                 ['team_id', Auth::user()->current_team_id]
             ])->with(['standard', 'correctiveMeasures', 'user'])->get();
 
-        return view('system_processes.evaluation_of_requirement.index', ['EvaluationOfLegalAndOtherRequirement' => $EvaluationOfLegalAndOtherRequirement]);
+        return view('system_processes.evaluation_of_requirement.index', ['EvaluationOfLegalAndOtherRequirement' => $EvaluationOfLegalAndOtherRequirement, 'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create(){

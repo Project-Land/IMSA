@@ -118,7 +118,7 @@
 
                     <h2 class="sm:text-xl font-bold my-3"><i class="fas fa-balance-scale-right mr-2 text-red-600"></i>{{__('Zašto je bolje iznajmiti nego kupiti IMSU?')}}</h2>
                     <ul class="list-disc pl-4">
-                        <li>{{ __('Možete odustati u svakom trenutku') }}</li>
+                        <li>{{ __('Možete odustati u svakom trenutku') }}.</li>
                         <li>{{ __('Ušteda u IT podršci – redovno ažuriranje i apdejtovanje aplikacije su uračunate u cenu - dakle, nema dodatnih troškova kasnije.') }}</li>
                     </ul>
 
@@ -155,7 +155,7 @@
                             <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('modernizovano planiranje i organizovanje internih provera')}}</li>
                             <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('ažurnost korišćene dokumentacije')}}</li>
                             <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('smanjen rizik od gubljenja/suspenzije sertifikata')}}</li>
-                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('pristup 24/7 s bilo kog računara, laptopa, tablet, smart telefona uz internet konekciju.')}}</li>
+                            <li><i class="fas fa-check mr-1 text-green-400"></i>{{__('pristup 24/7 s bilo kog računara, laptopa, tableta, smart telefona uz internet konekciju.')}}</li>
                         </ul>
                     </div>
 

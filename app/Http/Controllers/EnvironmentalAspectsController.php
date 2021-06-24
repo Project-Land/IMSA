@@ -13,6 +13,10 @@ use App\Http\Requests\EnvironmentalAspectsRequest;
 
 class EnvironmentalAspectsController extends Controller
 {
+    private  $help_video_sr="BOI2XUb3uF4";
+    private  $help_video_en="BOI2XUb3uF4";
+    private  $help_video_hr="BOI2XUb3uF4";
+    private  $help_video_it="BOI2XUb3uF4";
 
     public function index()
     {
@@ -24,7 +28,8 @@ class EnvironmentalAspectsController extends Controller
                 ['standard_id', session('standard')],
                 ['team_id', Auth::user()->current_team_id]
             ])->with(['standard'])->get();
-        return view('system_processes.environmental_aspects.index', compact('environmental_aspects'));
+        $help_video = $this->{'help_video_'.session('locale')};
+        return view('system_processes.environmental_aspects.index', compact('environmental_aspects','help_video'));
     }
 
     public function create()

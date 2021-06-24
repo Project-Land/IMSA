@@ -20,6 +20,10 @@ use App\Notifications\ComplaintInstantNotification;
 
 class ComplaintsController extends Controller
 {
+    private  $help_video_sr="Bp9vCV4eQOY";
+    private  $help_video_en="Bp9vCV4eQOY";
+    private  $help_video_hr="Bp9vCV4eQOY";
+    private  $help_video_it="Bp9vCV4eQOY";
 
     public function index()
     {
@@ -37,7 +41,7 @@ class ComplaintsController extends Controller
                 ['team_id', Auth::user()->current_team_id]
             ])->with('sector')->get();
 
-        return view('system_processes.complaints.index', compact('complaints'));
+        return view('system_processes.complaints.index',['complaints'=>$complaints,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()

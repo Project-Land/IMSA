@@ -18,6 +18,11 @@ use Maatwebsite\Excel\Facades\Excel;
 class SoaController extends Controller
 {
 
+    private  $help_video_sr="ERPlcnAz1PI";
+    private  $help_video_en="ERPlcnAz1PI";
+    private  $help_video_hr="ERPlcnAz1PI";
+    private  $help_video_it="ERPlcnAz1PI";
+
     public function index()
     {
         if(empty(session('standard')) || session('standard_name') != "27001"){
@@ -30,7 +35,7 @@ class SoaController extends Controller
         ])->with('soaField', 'documents', 'user')->get();
 
         $groups = SoaFieldGroup::all();
-        return view('system_processes.statement_of_applicability.index', ['soas' => $soas, 'groups' => $groups]);
+        return view('system_processes.statement_of_applicability.index', ['soas' => $soas, 'groups' => $groups,'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()

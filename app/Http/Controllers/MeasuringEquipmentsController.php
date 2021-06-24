@@ -15,6 +15,11 @@ use App\Http\Requests\MeasuringEquipmentsRequest;
 class MeasuringEquipmentsController extends Controller
 {
 
+    private  $help_video_sr="7WZU05EbNQE";
+    private  $help_video_en="7WZU05EbNQE";
+    private  $help_video_hr="7WZU05EbNQE";
+    private  $help_video_it="7WZU05EbNQE";
+
     public function index()
     {
         if(request()->has('standard') && request()->has('standard_name')){
@@ -31,7 +36,7 @@ class MeasuringEquipmentsController extends Controller
                 ['team_id', Auth::user()->current_team_id]
             ])->with('user')->get();
 
-        return view('system_processes.measuring_equipments.index', ['measuring_equipment' => $me]);
+        return view('system_processes.measuring_equipments.index', ['measuring_equipment' => $me, 'help_video' => $this->{'help_video_'.session('locale')}]);
     }
 
     public function create()

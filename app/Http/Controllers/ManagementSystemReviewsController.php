@@ -17,6 +17,10 @@ use App\Exports\ManagementSystemReviews45001Export;
 
 class ManagementSystemReviewsController extends Controller
 {
+    private  $help_video_sr="s8Wdzv7t0e0";
+    private  $help_video_en="s8Wdzv7t0e0";
+    private  $help_video_hr="s8Wdzv7t0e0";
+    private  $help_video_it="s8Wdzv7t0e0";
 
     public function index()
     {
@@ -28,8 +32,8 @@ class ManagementSystemReviewsController extends Controller
                 ['standard_id', session('standard')],
                 ['team_id',Auth::user()->current_team_id],
             ])->get();
-
-        return view('system_processes.management_system_reviews_'.session('standard_name').'.index', compact('msr'));
+        $help_video = $this->{'help_video_'.session('locale')};
+        return view('system_processes.management_system_reviews_'.session('standard_name').'.index', compact('msr','help_video'));
     }
 
     public function getData(Request $request)
