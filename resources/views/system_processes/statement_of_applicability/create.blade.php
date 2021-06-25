@@ -32,11 +32,11 @@
                         <div id="{{ $loop->index }}" data-group="group-{{ $group->id }}" class="flex flex-wrap border-b-2 py-2 my-2 main-block group-{{ $group->id }} title-group-{{ $group->id }}" :class="{'': open{{ $group->id }}, 'hidden': ! open{{ $group->id }} }">
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Naziv kontrole')}}:</label>
-                                <p class="text-xs sm:text-sm">{{ $field->name }}</p>
+                                <p class="text-xs sm:text-sm">{{ __($field->name) }}</p>
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">{{__('Opis kontrole')}}:</label>
-                                <p class="text-xs sm:text-sm">{{ $field->description }}</p>
+                                <p class="text-xs sm:text-sm">{{ __($field->description) }}</p>
                             </div>
                             <div class="w-full sm:w-1/5">
                                 <label for="status" class="block text-gray-700 text-sm font-bold mb-2">{{__('Status kontrole')}}:</label>
@@ -44,7 +44,7 @@
                                     <option value="">{{ __('Izaberi') }}...</option>
                                     <option  @if( old($field->id.'.status')=='Prihvaćeno' ){{'selected'}} @endif value="Prihvaćeno">{{ __('Prihvaćeno') }}</option>
                                     <option  @if( old($field->id.'.status')=='Neprihvaćeno' ){{'selected'}} @endif value="Neprihvaćeno">{{ __('Neprihvaćeno') }}</option>
-                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenljivo">{{ __('Nije primenjivo') }}</option>
+                                    <option  @if( old($field->id.'.status')=='Nije primenljivo' ){{'selected'}} @endif value="Nije primenljivo">{{ __('Nije primenljivo') }}</option>
                                 </select>
                                 @error('status')
                                     <span class="text-red-700 italic text-sm">{{ $message }}</span>
