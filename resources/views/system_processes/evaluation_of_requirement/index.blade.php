@@ -1,24 +1,25 @@
 <x-app-layout>
     @push('scripts')
-        <!-- Datatable -->
-        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Datatable -->
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.25/sorting/date-de.js"></script>
     @endpush
 
     <x-slot name="header">
-    <div class="flex flex-row justify-between">
-        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Vrednovanje zakonskih i drugih zahteva') }}
-        </h2>
-        @include('includes.video')
-    </div>
+        <div class="flex flex-row justify-between">
+            <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
+                {{ session('standard_name') }} - {{ __('Vrednovanje zakonskih i drugih zahteva') }}
+            </h2>
+            @include('includes.video')
+        </div>
     </x-slot>
 
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+            <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]" />
             @endif
         </div>
     </div>
@@ -32,12 +33,17 @@
                     <div class="row">
                         <div class="col-sm-8">
                             @can('create', App\Models\EvaluationOfLegalAndOtherRequirement::class)
-                                <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i> {{ __('Dodaj zakon / zahtev')}}</a>
+                            <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3"
+                                href="{{ route('evaluation-of-requirements.create') }}"><i class="fas fa-plus"></i>
+                                {{ __('Dodaj zakon / zahtev')}}</a>
                             @endcan
                         </div>
                         <div class="col-sm-4 float-right">
-                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/evaluation-of-requirements-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
-                    </div>
+                            <a id="excelBtn"
+                                class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3"
+                                href="{{ '/evaluation-of-requirements-export' }}"><i class="fas fa-file-export"></i>
+                                {{ __('Excel') }}</a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body bg-white mt-3">
@@ -55,29 +61,42 @@
                                 </tr>
                             </thead>
                             <tbody id="table-body">
-                            @foreach($EvaluationOfLegalAndOtherRequirement as $requirement )
+                                @foreach($EvaluationOfLegalAndOtherRequirement as $requirement )
                                 <tr>
                                     <td class="text-center">{{ __($requirement->requirement_level) }}</td>
                                     <td class="text-center">{{ $requirement->document_name }}</td>
-                                    <td class="text-center">{{ $requirement->compliance ? __('Usaglašen') : __('Neusaglašen') }}</td>
-                                    <td class="text-center">{{ $requirement->updated_at->format('d.m.Y') }} {{ __('u') }} {{ $requirement->updated_at->format('H:i') }}</td>
+                                    <td class="text-center">
+                                        {{ $requirement->compliance ? __('Usaglašen') : __('Neusaglašen') }}</td>
+                                    <td class="text-center">{{ $requirement->updated_at->format('d.m.Y') }}
+                                        {{ $requirement->updated_at->format('H:i') }}</td>
                                     <td class="text-center">{{ $requirement->note ?? '/' }}</td>
                                     <td class="text-center">{{ $requirement->user->name }}</td>
                                     <td class="text-center">
-                                    <a
-                                        href="{{route('evaluation-of-requirements.print',$requirement->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
+                                        <a href="{{route('evaluation-of-requirements.print',$requirement->id)}}"
+                                            target="_blank" data-toggle="tooltip" data-placement="top"
+                                            class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}"><i
+                                                class="fas fa-print"></i>
                                         </a>
                                         @canany(['update', 'delete'], $requirement)
-                                        <a data-toggle="tooltip" data-placement="top" title="{{ __('Izmena zakona/zahteva')}}" href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" id="delete-form-{{ $requirement->id }}" action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}" method="POST">
+                                        <a data-toggle="tooltip" data-placement="top"
+                                            title="{{ __('Izmena zakona/zahteva')}}"
+                                            href="{{ route('evaluation-of-requirements.edit', $requirement->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        <form class="inline" id="delete-form-{{ $requirement->id }}"
+                                            action="{{ route('evaluation-of-requirements.destroy', $requirement->id) }}"
+                                            method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button" data-toggle="tooltip" data-placement="top" title="{{ __('Brisanje zakona/zahteva')}}" onclick="confirmDeleteModal({{ $requirement->id }})"><i class="fas fa-trash"></i></button>
+                                            <button class="text-red-600 cursor-pointer hover:text-red-800" type="button"
+                                                data-toggle="tooltip" data-placement="top"
+                                                title="{{ __('Brisanje zakona/zahteva')}}"
+                                                onclick="confirmDeleteModal({{ $requirement->id }})"><i
+                                                    class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
                                 </tr>
-                            @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -88,7 +107,8 @@
 
     </div>
 
-    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
@@ -96,8 +116,11 @@
                     <div class="mt-4">{{ __('Da li ste sigurni?')}}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{ __('Odustani')}}</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši')}}</a>
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+                        data-dismiss="modal">{{ __('Odustani')}}</button>
+                    <a
+                        class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{ __('Obriši')}}</a>
                 </div>
             </div>
         </div>
@@ -106,7 +129,6 @@
 </x-app-layout>
 
 <script>
-
     $('[data-toggle="tooltip"]').tooltip();
 
     $('.yajra-datatable').DataTable({
@@ -124,10 +146,12 @@
                 "last": "{{__('Poslednja')}}"
             }
         },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
+        "columnDefs": [
+            {
+                "targets": 'no-sort',
+                "orderable": false,
+            },
+        ],
         "order": [[ 3, "desc" ]]
     });
 

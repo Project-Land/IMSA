@@ -1,24 +1,25 @@
 <x-app-layout>
     @push('scripts')
-        <!-- Datatable -->
-        <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Datatable -->
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.25/sorting/date-de.js"></script>
     @endpush
 
     <x-slot name="header">
-    <div class="flex flex-row justify-between">
-        <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
-            {{ session('standard_name') }} - {{ __('Merna oprema') }}
-        </h2>
-        @include('includes.video')
-    </div>
+        <div class="flex flex-row justify-between">
+            <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
+                {{ session('standard_name') }} - {{ __('Merna oprema') }}
+            </h2>
+            @include('includes.video')
+        </div>
     </x-slot>
 
     <div class="row mt-1">
         <div class="col">
             @if(Session::has('status'))
-                <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]"/>
+            <x-alert :type="Session::get('status')[0]" :message="Session::get('status')[1]" />
             @endif
         </div>
     </div>
@@ -30,9 +31,14 @@
             <div class="card">
                 @can('create', App\Models\MeasuringEquipment::class)
                 <div class="card-header">
-                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3" href="{{ route('measuring-equipment.create') }}"><i class="fas fa-plus"></i> {{ __('Kreiraj mernu opremu')}}</a>
+                    <a class="inline-block text-xs md:text-base bg-blue-500 hover:bg-blue-700 text-white hover:no-underline rounded py-2 px-3"
+                        href="{{ route('measuring-equipment.create') }}"><i class="fas fa-plus"></i>
+                        {{ __('Kreiraj mernu opremu')}}</a>
                     <div class="col-sm-4 float-right">
-                        <a id="excelBtn" class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3" href="{{ '/measuring-equipment-export' }}"><i class="fas fa-file-export"></i> {{ __('Excel') }}</a>
+                        <a id="excelBtn"
+                            class="inline-block float-right text-xs md:text-base bg-green-500 hover:bg-green-700 text-white hover:no-underline rounded py-2 px-3"
+                            href="{{ '/measuring-equipment-export' }}"><i class="fas fa-file-export"></i>
+                            {{ __('Excel') }}</a>
                     </div>
                 </div>
                 @endcan
@@ -54,19 +60,33 @@
                                 <tr id='trmeasuringequipment{{$me->id}}'><a id='measuringequipment{{$me->id}}'></a>
                                     <td id='tdmeasuringequipment{{$me->id}}' class="text-center">{{ $me->label }}</td>
                                     <td class="text-center">{{ $me->name }}</td>
-                                    <td class="text-center">@if($me->last_calibration_date){{ date('d.m.Y', strtotime($me->last_calibration_date)) }}@else {{"/"}}@endif</td>
-                                    <td class="text-center">@if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else {{"/"}}@endif</td>
+                                    <td class="text-center">
+                                        @if($me->last_calibration_date){{ date('d.m.Y', strtotime($me->last_calibration_date)) }}@else
+                                        {{"/"}}@endif</td>
+                                    <td class="text-center">
+                                        @if($me->next_calibration_date){{ date('d.m.Y', strtotime($me->next_calibration_date)) }}@else
+                                        {{"/"}}@endif</td>
                                     <td class="text-center">{{ $me->user->name }}</td>
                                     <td class="text-center">
-                                    <a
-                                        href="{{route('measuring-equipment.print',$me->id)}}" target="_blank" data-toggle="tooltip" data-placement="top" class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}" ><i class="fas fa-print"></i>
-                                    </a>
+                                        <a href="{{route('measuring-equipment.print',$me->id)}}" target="_blank"
+                                            data-toggle="tooltip" data-placement="top"
+                                            class="text-green-400 hover:text-green-600" title="{{__('Odštampaj')}}"><i
+                                                class="fas fa-print"></i>
+                                        </a>
                                         @canany(['update', 'delete'], $me)
-                                        <a data-toggle="tooltip" data-placement="top" title="{{__('Izmena merne opreme')}}" href="{{ route('measuring-equipment.edit', $me->id) }}"><i class="fas fa-edit"></i></a>
-                                        <form class="inline" id="delete-form-{{ $me->id }}" action="{{ route('measuring-equipment.destroy', $me->id) }}" method="POST">
+                                        <a data-toggle="tooltip" data-placement="top"
+                                            title="{{__('Izmena merne opreme')}}"
+                                            href="{{ route('measuring-equipment.edit', $me->id) }}"><i
+                                                class="fas fa-edit"></i></a>
+                                        <form class="inline" id="delete-form-{{ $me->id }}"
+                                            action="{{ route('measuring-equipment.destroy', $me->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button data-toggle="tooltip" data-placement="top" title="{{__('Brisanje merne opreme')}}" class="text-red-600 cursor-pointer hover:text-red-800" type="button" onclick="confirmDeleteModal({{ $me->id }})"><i class="fas fa-trash"></i></button>
+                                            <button data-toggle="tooltip" data-placement="top"
+                                                title="{{__('Brisanje merne opreme')}}"
+                                                class="text-red-600 cursor-pointer hover:text-red-800" type="button"
+                                                onclick="confirmDeleteModal({{ $me->id }})"><i
+                                                    class="fas fa-trash"></i></button>
                                         </form>
                                         @endcanany
                                     </td>
@@ -82,7 +102,8 @@
 
     </div>
 
-    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal" aria-hidden="true">
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="px-6 py-4">
@@ -90,8 +111,11 @@
                     <div class="mt-4">{{__('Da li ste sigurni?')}}</div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
-                    <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150" data-dismiss="modal">{{__('Odustani')}}</button>
-                    <a class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{__('Obriši')}}</a>
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+                        data-dismiss="modal">{{__('Odustani')}}</button>
+                    <a
+                        class="btn-ok hover:no-underline cursor-pointer inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">{{__('Obriši')}}</a>
                 </div>
             </div>
         </div>
@@ -115,10 +139,16 @@
                 "last": "{{__('Poslednja')}}"
             }
         },
-        "columnDefs": [{
-          "targets": 'no-sort',
-          "orderable": false,
-        }],
+        "columnDefs": [
+            {
+                "targets": 'no-sort',
+                "orderable": false,
+            },
+            {
+                "type": 'de_date',
+                targets: [2, 3]
+            }
+        ],
         "order": [[ 3, "asc" ]]
     });
 
