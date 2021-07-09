@@ -192,6 +192,7 @@
     "Plan je uspešno izmenjen!" : "Plan modified",
     "Plan je uspešno uklonjen" : "Plan deleted",
     "Kreiranje / izmena plana" : "Create / edit plan",
+    "Izmena plana" : "Edit plan",
     "Plan za postupanje sa rizikom / prilikom" : "Risk / opportunity management plan",
     "Primarni jezik" : "Default language",
     "Srpski" : "Serbian",
@@ -1076,5 +1077,5 @@
     "Preispitivanje tehničke usklađenosti":"Review of technical harmony",
     "Mora se redovno preispitivati usklađenost informacionih sistema sa politikama bezbednosti informacija organizacije i standardima.":"It is necessary to regularly review harmony between the information systems, on the one hand, and the organization's information security and standards on the other.",
     "Kliknite ovde za pomeranje prozora" : "Click here to move",
-    "Video pomoć" : "Video help" 
+    "Video pomoć" : "Video help"
 }
