@@ -13,11 +13,11 @@ use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles,WithMapping, WithColumnWidths, WithProperties
+class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles, WithMapping, WithColumnWidths, WithProperties
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function properties(): array
     {
         return [
@@ -48,16 +48,16 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
 
 
         $sheet->getStyle('A1:E1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
-        $sheet->getStyle('A2:E'.$count)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-        $sheet->getStyle('A2:E'.$count)->getAlignment()->setIndent(1);
+        $sheet->getStyle('A2:E' . $count)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $sheet->getStyle('A2:E' . $count)->getAlignment()->setIndent(1);
         $sheet->getStyle('1')->getFont()->setBold(true);
         $sheet->getStyle('1')->getFont()->setSize(12);
         $sheet->getStyle('1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A:E')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
         $sheet->getStyle('A:E')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('A2:E'.$count)->getFill()
-        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
-        ->getStartColor()->setARGB('FFFFFFED');
+        $sheet->getStyle('A2:E' . $count)->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('FFFFFFED');
     }
 
     public function columnWidths(): array
@@ -76,17 +76,17 @@ class SoasExport implements FromCollection, WithHeadings, ShouldAutoSize, WithSt
         return Soa::where([
             ['standard_id', session('standard')],
             ['team_id', Auth::user()->current_team_id]
-        ])->with(['user','standard','soaField','documents'])->get();
+        ])->with(['user', 'standard', 'soaField', 'documents'])->get();
     }
 
     public function map($soa): array
     {
         return [
-            $soa->soaField->name,
-            $soa->soaField->description,
-            $soa->status,
+            __($soa->soaField->name),
+            __($soa->soaField->description),
+            __($soa->status),
             $soa->comment,
-            count($soa->documents)>0 ? $soa->documents()->pluck('file_name')->implode(', '): '/',
+            count($soa->documents) > 0 ? $soa->documents()->pluck('file_name')->implode(', ') : '/',
         ];
     }
 }
