@@ -71,7 +71,7 @@
                                     <th>{{ __('Odgovornost za praćenje i realizaciju cilja') }}</th>
                                     <th>{{ __('Rok za realizaciju cilja') }}</th>
                                     <th>{{ __('Potrebni resursi') }}</th>
-                                    <th>{{ __('Analiza ispunjenosti cilja') }}</th>
+                                   <!-- <th>{{ __('Analiza ispunjenosti cilja') }}</th> -->
                                     <th class="no-sort w-20">{{ __('Akcije') }}</th>
                                 </tr>
                             </thead>
@@ -93,7 +93,7 @@
                                         {{ $goal->users ? $goal->users()->pluck('name')->implode(', ') : '/' }}</td>
                                     <td class="text-center">{{ date('d.m.Y', strtotime($goal->deadline)) }}</td>
                                     <td class="text-center">{{ $goal->resources }}</td>
-                                    <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td>
+                                   <!-- <td class="text-center">{{ Str::limit($goal->analysis, 35) ? : '/' }}</td> -->
                                     <td class="text-center">
                                         <button data-toggle="tooltip" data-placement="top"
                                             title="{{ __('Pregled cilja') }}" class="text-blue-700 hover:text-blue-900"
