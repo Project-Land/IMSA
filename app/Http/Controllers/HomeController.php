@@ -83,7 +83,7 @@ class HomeController extends Controller
 
     public function about()
     {
-        return redirect('/images/imsa.pdf');
+        return redirect('/images/imsa_'.session('locale').'.pdf');
     }
 
     public function contact()
